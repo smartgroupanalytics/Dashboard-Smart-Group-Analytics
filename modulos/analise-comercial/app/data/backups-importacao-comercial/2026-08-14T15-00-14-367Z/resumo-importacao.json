@@ -1,0 +1,97 @@
+{
+  "importadoEm": "2026-08-12T17:46:53.399Z",
+  "pastaEntrada": "C:\\Dashboard - Smart Group\\Analise-Integrada-Comercial-App\\analise-integrada-comercial\\entrada-relatorios",
+  "status": "OK",
+  "relatorios": {
+    "ESTOQUE": {
+      "arquivo": "ESTOQUE.xlsx",
+      "aba": "Planilha",
+      "linhaCabecalho": 1,
+      "linhasOriginais": 2659,
+      "linhasValidas": 2658,
+      "produtosDistintos": 852,
+      "quantidade": 497500.54999999993
+    },
+    "COMPRAS": {
+      "arquivo": "COMPRAS.xlsx",
+      "aba": "Planilha",
+      "linhaCabecalho": 1,
+      "linhasOriginais": 36,
+      "linhasValidas": 36,
+      "produtosDistintos": 16,
+      "quantidade": 210000
+    },
+    "CONSUMO": {
+      "arquivo": "CONSUMO.xlsx",
+      "aba": "Planilha",
+      "linhaCabecalho": 1,
+      "linhasOriginais": 1410,
+      "linhasValidas": 1410,
+      "produtosDistintos": 135,
+      "quantidade": 211977.44
+    },
+    "OP": {
+      "arquivo": "OP.xlsx",
+      "aba": "Planilha",
+      "linhaCabecalho": 1,
+      "linhasOriginais": 38,
+      "linhasValidas": 38,
+      "produtosDistintos": 36,
+      "quantidade": 15142
+    },
+    "VENDAS": {
+      "arquivo": "VENDAS.xlsx",
+      "aba": "Planilha",
+      "linhaCabecalho": 1,
+      "linhasOriginais": 5483,
+      "linhasValidas": 5483,
+      "produtosDistintos": 584,
+      "quantidade": 668631.7
+    },
+    "PEDIDOS_EM_ABERTO": {
+      "arquivo": "PEDIDOS EM ABERTO.xlsx",
+      "aba": "Planilha",
+      "linhaCabecalho": 1,
+      "linhasOriginais": 608,
+      "linhasValidas": 607,
+      "produtosDistintos": 353,
+      "quantidade": 72678.23500000002,
+      "valor": 1421534.099999999,
+      "pedidosDistintos": 277,
+      "clientesDistintos": 54
+    },
+    "ESTOQUEBR": {
+      "arquivo": "ESTOQUEBR.xlsx",
+      "aba": "Planilha",
+      "linhaCabecalho": 1,
+      "linhasOriginais": 885,
+      "linhasValidas": 885,
+      "produtosDistintos": 521,
+      "quantidade": 35946.1
+    },
+    "OPBR": {
+      "arquivo": "OPBR.xlsx",
+      "aba": "Planilha",
+      "linhaCabecalho": 1,
+      "linhasOriginais": 58,
+      "linhasValidas": 58,
+      "produtosDistintos": 49,
+      "quantidade": 24958.5
+    },
+    "VENDASBR": {
+      "arquivo": "VENDASBR.xlsx",
+      "aba": "Planilha",
+      "linhaCabecalho": 1,
+      "linhasOriginais": 1740,
+      "linhasValidas": 1740,
+      "produtosDistintos": 345,
+      "quantidade": 607822.4700000001
+    }
+  },
+  "totais": {
+    "stk": {},
+    "beiraRio": {},
+    "comum": {}
+  },
+  "erros": []
+}
