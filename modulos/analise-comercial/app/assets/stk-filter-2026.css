@@ -1,0 +1,33 @@
+.sg-stk-collection {
+  position: relative;
+  min-width: 220px;
+}
+
+.sg-stk-collection > button {
+  min-width: 220px;
+}
+
+.sg-stk-collection .sg-collection-menu {
+  right: 0;
+  width: 300px;
+  max-width: calc(100vw - 32px);
+  overflow: hidden;
+}
+
+.sg-stk-collection .max-h-64 {
+  max-height: 16rem;
+}
+
+.sg-stk-collection input[type="checkbox"] {
+  width: 16px !important;
+  min-width: 16px;
+  height: 16px !important;
+  margin: 0;
+  accent-color: #3b82f6;
+  box-shadow: none !important;
+}
+
+.sg-stk-collection > button span span:first-child {
+  color: #bfdbfe !important;
+  font-size: 10px;
+}
