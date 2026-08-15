@@ -11,6 +11,7 @@ const mapaPermissoes = {
     vendas: "vendas",
     financeiro: "financeiro",
     compras: "compras",
+    "analise-comercial": "analise-comercial",
     comex: "comex",
     usuarios: "usuarios",
     permissoes: "usuarios",
@@ -122,6 +123,24 @@ break;
             src="modulos/compras/index.html?v=1"
             class="iframe-modulo"
             title="Módulo Compras e Suprimentos"
+            frameborder="0">
+        </iframe>
+    `;
+
+break;
+
+case "analise-comercial":
+
+    titulo.innerText = "Análise Integrada Comercial";
+
+    subtitulo.innerText =
+    "Estoque, vendas, consumo, produção e carteira comercial.";
+
+    conteudo.innerHTML = `
+        <iframe
+            src="modulos/analise-comercial/index.html?v=2"
+            class="iframe-modulo"
+            title="Módulo Análise Integrada Comercial"
             frameborder="0">
         </iframe>
     `;
@@ -359,6 +378,13 @@ function gerarCardsDashboardPermitidos() {
                 "Acompanhe compras, estoque, consumo e produção."
         },
         {
+            modulo: "analise-comercial",
+            icone: "fa-solid fa-chart-column",
+            titulo: "Análise Integrada Comercial",
+            descricao:
+                "Analise estoque, vendas, consumo, produção e pedidos em aberto."
+        },
+        {
             modulo: "comex",
             icone: "fa-solid fa-ship",
             titulo: "COMEX",
@@ -468,6 +494,11 @@ const modulosBusca = [
         nome: "Compras e Suprimentos",
         descricao: "Compras, estoque, consumo e produção",
         modulo: "compras"
+    },
+    {
+        nome: "Análise Integrada Comercial",
+        descricao: "Estoque, vendas, consumo, produção e pedidos em aberto",
+        modulo: "analise-comercial"
     },
     {
         nome: "COMEX",

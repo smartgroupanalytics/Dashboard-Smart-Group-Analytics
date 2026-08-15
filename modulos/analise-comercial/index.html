@@ -12,8 +12,12 @@
 
     <link
         rel="stylesheet"
-        href="comercial.css?v=1"
+        href="comercial.css?v=2"
     >
+
+    <style>
+        html { visibility: hidden; }
+    </style>
 </head>
 
 <body>
@@ -33,7 +37,7 @@
             </div>
 
             <span class="status-local">
-                Desenvolvimento
+                Integrado ao Analytics
             </span>
 
         </div>
@@ -43,7 +47,7 @@
 
             <iframe
                 id="comercialFrame"
-                src="http://localhost:5173"
+                src="./app/index.html?v=2"
                 title="Análise Integrada Comercial"
                 loading="eager"
                 allow="fullscreen"
@@ -54,31 +58,20 @@
     </main>
 
 
-    <script>
+    <script type="module">
 
-        /*
-         * IMPORTANTE
-         *
-         * O Compras continua usando:
-         *
-         * https://smartstocksight.onrender.com
-         *
-         * Este módulo NÃO utiliza aquela URL.
-         *
-         * Durante o desenvolvimento, o Comercial
-         * será uma aplicação independente em:
-         *
-         * http://localhost:5173
-         */
+        import {
+            protegerModulo
+        } from "../../module-guard.js?v=3";
 
-        const COMERCIAL_URL =
-            "http://localhost:5173";
-
-
-        document.getElementById(
-            "comercialFrame"
-        ).src =
-            COMERCIAL_URL;
+        try {
+            await protegerModulo("analise-comercial");
+        } catch (erro) {
+            console.warn(
+                "Acesso ao módulo Análise Comercial interrompido:",
+                erro.message
+            );
+        }
 
     </script>
 

@@ -126,6 +126,17 @@
 
             </a>
 
+            <a
+                data-modulo="analise-comercial"
+                onclick="abrirModulo('analise-comercial', this)"
+            >
+
+                <i class="fa-solid fa-chart-column"></i>
+
+                Análise Integrada Comercial
+
+            </a>
+
 
             <a
                 data-modulo="comex"
@@ -569,6 +580,31 @@
 
                     </div>
 
+                    <div
+                        class="card-home"
+                        data-modulo="analise-comercial"
+                        role="button"
+                        tabindex="0"
+                        onclick="abrirModulo(
+                            'analise-comercial',
+                            document.querySelector(
+                                '.menu a[data-modulo=&quot;analise-comercial&quot;]'
+                            )
+                        )"
+                    >
+
+                        <i class="fa-solid fa-chart-column"></i>
+
+                        <h3>
+                            Análise Integrada Comercial
+                        </h3>
+
+                        <p>
+                            Analise estoque, vendas, consumo, produção e pedidos em aberto.
+                        </p>
+
+                    </div>
+
 
                     <div
                         class="card-home"
@@ -644,7 +680,7 @@
          SCRIPTS
     ================================================== -->
 
-    <script src="app.js?v=12"></script>
+    <script src="app.js?v=13"></script>
 
     <script
         type="module"
