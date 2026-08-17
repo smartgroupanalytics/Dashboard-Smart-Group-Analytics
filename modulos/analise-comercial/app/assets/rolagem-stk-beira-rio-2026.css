@@ -1,0 +1,38 @@
+/*
+ * Rolagem segura das famílias comerciais.
+ *
+ * Mantém intacto o JavaScript validado em produção e transforma somente
+ * a lista que já existe dentro de cada pasta STK / BEIRA RIO em uma área
+ * rolável. O cabeçalho de cada pasta fica fora desta área e permanece visível.
+ */
+@media (min-width: 901px) {
+  .sg-source-folder > .space-y-3.p-3 {
+    max-height: clamp(360px, calc(100dvh - 360px), 660px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(79, 154, 245, .86) rgba(3, 19, 41, .52);
+    border-top: 1px solid rgba(74, 133, 199, .28);
+    background: rgba(3, 19, 41, .30);
+  }
+
+  .sg-source-folder > .space-y-3.p-3::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  .sg-source-folder > .space-y-3.p-3::-webkit-scrollbar-track {
+    background: rgba(3, 19, 41, .52);
+  }
+
+  .sg-source-folder > .space-y-3.p-3::-webkit-scrollbar-thumb {
+    border: 2px solid rgba(3, 19, 41, .52);
+    border-radius: 999px;
+    background: rgba(79, 154, 245, .86);
+  }
+
+  .sg-source-folder > .space-y-3.p-3::-webkit-scrollbar-thumb:hover {
+    background: rgba(112, 183, 255, .96);
+  }
+}
