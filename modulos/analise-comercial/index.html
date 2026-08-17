@@ -1,79 +1,14 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="./logo-smart-group.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Análise Integrada Comercial</title>
-
-    <link
-        rel="stylesheet"
-        href="comercial.css?v=2"
-    >
-
-    <style>
-        html { visibility: hidden; }
-    </style>
-</head>
-
-<body>
-
-    <main class="modulo-comercial">
-
-        <div class="barra-comercial">
-
-            <div>
-                <strong>
-                    Análise Integrada Comercial
-                </strong>
-
-                <span>
-                    Estoque, vendas, carteira e análise por produto.
-                </span>
-            </div>
-
-            <span class="status-local">
-                Integrado ao Analytics
-            </span>
-
-        </div>
-
-
-        <section class="conteudo-comercial">
-
-            <iframe
-                id="comercialFrame"
-                src="./app/index.html?v=2"
-                title="Análise Integrada Comercial"
-                loading="eager"
-                allow="fullscreen"
-            ></iframe>
-
-        </section>
-
-    </main>
-
-
-    <script type="module">
-
-        import {
-            protegerModulo
-        } from "../../module-guard.js?v=3";
-
-        try {
-            await protegerModulo("analise-comercial");
-        } catch (erro) {
-            console.warn(
-                "Acesso ao módulo Análise Comercial interrompido:",
-                erro.message
-            );
-        }
-
-    </script>
-
-</body>
+    <script type="module" crossorigin src="./assets/index-DamKvZ9H.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BF-V9bOf.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
 </html>
