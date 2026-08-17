@@ -258,10 +258,10 @@
     "desc_completa": "MIRAGE OURO LIGHT",
     "grupo": 39,
     "subgrupo": 41,
-    "qtd_produzir": 400,
+    "qtd_produzir": 213,
     "dt_saida": "2026-08-06",
-    "centro_custo": 26,
-    "abreviacao": "IMP DIG"
+    "centro_custo": 10,
+    "abreviacao": "REV 1"
   },
   {
     "fonte_comercial": "STK",
