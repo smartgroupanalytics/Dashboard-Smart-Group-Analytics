@@ -224,8 +224,8 @@
     "subgrupo": 41,
     "qtd_produzir": 2000,
     "dt_saida": "2026-08-06",
-    "centro_custo": 1,
-    "abreviacao": "RECOB"
+    "centro_custo": 25,
+    "abreviacao": "TRANSFE"
   },
   {
     "fonte_comercial": "STK",
@@ -260,8 +260,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-08-06",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 26,
+    "abreviacao": "IMP DIG"
   },
   {
     "fonte_comercial": "STK",
@@ -272,8 +272,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-08-06",
-    "centro_custo": 1,
-    "abreviacao": "RECOB"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -296,8 +296,8 @@
     "subgrupo": 0,
     "qtd_produzir": 500,
     "dt_saida": "2026-08-12",
-    "centro_custo": 39,
-    "abreviacao": "MISTURA 1"
+    "centro_custo": 1,
+    "abreviacao": "RECOB"
   },
   {
     "fonte_comercial": "STK",
@@ -356,8 +356,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-08-19",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 1,
+    "abreviacao": "RECOB"
   },
   {
     "fonte_comercial": "STK",
@@ -394,5 +394,17 @@
     "dt_saida": "2026-08-19",
     "centro_custo": 13,
     "abreviacao": "JUMBO 1"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "7871",
+    "produto": "12550",
+    "desc_completa": "LILLY NUDE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-08-19",
+    "centro_custo": 0,
+    "abreviacao": ""
   }
 ]

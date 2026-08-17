@@ -1,0 +1,60 @@
+name: Atualizar Análise Integrada Comercial
+
+on:
+  repository_dispatch:
+    types:
+      - relatorios-comerciais-atualizados
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: atualizacao-analise-comercial
+  cancel-in-progress: false
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Baixar projeto
+        uses: actions/checkout@v4
+
+      - name: Preparar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: _automacao/package-lock.json
+
+      - name: Instalar importador
+        run: npm ci --prefix _automacao --ignore-scripts --no-audit --no-fund
+
+      - name: Baixar relatórios privados
+        env:
+          APPS_SCRIPT_DATA_URL: ${{ secrets.APPS_SCRIPT_DATA_URL }}
+          APPS_SCRIPT_DATA_TOKEN: ${{ secrets.APPS_SCRIPT_DATA_TOKEN }}
+        run: node _automacao/scripts/baixar-relatorios-apps-script.js _automacao/entrada-relatorios
+
+      - name: Validar e atualizar somente os relatórios corretos
+        run: >-
+          node _automacao/scripts/importar-relatorios-parcial.js
+          _automacao/entrada-relatorios
+          "$GITHUB_WORKSPACE"
+          _automacao/entrada-relatorios/status-gmail.json
+
+      - name: Publicar dados validados
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add modulos/analise-comercial/app/data/importacao-comercial
+          git add modulos/analise-comercial/app/data/status-atualizacao-comercial.json
+          git add modulos/analise-comercial/app/data/_version.json
+          if git diff --cached --quiet; then
+            echo "Nenhuma alteração de dados para publicar."
+            exit 0
+          fi
+          git commit -m "Atualiza dados da Análise Comercial"
+          git push

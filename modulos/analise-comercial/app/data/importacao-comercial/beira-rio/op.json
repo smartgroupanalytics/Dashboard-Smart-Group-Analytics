@@ -141,16 +141,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "7682",
-    "produto": "12683",
-    "desc_completa": "NAPA CALF PU 0.9 BRANCO OFF",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 486.4,
-    "dt_saida": "2026-08-06",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "7683",
     "produto": "9873",
     "desc_completa": "METALIZADO NANCY PU 1.0 DOURADO",
@@ -177,16 +167,6 @@
     "grupo": "BEIRA RIO",
     "qtd_produzir": 13.5,
     "dt_saida": "2026-08-05",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "7709",
-    "produto": "17022",
-    "desc_completa": "NAPA MALAGA AVELA 1248",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 1000,
-    "dt_saida": "2026-08-10",
     "abreviacao": ""
   },
   {
@@ -301,16 +281,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "7791",
-    "produto": "17287",
-    "desc_completa": "NAPA MALAGA CAFE 987",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 119,
-    "dt_saida": "2026-08-12",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "7793",
     "produto": "15832",
     "desc_completa": "NAPA NEW NANCY PRETO",
@@ -376,6 +346,26 @@
     "desc_completa": "NAPA MARSELHA BLUSH 1562",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 400,
+    "dt_saida": "2026-08-19",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "7884",
+    "produto": "9100083",
+    "desc_completa": "NAPA CALF PU 0.9 MOCCA 1398",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 800,
+    "dt_saida": "2026-08-19",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "7885",
+    "produto": "13172",
+    "desc_completa": "NOBUCK TUNISIA PU 1.2 CHOCOLATE 1271",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 600,
     "dt_saida": "2026-08-19",
     "abreviacao": ""
   }

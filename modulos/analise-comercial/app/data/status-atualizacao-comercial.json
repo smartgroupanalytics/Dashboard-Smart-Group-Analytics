@@ -1,88 +1,76 @@
 {
-  "atualizadoEm": "2026-08-14T18:37:37.055Z",
-  "ultimaAtualizacaoValida": "2026-08-14T18:37:37.055Z",
+  "atualizadoEm": "2026-08-17T11:30:52.043Z",
+  "ultimaAtualizacaoValida": "2026-08-17T11:30:52.043Z",
   "status": "OK",
-  "mensagem": "9 de 9 relatórios recebidos e processados com sucesso.",
+  "mensagem": "9 de 9 relatórios atualizados com sucesso.",
+  "modo": "PARCIAL_SEGURO",
   "totalEsperado": 9,
   "totalRecebido": 9,
-  "maxAgeHours": 48,
+  "totalAtualizado": 9,
+  "totalMantido": 0,
   "relatorios": [
     {
       "arquivo": "ESTOQUE.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-08-14T14:45:25.000Z",
-      "idadeHoras": 3.9,
-      "mensagemId": "1a000bc25df2cc9b",
-      "bytes": 131733
+      "recebidoEm": "2026-08-17T11:30:45.221Z",
+      "linhasValidas": 2658,
+      "mensagem": "Atualizado com sucesso."
     },
     {
       "arquivo": "COMPRAS.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-08-14T16:29:44.000Z",
-      "idadeHoras": 2.1,
-      "mensagemId": "1a0011ba67c47b4e",
-      "bytes": 6708
+      "recebidoEm": "2026-08-17T11:30:45.221Z",
+      "linhasValidas": 36,
+      "mensagem": "Atualizado com sucesso."
     },
     {
       "arquivo": "CONSUMO.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-08-14T16:52:10.000Z",
-      "idadeHoras": 1.7,
-      "mensagemId": "1a0013031fe1f237",
-      "bytes": 499161
+      "recebidoEm": "2026-08-17T11:30:45.221Z",
+      "linhasValidas": 12834,
+      "mensagem": "Atualizado com sucesso."
     },
     {
       "arquivo": "OP.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-08-14T15:50:10.000Z",
-      "idadeHoras": 2.8,
-      "mensagemId": "1a000f76dff41b12",
-      "bytes": 6128
+      "recebidoEm": "2026-08-17T11:30:45.221Z",
+      "linhasValidas": 34,
+      "mensagem": "Atualizado com sucesso."
     },
     {
       "arquivo": "VENDAS.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-08-14T16:59:25.000Z",
-      "idadeHoras": 1.6,
-      "mensagemId": "1a00136d3a3e6827",
-      "bytes": 571098
+      "recebidoEm": "2026-08-17T11:30:45.221Z",
+      "linhasValidas": 5592,
+      "mensagem": "Atualizado com sucesso."
     },
     {
       "arquivo": "PEDIDOS EM ABERTO.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-08-14T16:56:47.000Z",
-      "idadeHoras": 1.7,
-      "mensagemId": "1a001346aaf2236a",
-      "bytes": 84977
+      "recebidoEm": "2026-08-17T11:30:45.221Z",
+      "linhasValidas": 603,
+      "mensagem": "Atualizado com sucesso."
     },
     {
       "arquivo": "ESTOQUEBR.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-08-14T18:05:17.000Z",
-      "idadeHoras": 0.5,
-      "mensagemId": "1a0017320057c87f",
-      "bytes": 28021
+      "recebidoEm": "2026-08-17T11:30:45.221Z",
+      "linhasValidas": 888,
+      "mensagem": "Atualizado com sucesso."
     },
     {
       "arquivo": "OPBR.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-08-14T18:08:10.000Z",
-      "idadeHoras": 0.5,
-      "mensagemId": "1a00175c662f9423",
-      "bytes": 5963
+      "recebidoEm": "2026-08-17T11:30:45.221Z",
+      "linhasValidas": 37,
+      "mensagem": "Atualizado com sucesso."
     },
     {
       "arquivo": "VENDASBR.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-08-14T18:14:28.000Z",
-      "idadeHoras": 0.4,
-      "mensagemId": "1a0017b895b7d192",
-      "bytes": 70451
+      "recebidoEm": "2026-08-17T11:30:45.221Z",
+      "linhasValidas": 1675,
+      "mensagem": "Atualizado com sucesso."
     }
-  ],
-  "etapas": {
-    "gmail": "OK",
-    "importacao": "OK",
-    "classificacao": "OK"
-  }
+  ]
 }

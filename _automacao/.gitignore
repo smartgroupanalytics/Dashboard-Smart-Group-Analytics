@@ -1,0 +1,5 @@
+node_modules/
+entrada-relatorios/*
+!entrada-relatorios/.gitkeep
+.importacao-comercial-temp/
+backups-importacao-comercial/
