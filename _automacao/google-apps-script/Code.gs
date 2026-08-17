@@ -167,6 +167,48 @@ function coletarPartes_(
     );
 }
 
+function gmailApiJson_(
+  caminho
+) {
+  const resposta =
+    UrlFetchApp.fetch(
+      'https://gmail.googleapis.com/gmail/v1/users/me' +
+        caminho,
+      {
+        method:
+          'get',
+        headers: {
+          Authorization:
+            'Bearer ' +
+            ScriptApp.getOAuthToken(),
+        },
+        muteHttpExceptions:
+          true,
+      }
+    );
+
+  const codigo =
+    resposta.getResponseCode();
+
+  if (
+    codigo < 200 ||
+    codigo >= 300
+  ) {
+    throw new Error(
+      'Gmail API retornou HTTP ' +
+        codigo +
+        ': ' +
+        resposta
+          .getContentText()
+          .slice(0, 300)
+    );
+  }
+
+  return JSON.parse(
+    resposta.getContentText()
+  );
+}
+
 function localizarAnexoMaisRecente_(
   nomeArquivo
 ) {
@@ -205,10 +247,30 @@ function localizarAnexoMaisRecente_(
         pagina;
     }
 
+    const parametros = [
+      'q=' +
+        encodeURIComponent(
+          opcoes.q
+        ),
+      'maxResults=' +
+        encodeURIComponent(
+          opcoes.maxResults
+        ),
+    ];
+
+    if (opcoes.pageToken) {
+      parametros.push(
+        'pageToken=' +
+          encodeURIComponent(
+            opcoes.pageToken
+          )
+      );
+    }
+
     const resposta =
-      Gmail.Users.Messages.list(
-        'me',
-        opcoes
+      gmailApiJson_(
+        '/messages?' +
+          parametros.join('&')
       );
 
     const mensagens =
@@ -221,13 +283,12 @@ function localizarAnexoMaisRecente_(
       indice += 1
     ) {
       const detalhe =
-        Gmail.Users.Messages.get(
-          'me',
-          mensagens[indice].id,
-          {
-            format:
-              'full',
-          }
+        gmailApiJson_(
+          '/messages/' +
+            encodeURIComponent(
+              mensagens[indice].id
+            ) +
+            '?format=full'
         );
 
       verificados += 1;
@@ -327,12 +388,16 @@ function baixarBytesAnexo_(
     corpo.attachmentId
   ) {
     const anexo =
-      Gmail.Users.Messages
-        .Attachments.get(
-          'me',
-          candidato.mensagemId,
-          corpo.attachmentId
-        );
+      gmailApiJson_(
+        '/messages/' +
+          encodeURIComponent(
+            candidato.mensagemId
+          ) +
+          '/attachments/' +
+          encodeURIComponent(
+            corpo.attachmentId
+          )
+      );
 
     dados =
       anexo.data ||
@@ -345,10 +410,36 @@ function baixarBytesAnexo_(
     );
   }
 
-  return Utilities
-    .base64DecodeWebSafe(
-      dados
+  const textoBase64 =
+    String(dados)
+      .trim()
+      .replace(/\s/g, '')
+      .replace(/-/g, '+')
+      .replace(/_/g, '/')
+      .replace(/=+$/, '');
+
+  if (
+    !/^[A-Za-z0-9+/]+$/.test(
+      textoBase64
+    )
+  ) {
+    throw new Error(
+      'O Gmail retornou o anexo em um formato Base64 inválido.'
     );
+  }
+
+  const preenchimento =
+    '='.repeat(
+      (
+        4 -
+        textoBase64.length % 4
+      ) % 4
+    );
+
+  return Utilities.base64Decode(
+    textoBase64 +
+      preenchimento
+  );
 }
 
 function excelValido_(bytes) {
