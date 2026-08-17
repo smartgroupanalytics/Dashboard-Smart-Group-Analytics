@@ -1,6 +1,6 @@
 {
-  "importadoEm": "2026-08-17T11:30:52.043Z",
-  "pastaEntrada": "/workspace/scratch/e0d4822a5b6d/trabalho-automacao/Smart-Group-Analytics-com-Analise-Comercial/_automacao/mock-download",
+  "importadoEm": "2026-08-17T13:52:26.020Z",
+  "pastaEntrada": "/home/runner/work/Dashboard-Smart-Group-Analytics/Dashboard-Smart-Group-Analytics/_automacao/entrada-relatorios",
   "modo": "ATUALIZACAO_PARCIAL_PROTEGIDA",
   "status": "OK",
   "relatorios": {
@@ -68,16 +68,16 @@
       "linhasOriginais": 888,
       "linhasValidas": 888,
       "produtosDistintos": 521,
-      "quantidade": 39862.99999999999
+      "quantidade": 38749.9
     },
     "OPBR": {
       "arquivo": "OPBR.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 37,
-      "linhasValidas": 37,
-      "produtosDistintos": 31,
-      "quantidade": 16757.5
+      "linhasOriginais": 36,
+      "linhasValidas": 36,
+      "produtosDistintos": 30,
+      "quantidade": 16157.499999999998
     },
     "VENDASBR": {
       "arquivo": "VENDASBR.xlsx",
