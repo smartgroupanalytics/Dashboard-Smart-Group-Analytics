@@ -141,16 +141,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "7683",
-    "produto": "9873",
-    "desc_completa": "METALIZADO NANCY PU 1.0 DOURADO",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 468,
-    "dt_saida": "2026-08-06",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "7685",
     "produto": "50008",
     "desc_completa": "CAMURÇA PARIS GLAM + FLANELA / CHOCOLATE 1271- DOURADO/PRETO",
@@ -186,16 +176,6 @@
     "desc_completa": "METALIZADO NANCY PU 1.0 DOURADO",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 2000,
-    "dt_saida": "2026-08-10",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "7719",
-    "produto": "11013",
-    "desc_completa": "NOBUCK TUNISIA PU 1.2 BRANCO OFF (VENDA BEIRA RIO)",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 1000,
     "dt_saida": "2026-08-10",
     "abreviacao": ""
   },
