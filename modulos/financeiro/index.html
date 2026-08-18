@@ -17,7 +17,7 @@
 
     <link
         rel="stylesheet"
-        href="financeiro.css?v=24"
+        href="financeiro.css?v=25"
     >
     <link rel="stylesheet" href="css/graficos-financeiros.css?v=12">
     <link rel="stylesheet" href="css/bancos-financeiros.css?v=12">
@@ -996,10 +996,79 @@
             </div>
 
             <div class="campo-filtro">
-                <label for="banco">Banco / Conta</label>
-                <select id="banco" name="banco">
-                    <option value="">Todos</option>
-                </select>
+                <label>Banco / Conta</label>
+
+                <div
+                    class="multiselect-pessoas multiselect-bancos"
+                    id="multiselectBancos"
+                >
+                    <button
+                        type="button"
+                        class="multiselect-pessoas-botao"
+                        id="multiselectBancosBotao"
+                        aria-expanded="false"
+                    >
+                        <span id="multiselectBancosResumo">
+                            Todos
+                        </span>
+
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+
+                    <div
+                        class="multiselect-pessoas-painel"
+                        id="multiselectBancosPainel"
+                        hidden
+                    >
+                        <div class="multiselect-pessoas-busca">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+
+                            <input
+                                type="search"
+                                id="multiselectBancosBusca"
+                                placeholder="Pesquisar banco..."
+                                autocomplete="off"
+                            >
+                        </div>
+
+                        <div class="multiselect-pessoas-acoes">
+                            <button
+                                type="button"
+                                id="btnMarcarTodosBancos"
+                            >
+                                Marcar todos
+                            </button>
+
+                            <button
+                                type="button"
+                                id="btnDesmarcarTodosBancos"
+                            >
+                                Desmarcar todos
+                            </button>
+                        </div>
+
+                        <label class="multiselect-pessoas-todos">
+                            <input
+                                type="checkbox"
+                                id="checkboxTodosBancos"
+                                checked
+                            >
+
+                            <span>Todos</span>
+                        </label>
+
+                        <div
+                            class="multiselect-pessoas-lista"
+                            id="multiselectBancosLista"
+                        ></div>
+
+                        <div class="multiselect-pessoas-rodape">
+                            <span id="multiselectBancosContador">
+                                Todos selecionados
+                            </span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="campo-filtro">
@@ -1146,8 +1215,8 @@
     <script src="js/processador-financeiro.js?v=21"></script>
     <script src="js/indicadores-financeiros.js?v=7"></script>
     <script src="js/graficos-financeiros.js?v=14"></script>
-    <script src="js/bancos-financeiros.js?v=7"></script>
-    <script src="js/filtros-financeiro.js?v=24"></script>
+    <script src="js/bancos-financeiros.js?v=8"></script>
+    <script src="js/filtros-financeiro.js?v=25"></script>
     <script src="js/importacao-planilha.js?v=7"></script>
     <script src="js/contas-receber.js?v=20"></script>
     <script src="js/contas-pagar.js?v=21"></script>

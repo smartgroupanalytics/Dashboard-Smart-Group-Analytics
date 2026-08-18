@@ -5,6 +5,11 @@ const filtroPessoas = {
     selecionadas: new Set()
 };
 
+const filtroBancos = {
+    opcoes: [],
+    selecionados: new Set()
+};
+
 /* Filtros da Visão Geral. */
 
 function configurarPainelFiltros() {
@@ -18,6 +23,7 @@ function configurarPainelFiltros() {
     if (!btnAbrir || !btnFechar || !painel || !overlay) return;
 
     configurarMultiselectPessoas();
+    configurarMultiselectBancos();
 
     const abrir = () => {
         painel.classList.add("aberto");
@@ -40,7 +46,8 @@ function configurarPainelFiltros() {
     if (btnLimpar && formulario) {
         btnLimpar.addEventListener("click", () => {
             formulario.reset();
-            marcarTodasPessoas(false);
+            marcarTodasPessoas();
+            marcarTodosBancos();
             aplicarFiltrosDashboard();
         });
     }
@@ -123,6 +130,48 @@ function configurarMultiselectPessoas() {
             componente &&
             !componente.contains(evento.target)
         ) {
+            painel.hidden = true;
+            botao.setAttribute("aria-expanded", "false");
+        }
+    });
+}
+
+function configurarMultiselectBancos() {
+    const botao = document.getElementById("multiselectBancosBotao");
+    const painel = document.getElementById("multiselectBancosPainel");
+    const busca = document.getElementById("multiselectBancosBusca");
+    const marcar = document.getElementById("btnMarcarTodosBancos");
+    const desmarcar = document.getElementById("btnDesmarcarTodosBancos");
+    const todos = document.getElementById("checkboxTodosBancos");
+
+    if (!botao || !painel) return;
+
+    botao.addEventListener("click", () => {
+        const abrir = painel.hidden;
+        painel.hidden = !abrir;
+        botao.setAttribute("aria-expanded", String(abrir));
+
+        if (abrir) {
+            busca?.focus();
+        }
+    });
+
+    busca?.addEventListener("input", renderizarListaBancosFiltro);
+    marcar?.addEventListener("click", () => marcarTodosBancos());
+    desmarcar?.addEventListener("click", desmarcarTodosBancos);
+
+    todos?.addEventListener("change", () => {
+        if (todos.checked) {
+            marcarTodosBancos();
+        } else {
+            desmarcarTodosBancos();
+        }
+    });
+
+    document.addEventListener("click", (evento) => {
+        const componente = document.getElementById("multiselectBancos");
+
+        if (componente && !componente.contains(evento.target)) {
             painel.hidden = true;
             botao.setAttribute("aria-expanded", "false");
         }
@@ -240,6 +289,125 @@ function atualizarResumoPessoas() {
     }
 }
 
+function preencherMultiselectBancos(bancos) {
+    const opcoes = bancos
+        .map((banco) => ({
+            id: String(banco.id || "").trim(),
+            nome: String(banco.nome || "").trim()
+        }))
+        .filter((banco) => banco.id && banco.nome)
+        .sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"));
+
+    filtroBancos.opcoes = opcoes;
+    filtroBancos.selecionados = new Set(opcoes.map((banco) => banco.id));
+
+    const busca = document.getElementById("multiselectBancosBusca");
+    if (busca) busca.value = "";
+
+    renderizarListaBancosFiltro();
+    atualizarResumoBancos();
+}
+
+function renderizarListaBancosFiltro() {
+    const lista = document.getElementById("multiselectBancosLista");
+    if (!lista) return;
+
+    const busca = normalizarTexto(
+        document.getElementById("multiselectBancosBusca")?.value || ""
+    );
+
+    const visiveis = filtroBancos.opcoes.filter((banco) => {
+        return !busca || normalizarTexto(banco.nome).includes(busca);
+    });
+
+    if (!visiveis.length) {
+        lista.innerHTML =
+            '<div class="multiselect-pessoas-vazio">Nenhum banco encontrado.</div>';
+        return;
+    }
+
+    lista.innerHTML = "";
+
+    visiveis.forEach((banco) => {
+        const label = document.createElement("label");
+        label.className = "multiselect-pessoas-item";
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = filtroBancos.selecionados.has(banco.id);
+
+        const texto = document.createElement("span");
+        texto.textContent = banco.nome;
+
+        checkbox.addEventListener("change", () => {
+            if (checkbox.checked) {
+                filtroBancos.selecionados.add(banco.id);
+            } else {
+                filtroBancos.selecionados.delete(banco.id);
+            }
+
+            atualizarResumoBancos();
+        });
+
+        label.appendChild(checkbox);
+        label.appendChild(texto);
+        lista.appendChild(label);
+    });
+}
+
+function marcarTodosBancos(renderizar = true) {
+    filtroBancos.selecionados = new Set(
+        filtroBancos.opcoes.map((banco) => banco.id)
+    );
+
+    if (renderizar) {
+        renderizarListaBancosFiltro();
+    }
+
+    atualizarResumoBancos();
+}
+
+function desmarcarTodosBancos() {
+    filtroBancos.selecionados.clear();
+    renderizarListaBancosFiltro();
+    atualizarResumoBancos();
+}
+
+function atualizarResumoBancos() {
+    const total = filtroBancos.opcoes.length;
+    const selecionados = filtroBancos.selecionados.size;
+    const resumo = document.getElementById("multiselectBancosResumo");
+    const contador = document.getElementById("multiselectBancosContador");
+    const todos = document.getElementById("checkboxTodosBancos");
+
+    if (todos) {
+        todos.checked = total > 0 && selecionados === total;
+        todos.indeterminate = selecionados > 0 && selecionados < total;
+    }
+
+    if (resumo) {
+        if (total === 0 || selecionados === total) {
+            resumo.textContent = "Todos";
+        } else if (selecionados === 0) {
+            resumo.textContent = "Nenhum selecionado";
+        } else if (selecionados === 1) {
+            const selecionado = filtroBancos.opcoes.find((banco) =>
+                filtroBancos.selecionados.has(banco.id)
+            );
+            resumo.textContent = selecionado?.nome || "1 selecionado";
+        } else {
+            resumo.textContent = `${selecionados} selecionados`;
+        }
+    }
+
+    if (contador) {
+        contador.textContent =
+            selecionados === total && total > 0
+                ? `Todos selecionados (${total})`
+                : `${selecionados} de ${total} selecionados`;
+    }
+}
+
 function preencherSelectUnico(id, valores) {
     const select = document.getElementById(id);
     if (!select) return;
@@ -266,7 +434,10 @@ function aplicarFiltrosDashboard() {
         pessoasSelecionadas.size === filtroPessoas.opcoes.length;
 
     const representante = document.getElementById("representante")?.value || "";
-    const banco = document.getElementById("banco")?.value || "";
+    const bancosSelecionados = filtroBancos.selecionados;
+    const todosBancosSelecionados =
+        filtroBancos.opcoes.length > 0 &&
+        bancosSelecionados.size === filtroBancos.opcoes.length;
     const plano = document.getElementById("planoFinanceiro")?.value || "";
     const situacao = document.getElementById("situacao")?.value || "";
     const tipoDocumento = document.getElementById("tipoDocumento")?.value || "";
@@ -288,15 +459,16 @@ function aplicarFiltrosDashboard() {
         if (situacao && item.situacao !== situacao) return false;
         if (tipoDocumento && item.tipoDocumento !== tipoDocumento) return false;
 
-        if (banco) {
-            const identidade = identificarBanco(item.banco, "");
-            if (identidade.id !== banco) return false;
+        if (filtroBancos.opcoes.length > 0 && !todosBancosSelecionados) {
+            const identidade = identificarLocalCobranca(item.banco);
+            if (!bancosSelecionados.has(identidade.id)) return false;
         }
 
         return true;
     });
 
     atualizarDashboardCompleto(lancamentosFiltrados);
+    renderizarBancos(agruparBancosDosLancamentos(lancamentosFiltrados));
     atualizarTextoPeriodo(inicio, fim);
 }
 
@@ -318,26 +490,5 @@ function atualizarTextoPeriodo(inicio, fim) {
 }
 
 function preencherFiltroBancos(limparAntes = false) {
-    const select =
-        document.getElementById("banco");
-
-    if (!select) {
-        return;
-    }
-
-    if (limparAntes) {
-        select.innerHTML =
-            '<option value="">Todos</option>';
-    }
-
-    bancosFinanceiros.forEach((banco) => {
-        const option =
-            document.createElement("option");
-
-        option.value = banco.id;
-        option.textContent = banco.nome;
-
-        select.appendChild(option);
-    });
+    preencherMultiselectBancos(bancosFinanceiros);
 }
-
