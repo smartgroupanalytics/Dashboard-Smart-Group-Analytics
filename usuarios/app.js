@@ -387,6 +387,8 @@ if(
     modulos[campo.dataset.modulo] = campo.checked;
   });
 
+  const setor = String(campoSetor.value || "").trim();
+
   const dados = {
 
     uid: campoUid.value.trim(),
@@ -394,7 +396,8 @@ if(
     nome: String(campoNome.value || "").trim(),
     email: String(campoEmail.value || "").trim().toLowerCase(),
     cargo: String(campoCargo.value || "").trim(),
-    setor: String(campoSetor.value || "").trim(),
+    setor,
+    setorChave: normalizarChaveSetor(setor),
     empresa: String(campoEmpresa.value || "").trim() || "Smart Group",
     perfil: campoPerfil.value,
     ativo: campoAtivo.checked,
@@ -484,6 +487,15 @@ function mostrarCarregando() {
   mensagem.textContent = "Carregando usuários...";
   tabelaContainer.hidden = true;
   estadoVazio.hidden = true;
+}
+
+function normalizarChaveSetor(valor) {
+  return String(valor || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function formatarPerfil(perfil) {

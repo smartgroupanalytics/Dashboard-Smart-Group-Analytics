@@ -13,6 +13,7 @@ const mapaPermissoes = {
     compras: "compras",
     "analise-comercial": "analise-comercial",
     comex: "comex",
+    rh: "rh",
     usuarios: "usuarios",
     permissoes: "usuarios",
     logs: "usuarios",
@@ -165,6 +166,24 @@ case "comex":
 
 break;
 
+case "rh":
+
+    titulo.innerText = "Recursos Humanos";
+
+    subtitulo.innerText =
+    "Perfis, treinamentos e matriz de habilidades.";
+
+    conteudo.innerHTML = `
+        <iframe
+            src="modulos/rh/index.html?v=1"
+            class="iframe-modulo"
+            title="Módulo de Recursos Humanos"
+            frameborder="0">
+        </iframe>
+    `;
+
+break;
+
 
  case "usuarios":
 
@@ -175,7 +194,7 @@ break;
 
     conteudo.innerHTML = `
         <iframe
-            src="usuarios/index.html?v=3"
+            src="usuarios/index.html?v=4"
             class="iframe-modulo"
             title="Gerenciamento de Usuários">
         </iframe>
@@ -392,6 +411,13 @@ function gerarCardsDashboardPermitidos() {
                 "Acompanhe importações, invoices e entregas por material."
         },
         {
+            modulo: "rh",
+            icone: "fa-solid fa-people-group",
+            titulo: "Recursos Humanos",
+            descricao:
+                "Consulte perfis, treinamentos e matrizes de habilidades."
+        },
+        {
             modulo: "usuarios",
             icone: "fa-solid fa-shield-halved",
             titulo: "Controle de Acesso",
@@ -504,6 +530,11 @@ const modulosBusca = [
         nome: "COMEX",
         descricao: "Importações, invoices, embarques e entregas por material",
         modulo: "comex"
+    },
+    {
+        nome: "Recursos Humanos",
+        descricao: "Perfis, treinamentos e matriz de habilidades",
+        modulo: "rh"
     }
 ];
 

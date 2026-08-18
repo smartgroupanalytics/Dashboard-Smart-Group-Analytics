@@ -149,6 +149,17 @@
 
             </a>
 
+            <a
+                data-modulo="rh"
+                onclick="abrirModulo('rh', this)"
+            >
+
+                <i class="fa-solid fa-people-group"></i>
+
+                Recursos Humanos
+
+            </a>
+
 
 
     
@@ -506,6 +517,33 @@
 
                     <div
                         class="card-home"
+                        data-modulo="rh"
+                        role="button"
+                        tabindex="0"
+                        onclick="abrirModulo(
+                            'rh',
+                            document.querySelector(
+                                '.menu a[data-modulo=&quot;rh&quot;]'
+                            )
+                        )"
+                    >
+
+                        <i class="fa-solid fa-people-group"></i>
+
+                        <h3>
+                            Recursos Humanos
+                        </h3>
+
+                        <p>
+                            Consulte perfis, treinamentos e matrizes de habilidades.
+                        </p>
+
+                    </div>
+
+
+
+                    <div
+                        class="card-home"
                         data-modulo="vendas"
                         role="button"
                         tabindex="0"
@@ -680,7 +718,7 @@
          SCRIPTS
     ================================================== -->
 
-    <script src="app.js?v=13"></script>
+    <script src="app.js?v=14"></script>
 
     <script
         type="module"

@@ -1394,17 +1394,3 @@ button {
     font-size: 10px;
     text-align: right;
 }
-
-.bancos-vazio {
-    grid-column: 1 / -1;
-    padding: 28px 18px;
-
-    border: 1px dashed rgba(72, 145, 220, 0.38);
-    border-radius: 12px;
-
-    background: rgba(8, 31, 60, 0.45);
-    color: var(--cor-texto-secundario);
-
-    font-size: 13px;
-    text-align: center;
-}

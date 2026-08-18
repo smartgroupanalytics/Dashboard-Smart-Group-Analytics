@@ -105,7 +105,7 @@ function abrirDetalhesBanco(banco) {
     document.body.style.overflow = "hidden";
 }
 
-function renderizarBancos(bancosParaExibir = bancosFinanceiros) {
+function renderizarBancos() {
     const grade =
         document.getElementById("gradeBancos");
 
@@ -121,15 +121,7 @@ function renderizarBancos(bancosParaExibir = bancosFinanceiros) {
 
     grade.innerHTML = "";
 
-    if (!bancosParaExibir.length) {
-        grade.innerHTML = `
-            <div class="bancos-vazio">
-                Nenhum banco corresponde aos filtros selecionados.
-            </div>
-        `;
-    }
-
-    bancosParaExibir.forEach((banco) => {
+    bancosFinanceiros.forEach((banco) => {
         const card =
             document.createElement("button");
 
@@ -174,7 +166,7 @@ function renderizarBancos(bancosParaExibir = bancosFinanceiros) {
     });
 
     const soma =
-        bancosParaExibir.reduce(
+        bancosFinanceiros.reduce(
             (total, banco) => total + Number(banco.saldo || 0),
             0
         );
@@ -186,7 +178,7 @@ function renderizarBancos(bancosParaExibir = bancosFinanceiros) {
 
     if (quantidade) {
         quantidade.textContent =
-            `${bancosParaExibir.length} bancos exibidos`;
+            `${bancosFinanceiros.length} bancos carregados`;
     }
 }
 
@@ -224,3 +216,4 @@ function criarLogoBanco(banco, tamanho = "normal") {
         </span>
     `;
 }
+

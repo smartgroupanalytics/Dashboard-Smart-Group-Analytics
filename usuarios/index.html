@@ -162,6 +162,7 @@
             <label><input type="checkbox" data-modulo="compras"> Compras</label>
             <label><input type="checkbox" data-modulo="analise-comercial"> Análise Integrada Comercial</label>
             <label><input type="checkbox" data-modulo="comex"> COMEX</label>
+            <label><input type="checkbox" data-modulo="rh"> Recursos Humanos</label>
             <label><input type="checkbox" data-modulo="usuarios"> Usuários</label>
             <label><input type="checkbox" data-modulo="configuracoes"> Configurações</label>
           </div>
@@ -188,7 +189,7 @@ try {
 
     await protegerModulo("usuarios");
 
-    await import("./app.js?v=11");
+    await import("./app.js?v=12");
 
 } catch (erro) {
 

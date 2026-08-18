@@ -1,0 +1,33 @@
+MÓDULO DE RECURSOS HUMANOS — PRIMEIRA CONFIGURAÇÃO
+
+1. FIRESTORE
+   Adicione o conteúdo do arquivo ADICIONAR-NAS-REGRAS-FIRESTORE-RH.txt
+   às regras atuais do Firestore e publique as regras.
+
+2. PERMISSÃO DOS USUÁRIOS
+   Entre em Administração > Usuários, edite o usuário e marque:
+   Recursos Humanos.
+
+3. ACESSO POR DEPARTAMENTO
+   O campo Setor do gerente deve ser igual ao Departamento da planilha.
+   Exemplo: o gerente de Produção deve ter o setor Produção.
+   Edite e salve novamente cada gestor/RH após esta atualização para que o
+   sistema gere a chave de segurança do setor.
+
+   - Administrador: visualiza todos os departamentos e importa planilhas.
+   - Usuário do setor RH ou Recursos Humanos: visualiza todos e importa.
+   - Demais gestores com permissão RH: visualizam somente o próprio setor.
+
+4. IMPORTAÇÃO DA BASE
+   No módulo Recursos Humanos, clique em Importar planilha.
+   É possível selecionar uma ou várias planilhas ao mesmo tempo.
+   Cada arquivo deve manter as abas Perfil e Matriz de Habilidades.
+
+5. ATUALIZAÇÕES
+   Uma nova importação do mesmo colaborador atualiza o cadastro existente.
+   A identificação usa, nesta ordem: CPF, matrícula e nome completo.
+
+IMPORTANTE
+Não coloque as planilhas de RH dentro da pasta publicada no GitHub Pages.
+Os dados são importados pelo módulo e armazenados no Firestore com as regras
+de acesso por departamento.

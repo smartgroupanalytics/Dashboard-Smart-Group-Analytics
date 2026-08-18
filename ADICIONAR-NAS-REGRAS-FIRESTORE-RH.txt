@@ -1,0 +1,64 @@
+MÓDULO DE RH — REGRAS DE SEGURANÇA DO FIRESTORE
+
+Adicione as funções e os blocos abaixo DENTRO de:
+
+match /databases/{database}/documents {
+  ...
+}
+
+Não substitua as regras que já protegem usuários e os outros módulos.
+
+-----------------------------------------------------------------------
+
+function rhUsuarioAnalytics() {
+  return get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data;
+}
+
+function rhUsuarioAtivo() {
+  return request.auth != null
+    && rhUsuarioAnalytics().ativo == true
+    && (
+      rhUsuarioAnalytics().perfil == "administrador"
+      || rhUsuarioAnalytics().modulos.rh == true
+    );
+}
+
+function rhAdministradorOuRh() {
+  return rhUsuarioAtivo()
+    && (
+      rhUsuarioAnalytics().perfil == "administrador"
+      || rhUsuarioAnalytics().setorChave == "rh"
+      || rhUsuarioAnalytics().setorChave == "recursos humanos"
+      || rhUsuarioAnalytics().setorChave == "gestao de pessoas"
+    );
+}
+
+match /rh_colaboradores/{colaboradorId} {
+  allow read: if rhAdministradorOuRh()
+    || (
+      rhUsuarioAtivo()
+      && resource.data.departamentoChave == rhUsuarioAnalytics().setorChave
+    );
+
+  allow create, update, delete: if rhAdministradorOuRh();
+}
+
+-----------------------------------------------------------------------
+
+RECOMENDAÇÃO MAIS SEGURA
+
+Edite e salve novamente os usuários do RH e os gerentes para que o sistema
+grave o campo interno "setorChave". No cadastro, mantenha o campo "setor"
+escrito igual ao campo
+"Departamento" da planilha. Exemplos:
+
+- Produção
+- Laboratório
+- Financeiro
+- Comercial
+
+Depois, marque somente a permissão "Recursos Humanos" para os gestores que
+devem consultar os colaboradores de seu próprio setor.
+
+Administradores e usuários do setor "RH" ou "Recursos Humanos" visualizam
+todos os departamentos e podem importar/atualizar planilhas.
