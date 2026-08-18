@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Recursos Humanos - Smart Group Analytics</title>
+  <link rel="stylesheet" href="rh.css?v=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>html{visibility:hidden}</style>
+</head>
+<body>
+  <main class="pagina-rh">
+    <header class="cabecalho-rh">
+      <div>
+        <span class="rotulo">RECURSOS HUMANOS</span>
+        <h1>Perfil e Matriz de Habilidades</h1>
+        <p>Consulta da planilha principal de RH, respeitando o acesso por departamento.</p>
+      </div>
+      <div class="cabecalho-acoes">
+        <span class="escopo-acesso" id="escopoAcesso"><i class="fa-solid fa-lock"></i> Verificando acesso</span>
+        <button class="btn-importar" id="btnSelecionarArquivos" type="button" hidden>
+          <i class="fa-solid fa-file-arrow-up"></i> Importar planilha
+        </button>
+        <input id="arquivosExcel" type="file" accept=".xlsx,.xlsm" multiple hidden>
+      </div>
+    </header>
+
+    <section class="painel-importacao" id="painelImportacao" hidden>
+      <div>
+        <strong><i class="fa-solid fa-circle-info"></i> Atualização da base principal</strong>
+        <p>Selecione uma ou várias planilhas no padrão aprovado. Cada arquivo será gravado como um colaborador.</p>
+      </div>
+      <button class="btn-fechar-painel" id="btnFecharImportacao" type="button" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
+    </section>
+
+    <section class="barra-filtros">
+      <label class="campo-filtro campo-pesquisa">
+        <span>Pesquisar</span>
+        <div><i class="fa-solid fa-magnifying-glass"></i><input id="pesquisaColaborador" type="search" placeholder="Nome, cargo ou matrícula"></div>
+      </label>
+      <label class="campo-filtro">
+        <span>Departamento</span>
+        <select id="filtroDepartamento"><option value="">Todos os departamentos</option></select>
+      </label>
+      <label class="campo-filtro campo-colaborador">
+        <span>Colaborador</span>
+        <select id="seletorColaborador"><option value="">Selecione um colaborador</option></select>
+      </label>
+      <button class="btn-atualizar" id="btnAtualizar" type="button" title="Atualizar dados"><i class="fa-solid fa-rotate"></i></button>
+    </section>
+
+    <section class="estado-vazio" id="estadoVazio">
+      <div class="icone-vazio"><i class="fa-solid fa-people-group"></i></div>
+      <h2>Nenhum colaborador disponível</h2>
+      <p id="mensagemVazia">A base de RH ainda não foi importada ou não há colaboradores no seu departamento.</p>
+      <button class="btn-importar" id="btnImportarVazio" type="button" hidden><i class="fa-solid fa-file-arrow-up"></i> Importar planilha principal</button>
+    </section>
+
+    <section id="conteudoRh" hidden>
+      <nav class="abas-rh" aria-label="Abas do módulo de RH">
+        <button class="aba-rh ativa" data-aba="perfil" type="button"><i class="fa-regular fa-id-card"></i> Perfil</button>
+        <button class="aba-rh" data-aba="matriz" type="button"><i class="fa-solid fa-table-cells-large"></i> Matriz de Habilidades</button>
+      </nav>
+
+      <section class="conteudo-aba ativo" id="abaPerfil">
+        <article class="folha-rh">
+          <header class="titulo-folha"><span>PERFIL DO COLABORADOR</span><small>Dados da aba “Perfil”</small></header>
+
+          <section class="bloco-rh">
+            <h2>IDENTIFICAÇÃO</h2>
+            <div class="identificacao-grid">
+              <div class="foto-colaborador">
+                <div class="foto-placeholder" id="fotoPlaceholder">RH</div>
+                <img id="fotoColaborador" alt="Foto do colaborador" hidden>
+              </div>
+              <div class="dados-identificacao" id="dadosIdentificacao"></div>
+            </div>
+          </section>
+
+          <section class="bloco-rh">
+            <h2>HISTÓRICO NA EMPRESA</h2>
+            <div class="tabela-scroll"><table class="tabela-rh"><thead><tr><th>Data</th><th>Cargo / Evento</th><th>Salário</th><th>Motivo</th><th>Observações</th></tr></thead><tbody id="historicoCorpo"></tbody></table></div>
+          </section>
+
+          <section class="bloco-rh duas-colunas">
+            <div class="caixa-rh">
+              <h3>RESUMO SALARIAL</h3>
+              <table class="tabela-detalhes"><tbody id="resumoSalarial"></tbody></table>
+            </div>
+            <div class="caixa-rh">
+              <h3>MATRIZ DE HABILIDADES</h3>
+              <div class="atingimento">
+                <div class="anel-progresso" id="anelAtingimento"><strong id="nivelAtingimento">0%</strong></div>
+                <div><span>Nível de atingimento</span><p>Resultado registrado no perfil do colaborador.</p></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="bloco-rh">
+            <h2>REGISTRO DE TREINAMENTOS</h2>
+            <div class="tabela-scroll"><table class="tabela-rh"><thead><tr><th>Treinamento</th><th>Categoria</th><th>Conclusão</th><th>Carga</th><th>Validade</th><th>Status</th><th>Certificado</th></tr></thead><tbody id="treinamentosCorpo"></tbody></table></div>
+          </section>
+
+          <section class="bloco-rh duas-colunas">
+            <div class="caixa-rh">
+              <h3>PLANO DE DESENVOLVIMENTO INDIVIDUAL</h3>
+              <div class="tabela-scroll"><table class="tabela-rh compacta"><thead><tr><th>Meta / Competência</th><th>Ação</th><th>Status</th></tr></thead><tbody id="pdiCorpo"></tbody></table></div>
+            </div>
+            <div class="caixa-rh">
+              <h3>REGISTRO DE FEEDBACKS</h3>
+              <div class="tabela-scroll"><table class="tabela-rh compacta"><thead><tr><th>Data</th><th>Feedback</th><th>Tipo</th><th>Dado por</th></tr></thead><tbody id="feedbackCorpo"></tbody></table></div>
+            </div>
+          </section>
+
+          <section class="bloco-rh">
+            <h2>AVALIAÇÃO DE DESEMPENHO</h2>
+            <div class="avaliacao-resumo"><span>Resultado geral</span><strong id="resultadoAvaliacao">—</strong></div>
+            <div class="duas-colunas avaliacao-grids">
+              <div class="caixa-rh"><h3>COMPETÊNCIAS TÉCNICAS</h3><div class="tabela-scroll"><table class="tabela-rh compacta"><thead><tr><th>Competência</th><th>Nota atual</th><th>Próxima nota</th></tr></thead><tbody id="avaliacaoTecnicaCorpo"></tbody></table></div></div>
+              <div class="caixa-rh"><h3>COMPETÊNCIAS COMPORTAMENTAIS</h3><div class="tabela-scroll"><table class="tabela-rh compacta"><thead><tr><th>Competência</th><th>Nota atual</th><th>Próxima nota</th></tr></thead><tbody id="avaliacaoComportamentalCorpo"></tbody></table></div></div>
+            </div>
+          </section>
+        </article>
+      </section>
+
+      <section class="conteudo-aba" id="abaMatriz">
+        <article class="folha-rh">
+          <header class="titulo-folha"><span>MATRIZ DE HABILIDADES</span><small>Dados da aba “Matriz de Habilidades”</small></header>
+          <section class="bloco-rh">
+            <div class="identificacao-matriz"><div><span>Membro do time</span><strong id="matrizNome">—</strong></div><div><span>Cargo / Função</span><strong id="matrizCargo">—</strong></div></div>
+            <div class="cards-matriz">
+              <article><span>Habilidades requeridas</span><strong id="matrizRequeridas">0</strong></article>
+              <article><span>Habilidades nível 3+</span><strong id="matrizCapazes">0</strong></article>
+              <article><span>Gap de habilidades</span><strong id="matrizGap">0</strong></article>
+              <article><span>Nota meta</span><strong id="matrizMeta">0%</strong></article>
+              <article class="destaque"><span>Nota atual</span><strong id="matrizAtual">0%</strong></article>
+            </div>
+            <div class="mensagem-meta" id="mensagemMeta"></div>
+          </section>
+
+          <section class="bloco-rh">
+            <h2>LEGENDA DA COMPETÊNCIA / CAPACIDADE</h2>
+            <div class="legenda-matriz">
+              <div><i class="nivel x">X</i><span>Isento da competência</span></div>
+              <div><i class="nivel n1">1</i><span>Ainda incapaz, mas requerido</span></div>
+              <div><i class="nivel n2">2</i><span>Alguma capacidade, em treinamento</span></div>
+              <div><i class="nivel n3">3</i><span>Capaz, treinamento finalizado</span></div>
+              <div><i class="nivel n4">4</i><span>Especialista, capaz de treinar outros</span></div>
+            </div>
+          </section>
+
+          <section class="bloco-rh">
+            <div class="cabecalho-habilidades"><h2>HABILIDADES DO COLABORADOR</h2><div><input id="pesquisaHabilidade" type="search" placeholder="Pesquisar habilidade"><select id="filtroSituacaoHabilidade"><option value="">Todas as situações</option><option value="evolucao">Em evolução</option><option value="adequado">Adequado</option><option value="avaliar">A avaliar</option><option value="isento">Isento</option></select></div></div>
+            <div class="tabela-scroll"><table class="tabela-rh tabela-habilidades"><thead><tr><th>Habilidade</th><th>Atual</th><th>Objetivo</th><th>Diferença</th><th>Situação</th></tr></thead><tbody id="habilidadesCorpo"></tbody></table></div>
+          </section>
+        </article>
+      </section>
+    </section>
+  </main>
+
+  <div class="carregando-rh" id="carregandoRh" hidden><div><i class="fa-solid fa-spinner fa-spin"></i><span id="textoCarregando">Carregando dados...</span></div></div>
+  <div class="toast" id="toast" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script type="module">
+    import { protegerModulo } from "../../module-guard.js?v=3";
+    try {
+      await protegerModulo("rh");
+      await import("./rh.js?v=1");
+    } catch (erro) {
+      console.warn("Acesso ao módulo de RH interrompido:", erro.message);
+    }
+  </script>
+</body>
+</html>
