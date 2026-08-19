@@ -150,46 +150,10 @@
     "desc_completa": "GRID CANELA",
     "grupo": 39,
     "subgrupo": 41,
-    "qtd_produzir": 400,
+    "qtd_produzir": 4,
     "dt_saida": "2026-07-30",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "7546",
-    "produto": "15370",
-    "desc_completa": "GRID CARAMELO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 400,
-    "dt_saida": "2026-07-30",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "7547",
-    "produto": "15367",
-    "desc_completa": "GRID OFF WHITE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 400,
-    "dt_saida": "2026-07-30",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "7548",
-    "produto": "15373",
-    "desc_completa": "GRID PRETO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 400,
-    "dt_saida": "2026-07-30",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 10,
+    "abreviacao": "REV 1"
   },
   {
     "fonte_comercial": "STK",
@@ -212,20 +176,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-08-03",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "7621",
-    "produto": "11845",
-    "desc_completa": "BORGONHA OURO LIGHT",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 2000,
-    "dt_saida": "2026-08-06",
-    "centro_custo": 1,
-    "abreviacao": "RECOB"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -258,22 +210,10 @@
     "desc_completa": "MIRAGE OURO LIGHT",
     "grupo": 39,
     "subgrupo": 41,
-    "qtd_produzir": 400,
+    "qtd_produzir": 213,
     "dt_saida": "2026-08-06",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "7627",
-    "produto": "16605",
-    "desc_completa": "NAPA FLOATER VENEZIA DOURADO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 1000,
-    "dt_saida": "2026-08-06",
-    "centro_custo": 1,
-    "abreviacao": "RECOB"
+    "centro_custo": 10,
+    "abreviacao": "REV 1"
   },
   {
     "fonte_comercial": "STK",
@@ -289,6 +229,18 @@
   },
   {
     "fonte_comercial": "STK",
+    "nro_op": "7687",
+    "produto": "17420",
+    "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 1000,
+    "dt_saida": "2026-08-12",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
     "nro_op": "7688",
     "produto": "11844",
     "desc_completa": "BORGONHA PRATA",
@@ -296,8 +248,8 @@
     "subgrupo": 0,
     "qtd_produzir": 500,
     "dt_saida": "2026-08-12",
-    "centro_custo": 39,
-    "abreviacao": "MISTURA 1"
+    "centro_custo": 1,
+    "abreviacao": "RECOB"
   },
   {
     "fonte_comercial": "STK",
@@ -320,8 +272,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-08-12",
-    "centro_custo": 1,
-    "abreviacao": "RECOB"
+    "centro_custo": 3,
+    "abreviacao": "GR 1"
   },
   {
     "fonte_comercial": "STK",
@@ -332,8 +284,8 @@
     "subgrupo": 41,
     "qtd_produzir": 500,
     "dt_saida": "2026-08-13",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -344,8 +296,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-08-19",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -356,8 +308,20 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-08-19",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "7809",
+    "produto": "16466",
+    "desc_completa": "SAVOY GLAM OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 1000,
+    "dt_saida": "2026-08-19",
+    "centro_custo": 0,
+    "abreviacao": ""
   },
   {
     "fonte_comercial": "STK",
@@ -368,8 +332,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-08-19",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -394,5 +358,89 @@
     "dt_saida": "2026-08-19",
     "centro_custo": 13,
     "abreviacao": "JUMBO 1"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "7834",
+    "produto": "11845",
+    "desc_completa": "BORGONHA OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 1000,
+    "dt_saida": "2026-08-21",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "7837",
+    "produto": "11907",
+    "desc_completa": "NAPA MADRID CASTOR - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "qtd_produzir": 400,
+    "dt_saida": "2026-08-19",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "7837",
+    "produto": "9000134",
+    "desc_completa": "BERGAMO CARAMELO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 400,
+    "dt_saida": "2026-08-19",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "7871",
+    "produto": "12550",
+    "desc_completa": "LILLY NUDE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-08-19",
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "7889",
+    "produto": "30096",
+    "desc_completa": "BORGONHA BROWN",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 400,
+    "dt_saida": "2026-08-21",
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "7891",
+    "produto": "11903",
+    "desc_completa": "NAPA MADRID BEGE - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "qtd_produzir": 400,
+    "dt_saida": "2026-08-24",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "7895",
+    "produto": "11903",
+    "desc_completa": "NAPA MADRID BEGE - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "qtd_produzir": 320,
+    "dt_saida": "2026-08-18",
+    "centro_custo": 0,
+    "abreviacao": ""
   }
 ]
