@@ -230,6 +230,8 @@ async function importarArquivos(evento) {
 
   mostrarCarregamento(`Preparando ${arquivos.length} planilha(s)...`);
   let importados = 0;
+  let fotosImportadas = 0;
+  let fotosNaoLocalizadas = 0;
   const falhas = [];
 
   try {
@@ -241,9 +243,19 @@ async function importarArquivos(evento) {
       try {
         const colaborador = await processarPlanilha(arquivo);
         const id = criarIdColaborador(colaborador);
+        const dadosColaborador = limparObjeto(colaborador);
+
+        // Uma falha pontual na leitura da imagem não deve apagar uma foto
+        // que já esteja salva no cadastro do colaborador.
+        if (dadosColaborador.foto) {
+          fotosImportadas += 1;
+        } else {
+          delete dadosColaborador.foto;
+          fotosNaoLocalizadas += 1;
+        }
 
         await setDoc(doc(db, "rh_colaboradores", id), {
-          ...limparObjeto(colaborador),
+          ...dadosColaborador,
           atualizadoEm: serverTimestamp(),
           atualizadoPor: usuario.uid || "",
           origemArquivo: arquivo.name
@@ -257,8 +269,15 @@ async function importarArquivos(evento) {
     }
 
     if (importados) {
-      mostrarToast(`${importados} colaborador(es) atualizado(s) com sucesso.`);
+      const resumoFotos = fotosImportadas
+        ? ` ${fotosImportadas} foto(s) carregada(s).`
+        : "";
+      mostrarToast(`${importados} colaborador(es) atualizado(s) com sucesso.${resumoFotos}`);
       await carregarColaboradores();
+    }
+
+    if (fotosNaoLocalizadas && !falhas.length) {
+      console.warn(`${fotosNaoLocalizadas} planilha(s) não possuíam uma foto compatível incorporada.`);
     }
 
     if (falhas.length) {
@@ -272,7 +291,14 @@ async function importarArquivos(evento) {
 
 async function processarPlanilha(arquivo) {
   const buffer = await arquivo.arrayBuffer();
-  const workbook = window.XLSX.read(buffer, { type: "array", cellDates: true });
+
+  // Cada biblioteca recebe sua própria cópia. Isso evita que a leitura do
+  // Excel altere o buffer antes de o JSZip procurar a foto incorporada.
+  const bufferPlanilha = buffer.slice(0);
+  const bufferImagem = buffer.slice(0);
+  const fotoPromessa = extrairFoto(bufferImagem);
+
+  const workbook = window.XLSX.read(bufferPlanilha, { type: "array", cellDates: true });
   const nomePerfil = workbook.SheetNames.find(nome => normalizarTexto(nome).includes("perfil"));
   const nomeMatriz = workbook.SheetNames.find(nome => normalizarTexto(nome).includes("matriz de habilidades"));
 
@@ -312,7 +338,7 @@ async function processarPlanilha(arquivo) {
     situacao: texto(valorAoLado(perfil, "Situação")),
     cpf: texto(valorAoLado(perfil, "CPF")),
     telefone: texto(valorAoLado(perfil, "Telefone")),
-    foto: await extrairFoto(buffer),
+    foto: await fotoPromessa,
     historico: extrairHistorico(perfil),
     remuneracao: {
       salario: valorAoLadoAposSecao(perfil, "Resumo Salarial", "Salário"),
@@ -333,14 +359,31 @@ async function extrairFoto(buffer) {
   try {
     const zip = await window.JSZip.loadAsync(buffer);
     const imagens = Object.values(zip.files)
-      .filter(item => !item.dir && /^xl\/media\/.*\.(png|jpe?g|webp)$/i.test(item.name))
+      .filter(item => !item.dir && /^xl\/media\/.*\.(png|jpe?g|webp|gif|bmp)$/i.test(item.name))
       .sort((a, b) => a.name.localeCompare(b.name));
 
     if (!imagens.length) return "";
     const imagem = imagens[0];
     const extensao = imagem.name.split(".").pop().toLowerCase();
-    const mime = extensao === "png" ? "image/png" : extensao === "webp" ? "image/webp" : "image/jpeg";
-    const original = `data:${mime};base64,${await imagem.async("base64")}`;
+    const tipos = {
+      png: "image/png",
+      webp: "image/webp",
+      gif: "image/gif",
+      bmp: "image/bmp",
+      jpg: "image/jpeg",
+      jpeg: "image/jpeg"
+    };
+    const mime = tipos[extensao] || "image/jpeg";
+    const conteudo = await imagem.async("base64");
+
+    if (!conteudo) return "";
+
+    const original = `data:${mime};base64,${conteudo}`;
+
+    // Fotos pequenas, como a do modelo aprovado, são gravadas diretamente.
+    // Assim a importação não depende do canvas do navegador.
+    if (original.length <= 600000) return original;
+
     return await otimizarFoto(original);
   } catch (erro) {
     console.warn("A foto não pôde ser extraída da planilha:", erro);
@@ -350,11 +393,21 @@ async function extrairFoto(buffer) {
 
 function otimizarFoto(dataUrl) {
   return new Promise(resolve => {
+    let finalizado = false;
+    const concluir = valor => {
+      if (finalizado) return;
+      finalizado = true;
+      clearTimeout(limiteEspera);
+      resolve(valor);
+    };
+
+    const alternativa = dataUrl.length <= 900000 ? dataUrl : "";
+    const limiteEspera = setTimeout(() => concluir(alternativa), 8000);
     const imagem = new Image();
     imagem.onload = () => {
       try {
-        const limiteLargura = 500;
-        const limiteAltura = 650;
+        const limiteLargura = 420;
+        const limiteAltura = 560;
         const escala = Math.min(1, limiteLargura / imagem.width, limiteAltura / imagem.height);
         const largura = Math.max(1, Math.round(imagem.width * escala));
         const altura = Math.max(1, Math.round(imagem.height * escala));
@@ -365,13 +418,13 @@ function otimizarFoto(dataUrl) {
         contexto.fillStyle = "#ffffff";
         contexto.fillRect(0, 0, largura, altura);
         contexto.drawImage(imagem, 0, 0, largura, altura);
-        resolve(canvas.toDataURL("image/jpeg", .82));
+        concluir(canvas.toDataURL("image/jpeg", .78));
       } catch (erro) {
         console.warn("A foto não pôde ser otimizada:", erro);
-        resolve(dataUrl.length <= 700000 ? dataUrl : "");
+        concluir(alternativa);
       }
     };
-    imagem.onerror = () => resolve(dataUrl.length <= 700000 ? dataUrl : "");
+    imagem.onerror = () => concluir(alternativa);
     imagem.src = dataUrl;
   });
 }
