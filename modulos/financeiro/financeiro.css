@@ -350,7 +350,7 @@ button {
 
 .grade-kpis {
     display: grid;
-    grid-template-columns: repeat(5, minmax(190px, 1fr));
+    grid-template-columns: repeat(6, minmax(175px, 1fr));
     gap: 14px;
     margin-top: 16px;
 }
@@ -387,6 +387,22 @@ button {
 .card-kpi:hover {
     transform: translateY(-3px);
     border-color: rgba(22, 131, 255, 0.45);
+}
+
+.card-kpi-filtro {
+    cursor: pointer;
+}
+
+.card-kpi-filtro:focus-visible {
+    outline: 3px solid rgba(82, 163, 255, 0.6);
+    outline-offset: 3px;
+}
+
+.card-kpi-filtro.ativo {
+    border-color: rgba(82, 163, 255, 0.82);
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.2),
+        0 0 0 2px rgba(82, 163, 255, 0.14);
 }
 
 .card-kpi::after {
@@ -471,8 +487,20 @@ button {
     color: #ff564d;
 }
 
+.kpi-acao {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    margin-top: 9px;
+
+    color: #78b9ff;
+    font-size: 9px;
+    font-weight: 700;
+}
+
 .kpi-recebido .kpi-icone,
-.kpi-pago .kpi-icone {
+.kpi-saidas .kpi-icone {
     background:
         linear-gradient(
             135deg,
@@ -499,6 +527,15 @@ button {
         );
 }
 
+.kpi-pagar .kpi-icone {
+    background:
+        linear-gradient(
+            135deg,
+            #ffbc42,
+            #d47b09
+        );
+}
+
 .kpi-ticket .kpi-icone {
     background:
         linear-gradient(
@@ -509,7 +546,7 @@ button {
 }
 
 .kpi-recebido .kpi-valor,
-.kpi-pago .kpi-valor {
+.kpi-saidas .kpi-valor {
     color: #26e578;
 }
 
@@ -519,6 +556,10 @@ button {
 
 .kpi-atraso .kpi-valor {
     color: #ff554d;
+}
+
+.kpi-pagar .kpi-valor {
+    color: #ffc55c;
 }
 
 .kpi-ticket .kpi-valor {

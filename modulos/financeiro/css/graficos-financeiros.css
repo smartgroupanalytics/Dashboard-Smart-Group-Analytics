@@ -49,10 +49,9 @@ Gráficos Financeiros
 
 .grade-graficos-terciaria {
     grid-template-columns:
-        minmax(330px, 1.35fr)
         minmax(185px, 0.55fr)
         minmax(185px, 0.55fr)
-        minmax(330px, 1.1fr);
+        minmax(360px, 1.4fr);
 
     align-items: stretch;
 }
@@ -103,6 +102,37 @@ Gráficos Financeiros
     color: var(--cor-texto-secundario);
     font-size: 10px;
     line-height: 1.45;
+}
+
+.controle-ranking {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    flex-shrink: 0;
+
+    color: #91abc9;
+    font-size: 9px;
+    font-weight: 700;
+}
+
+.controle-ranking select {
+    min-width: 82px;
+    height: 32px;
+    padding: 0 27px 0 10px;
+
+    color: #e6f2ff;
+    background: #071d39;
+    border: 1px solid rgba(82, 163, 255, 0.38);
+    border-radius: 8px;
+    outline: none;
+
+    font: inherit;
+    cursor: pointer;
+}
+
+.controle-ranking select:focus-visible {
+    border-color: #52a3ff;
+    box-shadow: 0 0 0 3px rgba(82, 163, 255, 0.15);
 }
 
 .grafico-container {
@@ -171,7 +201,7 @@ Gráficos Financeiros
     font-weight: 900;
 }
 
-.grade-graficos-terciaria .card-resumo:nth-child(3)::after {
+.card-resumo-inadimplencia::after {
     content: "\f071";
 
     background: rgba(255, 77, 77, 0.13);
@@ -196,7 +226,7 @@ Gráficos Financeiros
     letter-spacing: -0.03em;
 }
 
-.grade-graficos-terciaria .card-resumo:nth-child(3) strong {
+.card-resumo-inadimplencia strong {
     color: #ff665c;
 }
 
@@ -223,6 +253,10 @@ Gráficos Financeiros
         grid-template-columns:
             repeat(2, minmax(0, 1fr));
     }
+
+    .grade-graficos-terciaria > .card-grafico {
+        grid-column: 1 / -1;
+    }
 }
 
 @media (max-width: 900px) {
@@ -230,6 +264,10 @@ Gráficos Financeiros
     .grade-graficos-secundaria,
     .grade-graficos-terciaria {
         grid-template-columns: 1fr;
+    }
+
+    .grade-graficos-terciaria > .card-grafico {
+        grid-column: auto;
     }
 
     .periodo-dashboard {
@@ -249,5 +287,9 @@ Gráficos Financeiros
 
     .card-grafico {
         padding: 13px;
+    }
+
+    .card-grafico-header {
+        flex-direction: column;
     }
 }

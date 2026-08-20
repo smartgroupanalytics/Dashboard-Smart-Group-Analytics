@@ -30,10 +30,9 @@ function renderizarGraficos(dados) {
 
     renderizarFluxoCaixa(clientesPagos, fornecedoresPagos);
     renderizarRecebimentosDia(clientesPagos);
-    renderizarTopClientes(clientes);
+    renderizarTopClientes(clientesPagos);
     renderizarRecebimentosBanco(clientesPagos);
     renderizarPlanoFinanceiro(clientesPagos);
-    renderizarRepresentantes(clientesPagos);
 
     renderizarSituacaoReceber(clientes);
 }
@@ -190,67 +189,47 @@ function renderizarRecebimentosDia(recebimentos) {
 
 
 /* ======================================================
-   TOP 10 CLIENTES POR VENDAS
-   Usa Vlr.docto de todos os registros de clientes.
+   CLIENTES POR PAGAMENTOS
+   Usa somente Vlr.líq.pago dos títulos recebidos.
    ====================================================== */
 
-function renderizarTopClientes(clientes) {
+function renderizarTopClientes(clientesPagos) {
+    const limitesPermitidos = [5, 10, 15, 20];
+    const limiteSelecionado = Number(
+        document.getElementById("limiteTopClientes")?.value || 10
+    );
+    const limite = limitesPermitidos.includes(limiteSelecionado)
+        ? limiteSelecionado
+        : 10;
     const mapa = new Map();
 
-    clientes.forEach((item) => {
-        const cliente =
-            item.razaoSocial ||
-            item.nomeFantasia ||
-            "Não informado";
+    clientesPagos
+        .filter((item) => item.pago)
+        .forEach((item) => {
+            const cliente =
+                item.razaoSocial ||
+                item.nomeFantasia ||
+                "Não informado";
 
-        /*
-         * O ranking representa venda, não recebimento.
-         * Por isso usamos valorDocumento (Vlr.docto).
-         */
-        const valorVendido =
-            Number(item.valorDocumento || 0) > 0
-                ? Number(item.valorDocumento || 0)
-                : Number(item.valorLiquidoPago || 0);
+            const valorPago = Number(item.valorLiquidoPago || 0);
 
-        if (!mapa.has(cliente)) {
-            mapa.set(cliente, {
-                cliente,
-                totalVendido: 0,
-                quantidadeTitulos: 0,
-                valorRecebido: 0,
-                valorEmAberto: 0
-            });
-        }
+            if (!mapa.has(cliente)) {
+                mapa.set(cliente, {
+                    cliente,
+                    totalPago: 0,
+                    quantidadePagamentos: 0
+                });
+            }
 
-        const resumo =
-            mapa.get(cliente);
+            const resumo = mapa.get(cliente);
+            resumo.totalPago += valorPago;
+            resumo.quantidadePagamentos += 1;
+        });
 
-        resumo.totalVendido +=
-            valorVendido;
-
-        resumo.quantidadeTitulos += 1;
-
-        if (item.pago) {
-            resumo.valorRecebido +=
-                Number(
-                    item.valorLiquidoPago ||
-                    valorVendido ||
-                    0
-                );
-        } else {
-            resumo.valorEmAberto +=
-                Number(
-                    item.valorDocumento ||
-                    valorVendido ||
-                    0
-                );
-        }
-    });
-
-    const totalGeralVendido =
+    const totalGeralPago =
         [...mapa.values()].reduce(
             (total, item) =>
-                total + item.totalVendido,
+                total + item.totalPago,
             0
         );
 
@@ -260,21 +239,41 @@ function renderizarTopClientes(clientes) {
                 ...item,
 
                 participacao:
-                    totalGeralVendido > 0
+                    totalGeralPago > 0
                         ? (
-                            item.totalVendido /
-                            totalGeralVendido *
+                            item.totalPago /
+                            totalGeralPago *
                             100
                         )
                         : 0
             }))
             .sort(
                 (a, b) =>
-                    b.totalVendido -
-                    a.totalVendido
+                    b.totalPago -
+                    a.totalPago
             )
-            .slice(0, 10)
+            .slice(0, limite)
             .reverse();
+
+    preencherTexto(
+        "tituloTopClientes",
+        `Top ${limite} Clientes por Pagamentos`
+    );
+
+    const container = document
+        .getElementById("graficoTopClientes")
+        ?.closest(".grafico-container");
+
+    if (container) {
+        container.style.height = `${Math.max(
+            255,
+            Math.min(380, 120 + limite * 13)
+        )}px`;
+    }
+
+    if (typeof Chart === "undefined") {
+        return;
+    }
 
     const opcoes =
         opcoesGraficoHorizontal();
@@ -317,23 +316,15 @@ function renderizarTopClientes(clientes) {
                 }
 
                 return [
-                    `Total vendido: ${formatarMoeda(
-                        dados.totalVendido
+                    `Total pago: ${formatarMoeda(
+                        dados.totalPago
                     )}`,
 
-                    `Quantidade de títulos: ${
-                        dados.quantidadeTitulos
+                    `Quantidade de pagamentos: ${
+                        dados.quantidadePagamentos
                     }`,
 
-                    `Valor recebido: ${formatarMoeda(
-                        dados.valorRecebido
-                    )}`,
-
-                    `Valor em aberto: ${formatarMoeda(
-                        dados.valorEmAberto
-                    )}`,
-
-                    `Participação nas vendas: ${
+                    `Participação nos pagamentos: ${
                         dados.participacao.toLocaleString(
                             "pt-BR",
                             {
@@ -365,11 +356,11 @@ function renderizarTopClientes(clientes) {
                 datasets: [
                     {
                         label:
-                            "Valor total vendido",
+                            "Valor total pago",
 
                         data: ranking.map(
                             (item) =>
-                                item.totalVendido
+                                item.totalPago
                         ),
 
                         metricas:
@@ -630,130 +621,155 @@ function renderizarSituacaoReceber(clientes) {
 
 
 /* ======================================================
-   TABELA DE CONTAS EM ATRASO
+   DETALHES DOS INDICADORES FINANCEIROS
    ====================================================== */
 
-function renderizarTabelaAtrasos(dados) {
-    const corpo =
-        document.getElementById(
-            "corpoTabelaAtrasos"
-        );
-
-    const contador =
-        document.getElementById(
-            "contadorAtrasos"
-        );
+function renderizarDetalhesIndicadorFinanceiro(dados) {
+    const corpo = document.getElementById("corpoTabelaDetalhesKpi");
+    const contador = document.getElementById("contadorDetalhesKpi");
 
     if (!corpo) {
         return;
     }
 
-    const hoje =
-        inicioDoDia(new Date());
+    const configuracoes = {
+        entradas: {
+            titulo: "Detalhes do Total de Entradas",
+            descricao: "Recebimentos de clientes que formam o indicador selecionado",
+            vazio: "Nenhuma entrada encontrada no período selecionado.",
+            filtrar: (item) => item.tipoCadastro === "cliente" && item.pago,
+            campoValor: "valorLiquidoPago",
+            dataOrdenacao: (item) => item.dataPagamento,
+            ordem: "desc"
+        },
+        receber: {
+            titulo: "Detalhes de A Receber",
+            descricao: "Títulos de clientes ainda não pagos, vencidos ou a vencer",
+            vazio: "Nenhum título a receber encontrado no período selecionado.",
+            filtrar: (item) => item.tipoCadastro === "cliente" && !item.pago,
+            campoValor: "valorDocumento",
+            dataOrdenacao: (item) => item.vencimento,
+            ordem: "asc"
+        },
+        inadimplencia: {
+            titulo: "Detalhes da Inadimplência",
+            descricao: "Clientes com títulos vencidos e sem pagamento",
+            vazio: "Nenhum título inadimplente no período selecionado.",
+            filtrar: (item) => item.tipoCadastro === "cliente" && item.atrasado,
+            campoValor: "valorDocumento",
+            dataOrdenacao: (item) => item.vencimento,
+            ordem: "asc"
+        },
+        saidas: {
+            titulo: "Detalhes do Total de Saídas",
+            descricao: "Pagamentos realizados a fornecedores no período selecionado",
+            vazio: "Nenhuma saída encontrada no período selecionado.",
+            filtrar: (item) => item.tipoCadastro === "fornecedor" && item.pago,
+            campoValor: "valorLiquidoPago",
+            dataOrdenacao: (item) => item.dataPagamento,
+            ordem: "desc"
+        },
+        pagar: {
+            titulo: "Detalhes de A Pagar",
+            descricao: "Títulos de fornecedores ainda não pagos, vencidos ou a vencer",
+            vazio: "Nenhum título a pagar encontrado no período selecionado.",
+            filtrar: (item) => item.tipoCadastro === "fornecedor" && !item.pago,
+            campoValor: "valorDocumento",
+            dataOrdenacao: (item) => item.vencimento,
+            ordem: "asc"
+        }
+    };
 
-    const atrasados = dados
-        .filter(
-            (item) =>
-                item.tipoCadastro === "cliente" &&
-                item.atrasado
-        )
-        .sort(
-            (a, b) =>
-                a.vencimento - b.vencimento
-        );
+    const tipoAtivo = typeof detalheKpiAtivo === "string"
+        ? detalheKpiAtivo
+        : "inadimplencia";
+    const configuracao = configuracoes[tipoAtivo] || configuracoes.inadimplencia;
+    const registros = dados
+        .filter(configuracao.filtrar)
+        .sort((a, b) => {
+            const semData = configuracao.ordem === "desc"
+                ? 0
+                : Number.MAX_SAFE_INTEGER;
+            const dataA = configuracao.dataOrdenacao(a)?.getTime() || semData;
+            const dataB = configuracao.dataOrdenacao(b)?.getTime() || semData;
+            return configuracao.ordem === "desc"
+                ? dataB - dataA
+                : dataA - dataB;
+        });
+
+    preencherTexto("tituloDetalhesKpi", configuracao.titulo);
+    preencherTexto("descricaoDetalhesKpi", configuracao.descricao);
 
     if (contador) {
-        contador.textContent =
-            String(atrasados.length);
+        contador.textContent = String(registros.length);
     }
 
-    if (!atrasados.length) {
+    if (!registros.length) {
         corpo.innerHTML = `
             <tr>
-                <td
-                    colspan="7"
-                    class="tabela-vazia"
-                >
-                    Nenhuma conta em atraso no período selecionado.
+                <td colspan="12" class="tabela-vazia">
+                    ${escaparHtml(configuracao.vazio)}
                 </td>
             </tr>
         `;
-
         return;
     }
 
-    corpo.innerHTML =
-        atrasados
-            .slice(0, 15)
-            .map((item) => {
-                const dias =
-                    Math.max(
-                        0,
-                        Math.floor(
-                            (
-                                hoje -
-                                inicioDoDia(
-                                    item.vencimento
-                                )
-                            ) /
-                            86400000
-                        )
-                    );
+    const hoje = inicioDoDia(new Date());
 
-                return `
-                    <tr>
-                        <td
-                            title="${escaparHtml(item.razaoSocial)}"
-                        >
-                            ${escaparHtml(
-                                abreviarTexto(
-                                    item.razaoSocial,
-                                    38
-                                )
-                            )}
-                        </td>
+    corpo.innerHTML = registros.map((item) => {
+        const nomePessoa = item.razaoSocial || item.nomeFantasia || "Não informado";
+        const situacao = item.pago
+            ? "Pago"
+            : item.atrasado
+                ? "Vencido"
+                : "Em aberto";
+        const classeSituacao = item.pago
+            ? "pago"
+            : item.atrasado
+                ? "atrasado"
+                : "aberto";
+        const diasAtraso = item.atrasado && item.vencimento
+            ? Math.max(
+                0,
+                Math.floor((hoje - inicioDoDia(item.vencimento)) / 86400000)
+            )
+            : null;
+        const banco = normalizarTexto(item.banco) === "nao informado"
+            ? "-"
+            : nomeBancoAmigavel(item.banco);
 
-                        <td>
-                            ${escaparHtml(
-                                item.documento || "-"
-                            )}
-                        </td>
-
-                        <td>
-                            ${formatarDataBR(
-                                item.vencimento
-                            )}
-                        </td>
-
-                        <td>
-                            <span class="dias-atraso">
-                                ${dias}
-                            </span>
-                        </td>
-
-                        <td class="valor-financeiro">
-                            ${formatarMoeda(
-                                item.valorDocumento
-                            )}
-                        </td>
-
-                        <td class="banco-tabela">
-                            ${escaparHtml(
-                                nomeBancoAmigavel(
-                                    item.banco
-                                )
-                            )}
-                        </td>
-
-                        <td class="representante-tabela">
-                            ${escaparHtml(
-                                item.representante
-                            )}
-                        </td>
-                    </tr>
-                `;
-            })
-            .join("");
+        return `
+            <tr>
+                <td title="${escaparHtml(nomePessoa)}">
+                    ${escaparHtml(abreviarTexto(nomePessoa, 38))}
+                </td>
+                <td>${item.tipoCadastro === "cliente" ? "Cliente" : "Fornecedor"}</td>
+                <td>${escaparHtml(item.documento || "-")}</td>
+                <td>${formatarDataBR(item.dataMovimento)}</td>
+                <td>${formatarDataBR(item.vencimento)}</td>
+                <td>${formatarDataBR(item.dataPagamento)}</td>
+                <td>
+                    <span class="status-detalhe ${classeSituacao}">
+                        ${situacao}
+                    </span>
+                </td>
+                <td>
+                    ${diasAtraso === null
+                        ? "-"
+                        : `<span class="dias-atraso">${diasAtraso}</span>`}
+                </td>
+                <td class="valor-financeiro">
+                    ${formatarMoeda(item[configuracao.campoValor])}
+                </td>
+                <td class="banco-tabela">${escaparHtml(banco)}</td>
+                <td>${escaparHtml(item.planoFinanceiro || "-")}</td>
+                <td class="representante-tabela">
+                    ${escaparHtml(item.representante || "-")}
+                </td>
+            </tr>
+        `;
+    }).join("");
 }
 
 

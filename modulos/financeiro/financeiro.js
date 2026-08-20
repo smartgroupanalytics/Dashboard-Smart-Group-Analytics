@@ -7,6 +7,7 @@
 let bancosFinanceiros = [];
 let lancamentosFinanceiros = [];
 let lancamentosFiltrados = [];
+let detalheKpiAtivo = "inadimplencia";
 const graficosFinanceiros = {};
 
 document.addEventListener("DOMContentLoaded", iniciarModuloFinanceiro);
@@ -17,10 +18,68 @@ function iniciarModuloFinanceiro() {
     configurarPainelBanco();
     configurarExportacao();
     configurarImportacaoPlanilha();
+    configurarDetalhesKPIs();
+    configurarLimiteTopClientes();
     atualizarDataHora();
     carregarIndicadoresDemonstrativos();
     renderizarBancos();
     preencherFiltroBancos();
+}
+
+function configurarDetalhesKPIs() {
+    const cartoes = document.querySelectorAll("[data-detalhe-kpi]");
+
+    const abrirDetalhes = (cartao) => {
+        detalheKpiAtivo = cartao.dataset.detalheKpi || "inadimplencia";
+
+        cartoes.forEach((item) => {
+            const ativo = item === cartao;
+            item.classList.toggle("ativo", ativo);
+            item.setAttribute("aria-pressed", String(ativo));
+        });
+
+        renderizarDetalhesIndicadorFinanceiro(lancamentosFiltrados);
+
+        document.getElementById("detalhesIndicadorFinanceiro")
+            ?.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+
+    cartoes.forEach((cartao) => {
+        cartao.addEventListener("click", () => abrirDetalhes(cartao));
+        cartao.addEventListener("keydown", (evento) => {
+            if (evento.key !== "Enter" && evento.key !== " ") {
+                return;
+            }
+
+            evento.preventDefault();
+            abrirDetalhes(cartao);
+        });
+    });
+
+    const inicial = document.querySelector(
+        `[data-detalhe-kpi="${detalheKpiAtivo}"]`
+    );
+
+    if (inicial) {
+        inicial.classList.add("ativo");
+        inicial.setAttribute("aria-pressed", "true");
+    }
+}
+
+function configurarLimiteTopClientes() {
+    const seletor = document.getElementById("limiteTopClientes");
+
+    if (!seletor) {
+        return;
+    }
+
+    seletor.addEventListener("change", () => {
+        const clientesPagos = lancamentosFiltrados.filter(
+            (item) => item.tipoCadastro === "cliente" && item.pago
+        );
+
+        renderizarTopClientes(clientesPagos);
+    });
 }
 
 function configurarAbas() {

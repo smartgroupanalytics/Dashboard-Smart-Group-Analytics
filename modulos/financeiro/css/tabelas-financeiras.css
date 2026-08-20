@@ -8,6 +8,7 @@ Tabelas Financeiras
 .card-tabela-atrasos {
     margin-top: 18px;
     overflow: hidden;
+    scroll-margin-top: 18px;
 
     background:
         linear-gradient(
@@ -49,9 +50,7 @@ Tabelas Financeiras
     font-weight: 700;
 }
 
-.card-tabela-atrasos .card-grafico-header h3::before {
-    content: "\f071";
-
+.card-tabela-atrasos .card-grafico-header h3 > i {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -59,14 +58,12 @@ Tabelas Financeiras
     width: 34px;
     height: 34px;
 
-    background: rgba(255, 91, 82, 0.14);
-    border: 1px solid rgba(255, 91, 82, 0.24);
+    background: rgba(82, 163, 255, 0.14);
+    border: 1px solid rgba(82, 163, 255, 0.28);
     border-radius: 10px;
 
-    color: #ff6860;
-    font-family: "Font Awesome 6 Free";
+    color: #72b8ff;
     font-size: 14px;
-    font-weight: 900;
 }
 
 .card-tabela-atrasos .card-grafico-header p {
@@ -86,23 +83,24 @@ Tabelas Financeiras
     height: 30px;
     padding: 0 12px;
 
-    background: rgba(255, 81, 73, 0.16);
-    border: 1px solid rgba(255, 102, 94, 0.32);
+    background: rgba(82, 163, 255, 0.16);
+    border: 1px solid rgba(82, 163, 255, 0.32);
     border-radius: 999px;
 
-    color: #ff827c;
+    color: #8ac5ff;
     font-size: 11px;
     font-weight: 800;
 }
 
 .tabela-responsiva {
     width: 100%;
-    overflow-x: auto;
+    max-height: 540px;
+    overflow: auto;
 }
 
 .tabela-atrasos {
     width: 100%;
-    min-width: 930px;
+    min-width: 1480px;
 
     border-collapse: separate;
     border-spacing: 0;
@@ -115,8 +113,13 @@ Tabelas Financeiras
 }
 
 .tabela-atrasos th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+
     padding: 12px 15px;
 
+    background: #071d39;
     border-bottom: 1px solid rgba(113, 170, 225, 0.16);
 
     color: #8eabc9;
@@ -161,13 +164,15 @@ Tabelas Financeiras
     font-weight: 650;
 }
 
-.tabela-atrasos th:nth-child(4),
-.tabela-atrasos td:nth-child(4) {
+.tabela-atrasos th:nth-child(7),
+.tabela-atrasos td:nth-child(7),
+.tabela-atrasos th:nth-child(8),
+.tabela-atrasos td:nth-child(8) {
     text-align: center;
 }
 
-.tabela-atrasos th:nth-child(5),
-.tabela-atrasos td:nth-child(5) {
+.tabela-atrasos th:nth-child(9),
+.tabela-atrasos td:nth-child(9) {
     text-align: right;
 }
 
@@ -201,6 +206,39 @@ Tabelas Financeiras
     color: #ff7770;
     font-size: 10px;
     font-weight: 800;
+}
+
+.status-detalhe {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 68px;
+    height: 25px;
+    padding: 0 9px;
+
+    border-radius: 999px;
+
+    font-size: 9px;
+    font-weight: 800;
+}
+
+.status-detalhe.pago {
+    color: #72e6ad;
+    background: rgba(39, 209, 127, 0.13);
+    border: 1px solid rgba(39, 209, 127, 0.24);
+}
+
+.status-detalhe.aberto {
+    color: #72b8ff;
+    background: rgba(82, 163, 255, 0.13);
+    border: 1px solid rgba(82, 163, 255, 0.24);
+}
+
+.status-detalhe.atrasado {
+    color: #ff827c;
+    background: rgba(255, 84, 76, 0.13);
+    border: 1px solid rgba(255, 84, 76, 0.24);
 }
 
 .tabela-vazia {

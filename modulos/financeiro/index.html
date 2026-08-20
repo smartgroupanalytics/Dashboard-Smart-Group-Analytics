@@ -17,11 +17,11 @@
 
     <link
         rel="stylesheet"
-        href="financeiro.css?v=24"
+        href="financeiro.css?v=25"
     >
-    <link rel="stylesheet" href="css/graficos-financeiros.css?v=12">
+    <link rel="stylesheet" href="css/graficos-financeiros.css?v=13">
     <link rel="stylesheet" href="css/bancos-financeiros.css?v=12">
-    <link rel="stylesheet" href="css/tabelas-financeiras.css?v=12">
+    <link rel="stylesheet" href="css/tabelas-financeiras.css?v=13">
     <link rel="stylesheet" href="css/contas-receber.css?v=20">
     <link rel="stylesheet" href="css/contas-pagar.css?v=21">
     <link rel="stylesheet" href="css/fluxo-caixa.css?v=22">
@@ -183,50 +183,104 @@
                 </div>
 
                 <section class="grade-kpis" aria-label="Indicadores financeiros">
-                    <article class="card-kpi kpi-recebido">
+                    <article
+                        class="card-kpi card-kpi-filtro kpi-recebido"
+                        data-detalhe-kpi="entradas"
+                        role="button"
+                        tabindex="0"
+                        aria-controls="detalhesIndicadorFinanceiro"
+                        aria-pressed="false"
+                        aria-label="Exibir lançamentos do Total de Entradas"
+                    >
                         <div class="kpi-icone"><i class="fa-solid fa-dollar-sign"></i></div>
                         <div class="kpi-conteudo">
-                            <span class="kpi-titulo">Total Recebido</span>
+                            <span class="kpi-titulo">Total de Entradas</span>
                             <strong class="kpi-valor" id="kpiTotalRecebido">R$ 0,00</strong>
-                            <span class="kpi-legenda" id="legendaTotalRecebido">Clientes pagos</span>
+                            <span class="kpi-legenda" id="legendaTotalRecebido">Recebimentos de clientes</span>
+                            <span class="kpi-acao"><i class="fa-solid fa-list-ul"></i> Ver lançamentos</span>
                         </div>
                     </article>
 
-                    <article class="card-kpi kpi-receber">
+                    <article
+                        class="card-kpi card-kpi-filtro kpi-receber"
+                        data-detalhe-kpi="receber"
+                        role="button"
+                        tabindex="0"
+                        aria-controls="detalhesIndicadorFinanceiro"
+                        aria-pressed="false"
+                        aria-label="Exibir lançamentos a receber"
+                    >
                         <div class="kpi-icone"><i class="fa-solid fa-calendar-days"></i></div>
                         <div class="kpi-conteudo">
                             <span class="kpi-titulo">A Receber</span>
                             <strong class="kpi-valor" id="kpiAReceber">R$ 0,00</strong>
                             <span class="kpi-legenda" id="legendaAReceber">Títulos de clientes em aberto</span>
+                            <span class="kpi-acao"><i class="fa-solid fa-list-ul"></i> Ver lançamentos</span>
                         </div>
                     </article>
 
-                    <article class="card-kpi kpi-atraso">
+                    <article
+                        class="card-kpi card-kpi-filtro kpi-atraso"
+                        data-detalhe-kpi="inadimplencia"
+                        role="button"
+                        tabindex="0"
+                        aria-controls="detalhesIndicadorFinanceiro"
+                        aria-pressed="true"
+                        aria-label="Exibir lançamentos da Inadimplência"
+                    >
                         <div class="kpi-icone"><i class="fa-regular fa-clock"></i></div>
                         <div class="kpi-conteudo">
-                            <span class="kpi-titulo">Em Atraso</span>
+                            <span class="kpi-titulo">Inadimplência</span>
                             <strong class="kpi-valor" id="kpiEmAtraso">R$ 0,00</strong>
                             <span class="kpi-legenda" id="legendaEmAtraso">Clientes vencidos e não pagos</span>
+                            <span class="kpi-acao"><i class="fa-solid fa-list-ul"></i> Ver lançamentos</span>
                         </div>
                     </article>
 
-                    <article class="card-kpi kpi-pago">
+                    <article
+                        class="card-kpi card-kpi-filtro kpi-saidas"
+                        data-detalhe-kpi="saidas"
+                        role="button"
+                        tabindex="0"
+                        aria-controls="detalhesIndicadorFinanceiro"
+                        aria-pressed="false"
+                        aria-label="Exibir lançamentos do Total de Saídas"
+                    >
                         <div class="kpi-icone">
                             <i class="fa-solid fa-money-bill-transfer"></i>
                         </div>
 
                         <div class="kpi-conteudo">
-                            <span class="kpi-titulo">
-                                Pagamentos a Fornecedores
-                            </span>
+                            <span class="kpi-titulo">Total de Saídas</span>
 
-                            <strong class="kpi-valor" id="kpiPagoMes">
+                            <strong class="kpi-valor" id="kpiTotalSaidas">
                                 R$ 0,00
                             </strong>
 
-                            <span class="kpi-legenda" id="legendaPagoMes">
-                                Realizados no mês atual
+                            <span class="kpi-legenda" id="legendaTotalSaidas">
+                                Pagamentos a fornecedores
                             </span>
+                            <span class="kpi-acao"><i class="fa-solid fa-list-ul"></i> Ver lançamentos</span>
+                        </div>
+                    </article>
+
+                    <article
+                        class="card-kpi card-kpi-filtro kpi-pagar"
+                        data-detalhe-kpi="pagar"
+                        role="button"
+                        tabindex="0"
+                        aria-controls="detalhesIndicadorFinanceiro"
+                        aria-pressed="false"
+                        aria-label="Exibir lançamentos a pagar"
+                    >
+                        <div class="kpi-icone">
+                            <i class="fa-solid fa-file-invoice-dollar"></i>
+                        </div>
+                        <div class="kpi-conteudo">
+                            <span class="kpi-titulo">A Pagar</span>
+                            <strong class="kpi-valor" id="kpiAPagar">R$ 0,00</strong>
+                            <span class="kpi-legenda" id="legendaAPagar">Títulos de fornecedores em aberto</span>
+                            <span class="kpi-acao"><i class="fa-solid fa-list-ul"></i> Ver lançamentos</span>
                         </div>
                     </article>
 
@@ -267,12 +321,21 @@
                 </section>
 
                 <section class="grade-graficos grade-graficos-secundaria">
-                    <article class="card-grafico">
+                    <article class="card-grafico card-top-clientes">
                         <div class="card-grafico-header">
                             <div>
-                                <h3>Top 10 Clientes por Vendas</h3>
-                                <p>Clientes com maior valor vendido no período</p>
+                                <h3 id="tituloTopClientes">Top 10 Clientes por Pagamentos</h3>
+                                <p>Clientes com maior valor efetivamente pago no período</p>
                             </div>
+                            <label class="controle-ranking" for="limiteTopClientes">
+                                <span>Exibir</span>
+                                <select id="limiteTopClientes" aria-label="Quantidade de clientes no ranking">
+                                    <option value="5">Top 5</option>
+                                    <option value="10" selected>Top 10</option>
+                                    <option value="15">Top 15</option>
+                                    <option value="20">Top 20</option>
+                                </select>
+                            </label>
                         </div>
                         <div class="grafico-container">
                             <canvas id="graficoTopClientes"></canvas>
@@ -305,25 +368,13 @@
                 </section>
 
                 <section class="grade-graficos grade-graficos-terciaria">
-                    <article class="card-grafico">
-                        <div class="card-grafico-header">
-                            <div>
-                                <h3>Representantes</h3>
-                                <p>Recebimentos por representante</p>
-                            </div>
-                        </div>
-                        <div class="grafico-container">
-                            <canvas id="graficoRepresentantes"></canvas>
-                        </div>
-                    </article>
-
-                    <article class="card-resumo">
+                    <article class="card-resumo card-resumo-prazo">
                         <span>Prazo Médio de Recebimento</span>
                         <strong id="prazoMedioRecebimento">0 dias</strong>
                         <small>Da movimentação até o pagamento</small>
                     </article>
 
-                    <article class="card-resumo">
+                    <article class="card-resumo card-resumo-inadimplencia">
                         <span>Inadimplência</span>
                         <strong id="taxaInadimplencia">0,0%</strong>
                         <small>Valor vencido sobre a carteira de clientes</small>
@@ -342,31 +393,43 @@
                     </article>
                 </section>
 
-                <section class="card-tabela-atrasos">
+                <section
+                    class="card-tabela-atrasos card-detalhes-kpi"
+                    id="detalhesIndicadorFinanceiro"
+                    aria-live="polite"
+                >
                     <div class="card-grafico-header">
                         <div>
-                            <h3>Contas em Atraso</h3>
-                            <p>Clientes com títulos vencidos e sem pagamento</p>
+                            <h3>
+                                <i class="fa-solid fa-list-ul" aria-hidden="true"></i>
+                                <span id="tituloDetalhesKpi">Detalhes da Inadimplência</span>
+                            </h3>
+                            <p id="descricaoDetalhesKpi">Clientes com títulos vencidos e sem pagamento</p>
                         </div>
-                        <span class="contador-atrasos" id="contadorAtrasos">0</span>
+                        <span class="contador-atrasos" id="contadorDetalhesKpi">0</span>
                     </div>
 
                     <div class="tabela-responsiva">
                         <table class="tabela-atrasos">
                             <thead>
                                 <tr>
-                                    <th>Cliente</th>
+                                    <th>Pessoa</th>
+                                    <th>Cadastro</th>
                                     <th>Documento</th>
+                                    <th>Emissão</th>
                                     <th>Vencimento</th>
+                                    <th>Pagamento</th>
+                                    <th>Situação</th>
                                     <th>Dias em atraso</th>
                                     <th>Valor</th>
                                     <th>Banco</th>
+                                    <th>Plano financeiro</th>
                                     <th>Representante</th>
                                 </tr>
                             </thead>
-                            <tbody id="corpoTabelaAtrasos">
+                            <tbody id="corpoTabelaDetalhesKpi">
                                 <tr>
-                                    <td colspan="7" class="tabela-vazia">
+                                    <td colspan="12" class="tabela-vazia">
                                         Carregue uma planilha para visualizar.
                                     </td>
                                 </tr>
@@ -1144,15 +1207,15 @@
 
     <script src="js/utilitarios-financeiros.js?v=7"></script>
     <script src="js/processador-financeiro.js?v=21"></script>
-    <script src="js/indicadores-financeiros.js?v=7"></script>
-    <script src="js/graficos-financeiros.js?v=14"></script>
+    <script src="js/indicadores-financeiros.js?v=8"></script>
+    <script src="js/graficos-financeiros.js?v=15"></script>
     <script src="js/bancos-financeiros.js?v=7"></script>
     <script src="js/filtros-financeiro.js?v=24"></script>
     <script src="js/importacao-planilha.js?v=7"></script>
     <script src="js/contas-receber.js?v=20"></script>
     <script src="js/contas-pagar.js?v=21"></script>
     <script src="js/fluxo-caixa.js?v=22"></script>
-    <script src="financeiro.js?v=7"></script>
+    <script src="financeiro.js?v=8"></script>
 
 </body>
 </html>
