@@ -623,14 +623,34 @@ function renderizarIdentificacao(item) {
   const foto = document.getElementById("fotoColaborador");
   const placeholder = document.getElementById("fotoPlaceholder");
   placeholder.textContent = iniciais(item.nome);
+
+  foto.onload = null;
+  foto.onerror = null;
+  foto.hidden = true;
+  placeholder.hidden = false;
+
   if (item.foto) {
+    const mostrarFoto = () => {
+      foto.hidden = false;
+      placeholder.hidden = true;
+    };
+
+    const mostrarIniciais = () => {
+      foto.hidden = true;
+      placeholder.hidden = false;
+    };
+
+    foto.onload = mostrarFoto;
+    foto.onerror = mostrarIniciais;
     foto.src = item.foto;
-    foto.hidden = false;
-    placeholder.hidden = true;
+
+    // Imagens em cache podem estar completas antes do evento load.
+    if (foto.complete) {
+      if (foto.naturalWidth > 0) mostrarFoto();
+      else mostrarIniciais();
+    }
   } else {
     foto.removeAttribute("src");
-    foto.hidden = true;
-    placeholder.hidden = false;
   }
 }
 
