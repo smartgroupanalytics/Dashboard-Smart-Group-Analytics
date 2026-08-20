@@ -1,0 +1,134 @@
+.sg-stk-collection-filter {
+  position: relative;
+  z-index: 70;
+  min-width: 220px;
+  max-width: 285px;
+  flex: 0 1 285px;
+}
+
+.sg-stk-collection-button {
+  width: 100%;
+  height: 36px;
+  overflow: hidden;
+  border: 1px solid #1e5da8;
+  border-radius: 6px;
+  background: #061b38;
+  padding: 0 34px 0 12px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.sg-stk-collection-button::after {
+  content: "▾";
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  color: #9ac7ff;
+}
+
+.sg-stk-collection-button[aria-expanded="true"] {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.18);
+}
+
+.sg-stk-collection-panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 9999;
+  width: min(320px, 88vw);
+  overflow: hidden;
+  border: 1px solid #2869b4;
+  border-radius: 9px;
+  background: #071f42;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.42);
+}
+
+.sg-stk-collection-panel[hidden] {
+  display: none !important;
+}
+
+.sg-stk-collection-panel-title {
+  border-bottom: 1px solid rgba(96, 165, 250, 0.3);
+  padding: 11px 12px;
+  color: #dbeafe;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.sg-stk-collection-options {
+  max-height: 250px;
+  overflow-y: auto;
+  padding: 6px;
+}
+
+.sg-stk-collection-option {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border-radius: 6px;
+  padding: 8px 9px;
+  color: #f8fafc;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.sg-stk-collection-option:hover {
+  background: rgba(59, 130, 246, 0.2);
+}
+
+.sg-stk-collection-option input {
+  width: 15px;
+  height: 15px;
+  accent-color: #3b82f6;
+}
+
+.sg-stk-collection-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  border-top: 1px solid rgba(96, 165, 250, 0.3);
+  padding: 9px;
+}
+
+.sg-stk-collection-actions button {
+  border: 1px solid #2d64a4;
+  border-radius: 6px;
+  background: #0a2b58;
+  padding: 7px 12px;
+  color: #e5efff;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.sg-stk-collection-actions .sg-stk-collection-apply {
+  border-color: #60a5fa;
+  background: #2563eb;
+  color: #fff;
+}
+
+@media (max-width: 1100px) {
+  .sg-stk-collection-filter {
+    min-width: 200px;
+    max-width: none;
+    flex: 1 1 220px;
+  }
+}
+
+@media (max-width: 760px) {
+  .sg-stk-collection-filter {
+    width: 100%;
+    min-width: 0;
+    flex-basis: 100%;
+  }
+
+  .sg-stk-collection-panel {
+    width: min(310px, calc(100vw - 44px));
+  }
+}
