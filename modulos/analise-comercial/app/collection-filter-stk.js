@@ -5,10 +5,32 @@
   const EVENTO_COLECOES = "smart-group:stk-colecoes-carregadas";
   const CAMPO_COLECAO = "cod_altern_1";
   const ARQUIVOS_STK = /\/data\/importacao-comercial\/stk\/(estoque|compras|consumo|op|vendas)\.json$/i;
+  const ARQUIVO_VERSAO = /\/data\/_version\.json$/i;
   const FETCH_ORIGINAL = window.fetch.bind(window);
+  const SET_INTERVAL_ORIGINAL = window.setInterval.bind(window);
+  const CLEAR_INTERVAL_ORIGINAL = window.clearInterval.bind(window);
 
   let colecoesDisponiveis = [];
   let promessaEstoqueCompleto = null;
+  const atualizadoresAutomaticos = new Map();
+
+  window.setInterval = function (funcao, intervalo) {
+    const argumentos = Array.prototype.slice.call(arguments, 2);
+    const identificador = SET_INTERVAL_ORIGINAL.apply(window, [funcao, intervalo].concat(argumentos));
+
+    if (Number(intervalo) === 10000 && typeof funcao === "function") {
+      atualizadoresAutomaticos.set(identificador, function () {
+        return funcao.apply(window, argumentos);
+      });
+    }
+
+    return identificador;
+  };
+
+  window.clearInterval = function (identificador) {
+    atualizadoresAutomaticos.delete(identificador);
+    return CLEAR_INTERVAL_ORIGINAL(identificador);
+  };
 
   function texto(valor) {
     return String(valor == null ? "" : valor).trim();
@@ -48,6 +70,19 @@
 
   function selecaoAtual() {
     return carregarSelecao();
+  }
+
+  function assinaturaSelecao() {
+    const selecionadas = selecaoAtual().map(chave).sort();
+    return selecionadas.length ? selecionadas.join("|") : "TODAS";
+  }
+
+  function solicitarAtualizacaoImediata() {
+    atualizadoresAutomaticos.forEach(function (atualizar) {
+      Promise.resolve().then(atualizar).catch(function (erro) {
+        console.warn("Não foi possível antecipar a atualização do filtro STK:", erro);
+      });
+    });
   }
 
   function caminhoDaRequisicao(entrada) {
@@ -109,6 +144,20 @@
 
   window.fetch = async function (entrada, opcoes) {
     const caminho = caminhoDaRequisicao(entrada);
+
+    if (ARQUIVO_VERSAO.test(caminho)) {
+      const respostaVersao = await FETCH_ORIGINAL(entrada, opcoes);
+      if (!respostaVersao.ok) return respostaVersao;
+
+      try {
+        const versao = await respostaVersao.clone().json();
+        versao.updatedAt = texto(versao.updatedAt) + "|colecoes-stk:" + assinaturaSelecao();
+        return respostaJson(respostaVersao, versao);
+      } catch (erro) {
+        return respostaVersao;
+      }
+    }
+
     const correspondencia = caminho.match(ARQUIVOS_STK);
 
     if (!correspondencia) {
@@ -208,6 +257,30 @@
     return rotulo;
   }
 
+  function atualizarRotuloFiltro() {
+    const botao = document.querySelector(".sg-stk-collection-button");
+    if (!botao) return;
+
+    const selecionadas = selecaoAtual();
+    botao.textContent = selecionadas.length === 0
+      ? "Coleção: Todas"
+      : selecionadas.length === 1
+        ? "Coleção: " + selecionadas[0]
+        : "Coleções: " + selecionadas.length + " selecionadas";
+  }
+
+  function aplicarSelecao(valores) {
+    salvarSelecao(valores);
+    atualizarRotuloFiltro();
+
+    const painel = document.querySelector(".sg-stk-collection-panel");
+    const botao = document.querySelector(".sg-stk-collection-button");
+    if (painel) painel.hidden = true;
+    if (botao) botao.setAttribute("aria-expanded", "false");
+
+    solicitarAtualizacaoImediata();
+  }
+
   function montarPainel(painel) {
     painel.replaceChildren();
 
@@ -226,7 +299,11 @@
       opcoes.replaceChildren();
 
       opcoes.appendChild(criarOpcao("Todas as coleções", rascunho.size === 0, function (marcado) {
-        if (marcado) rascunho.clear();
+        if (marcado) {
+          rascunho.clear();
+          aplicarSelecao([]);
+          return;
+        }
         renderizarOpcoes();
       }));
 
@@ -262,8 +339,7 @@
       const valores = colecoesDisponiveis.filter(function (colecao) {
         return rascunho.has(chave(colecao));
       });
-      salvarSelecao(valores);
-      window.location.reload();
+      aplicarSelecao(valores);
     });
 
     acoes.append(limpar, aplicar);
