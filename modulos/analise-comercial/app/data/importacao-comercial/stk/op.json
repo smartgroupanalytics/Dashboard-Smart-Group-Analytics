@@ -193,18 +193,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "7626",
-    "produto": "15534",
-    "desc_completa": "MIRAGE OURO LIGHT",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 213,
-    "dt_saida": "2026-08-06",
-    "centro_custo": 10,
-    "abreviacao": "REV 1"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "7674",
     "produto": "17744",
     "desc_completa": "NAPA METAL LYON OURO ROSADO",
@@ -224,8 +212,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-08-12",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -236,32 +224,8 @@
     "subgrupo": 0,
     "qtd_produzir": 500,
     "dt_saida": "2026-08-12",
-    "centro_custo": 1,
-    "abreviacao": "RECOB"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "7689",
-    "produto": "30096",
-    "desc_completa": "BORGONHA BROWN",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 500,
-    "dt_saida": "2026-08-12",
-    "centro_custo": 1,
-    "abreviacao": "RECOB"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "7690",
-    "produto": "30095",
-    "desc_completa": "BORGONHA WHISKY",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 400,
-    "dt_saida": "2026-08-12",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "centro_custo": 25,
+    "abreviacao": "TRANSFE"
   },
   {
     "fonte_comercial": "STK",
@@ -284,8 +248,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-08-13",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -313,18 +277,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "7810",
-    "produto": "13334",
-    "desc_completa": "NAPA OLIMPIC CAFE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 400,
-    "dt_saida": "2026-08-19",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "7820",
     "produto": "900019",
     "desc_completa": "FLORENZA BEGE",
@@ -344,8 +296,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-08-21",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -368,8 +320,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-08-19",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 7,
+    "abreviacao": "ESTAM"
   },
   {
     "fonte_comercial": "STK",
@@ -392,8 +344,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-08-21",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -428,8 +380,8 @@
     "subgrupo": 41,
     "qtd_produzir": 300,
     "dt_saida": "2026-08-24",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 23,
+    "abreviacao": "RAMA"
   },
   {
     "fonte_comercial": "STK",
@@ -440,8 +392,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-08-24",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 23,
+    "abreviacao": "RAMA"
   },
   {
     "fonte_comercial": "STK",
@@ -452,6 +404,18 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-08-26",
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "7924",
+    "produto": "13154",
+    "desc_completa": "DOHA GRAFITE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-08-27",
     "centro_custo": 0,
     "abreviacao": ""
   }
