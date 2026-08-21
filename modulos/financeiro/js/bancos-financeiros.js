@@ -433,8 +433,9 @@ async function atualizarPainelSaldoDisponivel(banco) {
     const anterior =
         registrosAnteriores[registrosAnteriores.length - 1];
 
-    semanaAtual.textContent =
-        semana.rotulo;
+    semanaAtual.textContent = registroAtual
+        ? `Registrado em ${formatarDataSaldo(registroAtual)}`
+        : semana.rotulo;
 
     input.value =
         registroAtual
@@ -467,7 +468,7 @@ async function atualizarPainelSaldoDisponivel(banco) {
             `saldo-disponivel-comparativo ${diferenca >= 0 ? "positivo" : "negativo"}`;
 
         comparativo.innerHTML = `
-            <span>Comparado com ${escaparHtml(anterior.rotuloSemana)}</span>
+            <span>Comparado com ${formatarDataSaldo(anterior)}</span>
             <strong>${formatarMoeda(diferenca)}</strong>
             <small>${diferenca >= 0 ? "+" : ""}${percentual.toFixed(2).replace(".", ",")}%</small>
         `;
@@ -480,12 +481,36 @@ async function atualizarPainelSaldoDisponivel(banco) {
                 .reverse()
                 .map((registro) => `
                     <div class="saldo-disponivel-linha">
-                        <span>${escaparHtml(registro.rotuloSemana)}</span>
+                        <span>${formatarDataSaldo(registro)}</span>
                         <strong>${formatarMoeda(registro.valor)}</strong>
                     </div>
                 `)
                 .join("")
             : "";
+}
+
+function formatarDataSaldo(registro) {
+    const data = registro?.dataRegistro;
+
+    if (typeof data === "string" && data) {
+        const dataConvertida = new Date(data);
+
+        if (!Number.isNaN(dataConvertida.getTime())) {
+            return dataConvertida.toLocaleDateString("pt-BR");
+        }
+    }
+
+    if (data?.toDate) {
+        return data.toDate().toLocaleDateString("pt-BR");
+    }
+
+    if (registro?.atualizadoEm?.toDate) {
+        return registro.atualizadoEm
+            .toDate()
+            .toLocaleDateString("pt-BR");
+    }
+
+    return registro?.rotuloSemana || "Data não informada";
 }
 
 async function obterSaldosBanco(banco) {

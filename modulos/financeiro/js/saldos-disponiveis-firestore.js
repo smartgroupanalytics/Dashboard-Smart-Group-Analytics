@@ -38,7 +38,8 @@ async function listarSaldosBanco(bancoId) {
                 semana: dados.semana,
                 rotuloSemana: dados.rotuloSemana,
                 valor: Number(dados.valor || 0),
-                dataRegistro: dados.dataRegistro || ""
+                dataRegistro: dados.dataRegistro || "",
+                atualizadoEm: dados.atualizadoEm || null
             };
         })
         .sort((a, b) => String(a.semana).localeCompare(String(b.semana)))
@@ -70,6 +71,7 @@ async function salvarSaldoDisponivel({
             semana,
             rotuloSemana,
             valor: Number(valor || 0),
+            dataRegistro: new Date().toISOString(),
             atualizadoPorUid: usuario.uid,
             atualizadoPorEmail: usuario.email || "",
             atualizadoEm: serverTimestamp()
