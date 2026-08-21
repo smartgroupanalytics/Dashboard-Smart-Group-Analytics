@@ -95,6 +95,30 @@
     font-weight: 700;
 }
 
+.btn-limpar-saldo-disponivel {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    width: 100%;
+    min-height: 38px;
+    margin-top: 10px;
+
+    border: 1px solid rgba(255, 107, 107, 0.34);
+    border-radius: 9px;
+
+    background: rgba(255, 107, 107, 0.08);
+    color: #ffb3b3;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.btn-limpar-saldo-disponivel:hover {
+    background: rgba(255, 107, 107, 0.16);
+}
+
 .saldo-disponivel-comparativo {
     margin-top: 12px;
     padding: 12px;

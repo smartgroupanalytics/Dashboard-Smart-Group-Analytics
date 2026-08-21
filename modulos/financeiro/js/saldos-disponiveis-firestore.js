@@ -2,10 +2,9 @@ import { auth, db } from "../../../firebase-config.js";
 
 import {
     collection,
+    deleteDoc,
     doc,
     getDocs,
-    limit,
-    orderBy,
     query,
     serverTimestamp,
     setDoc,
@@ -17,31 +16,33 @@ const COLECAO_SALDOS =
 
 window.financeiroSaldosFirestore = {
     listarSaldosBanco,
-    salvarSaldoDisponivel
+    salvarSaldoDisponivel,
+    excluirSaldoDisponivel
 };
 
 async function listarSaldosBanco(bancoId) {
     const consulta =
         query(
             collection(db, COLECAO_SALDOS),
-            where("bancoId", "==", bancoId),
-            orderBy("semana", "asc"),
-            limit(12)
+            where("bancoId", "==", bancoId)
         );
 
     const resultado =
         await getDocs(consulta);
 
-    return resultado.docs.map((documento) => {
-        const dados = documento.data();
+    return resultado.docs
+        .map((documento) => {
+            const dados = documento.data();
 
-        return {
-            semana: dados.semana,
-            rotuloSemana: dados.rotuloSemana,
-            valor: Number(dados.valor || 0),
-            dataRegistro: dados.dataRegistro || ""
-        };
-    });
+            return {
+                semana: dados.semana,
+                rotuloSemana: dados.rotuloSemana,
+                valor: Number(dados.valor || 0),
+                dataRegistro: dados.dataRegistro || ""
+            };
+        })
+        .sort((a, b) => String(a.semana).localeCompare(String(b.semana)))
+        .slice(-12);
 }
 
 async function salvarSaldoDisponivel({
@@ -74,5 +75,14 @@ async function salvarSaldoDisponivel({
             atualizadoEm: serverTimestamp()
         },
         { merge: true }
+    );
+}
+
+async function excluirSaldoDisponivel(bancoId, semana) {
+    const idDocumento =
+        `${bancoId}_${semana}`;
+
+    await deleteDoc(
+        doc(db, COLECAO_SALDOS, idDocumento)
     );
 }

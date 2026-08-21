@@ -52,11 +52,18 @@ function configurarPainelBanco() {
     const btnSalvar =
         document.getElementById("btnSalvarSaldoDisponivel");
 
+    const btnLimpar =
+        document.getElementById("btnLimparSaldoDisponivel");
+
     const inputSaldo =
         document.getElementById("inputSaldoDisponivel");
 
     if (btnSalvar) {
         btnSalvar.addEventListener("click", salvarSaldoDisponivelAtual);
+    }
+
+    if (btnLimpar) {
+        btnLimpar.addEventListener("click", limparSaldoDisponivelAtual);
     }
 
     if (inputSaldo) {
@@ -296,6 +303,49 @@ async function salvarSaldoDisponivelAtual() {
     await atualizarPainelSaldoDisponivel(bancoDetalheAtual);
 }
 
+async function limparSaldoDisponivelAtual() {
+    if (!bancoDetalheAtual) {
+        return;
+    }
+
+    const confirmar =
+        window.confirm(
+            "Deseja limpar o saldo disponível desta semana para este banco?"
+        );
+
+    if (!confirmar) {
+        return;
+    }
+
+    const chaveBanco =
+        obterChaveBancoSaldo(bancoDetalheAtual);
+
+    const semana =
+        obterSemanaSaldoDisponivel();
+
+    try {
+        if (window.financeiroSaldosFirestore?.excluirSaldoDisponivel) {
+            await window.financeiroSaldosFirestore.excluirSaldoDisponivel(
+                chaveBanco,
+                semana.chave
+            );
+        } else {
+            excluirSaldoDisponivelLocal(chaveBanco, semana.chave);
+        }
+
+        await atualizarPainelSaldoDisponivel(bancoDetalheAtual);
+    } catch (erro) {
+        const comparativo =
+            document.getElementById("saldoDisponivelComparativo");
+
+        if (comparativo) {
+            comparativo.className = "saldo-disponivel-comparativo negativo";
+            comparativo.textContent =
+                "Não foi possível limpar o saldo no Firebase.";
+        }
+    }
+}
+
 function salvarSaldoDisponivelLocal(chaveBanco, semana, valor) {
     const saldos =
         carregarSaldosDisponiveisLocais();
@@ -323,6 +373,18 @@ function salvarSaldoDisponivelLocal(chaveBanco, semana, valor) {
         registrosBanco
             .sort((a, b) => a.semana.localeCompare(b.semana))
             .slice(-12);
+
+    localStorage.setItem(CHAVE_SALDOS_DISPONIVEIS, JSON.stringify(saldos));
+}
+
+function excluirSaldoDisponivelLocal(chaveBanco, semanaChave) {
+    const saldos =
+        carregarSaldosDisponiveisLocais();
+
+    saldos[chaveBanco] =
+        (saldos[chaveBanco] || []).filter((registro) => {
+            return registro.semana !== semanaChave;
+        });
 
     localStorage.setItem(CHAVE_SALDOS_DISPONIVEIS, JSON.stringify(saldos));
 }
