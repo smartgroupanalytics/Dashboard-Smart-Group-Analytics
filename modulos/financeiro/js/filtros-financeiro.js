@@ -297,6 +297,11 @@ function aplicarFiltrosDashboard() {
     });
 
     atualizarDashboardCompleto(lancamentosFiltrados);
+
+    if (typeof aplicarFiltrosContasReceber === "function") {
+        aplicarFiltrosContasReceber();
+    }
+
     atualizarTextoPeriodo(inicio, fim);
 }
 
@@ -340,4 +345,3 @@ function preencherFiltroBancos(limparAntes = false) {
         select.appendChild(option);
     });
 }
-

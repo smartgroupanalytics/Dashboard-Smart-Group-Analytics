@@ -132,6 +132,27 @@ function aplicarFiltrosContasReceber() {
     const fim =
         lerDataInput("receberDataFim");
 
+    const inicioGeral = lerDataInput("periodoInicio");
+    const fimGeral = lerDataInput("periodoFim");
+    const pessoasSelecionadas =
+        typeof filtroPessoas !== "undefined"
+            ? filtroPessoas.selecionadas
+            : new Set();
+    const todasPessoasSelecionadas =
+        typeof filtroPessoas !== "undefined" &&
+        filtroPessoas.opcoes.length > 0 &&
+        pessoasSelecionadas.size === filtroPessoas.opcoes.length;
+    const representanteGeral =
+        document.getElementById("representante")?.value || "";
+    const bancoGeral =
+        document.getElementById("banco")?.value || "";
+    const planoGeral =
+        document.getElementById("planoFinanceiro")?.value || "";
+    const situacaoGeral =
+        document.getElementById("situacao")?.value || "";
+    const tipoDocumentoGeral =
+        document.getElementById("tipoDocumento")?.value || "";
+
     receberFiltrados = receberTodos.filter((item) => {
         const texto = normalizarTexto([
             item.razaoSocial,
@@ -165,6 +186,44 @@ function aplicarFiltrosContasReceber() {
             (!item.vencimento || inicioDoDia(item.vencimento) > fim)
         ) return false;
 
+        const dataReferenciaGeral =
+            item.dataPagamento || item.vencimento || item.dataMovimento;
+
+        if (
+            inicioGeral &&
+            (!dataReferenciaGeral || dataReferenciaGeral < inicioGeral)
+        ) return false;
+
+        if (
+            fimGeral &&
+            (!dataReferenciaGeral || dataReferenciaGeral > fimGeral)
+        ) return false;
+
+        if (
+            typeof filtroPessoas !== "undefined" &&
+            filtroPessoas.opcoes.length > 0 &&
+            !todasPessoasSelecionadas &&
+            !pessoasSelecionadas.has(item.razaoSocial)
+        ) return false;
+
+        if (
+            representanteGeral &&
+            item.representante !== representanteGeral
+        ) return false;
+
+        if (planoGeral && item.planoFinanceiro !== planoGeral) return false;
+        if (situacaoGeral && item.situacao !== situacaoGeral) return false;
+
+        if (
+            tipoDocumentoGeral &&
+            item.tipoDocumento !== tipoDocumentoGeral
+        ) return false;
+
+        if (bancoGeral) {
+            const identidade = identificarBanco(item.banco, "");
+            if (identidade.id !== bancoGeral) return false;
+        }
+
         return true;
     });
 
@@ -191,14 +250,18 @@ function aplicarFiltrosContasReceber() {
 }
 
 function atualizarKpisContasReceber() {
-    const carteira = receberFiltrados.reduce(
+    const itensContabilizaveis = receberFiltrados.filter(
+        (item) => !ehAdiantamentoReceber(item)
+    );
+
+    const carteira = itensContabilizaveis.reduce(
         (total, item) => total + Number(item.valorDocumento || 0),
         0
     );
 
-    const pagos = receberFiltrados.filter((item) => item.pago);
-    const abertos = receberFiltrados.filter((item) => !item.pago);
-    const atrasados = receberFiltrados.filter((item) => item.atrasado);
+    const pagos = itensContabilizaveis.filter((item) => item.pago);
+    const abertos = itensContabilizaveis.filter((item) => !item.pago);
+    const atrasados = itensContabilizaveis.filter((item) => item.atrasado);
     const aVencer = abertos.filter((item) => !item.atrasado);
 
     const totalPago = pagos.reduce(
@@ -227,7 +290,7 @@ function atualizarKpisContasReceber() {
     preencherTexto("receberKpiPago", formatarMoeda(totalPago));
     preencherTexto("receberKpiVencer", formatarMoeda(totalVencer));
 
-    preencherTexto("receberQtdCarteira", `${receberFiltrados.length} títulos`);
+    preencherTexto("receberQtdCarteira", `${itensContabilizaveis.length} títulos`);
     preencherTexto("receberQtdAberto", `${abertos.length} títulos`);
     preencherTexto("receberQtdAtrasado", `${atrasados.length} títulos`);
     preencherTexto("receberQtdPago", `${pagos.length} títulos`);
@@ -237,6 +300,16 @@ function atualizarKpisContasReceber() {
         "receberResumoFiltro",
         `${receberFiltrados.length} de ${receberTodos.length} títulos exibidos`
     );
+}
+
+function ehAdiantamentoReceber(item) {
+    const classificacao = normalizarTexto([
+        item.planoFinanceiro,
+        item.tipoDocumento,
+        item.descricaoTipoDocumento
+    ].join(" "));
+
+    return classificacao.includes("adiantamento");
 }
 
 function saldoAbertoReceber(item) {
