@@ -116,7 +116,12 @@ async function carregarColaboradores() {
     }
 
     const resultado = await getDocs(consulta);
-    estado.colaboradores = resultado.docs.map(item => ({ id: item.id, ...item.data() }));
+    const carregados = resultado.docs.map(item => ({ id: item.id, ...item.data() }));
+
+    // Segurança contra registros duplicados antigos.
+    // Se a mesma pessoa existir mais de uma vez, prioriza o documento
+    // criado/atualizado pela automação do Google Drive.
+    estado.colaboradores = deduplicarColaboradores(carregados);
     estado.colaboradores.sort((a, b) =>
       String(a.nome || "").localeCompare(String(b.nome || ""), "pt-BR")
     );
@@ -896,9 +901,47 @@ function tagStatus(status) {
 
 function criarIdColaborador(item) {
   const cpf = String(item.cpf || "").replace(/\D/g, "");
-  const matricula = normalizarTexto(item.matricula).replace(/[^a-z0-9]+/g, "-");
-  const nome = normalizarTexto(item.nome).replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  const matricula = normalizarTexto(item.matricula)
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  const nome = normalizarTexto(item.nome)
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
   return (cpf || matricula || nome || `colaborador-${Date.now()}`).slice(0, 120);
+}
+
+function deduplicarColaboradores(lista) {
+  const mapa = new Map();
+
+  lista.forEach(item => {
+    const cpf = String(item.cpf || "").replace(/\D/g, "");
+    const matricula = normalizarTexto(item.matricula)
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+    const nome = normalizarTexto(item.nome)
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+
+    const chave = cpf || matricula || nome || item.id;
+    const atual = mapa.get(chave);
+
+    if (!atual) {
+      mapa.set(chave, item);
+      return;
+    }
+
+    const itemAutomacao =
+      item.atualizadoPor === "automacao-rh-drive" || Boolean(item.versaoAutomacao);
+    const atualAutomacao =
+      atual.atualizadoPor === "automacao-rh-drive" || Boolean(atual.versaoAutomacao);
+
+    if (itemAutomacao && !atualAutomacao) {
+      mapa.set(chave, item);
+    }
+  });
+
+  return [...mapa.values()];
 }
 
 function limparObjeto(valor) {
