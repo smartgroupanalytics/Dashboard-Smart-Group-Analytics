@@ -2,6 +2,11 @@
 
 /* Aba Bancos e painel de detalhes. */
 
+const CHAVE_SALDOS_DISPONIVEIS =
+    "smart_financeiro_saldos_disponiveis_v1";
+
+let bancoDetalheAtual = null;
+
 function configurarPainelBanco() {
     const painel =
         document.getElementById("painelBanco");
@@ -43,6 +48,25 @@ function configurarPainelBanco() {
             fecharPainelBanco();
         }
     });
+
+    const btnSalvar =
+        document.getElementById("btnSalvarSaldoDisponivel");
+
+    const inputSaldo =
+        document.getElementById("inputSaldoDisponivel");
+
+    if (btnSalvar) {
+        btnSalvar.addEventListener("click", salvarSaldoDisponivelAtual);
+    }
+
+    if (inputSaldo) {
+        inputSaldo.addEventListener("keydown", (evento) => {
+            if (evento.key === "Enter") {
+                evento.preventDefault();
+                salvarSaldoDisponivelAtual();
+            }
+        });
+    }
 }
 
 function abrirDetalhesBanco(banco) {
@@ -55,6 +79,8 @@ function abrirDetalhesBanco(banco) {
     if (!painel || !overlay) {
         return;
     }
+
+    bancoDetalheAtual = banco;
 
     preencherTexto(
         "detalheBancoNome",
@@ -93,6 +119,8 @@ function abrirDetalhesBanco(banco) {
     if (logo) {
         logo.innerHTML = criarLogoBanco(banco, "grande");
     }
+
+    atualizarPainelSaldoDisponivel(banco);
 
     painel.classList.add("aberto");
     overlay.classList.add("ativo");
@@ -217,3 +245,270 @@ function criarLogoBanco(banco, tamanho = "normal") {
     `;
 }
 
+async function salvarSaldoDisponivelAtual() {
+    if (!bancoDetalheAtual) {
+        return;
+    }
+
+    const input =
+        document.getElementById("inputSaldoDisponivel");
+
+    if (!input) {
+        return;
+    }
+
+    const valor =
+        converterValorSaldoDisponivel(input.value);
+
+    if (!Number.isFinite(valor)) {
+        input.classList.add("saldo-disponivel-erro");
+        input.focus();
+        return;
+    }
+
+    input.classList.remove("saldo-disponivel-erro");
+
+    const chaveBanco =
+        obterChaveBancoSaldo(bancoDetalheAtual);
+
+    const semana =
+        obterSemanaSaldoDisponivel();
+
+    if (window.financeiroSaldosFirestore?.salvarSaldoDisponivel) {
+        await window.financeiroSaldosFirestore.salvarSaldoDisponivel({
+            bancoId: chaveBanco,
+            bancoNome: bancoDetalheAtual.nome,
+            semana: semana.chave,
+            rotuloSemana: semana.rotulo,
+            valor
+        });
+
+        await atualizarPainelSaldoDisponivel(bancoDetalheAtual);
+        return;
+    }
+
+    salvarSaldoDisponivelLocal(
+        chaveBanco,
+        semana,
+        valor
+    );
+
+    await atualizarPainelSaldoDisponivel(bancoDetalheAtual);
+}
+
+function salvarSaldoDisponivelLocal(chaveBanco, semana, valor) {
+    const saldos =
+        carregarSaldosDisponiveisLocais();
+
+    const registrosBanco =
+        saldos[chaveBanco] || [];
+
+    const indiceSemana =
+        registrosBanco.findIndex((registro) => registro.semana === semana.chave);
+
+    const registro = {
+        semana: semana.chave,
+        rotuloSemana: semana.rotulo,
+        valor,
+        dataRegistro: new Date().toISOString()
+    };
+
+    if (indiceSemana >= 0) {
+        registrosBanco[indiceSemana] = registro;
+    } else {
+        registrosBanco.push(registro);
+    }
+
+    saldos[chaveBanco] =
+        registrosBanco
+            .sort((a, b) => a.semana.localeCompare(b.semana))
+            .slice(-12);
+
+    localStorage.setItem(CHAVE_SALDOS_DISPONIVEIS, JSON.stringify(saldos));
+}
+
+async function atualizarPainelSaldoDisponivel(banco) {
+    const input =
+        document.getElementById("inputSaldoDisponivel");
+
+    const saldoAtual =
+        document.getElementById("saldoDisponivelAtual");
+
+    const semanaAtual =
+        document.getElementById("saldoDisponivelSemana");
+
+    const comparativo =
+        document.getElementById("saldoDisponivelComparativo");
+
+    const historico =
+        document.getElementById("saldoDisponivelHistorico");
+
+    if (!input || !saldoAtual || !semanaAtual || !comparativo || !historico) {
+        return;
+    }
+
+    const semana =
+        obterSemanaSaldoDisponivel();
+
+    let registros = [];
+
+    try {
+        registros = await obterSaldosBanco(banco);
+    } catch (erro) {
+        comparativo.className = "saldo-disponivel-comparativo negativo";
+        comparativo.textContent =
+            "Não foi possível carregar o saldo compartilhado do Firebase.";
+        historico.innerHTML = "";
+        return;
+    }
+
+    const registroAtual =
+        registros.find((registro) => registro.semana === semana.chave);
+
+    const registrosAnteriores =
+        registros.filter((registro) => registro.semana < semana.chave);
+
+    const anterior =
+        registrosAnteriores[registrosAnteriores.length - 1];
+
+    semanaAtual.textContent =
+        semana.rotulo;
+
+    input.value =
+        registroAtual
+            ? formatarValorParaInputSaldo(registroAtual.valor)
+            : "";
+
+    saldoAtual.textContent =
+        registroAtual
+            ? formatarMoeda(registroAtual.valor)
+            : "R$ 0,00";
+
+    if (!registroAtual) {
+        comparativo.className = "saldo-disponivel-comparativo";
+        comparativo.textContent =
+            "Salve o saldo desta semana para iniciar o histórico.";
+    } else if (!anterior) {
+        comparativo.className = "saldo-disponivel-comparativo neutro";
+        comparativo.textContent =
+            "Saldo salvo. Na próxima semana o painel mostrará a comparação.";
+    } else {
+        const diferenca =
+            registroAtual.valor - anterior.valor;
+
+        const percentual =
+            anterior.valor !== 0
+                ? (diferenca / Math.abs(anterior.valor)) * 100
+                : 0;
+
+        comparativo.className =
+            `saldo-disponivel-comparativo ${diferenca >= 0 ? "positivo" : "negativo"}`;
+
+        comparativo.innerHTML = `
+            <span>Comparado com ${escaparHtml(anterior.rotuloSemana)}</span>
+            <strong>${formatarMoeda(diferenca)}</strong>
+            <small>${diferenca >= 0 ? "+" : ""}${percentual.toFixed(2).replace(".", ",")}%</small>
+        `;
+    }
+
+    historico.innerHTML =
+        registros.length
+            ? registros
+                .slice()
+                .reverse()
+                .map((registro) => `
+                    <div class="saldo-disponivel-linha">
+                        <span>${escaparHtml(registro.rotuloSemana)}</span>
+                        <strong>${formatarMoeda(registro.valor)}</strong>
+                    </div>
+                `)
+                .join("")
+            : "";
+}
+
+async function obterSaldosBanco(banco) {
+    const chaveBanco =
+        obterChaveBancoSaldo(banco);
+
+    if (window.financeiroSaldosFirestore?.listarSaldosBanco) {
+        return window.financeiroSaldosFirestore.listarSaldosBanco(chaveBanco);
+    }
+
+    const saldos =
+        carregarSaldosDisponiveisLocais();
+
+    return saldos[chaveBanco] || [];
+}
+
+function carregarSaldosDisponiveisLocais() {
+    try {
+        return JSON.parse(
+            localStorage.getItem(CHAVE_SALDOS_DISPONIVEIS) || "{}"
+        ) || {};
+    } catch (erro) {
+        return {};
+    }
+}
+
+function obterChaveBancoSaldo(banco) {
+    return banco.id || gerarIdentificador(banco.nome || "banco");
+}
+
+function obterSemanaSaldoDisponivel(dataBase = new Date()) {
+    const data =
+        new Date(
+            dataBase.getFullYear(),
+            dataBase.getMonth(),
+            dataBase.getDate()
+        );
+
+    const diaSemana =
+        data.getDay() || 7;
+
+    data.setDate(data.getDate() + 4 - diaSemana);
+
+    const inicioAno =
+        new Date(data.getFullYear(), 0, 1);
+
+    const semana =
+        Math.ceil((((data - inicioAno) / 86400000) + 1) / 7);
+
+    const ano =
+        data.getFullYear();
+
+    return {
+        chave: `${ano}-S${String(semana).padStart(2, "0")}`,
+        rotulo: `Semana ${String(semana).padStart(2, "0")}/${ano}`
+    };
+}
+
+function converterValorSaldoDisponivel(valor) {
+    const texto =
+        String(valor || "")
+            .trim()
+            .replace(/\s/g, "")
+            .replace(/R\$/gi, "");
+
+    if (!texto) {
+        return NaN;
+    }
+
+    const normalizado =
+        texto
+            .replace(/\./g, "")
+            .replace(",", ".");
+
+    const numero =
+        Number(normalizado);
+
+    return Number.isFinite(numero)
+        ? numero
+        : NaN;
+}
+
+function formatarValorParaInputSaldo(valor) {
+    return Number(valor || 0).toLocaleString("pt-BR", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+}

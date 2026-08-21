@@ -3,3 +3,167 @@
  * A base visual atual continua em financeiro.css.
  */
 
+.saldo-disponivel-card {
+    margin-top: 16px;
+    padding: 18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(11, 42, 77, 0.98),
+            rgba(8, 31, 60, 0.98)
+        );
+
+    border: 1px solid rgba(46, 229, 124, 0.22);
+    border-radius: 12px;
+}
+
+.saldo-disponivel-topo {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.saldo-disponivel-topo span,
+.saldo-disponivel-campo {
+    color: rgba(221, 231, 247, 0.72);
+    font-size: 12px;
+}
+
+.saldo-disponivel-topo strong {
+    display: block;
+    margin-top: 7px;
+
+    color: #2ee57c;
+    font-size: 26px;
+}
+
+.saldo-disponivel-semana {
+    flex: 0 0 auto;
+    padding: 5px 8px;
+
+    background: rgba(46, 229, 124, 0.12);
+    border: 1px solid rgba(46, 229, 124, 0.22);
+    border-radius: 999px;
+}
+
+.saldo-disponivel-campo {
+    display: block;
+    margin-top: 16px;
+}
+
+.saldo-disponivel-form {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px;
+
+    margin-top: 7px;
+}
+
+.saldo-disponivel-form input {
+    min-width: 0;
+    height: 42px;
+    padding: 0 12px;
+
+    border: 1px solid rgba(116, 140, 170, 0.28);
+    border-radius: 9px;
+    outline: none;
+
+    background: rgba(8, 31, 60, 0.92);
+    color: #ffffff;
+}
+
+.saldo-disponivel-form input:focus {
+    border-color: rgba(46, 229, 124, 0.72);
+}
+
+.saldo-disponivel-form input.saldo-disponivel-erro {
+    border-color: #ff5d5d;
+}
+
+.saldo-disponivel-form button {
+    height: 42px;
+    padding: 0 15px;
+
+    border: 1px solid rgba(46, 229, 124, 0.6);
+    border-radius: 9px;
+
+    background: #18a957;
+    color: #ffffff;
+
+    font-weight: 700;
+}
+
+.saldo-disponivel-comparativo {
+    margin-top: 12px;
+    padding: 12px;
+
+    background: rgba(22, 131, 255, 0.08);
+    border: 1px dashed rgba(22, 131, 255, 0.28);
+    border-radius: 10px;
+
+    color: rgba(221, 231, 247, 0.78);
+    font-size: 12px;
+    line-height: 1.45;
+}
+
+.saldo-disponivel-comparativo span,
+.saldo-disponivel-comparativo small {
+    display: block;
+}
+
+.saldo-disponivel-comparativo strong {
+    display: block;
+    margin-top: 5px;
+
+    font-size: 18px;
+}
+
+.saldo-disponivel-comparativo.positivo strong,
+.saldo-disponivel-comparativo.positivo small {
+    color: #2ee57c;
+}
+
+.saldo-disponivel-comparativo.negativo strong,
+.saldo-disponivel-comparativo.negativo small {
+    color: #ff6b6b;
+}
+
+.saldo-disponivel-historico {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    margin-top: 12px;
+}
+
+.saldo-disponivel-linha {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    padding: 9px 0;
+    border-top: 1px solid rgba(116, 140, 170, 0.18);
+}
+
+.saldo-disponivel-linha span {
+    color: rgba(221, 231, 247, 0.68);
+    font-size: 12px;
+}
+
+.saldo-disponivel-linha strong {
+    color: #ffffff;
+    font-size: 13px;
+}
+
+@media (max-width: 520px) {
+    .saldo-disponivel-form {
+        grid-template-columns: 1fr;
+    }
+
+    .saldo-disponivel-form button {
+        width: 100%;
+    }
+}
