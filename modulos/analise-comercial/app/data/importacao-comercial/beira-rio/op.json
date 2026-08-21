@@ -111,16 +111,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "7647",
-    "produto": "12478",
-    "desc_completa": "METALIZADO PREMIUM PU 0.9 BRONZE 1402",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 170,
-    "dt_saida": "2026-08-05",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "7648",
     "produto": "17444",
     "desc_completa": "BRILHO ITALIA BROWN 1570",
@@ -147,46 +137,6 @@
     "grupo": "BEIRA RIO",
     "qtd_produzir": 1000,
     "dt_saida": "2026-08-11",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "7752",
-    "produto": "17444",
-    "desc_completa": "BRILHO ITALIA BROWN 1570",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 800,
-    "dt_saida": "2026-08-11",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "7788",
-    "produto": "17027",
-    "desc_completa": "NAPA TRANÇADA EVORA NATURAL",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 400,
-    "dt_saida": "2026-08-12",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "7799",
-    "produto": "14295",
-    "desc_completa": "NAPA FLOATHER NATURE PU 1.0 BRANCO 99",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 1000,
-    "dt_saida": "2026-08-17",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "7813",
-    "produto": "16776",
-    "desc_completa": "NOBUCK TUNISIA ALECRIM 1491",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 400,
-    "dt_saida": "2026-08-14",
     "abreviacao": ""
   },
   {
@@ -226,16 +176,6 @@
     "desc_completa": "NAPA CALF PU 0.9 MOCCA 1398",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 800,
-    "dt_saida": "2026-08-19",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "7885",
-    "produto": "13172",
-    "desc_completa": "NOBUCK TUNISIA PU 1.2 CHOCOLATE 1271",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 452,
     "dt_saida": "2026-08-19",
     "abreviacao": ""
   },
