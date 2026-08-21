@@ -1,5 +1,5 @@
 {
-  "importadoEm": "2026-08-20T09:11:32.409Z",
+  "importadoEm": "2026-08-21T09:11:31.234Z",
   "pastaEntrada": "/home/runner/work/Dashboard-Smart-Group-Analytics/Dashboard-Smart-Group-Analytics/_automacao/entrada-relatorios",
   "modo": "ATUALIZACAO_PARCIAL_PROTEGIDA",
   "status": "OK",
@@ -8,10 +8,10 @@
       "arquivo": "ESTOQUE.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 2668,
-      "linhasValidas": 2667,
+      "linhasOriginais": 2674,
+      "linhasValidas": 2673,
       "produtosDistintos": 852,
-      "quantidade": 483186.9499999999
+      "quantidade": 481395.2499999999
     },
     "COMPRAS": {
       "arquivo": "COMPRAS.xlsx",
@@ -26,40 +26,40 @@
       "arquivo": "CONSUMO.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 13943,
-      "linhasValidas": 13943,
-      "produtosDistintos": 1475,
-      "quantidade": 1800543.4210000052
+      "linhasOriginais": 13793,
+      "linhasValidas": 13793,
+      "produtosDistintos": 1437,
+      "quantidade": 1873126.091000005
     },
     "OP": {
       "arquivo": "OP.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 38,
-      "linhasValidas": 38,
-      "produtosDistintos": 35,
-      "quantidade": 13331
+      "linhasOriginais": 35,
+      "linhasValidas": 35,
+      "produtosDistintos": 33,
+      "quantidade": 12018
     },
     "VENDAS": {
       "arquivo": "VENDAS.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 5722,
-      "linhasValidas": 5722,
+      "linhasOriginais": 5753,
+      "linhasValidas": 5753,
       "produtosDistintos": 585,
-      "quantidade": 687332.5
+      "quantidade": 689159.4999999999
     },
     "PEDIDOS_EM_ABERTO": {
       "arquivo": "PEDIDOS EM ABERTO.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 341,
-      "linhasValidas": 340,
-      "produtosDistintos": 239,
-      "quantidade": 78715.79999999999,
-      "valor": 1142095.49,
-      "pedidosDistintos": 158,
-      "clientesDistintos": 46
+      "linhasOriginais": 343,
+      "linhasValidas": 342,
+      "produtosDistintos": 225,
+      "quantidade": 78387.7,
+      "valor": 1116616.0299999998,
+      "pedidosDistintos": 152,
+      "clientesDistintos": 45
     },
     "ESTOQUEBR": {
       "arquivo": "ESTOQUEBR.xlsx",
@@ -68,25 +68,25 @@
       "linhasOriginais": 889,
       "linhasValidas": 889,
       "produtosDistintos": 521,
-      "quantidade": 40620.4
+      "quantidade": 39792.4
     },
     "OPBR": {
       "arquivo": "OPBR.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 29,
-      "linhasValidas": 29,
-      "produtosDistintos": 24,
-      "quantidade": 10867.7
+      "linhasOriginais": 23,
+      "linhasValidas": 23,
+      "produtosDistintos": 21,
+      "quantidade": 7645.700000000001
     },
     "VENDASBR": {
       "arquivo": "VENDASBR.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 1698,
-      "linhasValidas": 1698,
+      "linhasOriginais": 1706,
+      "linhasValidas": 1706,
       "produtosDistintos": 342,
-      "quantidade": 609336.3700000001
+      "quantidade": 611680.8700000001
     }
   },
   "totais": {
