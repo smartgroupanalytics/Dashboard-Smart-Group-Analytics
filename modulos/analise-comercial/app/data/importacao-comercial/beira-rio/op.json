@@ -161,26 +161,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "7850",
-    "produto": "17467",
-    "desc_completa": "NAPA MARSELHA BLUSH 1562",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 400,
-    "dt_saida": "2026-08-19",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "7884",
-    "produto": "9100083",
-    "desc_completa": "NAPA CALF PU 0.9 MOCCA 1398",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 800,
-    "dt_saida": "2026-08-19",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "7892",
     "produto": "9873",
     "desc_completa": "METALIZADO NANCY PU 1.0 DOURADO",
@@ -227,6 +207,46 @@
     "grupo": "BEIRA RIO",
     "qtd_produzir": 1000,
     "dt_saida": "2026-08-24",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "7921",
+    "produto": "16122",
+    "desc_completa": "NAPA NEW NANCY NUDE 658",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 400,
+    "dt_saida": "2026-08-24",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "7941",
+    "produto": "17446",
+    "desc_completa": "VERNIZ LONDON ALFAZEMA 1497",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 150,
+    "dt_saida": "2026-08-25",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "7942",
+    "produto": "13605",
+    "desc_completa": "METALIZADO NANCY PU 1.0 BRONZE 1402",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 200,
+    "dt_saida": "2026-08-25",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "7943",
+    "produto": "9516",
+    "desc_completa": "VERNIZ LONDON 1.0 ROSA 942",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 50,
+    "dt_saida": "2026-08-21",
     "abreviacao": ""
   }
 ]
