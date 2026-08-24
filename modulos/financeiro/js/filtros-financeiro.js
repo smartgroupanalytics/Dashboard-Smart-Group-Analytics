@@ -5,6 +5,11 @@ const filtroPessoas = {
     selecionadas: new Set()
 };
 
+const filtroBancos = {
+    opcoes: [],
+    selecionadas: new Set()
+};
+
 /* Filtros da Visão Geral. */
 
 function configurarPainelFiltros() {
@@ -18,6 +23,7 @@ function configurarPainelFiltros() {
     if (!btnAbrir || !btnFechar || !painel || !overlay) return;
 
     configurarMultiselectPessoas();
+    configurarMultiselectBancos();
 
     const abrir = () => {
         painel.classList.add("aberto");
@@ -41,6 +47,7 @@ function configurarPainelFiltros() {
         btnLimpar.addEventListener("click", () => {
             formulario.reset();
             marcarTodasPessoas(false);
+            marcarTodosBancos(false);
             aplicarFiltrosDashboard();
         });
     }
@@ -52,6 +59,79 @@ function configurarPainelFiltros() {
             fechar();
         });
     }
+}
+
+function configurarMultiselectBancos() {
+    const botao = document.getElementById("multiselectBancosBotao");
+    const painel = document.getElementById("multiselectBancosPainel");
+    const todos = document.getElementById("checkboxTodosBancos");
+    if (!botao || !painel) return;
+
+    botao.addEventListener("click", () => {
+        const abrir = painel.hidden;
+        painel.hidden = !abrir;
+        botao.setAttribute("aria-expanded", String(abrir));
+    });
+    document.getElementById("btnMarcarTodosBancos")?.addEventListener("click", () => marcarTodosBancos());
+    document.getElementById("btnDesmarcarTodosBancos")?.addEventListener("click", desmarcarTodosBancos);
+    todos?.addEventListener("change", () => todos.checked ? marcarTodosBancos() : desmarcarTodosBancos());
+    document.addEventListener("click", (evento) => {
+        const componente = document.getElementById("multiselectBancos");
+        if (componente && !componente.contains(evento.target)) {
+            painel.hidden = true;
+            botao.setAttribute("aria-expanded", "false");
+        }
+    });
+}
+
+function renderizarListaBancosFiltro() {
+    const lista = document.getElementById("multiselectBancosLista");
+    if (!lista) return;
+    lista.innerHTML = "";
+    filtroBancos.opcoes.forEach((banco, indice) => {
+        const label = document.createElement("label");
+        label.className = "multiselect-pessoas-item";
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.id = `bancoFiltro_${indice}`;
+        checkbox.checked = filtroBancos.selecionadas.has(banco.id);
+        checkbox.addEventListener("change", () => {
+            checkbox.checked ? filtroBancos.selecionadas.add(banco.id) : filtroBancos.selecionadas.delete(banco.id);
+            atualizarResumoBancos();
+        });
+        const texto = document.createElement("span");
+        texto.textContent = banco.nome;
+        label.append(checkbox, texto);
+        lista.appendChild(label);
+    });
+}
+
+function marcarTodosBancos(renderizar = true) {
+    filtroBancos.selecionadas = new Set(filtroBancos.opcoes.map((banco) => banco.id));
+    if (renderizar) renderizarListaBancosFiltro();
+    atualizarResumoBancos();
+}
+
+function desmarcarTodosBancos() {
+    filtroBancos.selecionadas.clear();
+    renderizarListaBancosFiltro();
+    atualizarResumoBancos();
+}
+
+function atualizarResumoBancos() {
+    const total = filtroBancos.opcoes.length;
+    const selecionados = filtroBancos.selecionadas.size;
+    const todos = document.getElementById("checkboxTodosBancos");
+    if (todos) {
+        todos.checked = total > 0 && selecionados === total;
+        todos.indeterminate = selecionados > 0 && selecionados < total;
+    }
+    preencherTexto("multiselectBancosResumo", total === selecionados ? "Todos" : selecionados ? `${selecionados} selecionados` : "Nenhum selecionado");
+    preencherTexto("multiselectBancosContador", total === selecionados && total ? `Todos selecionados (${total})` : `${selecionados} de ${total} selecionados`);
+}
+
+function bancosSelecionadosNoFiltro() {
+    return new Set(filtroBancos.selecionadas);
 }
 
 function preencherFiltrosComDados() {
@@ -266,7 +346,8 @@ function aplicarFiltrosDashboard() {
         pessoasSelecionadas.size === filtroPessoas.opcoes.length;
 
     const representante = document.getElementById("representante")?.value || "";
-    const banco = document.getElementById("banco")?.value || "";
+    const bancosSelecionados = bancosSelecionadosNoFiltro();
+    const todosBancosSelecionados = filtroBancos.opcoes.length > 0 && bancosSelecionados.size === filtroBancos.opcoes.length;
     const plano = document.getElementById("planoFinanceiro")?.value || "";
     const situacao = document.getElementById("situacao")?.value || "";
     const tipoDocumento = document.getElementById("tipoDocumento")?.value || "";
@@ -288,15 +369,19 @@ function aplicarFiltrosDashboard() {
         if (situacao && item.situacao !== situacao) return false;
         if (tipoDocumento && item.tipoDocumento !== tipoDocumento) return false;
 
-        if (banco) {
+        if (!todosBancosSelecionados) {
             const identidade = identificarBanco(item.banco, "");
-            if (identidade.id !== banco) return false;
+            if (!bancosSelecionados.has(identidade.id)) return false;
         }
 
         return true;
     });
 
     atualizarDashboardCompleto(lancamentosFiltrados);
+
+    if (typeof atualizarContasPagar === "function") atualizarContasPagar(lancamentosFiltrados);
+    if (typeof atualizarFluxoCaixa === "function") atualizarFluxoCaixa(lancamentosFiltrados);
+    if (typeof renderizarBancos === "function") renderizarBancos(agruparBancosDosLancamentos(lancamentosFiltrados));
 
     if (typeof aplicarFiltrosContasReceber === "function") {
         aplicarFiltrosContasReceber();
@@ -323,25 +408,9 @@ function atualizarTextoPeriodo(inicio, fim) {
 }
 
 function preencherFiltroBancos(limparAntes = false) {
-    const select =
-        document.getElementById("banco");
-
-    if (!select) {
-        return;
-    }
-
-    if (limparAntes) {
-        select.innerHTML =
-            '<option value="">Todos</option>';
-    }
-
-    bancosFinanceiros.forEach((banco) => {
-        const option =
-            document.createElement("option");
-
-        option.value = banco.id;
-        option.textContent = banco.nome;
-
-        select.appendChild(option);
-    });
+    filtroBancos.opcoes = bancosFinanceiros.map((banco) => ({ id: banco.id, nome: banco.nome }));
+    if (limparAntes || !filtroBancos.selecionadas.size) marcarTodosBancos(false);
+    else filtroBancos.selecionadas = new Set([...filtroBancos.selecionadas].filter((id) => filtroBancos.opcoes.some((b) => b.id === id)));
+    renderizarListaBancosFiltro();
+    atualizarResumoBancos();
 }

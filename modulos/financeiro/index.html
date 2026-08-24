@@ -20,7 +20,7 @@
         href="financeiro.css?v=25"
     >
     <link rel="stylesheet" href="css/graficos-financeiros.css?v=13">
-    <link rel="stylesheet" href="css/bancos-financeiros.css?v=13">
+    <link rel="stylesheet" href="css/bancos-financeiros.css?v=14">
     <link rel="stylesheet" href="css/tabelas-financeiras.css?v=13">
     <link rel="stylesheet" href="css/contas-receber.css?v=20">
     <link rel="stylesheet" href="css/contas-pagar.css?v=21">
@@ -287,9 +287,9 @@
                     <article class="card-kpi kpi-ticket">
                         <div class="kpi-icone"><i class="fa-solid fa-receipt"></i></div>
                         <div class="kpi-conteudo">
-                            <span class="kpi-titulo">Ticket Médio</span>
-                            <strong class="kpi-valor" id="kpiTicketMedio">R$ 0,00</strong>
-                            <span class="kpi-legenda" id="legendaTicketMedio">Média por título recebido</span>
+                            <span class="kpi-titulo">Saldo Disponível Geral</span>
+                            <strong class="kpi-valor" id="kpiSaldoDisponivelGeral">R$ 0,00</strong>
+                            <span class="kpi-legenda" id="legendaSaldoDisponivelGeral">Soma dos bancos selecionados</span>
                         </div>
                     </article>
                 </section>
@@ -876,7 +876,7 @@
                     </div>
 
                     <div class="resumo-bancario-conteudo">
-                        <span>Total movimentado no período</span>
+                        <span>Saldo disponível dos bancos selecionados</span>
 
                         <strong id="saldoBancarioTotal">
                             R$ 0,00
@@ -1059,10 +1059,25 @@
             </div>
 
             <div class="campo-filtro">
-                <label for="banco">Banco / Conta</label>
-                <select id="banco" name="banco">
-                    <option value="">Todos</option>
-                </select>
+                <label>Banco / Conta</label>
+                <div class="multiselect-pessoas" id="multiselectBancos">
+                    <button type="button" class="multiselect-pessoas-botao" id="multiselectBancosBotao" aria-expanded="false">
+                        <span id="multiselectBancosResumo">Todos</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="multiselect-pessoas-painel" id="multiselectBancosPainel" hidden>
+                        <div class="multiselect-pessoas-acoes">
+                            <button type="button" id="btnMarcarTodosBancos">Marcar todos</button>
+                            <button type="button" id="btnDesmarcarTodosBancos">Desmarcar todos</button>
+                        </div>
+                        <label class="multiselect-pessoas-todos">
+                            <input type="checkbox" id="checkboxTodosBancos" checked>
+                            <span>Todos</span>
+                        </label>
+                        <div class="multiselect-pessoas-lista" id="multiselectBancosLista"></div>
+                        <div class="multiselect-pessoas-rodape"><span id="multiselectBancosContador">Todos selecionados</span></div>
+                    </div>
+                </div>
             </div>
 
             <div class="campo-filtro">
@@ -1155,7 +1170,7 @@
         <div class="painel-banco-conteudo">
 
             <div class="detalhe-saldo">
-                <span>Total movimentado no período</span>
+                <span>Saldo disponível</span>
                 <strong id="detalheBancoSaldo">R$ 0,00</strong>
             </div>
 
@@ -1247,6 +1262,23 @@
                 ></div>
             </section>
 
+            <section class="saldo-disponivel-card" id="saldoInvestimentoCard" aria-label="Saldo de investimento informado manualmente" hidden>
+                <div class="saldo-disponivel-topo">
+                    <div><span>Saldo de investimento</span><strong id="saldoInvestimentoAtual">R$ 0,00</strong></div>
+                    <span class="saldo-disponivel-semana" id="saldoInvestimentoSemana">Semana atual</span>
+                </div>
+                <label class="saldo-disponivel-campo" for="inputSaldoInvestimento">Digitar saldo de investimento</label>
+                <div class="saldo-disponivel-form">
+                    <input type="text" id="inputSaldoInvestimento" inputmode="decimal" placeholder="Ex.: 250.000,00" autocomplete="off">
+                    <button type="button" id="btnSalvarSaldoInvestimento">Salvar</button>
+                </div>
+                <button type="button" class="btn-limpar-saldo-disponivel" id="btnLimparSaldoInvestimento">
+                    <i class="fa-solid fa-trash-can"></i> Limpar investimento desta semana
+                </button>
+                <div class="saldo-disponivel-comparativo" id="saldoInvestimentoComparativo">Salve o saldo desta semana para iniciar o histórico.</div>
+                <div class="saldo-disponivel-historico" id="saldoInvestimentoHistorico"></div>
+            </section>
+
             <div class="movimentacoes-placeholder">
                 <i class="fa-solid fa-clock-rotate-left"></i>
 
@@ -1276,10 +1308,10 @@
 
     <script src="js/utilitarios-financeiros.js?v=7"></script>
     <script src="js/processador-financeiro.js?v=21"></script>
-    <script src="js/indicadores-financeiros.js?v=8"></script>
+    <script src="js/indicadores-financeiros.js?v=9"></script>
     <script src="js/graficos-financeiros.js?v=15"></script>
-    <script src="js/bancos-financeiros.js?v=10"></script>
-    <script src="js/filtros-financeiro.js?v=25"></script>
+    <script src="js/bancos-financeiros.js?v=11"></script>
+    <script src="js/filtros-financeiro.js?v=26"></script>
     <script src="js/importacao-planilha.js?v=7"></script>
     <script src="js/contas-receber.js?v=22"></script>
     <script src="js/contas-pagar.js?v=21"></script>

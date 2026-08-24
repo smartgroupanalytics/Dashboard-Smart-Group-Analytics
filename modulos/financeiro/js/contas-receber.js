@@ -144,8 +144,11 @@ function aplicarFiltrosContasReceber() {
         pessoasSelecionadas.size === filtroPessoas.opcoes.length;
     const representanteGeral =
         document.getElementById("representante")?.value || "";
-    const bancoGeral =
-        document.getElementById("banco")?.value || "";
+    const bancosGerais = typeof bancosSelecionadosNoFiltro === "function"
+        ? bancosSelecionadosNoFiltro()
+        : new Set();
+    const todosBancosGerais = typeof filtroBancos === "undefined" ||
+        (filtroBancos.opcoes.length > 0 && bancosGerais.size === filtroBancos.opcoes.length);
     const planoGeral =
         document.getElementById("planoFinanceiro")?.value || "";
     const situacaoGeral =
@@ -219,9 +222,9 @@ function aplicarFiltrosContasReceber() {
             item.tipoDocumento !== tipoDocumentoGeral
         ) return false;
 
-        if (bancoGeral) {
+        if (!todosBancosGerais) {
             const identidade = identificarBanco(item.banco, "");
-            if (identidade.id !== bancoGeral) return false;
+            if (!bancosGerais.has(identidade.id)) return false;
         }
 
         return true;

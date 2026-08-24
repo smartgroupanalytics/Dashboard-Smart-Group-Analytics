@@ -27,23 +27,21 @@ function atualizarKPIs(dados) {
     const emAtraso = somar(clientesAtrasados, "valorDocumento");
     const totalSaidas = somar(fornecedoresPagos, "valorLiquidoPago");
     const aPagar = somar(fornecedoresAbertos, "valorDocumento");
-    const ticketMedio = clientesPagos.length
-        ? totalRecebido / clientesPagos.length
-        : 0;
 
     preencherTexto("kpiTotalRecebido", formatarMoeda(totalRecebido));
     preencherTexto("kpiAReceber", formatarMoeda(aReceber));
     preencherTexto("kpiEmAtraso", formatarMoeda(emAtraso));
     preencherTexto("kpiTotalSaidas", formatarMoeda(totalSaidas));
     preencherTexto("kpiAPagar", formatarMoeda(aPagar));
-    preencherTexto("kpiTicketMedio", formatarMoeda(ticketMedio));
 
     preencherTexto("legendaTotalRecebido", `${clientesPagos.length} títulos recebidos`);
     preencherTexto("legendaAReceber", `${clientesAbertos.length} títulos em aberto`);
     preencherTexto("legendaEmAtraso", `${clientesAtrasados.length} títulos vencidos`);
     preencherTexto("legendaTotalSaidas", `${fornecedoresPagos.length} pagamentos realizados`);
     preencherTexto("legendaAPagar", `${fornecedoresAbertos.length} títulos em aberto`);
-    preencherTexto("legendaTicketMedio", "Total recebido ÷ títulos recebidos");
+    if (typeof atualizarSaldoDisponivelGeral === "function") {
+        atualizarSaldoDisponivelGeral();
+    }
 
     atualizarIndicadoresComplementares(clientes);
 }

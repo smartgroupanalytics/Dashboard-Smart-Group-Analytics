@@ -6,6 +6,7 @@ const CHAVE_SALDOS_DISPONIVEIS =
     "smart_financeiro_saldos_disponiveis_v1";
 
 let bancoDetalheAtual = null;
+const saldosDisponiveisAtuais = new Map();
 
 function configurarPainelBanco() {
     const painel =
@@ -58,6 +59,18 @@ function configurarPainelBanco() {
     const inputSaldo =
         document.getElementById("inputSaldoDisponivel");
 
+    document.getElementById("btnSalvarSaldoInvestimento")
+        ?.addEventListener("click", salvarSaldoInvestimentoAtual);
+    document.getElementById("btnLimparSaldoInvestimento")
+        ?.addEventListener("click", limparSaldoInvestimentoAtual);
+    document.getElementById("inputSaldoInvestimento")
+        ?.addEventListener("keydown", (evento) => {
+            if (evento.key === "Enter") {
+                evento.preventDefault();
+                salvarSaldoInvestimentoAtual();
+            }
+        });
+
     if (btnSalvar) {
         btnSalvar.addEventListener("click", salvarSaldoDisponivelAtual);
     }
@@ -95,10 +108,7 @@ function abrirDetalhesBanco(banco) {
     );
 
 
-    preencherTexto(
-        "detalheBancoSaldo",
-        formatarMoeda(banco.saldo)
-    );
+    preencherTexto("detalheBancoSaldo", formatarMoeda(saldosDisponiveisAtuais.get(obterChaveBancoSaldo(banco)) || 0));
 
     preencherTexto(
         "detalheBancoRecebido",
@@ -128,6 +138,7 @@ function abrirDetalhesBanco(banco) {
     }
 
     atualizarPainelSaldoDisponivel(banco);
+    atualizarPainelSaldoInvestimento(banco);
 
     painel.classList.add("aberto");
     overlay.classList.add("ativo");
@@ -140,7 +151,7 @@ function abrirDetalhesBanco(banco) {
     document.body.style.overflow = "hidden";
 }
 
-function renderizarBancos() {
+function renderizarBancos(listaBancos = bancosFinanceiros) {
     const grade =
         document.getElementById("gradeBancos");
 
@@ -156,7 +167,7 @@ function renderizarBancos() {
 
     grade.innerHTML = "";
 
-    bancosFinanceiros.forEach((banco) => {
+    listaBancos.forEach((banco) => {
         const card =
             document.createElement("button");
 
@@ -181,8 +192,8 @@ function renderizarBancos() {
 
 
             <div class="banco-saldo">
-                <span>Total movimentado</span>
-                <strong>${formatarMoeda(banco.saldo)}</strong>
+                <span>Saldo disponível</span>
+                <strong data-saldo-banco="${escaparHtml(obterChaveBancoSaldo(banco))}">${formatarMoeda(saldosDisponiveisAtuais.get(obterChaveBancoSaldo(banco)) || 0)}</strong>
             </div>
 
             <div class="banco-rodape">
@@ -201,8 +212,8 @@ function renderizarBancos() {
     });
 
     const soma =
-        bancosFinanceiros.reduce(
-            (total, banco) => total + Number(banco.saldo || 0),
+        listaBancos.reduce(
+            (total, banco) => total + Number(saldosDisponiveisAtuais.get(obterChaveBancoSaldo(banco)) || 0),
             0
         );
 
@@ -213,8 +224,36 @@ function renderizarBancos() {
 
     if (quantidade) {
         quantidade.textContent =
-            `${bancosFinanceiros.length} bancos carregados`;
+            `${listaBancos.length} bancos selecionados`;
     }
+
+    carregarSaldosDisponiveisGerais(listaBancos);
+}
+
+async function carregarSaldosDisponiveisGerais(listaBancos = bancosFinanceiros) {
+    await Promise.all(listaBancos.map(async (banco) => {
+        try {
+            const registros = await obterSaldosBanco(banco);
+            const ultimo = registros[registros.length - 1];
+            saldosDisponiveisAtuais.set(obterChaveBancoSaldo(banco), Number(ultimo?.valor || 0));
+        } catch (erro) {
+            console.warn("Saldo disponível não carregado:", banco.nome, erro);
+        }
+    }));
+    listaBancos.forEach((banco) => {
+        document.querySelectorAll(`[data-saldo-banco="${obterChaveBancoSaldo(banco)}"]`)
+            .forEach((el) => el.textContent = formatarMoeda(saldosDisponiveisAtuais.get(obterChaveBancoSaldo(banco)) || 0));
+    });
+    atualizarSaldoDisponivelGeral(listaBancos);
+}
+
+function atualizarSaldoDisponivelGeral(listaBancos) {
+    const selecionados = typeof bancosSelecionadosNoFiltro === "function" ? bancosSelecionadosNoFiltro() : null;
+    const base = Array.isArray(listaBancos) ? listaBancos : bancosFinanceiros.filter((banco) => !selecionados || selecionados.has(banco.id));
+    const total = base.reduce((soma, banco) => soma + Number(saldosDisponiveisAtuais.get(obterChaveBancoSaldo(banco)) || 0), 0);
+    preencherTexto("kpiSaldoDisponivelGeral", formatarMoeda(total));
+    preencherTexto("saldoBancarioTotal", formatarMoeda(total));
+    preencherTexto("legendaSaldoDisponivelGeral", `${base.length} banco${base.length === 1 ? "" : "s"} selecionado${base.length === 1 ? "" : "s"}`);
 }
 
 function criarLogoBanco(banco, tamanho = "normal") {
@@ -291,6 +330,7 @@ async function salvarSaldoDisponivelAtual() {
         });
 
         await atualizarPainelSaldoDisponivel(bancoDetalheAtual);
+        await carregarSaldosDisponiveisGerais(bancosFinanceiros);
         return;
     }
 
@@ -301,6 +341,7 @@ async function salvarSaldoDisponivelAtual() {
     );
 
     await atualizarPainelSaldoDisponivel(bancoDetalheAtual);
+    await carregarSaldosDisponiveisGerais(bancosFinanceiros);
 }
 
 async function limparSaldoDisponivelAtual() {
@@ -334,6 +375,7 @@ async function limparSaldoDisponivelAtual() {
         }
 
         await atualizarPainelSaldoDisponivel(bancoDetalheAtual);
+        await carregarSaldosDisponiveisGerais(bancosFinanceiros);
     } catch (erro) {
         const comparativo =
             document.getElementById("saldoDisponivelComparativo");
@@ -446,6 +488,8 @@ async function atualizarPainelSaldoDisponivel(banco) {
         registroAtual
             ? formatarMoeda(registroAtual.valor)
             : "R$ 0,00";
+    saldosDisponiveisAtuais.set(obterChaveBancoSaldo(banco), Number(registroAtual?.valor || registros[registros.length - 1]?.valor || 0));
+    preencherTexto("detalheBancoSaldo", formatarMoeda(saldosDisponiveisAtuais.get(obterChaveBancoSaldo(banco)) || 0));
 
     if (!registroAtual) {
         comparativo.className = "saldo-disponivel-comparativo";
@@ -487,6 +531,73 @@ async function atualizarPainelSaldoDisponivel(banco) {
                 `)
                 .join("")
             : "";
+}
+
+function bancoPossuiInvestimento(banco) {
+    return ["sicoob-maxicredito", "sicoob-vale-sul"].includes(obterChaveBancoSaldo(banco));
+}
+
+function bancoInvestimentoVirtual(banco) {
+    return { id: `${obterChaveBancoSaldo(banco)}__investimento`, nome: `${banco.nome} - Investimento` };
+}
+
+async function atualizarPainelSaldoInvestimento(banco) {
+    const card = document.getElementById("saldoInvestimentoCard");
+    if (!card) return;
+    card.hidden = !bancoPossuiInvestimento(banco);
+    if (card.hidden) return;
+    const virtual = bancoInvestimentoVirtual(banco);
+    let registros = [];
+    try { registros = await obterSaldosBanco(virtual); } catch (erro) { registros = []; }
+    preencherPainelInvestimento(registros);
+}
+
+function preencherPainelInvestimento(registros) {
+    const semana = obterSemanaSaldoDisponivel();
+    const atual = registros.find((r) => r.semana === semana.chave);
+    const anteriores = registros.filter((r) => r.semana < semana.chave);
+    const anterior = anteriores[anteriores.length - 1];
+    const input = document.getElementById("inputSaldoInvestimento");
+    if (input) input.value = atual ? formatarValorParaInputSaldo(atual.valor) : "";
+    preencherTexto("saldoInvestimentoAtual", formatarMoeda(atual?.valor || 0));
+    preencherTexto("saldoInvestimentoSemana", atual ? `Registrado em ${formatarDataSaldo(atual)}` : semana.rotulo);
+    const comparativo = document.getElementById("saldoInvestimentoComparativo");
+    if (comparativo) {
+        comparativo.className = "saldo-disponivel-comparativo";
+        if (!atual) comparativo.textContent = "Salve o saldo desta semana para iniciar o histórico.";
+        else if (!anterior) comparativo.textContent = "Saldo salvo. Na próxima semana o painel mostrará a comparação.";
+        else {
+            const diferenca = atual.valor - anterior.valor;
+            comparativo.className += ` ${diferenca >= 0 ? "positivo" : "negativo"}`;
+            comparativo.innerHTML = `<span>Comparado com ${formatarDataSaldo(anterior)}</span><strong>${formatarMoeda(diferenca)}</strong>`;
+        }
+    }
+    const historico = document.getElementById("saldoInvestimentoHistorico");
+    if (historico) historico.innerHTML = registros.slice().reverse().map((r) => `<div class="saldo-disponivel-linha"><span>${formatarDataSaldo(r)}</span><strong>${formatarMoeda(r.valor)}</strong></div>`).join("");
+}
+
+async function salvarSaldoInvestimentoAtual() {
+    if (!bancoDetalheAtual || !bancoPossuiInvestimento(bancoDetalheAtual)) return;
+    const input = document.getElementById("inputSaldoInvestimento");
+    const valor = converterValorSaldoDisponivel(input?.value);
+    if (!Number.isFinite(valor)) { input?.classList.add("saldo-disponivel-erro"); input?.focus(); return; }
+    input.classList.remove("saldo-disponivel-erro");
+    const virtual = bancoInvestimentoVirtual(bancoDetalheAtual);
+    const semana = obterSemanaSaldoDisponivel();
+    if (window.financeiroSaldosFirestore?.salvarSaldoDisponivel) {
+        await window.financeiroSaldosFirestore.salvarSaldoDisponivel({ bancoId: virtual.id, bancoNome: virtual.nome, semana: semana.chave, rotuloSemana: semana.rotulo, valor });
+    } else salvarSaldoDisponivelLocal(virtual.id, semana, valor);
+    await atualizarPainelSaldoInvestimento(bancoDetalheAtual);
+}
+
+async function limparSaldoInvestimentoAtual() {
+    if (!bancoDetalheAtual || !bancoPossuiInvestimento(bancoDetalheAtual)) return;
+    if (!window.confirm("Deseja limpar o saldo de investimento desta semana?")) return;
+    const virtual = bancoInvestimentoVirtual(bancoDetalheAtual);
+    const semana = obterSemanaSaldoDisponivel();
+    if (window.financeiroSaldosFirestore?.excluirSaldoDisponivel) await window.financeiroSaldosFirestore.excluirSaldoDisponivel(virtual.id, semana.chave);
+    else excluirSaldoDisponivelLocal(virtual.id, semana.chave);
+    await atualizarPainelSaldoInvestimento(bancoDetalheAtual);
 }
 
 function formatarDataSaldo(registro) {
