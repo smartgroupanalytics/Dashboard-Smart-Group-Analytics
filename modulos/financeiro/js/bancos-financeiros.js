@@ -560,7 +560,10 @@ function preencherPainelInvestimento(registros) {
     const input = document.getElementById("inputSaldoInvestimento");
     if (input) input.value = atual ? formatarValorParaInputSaldo(atual.valor) : "";
     preencherTexto("saldoInvestimentoAtual", formatarMoeda(atual?.valor || 0));
-    preencherTexto("saldoInvestimentoSemana", atual ? `Registrado em ${formatarDataSaldo(atual)}` : semana.rotulo);
+    preencherTexto(
+        "saldoInvestimentoSemana",
+        atual ? `Registrado em ${formatarDataSaldo(atual)}` : "Sem registro"
+    );
     const comparativo = document.getElementById("saldoInvestimentoComparativo");
     if (comparativo) {
         comparativo.className = "saldo-disponivel-comparativo";
@@ -592,7 +595,7 @@ async function salvarSaldoInvestimentoAtual() {
 
 async function limparSaldoInvestimentoAtual() {
     if (!bancoDetalheAtual || !bancoPossuiInvestimento(bancoDetalheAtual)) return;
-    if (!window.confirm("Deseja limpar o saldo de investimento desta semana?")) return;
+    if (!window.confirm("Deseja limpar o saldo de investimento registrado?")) return;
     const virtual = bancoInvestimentoVirtual(bancoDetalheAtual);
     const semana = obterSemanaSaldoDisponivel();
     if (window.financeiroSaldosFirestore?.excluirSaldoDisponivel) await window.financeiroSaldosFirestore.excluirSaldoDisponivel(virtual.id, semana.chave);
