@@ -245,7 +245,8 @@ function verificarMenuAdministracao(
   const podeVerAdministracao =
     administrador ||
     modulos.usuarios === true ||
-    modulos.configuracoes === true;
+    modulos.configuracoes === true ||
+    modulos.assinaturas === true;
 
   if (tituloAdministracao) {
     tituloAdministracao.style.display =

@@ -14,6 +14,7 @@ const mapaPermissoes = {
     "analise-comercial": "analise-comercial",
     comex: "comex",
     rh: "rh",
+    assinaturas: "assinaturas",
     usuarios: "usuarios",
     permissoes: "usuarios",
     logs: "usuarios",
@@ -178,6 +179,25 @@ case "rh":
             src="modulos/rh/index.html?v=1"
             class="iframe-modulo"
             title="Módulo de Recursos Humanos"
+            frameborder="0">
+        </iframe>
+    `;
+
+break;
+
+
+case "assinaturas":
+
+    titulo.innerText = "Assinaturas e Licenças";
+
+    subtitulo.innerText =
+    "Controle de vencimentos, custos, licenças e renovações.";
+
+    conteudo.innerHTML = `
+        <iframe
+            src="modulos/assinaturas/index.html?v=1"
+            class="iframe-modulo"
+            title="Módulo Assinaturas e Licenças"
             frameborder="0">
         </iframe>
     `;
@@ -418,6 +438,13 @@ function gerarCardsDashboardPermitidos() {
                 "Consulte perfis, treinamentos e matrizes de habilidades."
         },
         {
+            modulo: "assinaturas",
+            icone: "fa-solid fa-tags",
+            titulo: "Assinaturas e Licenças",
+            descricao:
+                "Controle vencimentos, custos e renovações de licenças."
+        },
+        {
             modulo: "usuarios",
             icone: "fa-solid fa-shield-halved",
             titulo: "Controle de Acesso",
@@ -535,6 +562,11 @@ const modulosBusca = [
         nome: "Recursos Humanos",
         descricao: "Perfis, treinamentos e matriz de habilidades",
         modulo: "rh"
+    },
+    {
+        nome: "Assinaturas e Licenças",
+        descricao: "Vencimentos, custos, licenças e renovações",
+        modulo: "assinaturas"
     }
 ];
 

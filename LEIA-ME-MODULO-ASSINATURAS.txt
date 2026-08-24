@@ -1,0 +1,45 @@
+SMART GROUP ANALYTICS — MÓDULO ASSINATURAS E LICENÇAS
+
+O módulo foi adicionado de forma isolada. Nenhum cálculo ou regra interna dos
+módulos Estoque, Vendas, Financeiro, Compras, Análise Comercial, COMEX ou RH foi alterado.
+
+NOVOS ARQUIVOS
+- modulos/assinaturas/index.html
+- modulos/assinaturas/assinaturas.css
+- modulos/assinaturas/assinaturas.js
+- ADICIONAR-NAS-REGRAS-FIRESTORE-ASSINATURAS.txt
+- LEIA-ME-MODULO-ASSINATURAS.txt
+
+INTEGRAÇÕES MÍNIMAS NO PORTAL PRINCIPAL
+- index.html: apenas novo item de menu e novo card.
+- app.js: apenas rota, pesquisa e permissão do novo módulo.
+- auth-guard.js: Administração também aparece quando o usuário possui apenas a
+  permissão de Assinaturas.
+
+CONTROLE DE ACESSO
+- O primeiro administrador autorizado abre o módulo e define seu próprio UID
+  como "editor principal".
+- Somente o editor principal vê os botões de cadastro, edição, renovação,
+  exclusão e Gerenciar acessos.
+- Usuários liberados pelo editor recebem modulos.assinaturas=true e entram em
+  modo somente visualização.
+- As regras do Firestore incluídas no projeto reforçam a restrição no banco.
+
+ALERTAS VISUAIS
+- Vencido: data anterior a hoje.
+- Urgente: 0 a 15 dias.
+- Atenção: 16 a 60 dias.
+- Normal: acima de 60 dias.
+- Cards mostram vencimentos em 30 e 60 dias.
+
+CUSTO ANUAL ESTIMADO
+- Mensal: valor x 12
+- Trimestral: valor x 4
+- Semestral: valor x 2
+- Anual: valor x 1
+- Bienal: valor x 0,5
+- Pagamento único: não entra na estimativa anual recorrente.
+
+SEGURANÇA
+Não cadastre senhas, MFA, códigos de recuperação ou chaves secretas no módulo.
+Use apenas e-mail da conta e link do portal do fornecedor quando necessário.

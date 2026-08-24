@@ -181,6 +181,17 @@
         >
 
             <a
+                data-modulo="assinaturas"
+                onclick="abrirModulo('assinaturas', this)"
+            >
+
+                <i class="fa-solid fa-tags"></i>
+
+                Assinaturas e Licenças
+
+            </a>
+
+            <a
                 data-modulo="usuarios"
                 onclick="abrirModulo('usuarios', this)"
             >
@@ -673,6 +684,32 @@
 
                     <div
                         class="card-home"
+                        data-modulo="assinaturas"
+                        role="button"
+                        tabindex="0"
+                        onclick="abrirModulo(
+                            'assinaturas',
+                            document.querySelector(
+                                '.menu a[data-modulo=&quot;assinaturas&quot;]'
+                            )
+                        )"
+                    >
+
+                        <i class="fa-solid fa-tags"></i>
+
+                        <h3>
+                            Assinaturas e Licenças
+                        </h3>
+
+                        <p>
+                            Controle vencimentos, custos e renovações de licenças.
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        class="card-home"
                         data-modulo="usuarios"
                         role="button"
                         tabindex="0"
@@ -718,11 +755,11 @@
          SCRIPTS
     ================================================== -->
 
-    <script src="app.js?v=14"></script>
+    <script src="app.js?v=15"></script>
 
     <script
         type="module"
-        src="auth-guard.js?v=4"
+        src="auth-guard.js?v=5"
     ></script>
 
     <script

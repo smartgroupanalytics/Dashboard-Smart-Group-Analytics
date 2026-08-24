@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assinaturas e Licenças</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="assinaturas.css?v=1">
+  <style>html { visibility: hidden; }</style>
+</head>
+<body>
+  <div class="assinaturas-app">
+    <header class="cabecalho-modulo">
+      <div class="titulo-modulo">
+        <div class="icone-titulo"><i class="fa-solid fa-tags"></i></div>
+        <div>
+          <h1>Assinaturas e Licenças</h1>
+          <p>Controle de domínios, softwares, serviços, certificados e contratos recorrentes.</p>
+        </div>
+      </div>
+      <div class="acoes-cabecalho">
+        <button class="btn secundario somente-editor" id="btnAcessos" type="button" hidden>
+          <i class="fa-solid fa-user-shield"></i> Gerenciar acessos
+        </button>
+        <button class="btn primario somente-editor" id="btnNovaAssinatura" type="button" hidden>
+          <i class="fa-solid fa-plus"></i> Nova assinatura
+        </button>
+      </div>
+    </header>
+
+    <section class="aviso-editor" id="avisoDefinirEditor" hidden>
+      <div>
+        <strong><i class="fa-solid fa-lock"></i> Defina o editor principal</strong>
+        <p>O editor principal será o único usuário autorizado a cadastrar, alterar, renovar ou excluir assinaturas.</p>
+      </div>
+      <button class="btn primario" id="btnDefinirEditor" type="button">Usar meu usuário como editor principal</button>
+    </section>
+
+    <section class="barra-perfil">
+      <div>
+        <span class="rotulo-perfil">MODO DE ACESSO</span>
+        <strong id="modoAcesso">Carregando...</strong>
+      </div>
+      <div class="legenda-alertas">
+        <span><i class="bolinha normal"></i> Normal</span>
+        <span><i class="bolinha atencao"></i> Até 60 dias</span>
+        <span><i class="bolinha urgente"></i> Até 15 dias</span>
+        <span><i class="bolinha vencido"></i> Vencido</span>
+      </div>
+    </section>
+
+    <main class="conteudo-modulo">
+      <section class="grade-kpis" aria-label="Indicadores de assinaturas">
+        <article class="kpi kpi-azul"><div class="kpi-icone"><i class="fa-solid fa-file-contract"></i></div><div><span>Assinaturas ativas</span><strong id="kpiAtivas">0</strong><small>Cadastros não vencidos</small></div></article>
+        <article class="kpi kpi-amarelo"><div class="kpi-icone"><i class="fa-regular fa-clock"></i></div><div><span>Vencendo em 30 dias</span><strong id="kpi30">0</strong><small>Renovações próximas</small></div></article>
+        <article class="kpi kpi-laranja"><div class="kpi-icone"><i class="fa-regular fa-calendar"></i></div><div><span>Vencendo em 60 dias</span><strong id="kpi60">0</strong><small>Planeje com antecedência</small></div></article>
+        <article class="kpi kpi-vermelho"><div class="kpi-icone"><i class="fa-solid fa-triangle-exclamation"></i></div><div><span>Vencidas</span><strong id="kpiVencidas">0</strong><small>Precisam de atenção</small></div></article>
+        <article class="kpi kpi-verde"><div class="kpi-icone"><i class="fa-solid fa-sack-dollar"></i></div><div><span>Custo anual estimado</span><strong id="kpiCusto">R$ 0,00</strong><small>Conversão das recorrências</small></div></article>
+      </section>
+
+      <section class="grade-principal">
+        <div class="painel tabela-painel">
+          <div class="painel-cabecalho">
+            <div><h2>Lista de Assinaturas</h2><p id="resumoLista">0 registros</p></div>
+            <button class="btn icone" id="btnAtualizar" type="button" title="Atualizar dados"><i class="fa-solid fa-rotate"></i></button>
+          </div>
+          <div class="filtros">
+            <label class="campo-filtro busca"><i class="fa-solid fa-magnifying-glass"></i><input id="filtroBusca" type="search" placeholder="Buscar assinatura, fornecedor..."></label>
+            <select id="filtroStatus" class="campo-filtro"><option value="">Todos os status</option><option value="normal">Normal</option><option value="atencao">Atenção</option><option value="urgente">Urgente</option><option value="vencido">Vencido</option></select>
+            <select id="filtroCategoria" class="campo-filtro"><option value="">Todas as categorias</option></select>
+            <select id="filtroFornecedor" class="campo-filtro"><option value="">Todos os fornecedores</option></select>
+          </div>
+          <div class="tabela-wrap">
+            <table>
+              <thead><tr><th>Assinatura</th><th>Fornecedor</th><th>Categoria</th><th>Vencimento</th><th>Dias restantes</th><th>Status</th><th>Valor anual</th><th class="col-acoes">Ações</th></tr></thead>
+              <tbody id="corpoTabela"></tbody>
+            </table>
+          </div>
+          <div class="estado-vazio" id="estadoVazio" hidden><i class="fa-regular fa-folder-open"></i><h3>Nenhuma assinatura encontrada</h3><p>Cadastre a primeira assinatura ou altere os filtros.</p></div>
+        </div>
+
+        <aside class="lateral">
+          <section class="painel proximos-painel"><div class="painel-cabecalho"><div><h2>Próximos Vencimentos</h2><p>Prioridade de renovação</p></div></div><div id="listaProximos" class="lista-proximos"></div></section>
+          <section class="painel categorias-painel"><div class="painel-cabecalho"><div><h2>Assinaturas por Categoria</h2><p>Distribuição dos cadastros</p></div></div><div class="categorias-resumo" id="categoriasResumo"></div></section>
+          <section class="painel custos-painel"><div class="painel-cabecalho"><div><h2>Custo Anual por Categoria</h2><p>Estimativa dos contratos</p></div></div><div id="custosCategoria" class="barras-custos"></div></section>
+        </aside>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal" id="modalAssinatura" hidden>
+    <section class="modal-card modal-grande" role="dialog" aria-modal="true" aria-labelledby="tituloModalAssinatura">
+      <header class="modal-header"><div><span class="rotulo-modal">ASSINATURAS E LICENÇAS</span><h2 id="tituloModalAssinatura">Nova assinatura</h2></div><button type="button" class="fechar-modal" data-fechar="modalAssinatura" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button></header>
+      <form id="formAssinatura">
+        <div class="form-grid">
+          <label class="campo campo-duplo"><span>Nome da assinatura *</span><input id="campoNome" required maxlength="120" placeholder="Ex.: Microsoft 365 Business Standard"></label>
+          <label class="campo"><span>Fornecedor *</span><input id="campoFornecedor" required maxlength="100" placeholder="Ex.: Microsoft"></label>
+          <label class="campo"><span>Categoria *</span><select id="campoCategoria" required><option value="Software">Software</option><option value="Domínio">Domínio</option><option value="Hospedagem">Hospedagem</option><option value="Segurança">Segurança</option><option value="Certificado Digital">Certificado Digital</option><option value="Telefonia">Telefonia</option><option value="Serviço">Serviço</option><option value="Contrato">Contrato</option><option value="Outros">Outros</option></select></label>
+          <label class="campo"><span>Plano / descrição</span><input id="campoPlano" maxlength="140" placeholder="Ex.: 10 usuários"></label>
+          <label class="campo"><span>Quantidade de licenças</span><input id="campoQuantidade" type="number" min="1" step="1" value="1"></label>
+          <label class="campo"><span>Valor da cobrança</span><input id="campoValor" type="number" min="0" step="0.01" placeholder="0,00"></label>
+          <label class="campo"><span>Periodicidade</span><select id="campoPeriodicidade"><option value="mensal">Mensal</option><option value="trimestral">Trimestral</option><option value="semestral">Semestral</option><option value="anual" selected>Anual</option><option value="bienal">Bienal</option><option value="unico">Pagamento único</option></select></label>
+          <label class="campo"><span>Data de vencimento *</span><input id="campoVencimento" type="date" required></label>
+          <label class="campo"><span>Responsável</span><input id="campoResponsavel" maxlength="100" placeholder="Ex.: TI"></label>
+          <label class="campo"><span>E-mail da conta</span><input id="campoEmailConta" type="email" maxlength="160" placeholder="usuario@empresa.com.br"></label>
+          <label class="campo"><span>Forma de pagamento</span><input id="campoPagamento" maxlength="100" placeholder="Ex.: Cartão corporativo"></label>
+          <label class="campo campo-duplo"><span>Link do portal / fornecedor</span><input id="campoUrl" type="url" maxlength="300" placeholder="https://..."></label>
+          <label class="switch-linha campo-duplo"><input id="campoRenovacaoAutomatica" type="checkbox"><span class="switch"></span><strong>Renovação automática</strong></label>
+          <label class="campo campo-duplo"><span>Observações</span><textarea id="campoObservacoes" rows="3" maxlength="1000" placeholder="Informações úteis sobre a assinatura. Não armazene senhas aqui."></textarea></label>
+        </div>
+        <div class="alerta-seguranca"><i class="fa-solid fa-shield-halved"></i><span>Não salve senhas, códigos MFA ou chaves de recuperação neste cadastro.</span></div>
+        <footer class="modal-footer"><button class="btn secundario" type="button" data-fechar="modalAssinatura">Cancelar</button><button class="btn primario" id="btnSalvarAssinatura" type="submit"><i class="fa-solid fa-floppy-disk"></i> Salvar</button></footer>
+      </form>
+    </section>
+  </div>
+
+  <div class="modal" id="modalAcessos" hidden>
+    <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="tituloModalAcessos">
+      <header class="modal-header"><div><span class="rotulo-modal">CONTROLE DE ACESSO</span><h2 id="tituloModalAcessos">Quem pode visualizar</h2></div><button type="button" class="fechar-modal" data-fechar="modalAcessos" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button></header>
+      <p class="texto-modal">Marque os usuários que poderão visualizar Assinaturas e Licenças. A edição continua restrita ao editor principal.</p>
+      <div class="busca-usuarios"><i class="fa-solid fa-magnifying-glass"></i><input id="buscaUsuarios" placeholder="Buscar usuário..."></div>
+      <div id="listaUsuariosAcesso" class="lista-usuarios-acesso"></div>
+      <footer class="modal-footer"><button class="btn secundario" type="button" data-fechar="modalAcessos">Cancelar</button><button class="btn primario" id="btnSalvarAcessos" type="button"><i class="fa-solid fa-floppy-disk"></i> Salvar acessos</button></footer>
+    </section>
+  </div>
+
+  <div class="modal" id="modalDetalhes" hidden>
+    <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="tituloDetalhes">
+      <header class="modal-header"><div><span class="rotulo-modal">DETALHES</span><h2 id="tituloDetalhes">Assinatura</h2></div><button type="button" class="fechar-modal" data-fechar="modalDetalhes" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button></header>
+      <div id="conteudoDetalhes" class="detalhes-grid"></div>
+      <footer class="modal-footer"><button class="btn secundario" type="button" data-fechar="modalDetalhes">Fechar</button></footer>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" aria-live="polite"></div>
+  <script type="module" src="assinaturas.js?v=1"></script>
+</body>
+</html>
