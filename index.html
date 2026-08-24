@@ -137,6 +137,17 @@
 
             </a>
 
+            <a
+                data-modulo="colecoes"
+                onclick="abrirModulo('colecoes', this)"
+            >
+
+                <i class="fa-solid fa-layer-group"></i>
+
+                Desempenho de Coleções
+
+            </a>
+
 
             <a
                 data-modulo="comex"
@@ -676,6 +687,31 @@
 
                         <p>
                             Acompanhe importações, invoices e entregas por material.
+                        </p>
+
+                    </div>
+
+                    <div
+                        class="card-home"
+                        data-modulo="colecoes"
+                        role="button"
+                        tabindex="0"
+                        onclick="abrirModulo(
+                            'colecoes',
+                            document.querySelector(
+                                '.menu a[data-modulo=&quot;colecoes&quot;]'
+                            )
+                        )"
+                    >
+
+                        <i class="fa-solid fa-layer-group"></i>
+
+                        <h3>
+                            Desempenho de Coleções
+                        </h3>
+
+                        <p>
+                            Analise amostras, conversão, faturamento e estoque das coleções.
                         </p>
 
                     </div>

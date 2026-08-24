@@ -12,6 +12,7 @@ const mapaPermissoes = {
     financeiro: "financeiro",
     compras: "compras",
     "analise-comercial": "analise-comercial",
+    colecoes: "colecoes",
     comex: "comex",
     rh: "rh",
     assinaturas: "assinaturas",
@@ -143,6 +144,24 @@ case "analise-comercial":
             src="modulos/analise-comercial/index.html?v=2"
             class="iframe-modulo"
             title="Módulo Análise Integrada Comercial"
+            frameborder="0">
+        </iframe>
+    `;
+
+break;
+
+case "colecoes":
+
+    titulo.innerText = "Desempenho de Coleções";
+
+    subtitulo.innerText =
+    "Amostras, conversão, faturamento e estoque por coleção.";
+
+    conteudo.innerHTML = `
+        <iframe
+            src="modulos/colecoes/index.html?v=1"
+            class="iframe-modulo"
+            title="Módulo Desempenho de Coleções"
             frameborder="0">
         </iframe>
     `;
