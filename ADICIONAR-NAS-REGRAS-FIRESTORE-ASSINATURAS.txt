@@ -1,0 +1,92 @@
+MÓDULO ASSINATURAS E LICENÇAS — REGRAS DO FIRESTORE
+
+IMPORTANTE
+- Adicione os blocos abaixo DENTRO de:
+
+  match /databases/{database}/documents {
+    ...
+  }
+
+- NÃO substitua as regras que já existem para usuários, RH, financeiro ou outros módulos.
+- O módulo usa a coleção "assinaturas" e o documento "configuracoes/assinaturas".
+
+------------------------------------------------------------------------
+
+function assinaturasUsuario() {
+  return get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data;
+}
+
+function assinaturasUsuarioAtivo() {
+  return request.auth != null
+    && assinaturasUsuario().ativo == true;
+}
+
+function assinaturasEhAdministrador() {
+  return assinaturasUsuarioAtivo()
+    && assinaturasUsuario().perfil == "administrador";
+}
+
+function assinaturasEditorUid() {
+  return get(/databases/$(database)/documents/configuracoes/assinaturas).data.editorUid;
+}
+
+function assinaturasEhEditor() {
+  return assinaturasUsuarioAtivo()
+    && exists(/databases/$(database)/documents/configuracoes/assinaturas)
+    && request.auth.uid == assinaturasEditorUid();
+}
+
+function assinaturasPodeVisualizar() {
+  return assinaturasEhEditor()
+    || (
+      assinaturasUsuarioAtivo()
+      && assinaturasUsuario().modulos.assinaturas == true
+    );
+}
+
+match /assinaturas/{assinaturaId} {
+  allow read: if assinaturasPodeVisualizar();
+  allow create, update, delete: if assinaturasEhEditor();
+}
+
+match /configuracoes/assinaturas {
+  // Usuários autenticados podem ler apenas para o módulo identificar
+  // quem é o editor principal. Este documento não deve guardar senhas.
+  allow read: if request.auth != null;
+
+  // Primeira configuração: um administrador define o editor principal.
+  allow create: if assinaturasEhAdministrador()
+    && !exists(/databases/$(database)/documents/configuracoes/assinaturas)
+    && request.resource.data.editorUid == request.auth.uid;
+
+  // Depois de definido, somente o próprio editor principal pode alterar.
+  allow update: if assinaturasEhEditor();
+  allow delete: if false;
+}
+
+------------------------------------------------------------------------
+
+ACESSO DOS OUTROS USUÁRIOS
+
+O editor principal usa o botão "Gerenciar acessos" dentro do novo módulo.
+O sistema grava no documento do usuário:
+
+  modulos.assinaturas = true
+
+Para isso, mantenha as regras atuais da coleção "usuarios" permitindo que o
+administrador autorizado atualize os usuários, como o módulo de Usuários já faz.
+
+------------------------------------------------------------------------
+
+PRIMEIRO ACESSO
+
+1. Publique o projeto com o novo módulo.
+2. Cole estas regras junto das regras existentes do Firestore e publique.
+3. Entre no Analytics com seu usuário administrador.
+4. Abra "Assinaturas e Licenças".
+5. Clique em "Usar meu usuário como editor principal".
+6. Depois disso, somente o UID registrado em configuracoes/assinaturas poderá
+   criar, editar, renovar, excluir e liberar visualizações.
+
+Se futuramente precisar trocar o editor principal, faça a troca de forma
+controlada diretamente no documento configuracoes/assinaturas no Firestore.
