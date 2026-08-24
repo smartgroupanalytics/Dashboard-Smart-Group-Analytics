@@ -157,18 +157,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "7604",
-    "produto": "11843",
-    "desc_completa": "BORGONHA PRETO",
-    "grupo": 39,
-    "subgrupo": 0,
-    "qtd_produzir": 77.5,
-    "dt_saida": "2026-07-31",
-    "centro_custo": 10,
-    "abreviacao": "REV 1"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "7623",
     "produto": "12398",
     "desc_completa": "LILLY PRETO",
@@ -212,20 +200,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-08-12",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "7688",
-    "produto": "11844",
-    "desc_completa": "BORGONHA PRATA",
-    "grupo": 39,
-    "subgrupo": 0,
-    "qtd_produzir": 500,
-    "dt_saida": "2026-08-12",
-    "centro_custo": 25,
-    "abreviacao": "TRANSFE"
+    "centro_custo": 1,
+    "abreviacao": "RECOB"
   },
   {
     "fonte_comercial": "STK",
@@ -236,8 +212,8 @@
     "subgrupo": 41,
     "qtd_produzir": 500,
     "dt_saida": "2026-08-13",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "centro_custo": 3,
+    "abreviacao": "GR 1"
   },
   {
     "fonte_comercial": "STK",
@@ -248,18 +224,6 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-08-13",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "7808",
-    "produto": "16577",
-    "desc_completa": "SAVOY GLAM PRATA",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 400,
-    "dt_saida": "2026-08-19",
     "centro_custo": 6,
     "abreviacao": "EST1"
   },
@@ -272,6 +236,18 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-08-19",
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "7811",
+    "produto": "15485",
+    "desc_completa": "HELIOS OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-08-14",
     "centro_custo": 0,
     "abreviacao": ""
   },
@@ -296,8 +272,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-08-21",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 1,
+    "abreviacao": "RECOB"
   },
   {
     "fonte_comercial": "STK",
@@ -318,22 +294,10 @@
     "desc_completa": "BERGAMO CARAMELO",
     "grupo": 39,
     "subgrupo": 41,
-    "qtd_produzir": 400,
+    "qtd_produzir": 8.5,
     "dt_saida": "2026-08-19",
-    "centro_custo": 7,
-    "abreviacao": "ESTAM"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "7871",
-    "produto": "12550",
-    "desc_completa": "LILLY NUDE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 200,
-    "dt_saida": "2026-08-19",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 10,
+    "abreviacao": "REV 1"
   },
   {
     "fonte_comercial": "STK",
@@ -342,10 +306,10 @@
     "desc_completa": "BORGONHA BROWN",
     "grupo": 39,
     "subgrupo": 41,
-    "qtd_produzir": 400,
+    "qtd_produzir": 3.5,
     "dt_saida": "2026-08-21",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "centro_custo": 10,
+    "abreviacao": "REV 1"
   },
   {
     "fonte_comercial": "STK",
@@ -373,30 +337,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "7899",
-    "produto": "16650",
-    "desc_completa": "NAPA BARI FOSCO CAFE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 300,
-    "dt_saida": "2026-08-24",
-    "centro_custo": 23,
-    "abreviacao": "RAMA"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "7900",
-    "produto": "16737",
-    "desc_completa": "NAPA BARI FOSCO CARAMELO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 200,
-    "dt_saida": "2026-08-24",
-    "centro_custo": 23,
-    "abreviacao": "RAMA"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "7914",
     "produto": "17420",
     "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
@@ -404,8 +344,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-08-26",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 1,
+    "abreviacao": "RECOB"
   },
   {
     "fonte_comercial": "STK",
@@ -416,6 +356,42 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-08-27",
+    "centro_custo": 6,
+    "abreviacao": "EST1"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "7934",
+    "produto": "11903",
+    "desc_completa": "NAPA MADRID BEGE - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "qtd_produzir": 400,
+    "dt_saida": "2026-08-24",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "7934",
+    "produto": "13167",
+    "desc_completa": "CORDOBA BEGE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 400,
+    "dt_saida": "2026-08-24",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "7942",
+    "produto": "6395",
+    "desc_completa": "BORGONHA BRONZE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-08-25",
     "centro_custo": 0,
     "abreviacao": ""
   }
