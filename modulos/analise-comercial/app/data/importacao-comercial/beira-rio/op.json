@@ -125,7 +125,7 @@
     "produto": "50008",
     "desc_completa": "CAMURÇA PARIS GLAM + FLANELA / CHOCOLATE 1271- DOURADO/PRETO",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 10,
+    "qtd_produzir": 4.5,
     "dt_saida": "2026-08-03",
     "abreviacao": ""
   },
@@ -141,41 +141,11 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "7824",
-    "produto": "30127",
-    "desc_completa": "CAMURÇA PARIS GLAM BRANCO OFF 526/ PRATA/ CRU 20",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 130.9,
-    "dt_saida": "2026-08-14",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "7825",
-    "produto": "30127",
-    "desc_completa": "CAMURÇA PARIS GLAM BRANCO OFF 526/ PRATA/ CRU 20",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 38.8,
-    "dt_saida": "2026-08-12",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "7892",
     "produto": "9873",
     "desc_completa": "METALIZADO NANCY PU 1.0 DOURADO",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 2000,
-    "dt_saida": "2026-08-21",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "7901",
-    "produto": "16703",
-    "desc_completa": "NAPA SEVILLE CAMEL 1165",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 1000,
     "dt_saida": "2026-08-21",
     "abreviacao": ""
   },
@@ -211,6 +181,16 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "7919",
+    "produto": "9100112",
+    "desc_completa": "NAPA MARSELHA OSTRA",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 700,
+    "dt_saida": "2026-08-25",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "7921",
     "produto": "16122",
     "desc_completa": "NAPA NEW NANCY NUDE 658",
@@ -231,22 +211,42 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "7942",
-    "produto": "13605",
-    "desc_completa": "METALIZADO NANCY PU 1.0 BRONZE 1402",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 200,
-    "dt_saida": "2026-08-25",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "7943",
     "produto": "9516",
     "desc_completa": "VERNIZ LONDON 1.0 ROSA 942",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 50,
     "dt_saida": "2026-08-21",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "7956",
+    "produto": "14863",
+    "desc_completa": "METALIZADO PITON SAARA  PRATA",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 400,
+    "dt_saida": "2026-08-27",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "7959",
+    "produto": "17711",
+    "desc_completa": "NAPA MALAGA CHOCOLATE 1271",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 400,
+    "dt_saida": "2026-08-27",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "7966",
+    "produto": "30087",
+    "desc_completa": "NAPA MARSELHA CHOCOLATE 1271",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 400,
+    "dt_saida": "2026-08-27",
     "abreviacao": ""
   }
 ]
