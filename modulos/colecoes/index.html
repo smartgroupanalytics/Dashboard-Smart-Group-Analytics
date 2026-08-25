@@ -161,6 +161,7 @@ max-width:280px;box-shadow:0 4px 18px rgba(0,0,0,.5);white-space:pre-line}
 <div class="card">
   <div class="chead"><div><h2>Tempo de conversão — amostra → 1ª venda real</h2>
   <div class="hint">Dias entre a solicitação da amostra e a primeira venda real (&gt;5m) do material ao cliente · respeita período, segmento e representante</div></div></div>
+  <div class="hint" id="chLTResumo" style="margin-bottom:6px"></div>
   <div id="chLT"></div>
 </div>
 <div class="card" style="border-color:#6b4f1d">
@@ -577,21 +578,39 @@ function tbComp(){
 }
 const LT=RAW.lt.map(r=>({mes:r[0],seg:r[1],orig:r[2],rep:r[3],tag:r[4],bk:r[5],n:r[6],dias:r[7]}));
 const BKS=['0-30','31-60','61-90','91-180','180+'];
+function bucketDias(d){return d<=30?'0-30':d<=60?'31-60':d<=90?'61-90':d<=180?'91-180':'180+'}
 function chLT(){
   const l=LT.filter(r=>inP(r.mes)&&F.segs.has(r.seg)&&F.origs.has(r.orig)&&F.tags.has(r.tag)&&(!F.rep||r.rep===F.rep));
   const cnt={},tot=l.reduce((s,r)=>s+r.n,0),dias=l.reduce((s,r)=>s+r.dias,0);
   BKS.forEach(b=>cnt[b]=0);l.forEach(r=>cnt[r.bk]+=r.n);
   const mx=Math.max.apply(null,BKS.map(b=>cnt[b]).concat([1]));
-  const W=560,H=200,P={l:44,r:10,t:26,b:26},bw=(W-P.l-P.r)/BKS.length*0.62;
+  document.getElementById('chLTResumo').textContent=fI(tot)+' conversões · média '+(tot?Math.round(dias/tot):0)+' dias · clique numa barra para ver quais';
+  const W=560,H=210,P={l:44,r:10,t:22,b:26},bw=(W-P.l-P.r)/BKS.length*0.62;
   const x=i=>P.l+(W-P.l-P.r)*(i+0.5)/BKS.length, y=v=>H-P.b-(H-P.t-P.b)*v/mx;
   let s='<svg viewBox="0 0 '+W+' '+H+'">';
-  s+='<text x="'+P.l+'" y="14" fill="#e6ebf2" font-size="12">'+fI(tot)+' conversões · média '+(tot?Math.round(dias/tot):0)+' dias</text>';
   BKS.forEach((b,i)=>{const v=cnt[b];
-    s+='<rect x="'+(x(i)-bw/2)+'" y="'+y(v)+'" width="'+bw+'" height="'+(y(0)-y(v))+'" fill="#4fc3f7" rx="3"><title>'+b+' dias · '+fI(v)+' conversões · '+(tot?Math.round(100*v/tot):0)+'%</title></rect>';
-    s+='<text x="'+x(i)+'" y="'+(y(v)-5)+'" fill="#8b98ab" font-size="10.5" text-anchor="middle">'+(tot?Math.round(100*v/tot):0)+'%</text>';
+    s+='<rect data-bk="'+b+'" style="cursor:pointer" x="'+(x(i)-bw/2)+'" y="'+y(v)+'" width="'+bw+'" height="'+(y(0)-y(v))+'" fill="#4fc3f7" rx="3"><title>'+b+' dias · '+fI(v)+' conversões · '+(tot?Math.round(100*v/tot):0)+'%</title></rect>';
+    s+='<text x="'+x(i)+'" y="'+(y(v)-6)+'" fill="#8b98ab" font-size="10.5" text-anchor="middle">'+(tot?Math.round(100*v/tot):0)+'%</text>';
     s+='<text x="'+x(i)+'" y="'+(H-8)+'" fill="#8b98ab" font-size="10.5" text-anchor="middle">'+b+'d</text>'});
   s+='</svg>';
-  document.getElementById('chLT').innerHTML=s;
+  const el=document.getElementById('chLT');
+  el.innerHTML=s;
+  el.querySelectorAll('rect[data-bk]').forEach(r=>r.onclick=()=>modalLeadTime(r.getAttribute('data-bk')));
+}
+function modalLeadTime(bk,lim){
+  lim=lim||'15';
+  const rows=DET.filter(r=>r.dias>=0&&bucketDias(r.dias)===bk&&inP(r.mes)&&F.segs.has(r.seg)&&F.origs.has(r.orig)&&F.tags.has(r.tag)&&(!F.rep||r.rep===F.rep));
+  rows.sort((a,b)=>a.dias-b.dias);
+  const limN=lim==='9999'?rows.length:+lim;
+  const shown=rows.slice(0,limN);
+  const opts=[['5','Top 5'],['10','Top 10'],['15','Top 15'],['20','Top 20'],['30','Top 30'],['9999','Todos ('+rows.length+')']];
+  const selHtml='<select onchange="modalLeadTime(\''+bk+'\',this.value)" style="margin-bottom:8px">'+opts.map(o=>'<option value="'+o[0]+'"'+(String(lim)===o[0]?' selected':'')+'>'+o[1]+'</option>').join('')+'</select>';
+  let h=selHtml+'<table><thead><tr><th>Material</th><th>Cor</th><th>Cliente</th><th>Data amostra</th><th>Dias até venda</th></tr></thead><tbody id="tbLT"></tbody></table>';
+  openModal(bk+' dias — amostra até a venda', rows.length+' conversões nesta faixa · recorte atual', h);
+  const tb=document.getElementById('tbLT');
+  shown.forEach(r=>{const tr=document.createElement('tr');tr.onclick=()=>modalCorCliente(r.fam,r.cor);
+    tr.innerHTML='<td style="text-align:left;cursor:pointer">'+r.fam+'</td><td>'+r.cor+'</td><td style="text-align:left">'+r.cli+'</td><td>'+dBR(r.d)+'</td><td>'+r.dias+'</td>';
+    tb.appendChild(tr)});
 }
 function tbOrf(){
   const rows=RAW.orfrows.filter(r=>inP(r[1])&&F.segs.has(r[2])&&F.tags.has(r[3])&&F.origs.has(r[5])&&(!F.rep||r[4]===F.rep));
