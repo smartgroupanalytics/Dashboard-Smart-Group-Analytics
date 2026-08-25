@@ -1,6 +1,6 @@
 {
-  "atualizadoEm": "2026-08-25T08:56:30.108Z",
-  "ultimaAtualizacaoValida": "2026-08-25T08:56:30.108Z",
+  "atualizadoEm": "2026-08-25T09:11:30.714Z",
+  "ultimaAtualizacaoValida": "2026-08-25T09:11:30.714Z",
   "status": "OK",
   "mensagem": "9 de 9 relatórios atualizados com sucesso.",
   "modo": "PARCIAL_SEGURO",
@@ -19,8 +19,8 @@
     {
       "arquivo": "COMPRAS.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-08-24T09:00:19.000Z",
-      "linhasValidas": 36,
+      "recebidoEm": "2026-08-25T09:00:20.000Z",
+      "linhasValidas": 37,
       "mensagem": "Atualizado com sucesso."
     },
     {
@@ -47,8 +47,8 @@
     {
       "arquivo": "PEDIDOS EM ABERTO.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-08-24T08:56:04.000Z",
-      "linhasValidas": 346,
+      "recebidoEm": "2026-08-25T08:56:05.000Z",
+      "linhasValidas": 362,
       "mensagem": "Atualizado com sucesso."
     },
     {
