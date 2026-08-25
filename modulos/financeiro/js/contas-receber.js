@@ -148,7 +148,8 @@ function aplicarFiltrosContasReceber() {
         ? bancosSelecionadosNoFiltro()
         : new Set();
     const todosBancosGerais = typeof filtroBancos === "undefined" ||
-        (filtroBancos.opcoes.length > 0 && bancosGerais.size === filtroBancos.opcoes.length);
+        filtroBancos.opcoes.length === 0 ||
+        bancosGerais.size === filtroBancos.opcoes.length;
     const planoGeral =
         document.getElementById("planoFinanceiro")?.value || "";
     const situacaoGeral =

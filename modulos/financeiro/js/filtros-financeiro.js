@@ -347,7 +347,13 @@ function aplicarFiltrosDashboard() {
 
     const representante = document.getElementById("representante")?.value || "";
     const bancosSelecionados = bancosSelecionadosNoFiltro();
-    const todosBancosSelecionados = filtroBancos.opcoes.length > 0 && bancosSelecionados.size === filtroBancos.opcoes.length;
+    /*
+     * Alguns relatórios do SIGER não preenchem banco/local de cobrança.
+     * Nesse caso não existem opções no filtro e a ausência de bancos deve
+     * significar "sem restrição", não "excluir todos os lançamentos".
+     */
+    const todosBancosSelecionados = filtroBancos.opcoes.length === 0 ||
+        bancosSelecionados.size === filtroBancos.opcoes.length;
     const plano = document.getElementById("planoFinanceiro")?.value || "";
     const situacao = document.getElementById("situacao")?.value || "";
     const tipoDocumento = document.getElementById("tipoDocumento")?.value || "";
