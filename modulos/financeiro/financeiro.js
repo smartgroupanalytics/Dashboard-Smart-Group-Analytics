@@ -8,6 +8,7 @@ let bancosFinanceiros = [];
 let lancamentosFinanceiros = [];
 let lancamentosFiltrados = [];
 let detalheKpiAtivo = "inadimplencia";
+let modoVisaoGeral = "todos";
 const graficosFinanceiros = {};
 
 document.addEventListener("DOMContentLoaded", iniciarModuloFinanceiro);
@@ -20,10 +21,26 @@ function iniciarModuloFinanceiro() {
     configurarImportacaoPlanilha();
     configurarDetalhesKPIs();
     configurarLimiteTopClientes();
+    configurarFiltroCenarioVisao();
     atualizarDataHora();
     carregarIndicadoresDemonstrativos();
     renderizarBancos();
     preencherFiltroBancos();
+}
+
+function configurarFiltroCenarioVisao() {
+    const botoes = document.querySelectorAll("[data-modo-visao]");
+    botoes.forEach((botao) => {
+        botao.addEventListener("click", () => {
+            modoVisaoGeral = botao.dataset.modoVisao || "todos";
+            botoes.forEach((item) => {
+                const ativo = item === botao;
+                item.classList.toggle("ativo", ativo);
+                item.setAttribute("aria-pressed", String(ativo));
+            });
+            atualizarDashboardCompleto(lancamentosFiltrados);
+        });
+    });
 }
 
 function configurarDetalhesKPIs() {
@@ -38,7 +55,7 @@ function configurarDetalhesKPIs() {
             item.setAttribute("aria-pressed", String(ativo));
         });
 
-        renderizarDetalhesIndicadorFinanceiro(lancamentosFiltrados);
+        renderizarDetalhesIndicadorFinanceiro(filtrarDadosModoVisao(lancamentosFiltrados));
 
         document.getElementById("detalhesIndicadorFinanceiro")
             ?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -74,11 +91,7 @@ function configurarLimiteTopClientes() {
     }
 
     seletor.addEventListener("change", () => {
-        const clientesPagos = lancamentosFiltrados.filter(
-            (item) => item.tipoCadastro === "cliente" && item.pago
-        );
-
-        renderizarTopClientes(clientesPagos);
+        atualizarDashboardCompleto(lancamentosFiltrados);
     });
 }
 

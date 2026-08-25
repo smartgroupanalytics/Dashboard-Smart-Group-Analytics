@@ -8,9 +8,17 @@ function carregarIndicadoresDemonstrativos() {
 }
 
 function atualizarDashboardCompleto(dados) {
-    atualizarKPIs(dados);
-    renderizarGraficos(dados);
-    renderizarDetalhesIndicadorFinanceiro(dados);
+    const dadosDoModo = filtrarDadosModoVisao(dados);
+    atualizarKPIs(dadosDoModo);
+    renderizarGraficos(dadosDoModo);
+    renderizarDetalhesIndicadorFinanceiro(dadosDoModo);
+}
+
+function filtrarDadosModoVisao(dados) {
+    const lista = Array.isArray(dados) ? dados : [];
+    if (modoVisaoGeral === "realizado") return lista.filter((item) => item.pago);
+    if (modoVisaoGeral === "previsto") return lista.filter((item) => !item.pago);
+    return lista;
 }
 
 function atualizarKPIs(dados) {

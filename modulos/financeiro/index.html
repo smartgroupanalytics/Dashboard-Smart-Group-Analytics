@@ -17,7 +17,7 @@
 
     <link
         rel="stylesheet"
-        href="financeiro.css?v=25"
+        href="financeiro.css?v=26"
     >
     <link rel="stylesheet" href="css/graficos-financeiros.css?v=13">
     <link rel="stylesheet" href="css/bancos-financeiros.css?v=14">
@@ -177,6 +177,12 @@
                         <h2>Visão Geral</h2>
                         <p>Indicadores e movimentações extraídos da planilha carregada.</p>
                     </div>
+                    <div class="filtro-cenario-visao" role="group" aria-label="Cenário da Visão Geral">
+                        <span>Exibir</span>
+                        <button type="button" class="ativo" data-modo-visao="todos">Todos</button>
+                        <button type="button" data-modo-visao="realizado">Realizado</button>
+                        <button type="button" data-modo-visao="previsto">Previsto</button>
+                    </div>
                     <span class="periodo-dashboard" id="periodoDashboard">
                         Carregue uma planilha para visualizar os dados
                     </span>
@@ -298,8 +304,8 @@
                     <article class="card-grafico card-grafico-largo">
                         <div class="card-grafico-header">
                             <div>
-                                <h3>Fluxo de Caixa</h3>
-                                <p>Recebimentos de clientes e pagamentos a fornecedores por mês</p>
+                                <h3 id="tituloFluxoVisao">Fluxo de Caixa</h3>
+                                <p id="descricaoFluxoVisao">Realizado e previsto por mês</p>
                             </div>
                         </div>
                         <div class="grafico-container grafico-alto">
@@ -310,8 +316,8 @@
                     <article class="card-grafico">
                         <div class="card-grafico-header">
                             <div>
-                                <h3>Recebimentos por Dia</h3>
-                                <p>Valores recebidos conforme a data de pagamento</p>
+                                <h3 id="tituloRecebimentosDia">Entradas por Dia</h3>
+                                <p id="descricaoRecebimentosDia">Pagamento para realizado e vencimento para previsto</p>
                             </div>
                         </div>
                         <div class="grafico-container grafico-alto">
@@ -325,7 +331,7 @@
                         <div class="card-grafico-header">
                             <div>
                                 <h3 id="tituloTopClientes">Top 10 Clientes por Pagamentos</h3>
-                                <p>Clientes com maior valor efetivamente pago no período</p>
+                                <p id="descricaoTopClientes">Clientes com maiores valores realizados e previstos</p>
                             </div>
                             <label class="controle-ranking" for="limiteTopClientes">
                                 <span>Exibir</span>
@@ -345,7 +351,7 @@
                     <article class="card-grafico">
                         <div class="card-grafico-header">
                             <div>
-                                <h3>Recebimentos por Banco</h3>
+                                <h3 id="tituloRecebimentosBanco">Entradas por Banco</h3>
                                 <p>Somente registros com banco informado</p>
                             </div>
                         </div>
@@ -357,8 +363,8 @@
                     <article class="card-grafico">
                         <div class="card-grafico-header">
                             <div>
-                                <h3>Recebimentos por Plano Financeiro</h3>
-                                <p>Agrupados pela conta de planejamento</p>
+                                <h3 id="tituloPlanoFinanceiroVisao">Entradas por Plano Financeiro</h3>
+                                <p id="descricaoPlanoFinanceiroVisao">Realizado e previsto pela conta de planejamento</p>
                             </div>
                         </div>
                         <div class="grafico-container">
@@ -1308,15 +1314,15 @@
 
     <script src="js/utilitarios-financeiros.js?v=7"></script>
     <script src="js/processador-financeiro.js?v=21"></script>
-    <script src="js/indicadores-financeiros.js?v=9"></script>
-    <script src="js/graficos-financeiros.js?v=15"></script>
+    <script src="js/indicadores-financeiros.js?v=10"></script>
+    <script src="js/graficos-financeiros.js?v=16"></script>
     <script src="js/bancos-financeiros.js?v=12"></script>
     <script src="js/filtros-financeiro.js?v=27"></script>
     <script src="js/importacao-planilha.js?v=7"></script>
     <script src="js/contas-receber.js?v=23"></script>
     <script src="js/contas-pagar.js?v=21"></script>
     <script src="js/fluxo-caixa.js?v=22"></script>
-    <script src="financeiro.js?v=8"></script>
+    <script src="financeiro.js?v=9"></script>
 
 </body>
 </html>

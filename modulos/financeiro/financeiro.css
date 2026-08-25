@@ -300,6 +300,12 @@ button {
     font-size: 14px;
 }
 
+.filtro-cenario-visao { display:inline-flex; align-items:center; gap:5px; margin-left:auto; margin-right:18px; padding:5px; background:rgba(3,18,37,.5); border:1px solid var(--cor-borda); border-radius:9px; }
+.filtro-cenario-visao span { padding:0 7px; color:var(--cor-texto-secundario); font-size:12px; }
+.filtro-cenario-visao button { min-height:30px; padding:0 12px; border:1px solid transparent; border-radius:7px; background:transparent; color:var(--cor-texto-secundario); font-size:12px; font-weight:600; }
+.filtro-cenario-visao button:hover { color:var(--cor-texto); background:rgba(255,255,255,.05); }
+.filtro-cenario-visao button.ativo { color:#fff; background:var(--cor-primaria); border-color:rgba(82,163,255,.45); }
+
 .estado-inicial {
     display: flex;
     flex-direction: column;

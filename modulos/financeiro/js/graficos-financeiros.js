@@ -20,21 +20,52 @@ function renderizarGraficos(dados) {
         (item) => item.tipoCadastro === "cliente"
     );
 
-    const clientesPagos = clientes.filter(
-        (item) => item.pago
-    );
+    const clientesVisao = clientes
+        .map(prepararMovimentoVisao)
+        .filter(Boolean);
 
-    const fornecedoresPagos = dados.filter(
-        (item) => item.tipoCadastro === "fornecedor" && item.pago
-    );
+    const fornecedoresVisao = dados
+        .filter((item) => item.tipoCadastro === "fornecedor")
+        .map(prepararMovimentoVisao)
+        .filter(Boolean);
 
-    renderizarFluxoCaixa(clientesPagos, fornecedoresPagos);
-    renderizarRecebimentosDia(clientesPagos);
-    renderizarTopClientes(clientesPagos);
-    renderizarRecebimentosBanco(clientesPagos);
-    renderizarPlanoFinanceiro(clientesPagos);
+    atualizarTextosModoVisao();
+    renderizarFluxoCaixa(clientesVisao, fornecedoresVisao);
+    renderizarRecebimentosDia(clientesVisao);
+    renderizarTopClientes(clientesVisao);
+    renderizarRecebimentosBanco(clientesVisao);
+    renderizarPlanoFinanceiro(clientesVisao);
 
     renderizarSituacaoReceber(clientes);
+}
+
+function prepararMovimentoVisao(item) {
+    const dataReferencia = item.pago ? item.dataPagamento : item.vencimento;
+    if (!(dataReferencia instanceof Date)) return null;
+
+    const valorReferencia = item.pago
+        ? Number(item.valorLiquidoPago || item.valorDocumento || 0)
+        : Math.max(0, Number(item.valorDocumento || 0) - Number(item.valorLiquidoPago || 0));
+
+    return {
+        ...item,
+        dataPagamento: dataReferencia,
+        valorLiquidoPago: valorReferencia,
+        cenarioVisao: item.pago ? "realizado" : "previsto"
+    };
+}
+
+function atualizarTextosModoVisao() {
+    const textos = {
+        todos: ["Realizado e previsto", "Pagamento para realizado e vencimento para previsto"],
+        realizado: ["Realizado", "Valores conforme a data de pagamento"],
+        previsto: ["Previsto", "Valores conforme a data de vencimento"]
+    };
+    const [rotulo, descricao] = textos[modoVisaoGeral] || textos.todos;
+    preencherTexto("descricaoFluxoVisao", `${rotulo} por mês`);
+    preencherTexto("descricaoRecebimentosDia", descricao);
+    preencherTexto("descricaoTopClientes", `Clientes com maiores valores no cenário ${rotulo.toLowerCase()}`);
+    preencherTexto("descricaoPlanoFinanceiroVisao", `${rotulo} pela conta de planejamento`);
 }
 
 
@@ -203,9 +234,7 @@ function renderizarTopClientes(clientesPagos) {
         : 10;
     const mapa = new Map();
 
-    clientesPagos
-        .filter((item) => item.pago)
-        .forEach((item) => {
+    clientesPagos.forEach((item) => {
             const cliente =
                 item.razaoSocial ||
                 item.nomeFantasia ||
@@ -257,7 +286,7 @@ function renderizarTopClientes(clientesPagos) {
 
     preencherTexto(
         "tituloTopClientes",
-        `Top ${limite} Clientes por Pagamentos`
+        `Top ${limite} Clientes — ${modoVisaoGeral === "todos" ? "Todos" : modoVisaoGeral === "realizado" ? "Realizado" : "Previsto"}`
     );
 
     const container = document
@@ -316,15 +345,15 @@ function renderizarTopClientes(clientesPagos) {
                 }
 
                 return [
-                    `Total pago: ${formatarMoeda(
+                    `Total no cenário: ${formatarMoeda(
                         dados.totalPago
                     )}`,
 
-                    `Quantidade de pagamentos: ${
+                    `Quantidade de títulos: ${
                         dados.quantidadePagamentos
                     }`,
 
-                    `Participação nos pagamentos: ${
+                    `Participação no cenário: ${
                         dados.participacao.toLocaleString(
                             "pt-BR",
                             {
@@ -356,7 +385,7 @@ function renderizarTopClientes(clientesPagos) {
                 datasets: [
                     {
                         label:
-                            "Valor total pago",
+                            "Valor total",
 
                         data: ranking.map(
                             (item) =>
@@ -390,14 +419,13 @@ function renderizarTopClientes(clientesPagos) {
    ====================================================== */
 
 function renderizarRecebimentosBanco(recebimentos) {
-    const validos = recebimentos.filter(
-        (item) =>
-            normalizarTexto(item.banco) !== "nao informado"
-    );
+    const validos = recebimentos;
 
     const mapa = agruparPor(
         validos,
-        (item) => nomeBancoAmigavel(item.banco),
+        (item) => normalizarTexto(item.banco) === "nao informado" || !String(item.banco || "").trim()
+            ? "Não informado"
+            : nomeBancoAmigavel(item.banco),
         "valorLiquidoPago"
     );
 
@@ -480,7 +508,7 @@ function renderizarPlanoFinanceiro(recebimentos) {
 
                 datasets: [
                     {
-                        label: "Recebido",
+                        label: modoVisaoGeral === "previsto" ? "Previsto" : modoVisaoGeral === "realizado" ? "Realizado" : "Total",
                         data: ranking.map(
                             ([, valor]) => valor
                         ),
