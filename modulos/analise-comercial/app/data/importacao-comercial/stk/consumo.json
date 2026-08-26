@@ -3512,6 +3512,18 @@
     "subgrupo": 6,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 12,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "55",
+    "produto": "55",
+    "desc_completa": "SOLVENTE TOLUOL",
+    "grupo": 9,
+    "subgrupo": 6,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 12.538,
     "dt_movto": "2026-08-07"
   },
@@ -3586,6 +3598,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 14.039,
     "dt_movto": "2026-08-17"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "55",
+    "produto": "55",
+    "desc_completa": "SOLVENTE TOLUOL",
+    "grupo": 9,
+    "subgrupo": 6,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 14.229,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -4270,6 +4294,18 @@
     "descr_orig_movto": "Cálculo de valor de movimentos",
     "qtd_movimentada": 0,
     "dt_movto": "2026-07-31"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "55",
+    "produto": "55",
+    "desc_completa": "SOLVENTE TOLUOL",
+    "grupo": 9,
+    "subgrupo": 6,
+    "orig_movto": 39,
+    "descr_orig_movto": "Requisição do estoque",
+    "qtd_movimentada": 17.04,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -6793,18 +6829,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "cod_prod": "122",
-    "produto": "122",
-    "desc_completa": "PIGMENTO PEROLADO KC 225",
-    "grupo": 9,
-    "subgrupo": 4,
-    "orig_movto": 20,
-    "descr_orig_movto": "Item de ordem de produção",
-    "qtd_movimentada": 0.001,
-    "dt_movto": "2026-08-24"
-  },
-  {
-    "fonte_comercial": "STK",
     "cod_prod": "126",
     "produto": "126",
     "desc_completa": "RESINA NOVOTEX AL204",
@@ -7657,6 +7681,30 @@
   },
   {
     "fonte_comercial": "STK",
+    "cod_prod": "134",
+    "produto": "134",
+    "desc_completa": "SOLVENTE DOWANOL(METOXI-2-PROPANOL)",
+    "grupo": 9,
+    "subgrupo": 6,
+    "orig_movto": 39,
+    "descr_orig_movto": "Requisição do estoque",
+    "qtd_movimentada": 190,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "134",
+    "produto": "134",
+    "desc_completa": "SOLVENTE DOWANOL(METOXI-2-PROPANOL)",
+    "grupo": 9,
+    "subgrupo": 6,
+    "orig_movto": 39,
+    "descr_orig_movto": "Requisição do estoque",
+    "qtd_movimentada": 190,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
     "cod_prod": "135",
     "produto": "135",
     "desc_completa": "SOLVENTE ISOPROPANOL",
@@ -8096,8 +8144,32 @@
     "subgrupo": 6,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 9.055,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "135",
+    "produto": "135",
+    "desc_completa": "SOLVENTE ISOPROPANOL",
+    "grupo": 9,
+    "subgrupo": 6,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 10.448,
     "dt_movto": "2026-08-10"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "135",
+    "produto": "135",
+    "desc_completa": "SOLVENTE ISOPROPANOL",
+    "grupo": 9,
+    "subgrupo": 6,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 10.81,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -8384,6 +8456,18 @@
     "subgrupo": 5,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 62.85,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "140",
+    "produto": "140",
+    "desc_completa": "RESINA 7123A-1Z",
+    "grupo": 9,
+    "subgrupo": 5,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 112.5,
     "dt_movto": "2026-08-07"
   },
@@ -8600,6 +8684,18 @@
     "subgrupo": 5,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 32.948,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "159",
+    "produto": "159",
+    "desc_completa": "RESINA STAHL 4715",
+    "grupo": 9,
+    "subgrupo": 5,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 42.687,
     "dt_movto": "2026-07-27"
   },
@@ -8638,6 +8734,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 54.329,
     "dt_movto": "2026-08-10"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "159",
+    "produto": "159",
+    "desc_completa": "RESINA STAHL 4715",
+    "grupo": 9,
+    "subgrupo": 5,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 64.067,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -9104,6 +9212,18 @@
     "subgrupo": 1,
     "orig_movto": 2,
     "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 83.8,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "348",
+    "produto": "348",
+    "desc_completa": "LACA 7000",
+    "grupo": 5,
+    "subgrupo": 1,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 150,
     "dt_movto": "2026-08-07"
   },
@@ -9153,30 +9273,6 @@
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 8,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "348",
-    "produto": "348",
-    "desc_completa": "LACA 7000",
-    "grupo": 5,
-    "subgrupo": 1,
-    "orig_movto": 20,
-    "descr_orig_movto": "Item de ordem de produção",
-    "qtd_movimentada": 8,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "348",
-    "produto": "348",
-    "desc_completa": "LACA 7000",
-    "grupo": 5,
-    "subgrupo": 1,
-    "orig_movto": 20,
-    "descr_orig_movto": "Item de ordem de produção",
-    "qtd_movimentada": 8,
     "dt_movto": "2026-08-18"
   },
   {
@@ -9212,8 +9308,32 @@
     "subgrupo": 1,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 12.28,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "348",
+    "produto": "348",
+    "desc_completa": "LACA 7000",
+    "grupo": 5,
+    "subgrupo": 1,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 16,
     "dt_movto": "2026-08-11"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "348",
+    "produto": "348",
+    "desc_completa": "LACA 7000",
+    "grupo": 5,
+    "subgrupo": 1,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 16,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -10306,6 +10426,18 @@
     "descr_orig_movto": "Emissão de nota FAT",
     "qtd_movimentada": 3,
     "dt_movto": "2026-08-19"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "514",
+    "produto": "514",
+    "desc_completa": "PALLET METALICO *122923*",
+    "grupo": 22,
+    "subgrupo": 0,
+    "orig_movto": 10,
+    "descr_orig_movto": "Emissão de nota FAT",
+    "qtd_movimentada": 3,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -11470,6 +11602,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 1.12,
     "dt_movto": "2026-08-21"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "785",
+    "produto": "785",
+    "desc_completa": "BC 100 SILVER WHITE 10 - BRASCHEMICAL",
+    "grupo": 9,
+    "subgrupo": 4,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 1.32,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -13194,6 +13338,18 @@
     "desc_completa": "PIGMENTO DIKKA TRANS AMARELO 150/012",
     "grupo": 9,
     "subgrupo": 4,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 0.2,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "3933",
+    "produto": "3933",
+    "desc_completa": "PIGMENTO DIKKA TRANS AMARELO 150/012",
+    "grupo": 9,
+    "subgrupo": 4,
     "orig_movto": 35,
     "descr_orig_movto": "Ajuste de inventário",
     "qtd_movimentada": 0.7,
@@ -14574,6 +14730,18 @@
     "desc_completa": "PIGMENTO DIKKA DCA ROSA 122/008 OU 122/009",
     "grupo": 9,
     "subgrupo": 4,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 0.3,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "4329",
+    "produto": "4329",
+    "desc_completa": "PIGMENTO DIKKA DCA ROSA 122/008 OU 122/009",
+    "grupo": 9,
+    "subgrupo": 4,
     "orig_movto": 35,
     "descr_orig_movto": "Ajuste de inventário",
     "qtd_movimentada": 0.425,
@@ -15450,6 +15618,18 @@
     "desc_completa": "PIGMENTO STANLUX SILVER R 4112",
     "grupo": 9,
     "subgrupo": 4,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 6.216,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "5087",
+    "produto": "5087",
+    "desc_completa": "PIGMENTO STANLUX SILVER R 4112",
+    "grupo": 9,
+    "subgrupo": 4,
     "orig_movto": 35,
     "descr_orig_movto": "Ajuste de inventário",
     "qtd_movimentada": 10.275,
@@ -16062,6 +16242,18 @@
     "desc_completa": "NAPA SOFT NEW WHISKY",
     "grupo": 13,
     "subgrupo": 1,
+    "orig_movto": 10,
+    "descr_orig_movto": "Emissão de nota FAT",
+    "qtd_movimentada": 320,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "5302",
+    "produto": "5302",
+    "desc_completa": "NAPA SOFT NEW WHISKY",
+    "grupo": 13,
+    "subgrupo": 1,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 80,
@@ -16328,8 +16520,104 @@
     "subgrupo": 3,
     "orig_movto": 2,
     "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 39.5,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "5342",
+    "produto": "5342",
+    "desc_completa": "GRAVAÇÃO CROCO NEW WHISKY",
+    "grupo": 2,
+    "subgrupo": 3,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 40,
     "dt_movto": "2026-07-27"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "5342",
+    "produto": "5342",
+    "desc_completa": "GRAVAÇÃO CROCO NEW WHISKY",
+    "grupo": 2,
+    "subgrupo": 3,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "5342",
+    "produto": "5342",
+    "desc_completa": "GRAVAÇÃO CROCO NEW WHISKY",
+    "grupo": 2,
+    "subgrupo": 3,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "5342",
+    "produto": "5342",
+    "desc_completa": "GRAVAÇÃO CROCO NEW WHISKY",
+    "grupo": 2,
+    "subgrupo": 3,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "5342",
+    "produto": "5342",
+    "desc_completa": "GRAVAÇÃO CROCO NEW WHISKY",
+    "grupo": 2,
+    "subgrupo": 3,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "5342",
+    "produto": "5342",
+    "desc_completa": "GRAVAÇÃO CROCO NEW WHISKY",
+    "grupo": 2,
+    "subgrupo": 3,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "5342",
+    "produto": "5342",
+    "desc_completa": "GRAVAÇÃO CROCO NEW WHISKY",
+    "grupo": 2,
+    "subgrupo": 3,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "5342",
+    "produto": "5342",
+    "desc_completa": "GRAVAÇÃO CROCO NEW WHISKY",
+    "grupo": 2,
+    "subgrupo": 3,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -16342,6 +16630,18 @@
     "descr_orig_movto": "Separação de pedidos",
     "qtd_movimentada": 79,
     "dt_movto": "2026-07-27"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "5342",
+    "produto": "5342",
+    "desc_completa": "GRAVAÇÃO CROCO NEW WHISKY",
+    "grupo": 2,
+    "subgrupo": 3,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 319.5,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -18128,6 +18428,18 @@
     "subgrupo": 1,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 0.075,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "5661",
+    "produto": "5661",
+    "desc_completa": "LACA 2020",
+    "grupo": 6,
+    "subgrupo": 1,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 0.12,
     "dt_movto": "2026-08-12"
   },
@@ -18154,6 +18466,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 0.15,
     "dt_movto": "2026-08-13"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "5661",
+    "produto": "5661",
+    "desc_completa": "LACA 2020",
+    "grupo": 6,
+    "subgrupo": 1,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 0.2,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -18260,8 +18584,32 @@
     "subgrupo": 1,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 0.585,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "5661",
+    "produto": "5661",
+    "desc_completa": "LACA 2020",
+    "grupo": 6,
+    "subgrupo": 1,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 0.635,
     "dt_movto": "2026-08-12"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "5661",
+    "produto": "5661",
+    "desc_completa": "LACA 2020",
+    "grupo": 6,
+    "subgrupo": 1,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 0.715,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -18332,6 +18680,18 @@
     "subgrupo": 1,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 1.37,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "5661",
+    "produto": "5661",
+    "desc_completa": "LACA 2020",
+    "grupo": 6,
+    "subgrupo": 1,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 1.465,
     "dt_movto": "2026-08-12"
   },
@@ -18370,6 +18730,30 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 1.95,
     "dt_movto": "2026-08-12"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "5661",
+    "produto": "5661",
+    "desc_completa": "LACA 2020",
+    "grupo": 6,
+    "subgrupo": 1,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 2,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "5661",
+    "produto": "5661",
+    "desc_completa": "LACA 2020",
+    "grupo": 6,
+    "subgrupo": 1,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 2.105,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -18488,6 +18872,18 @@
     "subgrupo": 1,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 7.9,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "5661",
+    "produto": "5661",
+    "desc_completa": "LACA 2020",
+    "grupo": 6,
+    "subgrupo": 1,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 7.905,
     "dt_movto": "2026-08-12"
   },
@@ -18502,6 +18898,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 8.6,
     "dt_movto": "2026-08-11"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "5661",
+    "produto": "5661",
+    "desc_completa": "LACA 2020",
+    "grupo": 6,
+    "subgrupo": 1,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 8.65,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -19004,6 +19412,18 @@
     "subgrupo": 41,
     "orig_movto": 17,
     "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 25,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "6411",
+    "produto": "6411",
+    "desc_completa": "BERGAMO NATURAL",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
     "qtd_movimentada": 36,
     "dt_movto": "2026-08-06"
   },
@@ -19030,6 +19450,18 @@
     "descr_orig_movto": "Cálculo de valor de movimentos",
     "qtd_movimentada": 0,
     "dt_movto": "2026-07-31"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "6496",
+    "produto": "6496",
+    "desc_completa": "NAPAS SINTÉTICO",
+    "grupo": 53,
+    "subgrupo": 0,
+    "orig_movto": 1,
+    "descr_orig_movto": "Manutenção de movimentos",
+    "qtd_movimentada": 42000,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -20792,6 +21224,18 @@
     "subgrupo": 1,
     "orig_movto": 39,
     "descr_orig_movto": "Requisição do estoque",
+    "qtd_movimentada": 2,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "7299",
+    "produto": "7299",
+    "desc_completa": "FOLHA A4 BRANCA PCT 500 FOLHAS",
+    "grupo": 16,
+    "subgrupo": 1,
+    "orig_movto": 39,
+    "descr_orig_movto": "Requisição do estoque",
     "qtd_movimentada": 4,
     "dt_movto": "2026-07-30"
   },
@@ -21874,6 +22318,18 @@
     "descr_orig_movto": "Movimento livros ficais",
     "qtd_movimentada": 3000,
     "dt_movto": "2026-08-10"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "7485",
+    "produto": "7485",
+    "desc_completa": "TRANSFER TOTAL METALIC FILM SILVER QT-001A - AMERICA ASIA",
+    "grupo": 12,
+    "subgrupo": 3,
+    "orig_movto": 11,
+    "descr_orig_movto": "Correção/ajuste de estoque",
+    "qtd_movimentada": 0,
+    "dt_movto": "2026-08-31"
   },
   {
     "fonte_comercial": "STK",
@@ -24080,6 +24536,18 @@
     "subgrupo": 6,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 9.055,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "8329",
+    "produto": "8329",
+    "desc_completa": "SOLVENTE DMF (NACIONAL)",
+    "grupo": 9,
+    "subgrupo": 6,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 9.4,
     "dt_movto": "2026-07-28"
   },
@@ -24370,6 +24838,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 19.5,
     "dt_movto": "2026-07-28"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "8329",
+    "produto": "8329",
+    "desc_completa": "SOLVENTE DMF (NACIONAL)",
+    "grupo": 9,
+    "subgrupo": 6,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 20.95,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -24874,6 +25354,18 @@
     "descr_orig_movto": "Requisição do estoque",
     "qtd_movimentada": 18,
     "dt_movto": "2026-08-11"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "8329",
+    "produto": "8329",
+    "desc_completa": "SOLVENTE DMF (NACIONAL)",
+    "grupo": 9,
+    "subgrupo": 6,
+    "orig_movto": 39,
+    "descr_orig_movto": "Requisição do estoque",
+    "qtd_movimentada": 18.83,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -27030,10 +27522,34 @@
     "desc_completa": "BASE SHANGHAI PU 1.05 - BLACK",
     "grupo": 13,
     "subgrupo": 2,
+    "orig_movto": 11,
+    "descr_orig_movto": "Correção/ajuste de estoque",
+    "qtd_movimentada": 0,
+    "dt_movto": "2026-08-31"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9091",
+    "produto": "9091",
+    "desc_completa": "BASE SHANGHAI PU 1.05 - BLACK",
+    "grupo": 13,
+    "subgrupo": 2,
     "orig_movto": 17,
     "descr_orig_movto": "Separação de pedidos",
     "qtd_movimentada": 160,
     "dt_movto": "2026-08-24"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9091",
+    "produto": "9091",
+    "desc_completa": "BASE SHANGHAI PU 1.05 - BLACK",
+    "grupo": 13,
+    "subgrupo": 2,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 100,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -27320,6 +27836,30 @@
     "subgrupo": 2,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 400,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9091",
+    "produto": "9091",
+    "desc_completa": "BASE SHANGHAI PU 1.05 - BLACK",
+    "grupo": 13,
+    "subgrupo": 2,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 400,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9091",
+    "produto": "9091",
+    "desc_completa": "BASE SHANGHAI PU 1.05 - BLACK",
+    "grupo": 13,
+    "subgrupo": 2,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 500,
     "dt_movto": "2026-07-27"
   },
@@ -27476,6 +28016,30 @@
     "subgrupo": 2,
     "orig_movto": 37,
     "descr_orig_movto": "Transferência de local por NF",
+    "qtd_movimentada": 13475,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9091",
+    "produto": "9091",
+    "desc_completa": "BASE SHANGHAI PU 1.05 - BLACK",
+    "grupo": 13,
+    "subgrupo": 2,
+    "orig_movto": 37,
+    "descr_orig_movto": "Transferência de local por NF",
+    "qtd_movimentada": 13475,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9091",
+    "produto": "9091",
+    "desc_completa": "BASE SHANGHAI PU 1.05 - BLACK",
+    "grupo": 13,
+    "subgrupo": 2,
+    "orig_movto": 37,
+    "descr_orig_movto": "Transferência de local por NF",
     "qtd_movimentada": 14363,
     "dt_movto": "2026-08-18"
   },
@@ -27572,6 +28136,30 @@
     "subgrupo": 2,
     "orig_movto": 39,
     "descr_orig_movto": "Requisição do estoque",
+    "qtd_movimentada": 100,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9091",
+    "produto": "9091",
+    "desc_completa": "BASE SHANGHAI PU 1.05 - BLACK",
+    "grupo": 13,
+    "subgrupo": 2,
+    "orig_movto": 39,
+    "descr_orig_movto": "Requisição do estoque",
+    "qtd_movimentada": 100,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9091",
+    "produto": "9091",
+    "desc_completa": "BASE SHANGHAI PU 1.05 - BLACK",
+    "grupo": 13,
+    "subgrupo": 2,
+    "orig_movto": 39,
+    "descr_orig_movto": "Requisição do estoque",
     "qtd_movimentada": 187.5,
     "dt_movto": "2026-07-31"
   },
@@ -27898,6 +28486,54 @@
     "descr_orig_movto": "Requisição do estoque",
     "qtd_movimentada": 400,
     "dt_movto": "2026-08-18"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9091",
+    "produto": "9091",
+    "desc_completa": "BASE SHANGHAI PU 1.05 - BLACK",
+    "grupo": 13,
+    "subgrupo": 2,
+    "orig_movto": 39,
+    "descr_orig_movto": "Requisição do estoque",
+    "qtd_movimentada": 400,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9091",
+    "produto": "9091",
+    "desc_completa": "BASE SHANGHAI PU 1.05 - BLACK",
+    "grupo": 13,
+    "subgrupo": 2,
+    "orig_movto": 39,
+    "descr_orig_movto": "Requisição do estoque",
+    "qtd_movimentada": 400,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9091",
+    "produto": "9091",
+    "desc_completa": "BASE SHANGHAI PU 1.05 - BLACK",
+    "grupo": 13,
+    "subgrupo": 2,
+    "orig_movto": 39,
+    "descr_orig_movto": "Requisição do estoque",
+    "qtd_movimentada": 400,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9091",
+    "produto": "9091",
+    "desc_completa": "BASE SHANGHAI PU 1.05 - BLACK",
+    "grupo": 13,
+    "subgrupo": 2,
+    "orig_movto": 39,
+    "descr_orig_movto": "Requisição do estoque",
+    "qtd_movimentada": 400,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -28294,6 +28930,42 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 200,
     "dt_movto": "2026-08-04"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9295",
+    "produto": "9295",
+    "desc_completa": "NEW BASE VITÓRIA WZ 1.1  BEGE 435",
+    "grupo": 13,
+    "subgrupo": 2,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 200,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9295",
+    "produto": "9295",
+    "desc_completa": "NEW BASE VITÓRIA WZ 1.1  BEGE 435",
+    "grupo": 13,
+    "subgrupo": 2,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 346.8,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9295",
+    "produto": "9295",
+    "desc_completa": "NEW BASE VITÓRIA WZ 1.1  BEGE 435",
+    "grupo": 13,
+    "subgrupo": 2,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 350,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -30378,6 +31050,18 @@
     "desc_completa": "MISTURA ESTAMPA 1 LONDON ROSA 942 (SG-9236)",
     "grupo": 6,
     "subgrupo": 1,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 24.1,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9515",
+    "produto": "9515",
+    "desc_completa": "MISTURA ESTAMPA 1 LONDON ROSA 942 (SG-9236)",
+    "grupo": 6,
+    "subgrupo": 1,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 19.619,
@@ -30656,18 +31340,6 @@
     "subgrupo": 3,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
-    "qtd_movimentada": 0.095,
-    "dt_movto": "2026-08-24"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "9532",
-    "produto": "9532",
-    "desc_completa": "PIGMENTO PASTA HP-H100S",
-    "grupo": 6,
-    "subgrupo": 3,
-    "orig_movto": 20,
-    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 0.096,
     "dt_movto": "2026-08-06"
   },
@@ -30790,6 +31462,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 0.56,
     "dt_movto": "2026-08-11"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9532",
+    "produto": "9532",
+    "desc_completa": "PIGMENTO PASTA HP-H100S",
+    "grupo": 6,
+    "subgrupo": 3,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 0.565,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -30946,6 +31630,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 2,
     "dt_movto": "2026-07-27"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9532",
+    "produto": "9532",
+    "desc_completa": "PIGMENTO PASTA HP-H100S",
+    "grupo": 6,
+    "subgrupo": 3,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 2.155,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -31400,6 +32096,18 @@
     "subgrupo": 3,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 23.05,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9532",
+    "produto": "9532",
+    "desc_completa": "PIGMENTO PASTA HP-H100S",
+    "grupo": 6,
+    "subgrupo": 3,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 23.58,
     "dt_movto": "2026-08-12"
   },
@@ -31678,6 +32386,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 0.06,
     "dt_movto": "2026-08-10"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9535",
+    "produto": "9535",
+    "desc_completa": "PIGMENTO PASTA HP-H500S",
+    "grupo": 6,
+    "subgrupo": 3,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 0.094,
+    "dt_movto": "2026-08-24"
   },
   {
     "fonte_comercial": "STK",
@@ -32588,6 +33308,18 @@
     "subgrupo": 3,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 0.07,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9537",
+    "produto": "9537",
+    "desc_completa": "PIGMENTO PASTA HP-H200S",
+    "grupo": 6,
+    "subgrupo": 3,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 0.077,
     "dt_movto": "2026-08-06"
   },
@@ -33241,6 +33973,18 @@
   },
   {
     "fonte_comercial": "STK",
+    "cod_prod": "9537",
+    "produto": "9537",
+    "desc_completa": "PIGMENTO PASTA HP-H200S",
+    "grupo": 6,
+    "subgrupo": 3,
+    "orig_movto": 39,
+    "descr_orig_movto": "Requisição do estoque",
+    "qtd_movimentada": 4,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
     "cod_prod": "9538",
     "produto": "9538",
     "desc_completa": "PIGMENTO PASTA HP-H605S",
@@ -33416,8 +34160,32 @@
     "subgrupo": 3,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 0.48,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9538",
+    "produto": "9538",
+    "desc_completa": "PIGMENTO PASTA HP-H605S",
+    "grupo": 6,
+    "subgrupo": 3,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 0.56,
     "dt_movto": "2026-08-14"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9538",
+    "produto": "9538",
+    "desc_completa": "PIGMENTO PASTA HP-H605S",
+    "grupo": 6,
+    "subgrupo": 3,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 0.6,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -34064,6 +34832,18 @@
     "subgrupo": 3,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 0.545,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9539",
+    "produto": "9539",
+    "desc_completa": "PIGMENTO PASTA HP-H300S",
+    "grupo": 6,
+    "subgrupo": 3,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 0.6,
     "dt_movto": "2026-08-10"
   },
@@ -34234,6 +35014,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 1.396,
     "dt_movto": "2026-07-31"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9539",
+    "produto": "9539",
+    "desc_completa": "PIGMENTO PASTA HP-H300S",
+    "grupo": 6,
+    "subgrupo": 3,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 1.4,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -35566,6 +36358,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 0.136,
     "dt_movto": "2026-08-10"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9716",
+    "produto": "9716",
+    "desc_completa": "ADITIVO STAHL  EX-HM-96-006",
+    "grupo": 9,
+    "subgrupo": 5,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 0.14,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -38156,8 +38960,32 @@
     "subgrupo": 2,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 149,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9869",
+    "produto": "9869",
+    "desc_completa": "NEW BASE VITÓRIA WZ 1.1 SILVER",
+    "grupo": 13,
+    "subgrupo": 2,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 150,
     "dt_movto": "2026-08-21"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9869",
+    "produto": "9869",
+    "desc_completa": "NEW BASE VITÓRIA WZ 1.1 SILVER",
+    "grupo": 13,
+    "subgrupo": 2,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 250,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -38290,6 +39118,54 @@
     "descr_orig_movto": "Requisição do estoque",
     "qtd_movimentada": 10,
     "dt_movto": "2026-08-17"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9869",
+    "produto": "9869",
+    "desc_completa": "NEW BASE VITÓRIA WZ 1.1 SILVER",
+    "grupo": 13,
+    "subgrupo": 2,
+    "orig_movto": 39,
+    "descr_orig_movto": "Requisição do estoque",
+    "qtd_movimentada": 150,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9869",
+    "produto": "9869",
+    "desc_completa": "NEW BASE VITÓRIA WZ 1.1 SILVER",
+    "grupo": 13,
+    "subgrupo": 2,
+    "orig_movto": 39,
+    "descr_orig_movto": "Requisição do estoque",
+    "qtd_movimentada": 150,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9869",
+    "produto": "9869",
+    "desc_completa": "NEW BASE VITÓRIA WZ 1.1 SILVER",
+    "grupo": 13,
+    "subgrupo": 2,
+    "orig_movto": 39,
+    "descr_orig_movto": "Requisição do estoque",
+    "qtd_movimentada": 250,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9869",
+    "produto": "9869",
+    "desc_completa": "NEW BASE VITÓRIA WZ 1.1 SILVER",
+    "grupo": 13,
+    "subgrupo": 2,
+    "orig_movto": 39,
+    "descr_orig_movto": "Requisição do estoque",
+    "qtd_movimentada": 250,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -41792,6 +42668,18 @@
     "subgrupo": 1,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 12.872,
+    "dt_movto": "2026-08-24"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "10021",
+    "produto": "10021",
+    "desc_completa": "LACA 4550",
+    "grupo": 5,
+    "subgrupo": 1,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 13.05,
     "dt_movto": "2026-08-19"
   },
@@ -42186,18 +43074,6 @@
     "desc_completa": "LACA 4550",
     "grupo": 5,
     "subgrupo": 1,
-    "orig_movto": 20,
-    "descr_orig_movto": "Item de ordem de produção",
-    "qtd_movimentada": 129.067,
-    "dt_movto": "2026-08-24"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "10021",
-    "produto": "10021",
-    "desc_completa": "LACA 4550",
-    "grupo": 5,
-    "subgrupo": 1,
     "orig_movto": 39,
     "descr_orig_movto": "Requisição do estoque",
     "qtd_movimentada": 15,
@@ -42308,6 +43184,18 @@
     "subgrupo": 3,
     "orig_movto": 1,
     "descr_orig_movto": "Manutenção de movimentos",
+    "qtd_movimentada": 500,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "10090",
+    "produto": "10090",
+    "desc_completa": "QT-467A METALIC FILM (FULL TRANSFER) - BRONZE",
+    "grupo": 12,
+    "subgrupo": 3,
+    "orig_movto": 1,
+    "descr_orig_movto": "Manutenção de movimentos",
     "qtd_movimentada": 743.5,
     "dt_movto": "2026-08-18"
   },
@@ -42320,8 +43208,8 @@
     "subgrupo": 3,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
-    "qtd_movimentada": 67.295,
-    "dt_movto": "2026-07-25"
+    "qtd_movimentada": 90,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -42332,8 +43220,8 @@
     "subgrupo": 3,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
-    "qtd_movimentada": 332.705,
-    "dt_movto": "2026-07-25"
+    "qtd_movimentada": 210,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -42346,6 +43234,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 400,
     "dt_movto": "2026-07-27"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "10090",
+    "produto": "10090",
+    "desc_completa": "QT-467A METALIC FILM (FULL TRANSFER) - BRONZE",
+    "grupo": 12,
+    "subgrupo": 3,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 500,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -42370,6 +43270,30 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 800,
     "dt_movto": "2026-08-08"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "10090",
+    "produto": "10090",
+    "desc_completa": "QT-467A METALIC FILM (FULL TRANSFER) - BRONZE",
+    "grupo": 12,
+    "subgrupo": 3,
+    "orig_movto": 39,
+    "descr_orig_movto": "Requisição do estoque",
+    "qtd_movimentada": 90,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "10090",
+    "produto": "10090",
+    "desc_completa": "QT-467A METALIC FILM (FULL TRANSFER) - BRONZE",
+    "grupo": 12,
+    "subgrupo": 3,
+    "orig_movto": 39,
+    "descr_orig_movto": "Requisição do estoque",
+    "qtd_movimentada": 90,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -43150,6 +44074,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 0.065,
     "dt_movto": "2026-08-10"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "10375",
+    "produto": "10375",
+    "desc_completa": "PIGMENTO PASTA HP-H800S",
+    "grupo": 6,
+    "subgrupo": 3,
+    "orig_movto": 39,
+    "descr_orig_movto": "Requisição do estoque",
+    "qtd_movimentada": 0.3,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -47264,6 +48200,18 @@
     "subgrupo": 1,
     "orig_movto": 2,
     "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 130,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "10875",
+    "produto": "10875",
+    "desc_completa": "LACA 1015",
+    "grupo": 5,
+    "subgrupo": 1,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 158,
     "dt_movto": "2026-08-14"
   },
@@ -49304,6 +50252,18 @@
     "subgrupo": 2,
     "orig_movto": 17,
     "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 575,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11013",
+    "produto": "11013",
+    "desc_completa": "NOBUCK TUNISIA PU 1.2 BRANCO OFF (VENDA BEIRA RIO)",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
     "qtd_movimentada": 611,
     "dt_movto": "2026-08-12"
   },
@@ -50456,6 +51416,18 @@
     "subgrupo": 5,
     "orig_movto": 39,
     "descr_orig_movto": "Requisição do estoque",
+    "qtd_movimentada": 17.32,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11370",
+    "produto": "11370",
+    "desc_completa": "RESINA LX-50B (AMERICA ASIA)",
+    "grupo": 9,
+    "subgrupo": 5,
+    "orig_movto": 39,
+    "descr_orig_movto": "Requisição do estoque",
     "qtd_movimentada": 180,
     "dt_movto": "2026-07-28"
   },
@@ -50912,6 +51884,18 @@
     "subgrupo": 5,
     "orig_movto": 39,
     "descr_orig_movto": "Requisição do estoque",
+    "qtd_movimentada": 16.04,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11374",
+    "produto": "11374",
+    "desc_completa": "RESINA LR206 (AMERICA ASIA)",
+    "grupo": 9,
+    "subgrupo": 5,
+    "orig_movto": 39,
+    "descr_orig_movto": "Requisição do estoque",
     "qtd_movimentada": 180,
     "dt_movto": "2026-07-27"
   },
@@ -51142,6 +52126,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 35,
     "dt_movto": "2026-08-20"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11375",
+    "produto": "11375",
+    "desc_completa": "RESINA MJ1589 (AMERICA ASIA)",
+    "grupo": 9,
+    "subgrupo": 5,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 39.1,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -51826,6 +52822,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 1.594,
     "dt_movto": "2026-07-30"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11378",
+    "produto": "11378",
+    "desc_completa": "LX2345B (AMERICA ASIA)",
+    "grupo": 9,
+    "subgrupo": 5,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 1.77,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -52652,6 +53660,18 @@
     "subgrupo": 1,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 2.02,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11477",
+    "produto": "11477",
+    "desc_completa": "MISTURA INCOLOR 100% LR206",
+    "grupo": 6,
+    "subgrupo": 1,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 8.04,
     "dt_movto": "2026-08-20"
   },
@@ -53300,6 +54320,18 @@
     "subgrupo": 1,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 0.647,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11612",
+    "produto": "11612",
+    "desc_completa": "ST-430 ANTIBACTERIAL AND ANTFUNGAL AGENTS",
+    "grupo": 9,
+    "subgrupo": 1,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 0.787,
     "dt_movto": "2026-08-14"
   },
@@ -53850,6 +54882,30 @@
     "desc_completa": "AMALFI OFF WHITE",
     "grupo": 39,
     "subgrupo": 0,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 1,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11795",
+    "produto": "11795",
+    "desc_completa": "AMALFI OFF WHITE",
+    "grupo": 39,
+    "subgrupo": 0,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 4,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11795",
+    "produto": "11795",
+    "desc_completa": "AMALFI OFF WHITE",
+    "grupo": 39,
+    "subgrupo": 0,
     "orig_movto": 35,
     "descr_orig_movto": "Ajuste de inventário",
     "qtd_movimentada": 0.7,
@@ -53886,10 +54942,34 @@
     "desc_completa": "AMALFI PRETO",
     "grupo": 39,
     "subgrupo": 0,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 5,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11799",
+    "produto": "11799",
+    "desc_completa": "AMALFI PRETO",
+    "grupo": 39,
+    "subgrupo": 0,
     "orig_movto": 35,
     "descr_orig_movto": "Ajuste de inventário",
     "qtd_movimentada": 19,
     "dt_movto": "2026-07-31"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11800",
+    "produto": "11800",
+    "desc_completa": "AMALFI CARAMELO",
+    "grupo": 39,
+    "subgrupo": 0,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 2,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -56996,6 +58076,18 @@
     "subgrupo": 4,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 2.5,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11849",
+    "produto": "11849",
+    "desc_completa": "HC2170 Pure - White Flash Pigm",
+    "grupo": 9,
+    "subgrupo": 4,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 2.85,
     "dt_movto": "2026-08-07"
   },
@@ -57490,6 +58582,18 @@
     "descr_orig_movto": "Separação de pedidos",
     "qtd_movimentada": 1,
     "dt_movto": "2026-07-27"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11874",
+    "produto": "11874",
+    "desc_completa": "NAPA OLIMPIC PRATA - PU 1.4MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 2,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -58042,6 +59146,18 @@
     "descr_orig_movto": "Requisição do estoque",
     "qtd_movimentada": 400,
     "dt_movto": "2026-08-24"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11904",
+    "produto": "11904",
+    "desc_completa": "NAPA MADRID NUDE - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 80,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -61662,6 +62778,18 @@
     "desc_completa": "BASE SHANGHAI PU 1.05 - BEGE",
     "grupo": 13,
     "subgrupo": 2,
+    "orig_movto": 11,
+    "descr_orig_movto": "Correção/ajuste de estoque",
+    "qtd_movimentada": 0,
+    "dt_movto": "2026-08-31"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "12262",
+    "produto": "12262",
+    "desc_completa": "BASE SHANGHAI PU 1.05 - BEGE",
+    "grupo": 13,
+    "subgrupo": 2,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 112,
@@ -63608,6 +64736,18 @@
     "subgrupo": 41,
     "orig_movto": 17,
     "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 10,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "12397",
+    "produto": "12397",
+    "desc_completa": "LILLY BRANCO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
     "qtd_movimentada": 39,
     "dt_movto": "2026-08-19"
   },
@@ -63814,6 +64954,18 @@
     "descr_orig_movto": "Separação de pedidos",
     "qtd_movimentada": 10,
     "dt_movto": "2026-08-14"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "12399",
+    "produto": "12399",
+    "desc_completa": "LILLY MANTEIGA",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 10,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -64088,6 +65240,18 @@
     "subgrupo": 2,
     "orig_movto": 2,
     "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 10,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "12478",
+    "produto": "12478",
+    "desc_completa": "METALIZADO PREMIUM PU 0.9 BRONZE 1402",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 14,
     "dt_movto": "2026-07-28"
   },
@@ -64232,6 +65396,18 @@
     "subgrupo": 2,
     "orig_movto": 2,
     "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 32,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "12478",
+    "produto": "12478",
+    "desc_completa": "METALIZADO PREMIUM PU 0.9 BRONZE 1402",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 32.5,
     "dt_movto": "2026-08-10"
   },
@@ -64292,6 +65468,18 @@
     "subgrupo": 2,
     "orig_movto": 2,
     "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 39.5,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "12478",
+    "produto": "12478",
+    "desc_completa": "METALIZADO PREMIUM PU 0.9 BRONZE 1402",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 40,
     "dt_movto": "2026-07-28"
   },
@@ -64582,6 +65770,114 @@
     "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 40,
     "dt_movto": "2026-08-20"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "12478",
+    "produto": "12478",
+    "desc_completa": "METALIZADO PREMIUM PU 0.9 BRONZE 1402",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "12478",
+    "produto": "12478",
+    "desc_completa": "METALIZADO PREMIUM PU 0.9 BRONZE 1402",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "12478",
+    "produto": "12478",
+    "desc_completa": "METALIZADO PREMIUM PU 0.9 BRONZE 1402",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "12478",
+    "produto": "12478",
+    "desc_completa": "METALIZADO PREMIUM PU 0.9 BRONZE 1402",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "12478",
+    "produto": "12478",
+    "desc_completa": "METALIZADO PREMIUM PU 0.9 BRONZE 1402",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "12478",
+    "produto": "12478",
+    "desc_completa": "METALIZADO PREMIUM PU 0.9 BRONZE 1402",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "12478",
+    "produto": "12478",
+    "desc_completa": "METALIZADO PREMIUM PU 0.9 BRONZE 1402",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "12478",
+    "produto": "12478",
+    "desc_completa": "METALIZADO PREMIUM PU 0.9 BRONZE 1402",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "12478",
+    "produto": "12478",
+    "desc_completa": "METALIZADO PREMIUM PU 0.9 BRONZE 1402",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -65168,6 +66464,30 @@
     "subgrupo": 3,
     "orig_movto": 39,
     "descr_orig_movto": "Requisição do estoque",
+    "qtd_movimentada": 145,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "12515",
+    "produto": "12515",
+    "desc_completa": "TRANSFER 99-5-4 PARCIAL FOIL - LT GOLD",
+    "grupo": 12,
+    "subgrupo": 3,
+    "orig_movto": 39,
+    "descr_orig_movto": "Requisição do estoque",
+    "qtd_movimentada": 145,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "12515",
+    "produto": "12515",
+    "desc_completa": "TRANSFER 99-5-4 PARCIAL FOIL - LT GOLD",
+    "grupo": 12,
+    "subgrupo": 3,
+    "orig_movto": 39,
+    "descr_orig_movto": "Requisição do estoque",
     "qtd_movimentada": 200,
     "dt_movto": "2026-07-27"
   },
@@ -65182,6 +66502,30 @@
     "descr_orig_movto": "Requisição do estoque",
     "qtd_movimentada": 200,
     "dt_movto": "2026-07-27"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "12515",
+    "produto": "12515",
+    "desc_completa": "TRANSFER 99-5-4 PARCIAL FOIL - LT GOLD",
+    "grupo": 12,
+    "subgrupo": 3,
+    "orig_movto": 39,
+    "descr_orig_movto": "Requisição do estoque",
+    "qtd_movimentada": 411.41,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "12515",
+    "produto": "12515",
+    "desc_completa": "TRANSFER 99-5-4 PARCIAL FOIL - LT GOLD",
+    "grupo": 12,
+    "subgrupo": 3,
+    "orig_movto": 39,
+    "descr_orig_movto": "Requisição do estoque",
+    "qtd_movimentada": 411.41,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -65422,6 +66766,18 @@
     "descr_orig_movto": "Separação de pedidos",
     "qtd_movimentada": 5,
     "dt_movto": "2026-08-12"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "12550",
+    "produto": "12550",
+    "desc_completa": "LILLY NUDE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 5,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -66730,6 +68086,18 @@
     "descr_orig_movto": "Separação de pedidos",
     "qtd_movimentada": 5,
     "dt_movto": "2026-08-11"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "12761",
+    "produto": "12761",
+    "desc_completa": "MONTPELLIER PRETO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 5,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -68065,6 +69433,18 @@
   },
   {
     "fonte_comercial": "STK",
+    "cod_prod": "12964",
+    "produto": "12964",
+    "desc_completa": "BASE SHANGHAI PU 1.05 BLACK",
+    "grupo": 13,
+    "subgrupo": 1,
+    "orig_movto": 9,
+    "descr_orig_movto": "Movimento livros ficais",
+    "qtd_movimentada": 160,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
     "cod_prod": "12966",
     "produto": "12966",
     "desc_completa": "NAPA BARI METAL BRONZE",
@@ -68230,6 +69610,18 @@
     "descr_orig_movto": "Separação de pedidos",
     "qtd_movimentada": 1,
     "dt_movto": "2026-08-24"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "13007",
+    "produto": "13007",
+    "desc_completa": "MONTPELLIER CAFE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 5,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -69464,8 +70856,32 @@
     "subgrupo": 2,
     "orig_movto": 17,
     "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 120,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "13172",
+    "produto": "13172",
+    "desc_completa": "NOBUCK TUNISIA PU 1.2 CHOCOLATE 1271",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
     "qtd_movimentada": 201,
     "dt_movto": "2026-08-11"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "13172",
+    "produto": "13172",
+    "desc_completa": "NOBUCK TUNISIA PU 1.2 CHOCOLATE 1271",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 318.5,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -69646,6 +71062,18 @@
     "descr_orig_movto": "Manutenção de movimentos",
     "qtd_movimentada": 10.8,
     "dt_movto": "2026-08-04"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "13198",
+    "produto": "13198",
+    "desc_completa": "CORDOBA PRETO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 1,
+    "descr_orig_movto": "Manutenção de movimentos",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -70052,6 +71480,18 @@
     "subgrupo": 41,
     "orig_movto": 17,
     "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 5,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "13238",
+    "produto": "13238",
+    "desc_completa": "MONTPELLIER OFF WHITE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
     "qtd_movimentada": 10,
     "dt_movto": "2026-08-14"
   },
@@ -70390,6 +71830,18 @@
     "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 20,
     "dt_movto": "2026-08-19"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "13331",
+    "produto": "13331",
+    "desc_completa": "LACA 1515",
+    "grupo": 6,
+    "subgrupo": 1,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 20,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -71408,6 +72860,54 @@
     "subgrupo": 2,
     "orig_movto": 2,
     "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 22.5,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "13406",
+    "produto": "13406",
+    "desc_completa": "SINTETICO NAPA FIRENZE METALCOR OURO VELHO",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 26.5,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "13406",
+    "produto": "13406",
+    "desc_completa": "SINTETICO NAPA FIRENZE METALCOR OURO VELHO",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 27.5,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "13406",
+    "produto": "13406",
+    "desc_completa": "SINTETICO NAPA FIRENZE METALCOR OURO VELHO",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 28.5,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "13406",
+    "produto": "13406",
+    "desc_completa": "SINTETICO NAPA FIRENZE METALCOR OURO VELHO",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 29,
     "dt_movto": "2026-08-06"
   },
@@ -71602,6 +73102,54 @@
     "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 40,
     "dt_movto": "2026-08-06"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "13406",
+    "produto": "13406",
+    "desc_completa": "SINTETICO NAPA FIRENZE METALCOR OURO VELHO",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "13406",
+    "produto": "13406",
+    "desc_completa": "SINTETICO NAPA FIRENZE METALCOR OURO VELHO",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "13406",
+    "produto": "13406",
+    "desc_completa": "SINTETICO NAPA FIRENZE METALCOR OURO VELHO",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "13406",
+    "produto": "13406",
+    "desc_completa": "SINTETICO NAPA FIRENZE METALCOR OURO VELHO",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -72114,6 +73662,18 @@
     "desc_completa": "BASE SHANGHAI PU 1.05 - WHITE",
     "grupo": 13,
     "subgrupo": 2,
+    "orig_movto": 11,
+    "descr_orig_movto": "Correção/ajuste de estoque",
+    "qtd_movimentada": 0,
+    "dt_movto": "2026-08-31"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "13485",
+    "produto": "13485",
+    "desc_completa": "BASE SHANGHAI PU 1.05 - WHITE",
+    "grupo": 13,
+    "subgrupo": 2,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 100,
@@ -72322,6 +73882,54 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 520,
     "dt_movto": "2026-07-28"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "13485",
+    "produto": "13485",
+    "desc_completa": "BASE SHANGHAI PU 1.05 - WHITE",
+    "grupo": 13,
+    "subgrupo": 2,
+    "orig_movto": 37,
+    "descr_orig_movto": "Transferência de local por NF",
+    "qtd_movimentada": 450,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "13485",
+    "produto": "13485",
+    "desc_completa": "BASE SHANGHAI PU 1.05 - WHITE",
+    "grupo": 13,
+    "subgrupo": 2,
+    "orig_movto": 37,
+    "descr_orig_movto": "Transferência de local por NF",
+    "qtd_movimentada": 450,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "13485",
+    "produto": "13485",
+    "desc_completa": "BASE SHANGHAI PU 1.05 - WHITE",
+    "grupo": 13,
+    "subgrupo": 2,
+    "orig_movto": 37,
+    "descr_orig_movto": "Transferência de local por NF",
+    "qtd_movimentada": 13706,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "13485",
+    "produto": "13485",
+    "desc_completa": "BASE SHANGHAI PU 1.05 - WHITE",
+    "grupo": 13,
+    "subgrupo": 2,
+    "orig_movto": 37,
+    "descr_orig_movto": "Transferência de local por NF",
+    "qtd_movimentada": 13706,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -72589,6 +74197,30 @@
   },
   {
     "fonte_comercial": "STK",
+    "cod_prod": "13486",
+    "produto": "13486",
+    "desc_completa": "BASE SHANGHAI PU 1.05 - CREME",
+    "grupo": 13,
+    "subgrupo": 2,
+    "orig_movto": 37,
+    "descr_orig_movto": "Transferência de local por NF",
+    "qtd_movimentada": 13320,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "13486",
+    "produto": "13486",
+    "desc_completa": "BASE SHANGHAI PU 1.05 - CREME",
+    "grupo": 13,
+    "subgrupo": 2,
+    "orig_movto": 37,
+    "descr_orig_movto": "Transferência de local por NF",
+    "qtd_movimentada": 13320,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
     "cod_prod": "13563",
     "produto": "13563",
     "desc_completa": "NANCY MOCHA MOUSSE",
@@ -72745,6 +74377,18 @@
   },
   {
     "fonte_comercial": "STK",
+    "cod_prod": "13605",
+    "produto": "13605",
+    "desc_completa": "METALIZADO NANCY PU 1.0 BRONZE 1402",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 196.5,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
     "cod_prod": "13617",
     "produto": "13617",
     "desc_completa": "BOLSA PRETO",
@@ -72814,42 +74458,6 @@
     "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 30,
     "dt_movto": "2026-07-27"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "13674",
-    "produto": "13674",
-    "desc_completa": "MISTURA INCOLOR LACA 4550 + 0,5G TS100",
-    "grupo": 6,
-    "subgrupo": 1,
-    "orig_movto": 20,
-    "descr_orig_movto": "Item de ordem de produção",
-    "qtd_movimentada": 4.629,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "13674",
-    "produto": "13674",
-    "desc_completa": "MISTURA INCOLOR LACA 4550 + 0,5G TS100",
-    "grupo": 6,
-    "subgrupo": 1,
-    "orig_movto": 20,
-    "descr_orig_movto": "Item de ordem de produção",
-    "qtd_movimentada": 11.771,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "13674",
-    "produto": "13674",
-    "desc_completa": "MISTURA INCOLOR LACA 4550 + 0,5G TS100",
-    "grupo": 6,
-    "subgrupo": 1,
-    "orig_movto": 20,
-    "descr_orig_movto": "Item de ordem de produção",
-    "qtd_movimentada": 13.6,
-    "dt_movto": "2026-07-25"
   },
   {
     "fonte_comercial": "STK",
@@ -76230,6 +77838,30 @@
     "desc_completa": "SALERNO CARAMELO",
     "grupo": 39,
     "subgrupo": 41,
+    "orig_movto": 1,
+    "descr_orig_movto": "Manutenção de movimentos",
+    "qtd_movimentada": 2.5,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "14137",
+    "produto": "14137",
+    "desc_completa": "SALERNO CARAMELO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 4,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "14137",
+    "produto": "14137",
+    "desc_completa": "SALERNO CARAMELO",
+    "grupo": 39,
+    "subgrupo": 41,
     "orig_movto": 17,
     "descr_orig_movto": "Separação de pedidos",
     "qtd_movimentada": 5,
@@ -76446,6 +78078,18 @@
     "desc_completa": "STELLAR BEGE",
     "grupo": 39,
     "subgrupo": 41,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 20,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "14146",
+    "produto": "14146",
+    "desc_completa": "STELLAR BEGE",
+    "grupo": 39,
+    "subgrupo": 41,
     "orig_movto": 35,
     "descr_orig_movto": "Ajuste de inventário",
     "qtd_movimentada": 5,
@@ -76546,6 +78190,18 @@
     "descr_orig_movto": "Requisição do estoque",
     "qtd_movimentada": 1,
     "dt_movto": "2026-08-14"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "14166",
+    "produto": "14166",
+    "desc_completa": "SALERNO OFF WHITE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 5,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -78717,30 +80373,6 @@
     "orig_movto": 2,
     "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 15,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 15,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 15,
     "dt_movto": "2026-08-01"
   },
   {
@@ -78790,18 +80422,6 @@
     "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 16.5,
     "dt_movto": "2026-08-14"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 18.5,
-    "dt_movto": "2026-07-25"
   },
   {
     "fonte_comercial": "STK",
@@ -78872,42 +80492,6 @@
     "subgrupo": 1,
     "orig_movto": 2,
     "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 21,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 21,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 22,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 22,
     "dt_movto": "2026-08-14"
   },
@@ -78932,32 +80516,8 @@
     "subgrupo": 1,
     "orig_movto": 2,
     "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 23,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 25,
     "dt_movto": "2026-08-14"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 25.5,
-    "dt_movto": "2026-07-25"
   },
   {
     "fonte_comercial": "STK",
@@ -78993,91 +80553,7 @@
     "orig_movto": 2,
     "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 26,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 26,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 26,
     "dt_movto": "2026-08-12"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 26.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 26.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 27,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 27,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 27,
-    "dt_movto": "2026-07-25"
   },
   {
     "fonte_comercial": "STK",
@@ -79138,30 +80614,6 @@
     "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 27,
     "dt_movto": "2026-08-14"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 27.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 27.5,
-    "dt_movto": "2026-07-25"
   },
   {
     "fonte_comercial": "STK",
@@ -79209,66 +80661,6 @@
     "orig_movto": 2,
     "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 28,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 28,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 28,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 28,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 28,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 28,
     "dt_movto": "2026-08-01"
   },
   {
@@ -79378,30 +80770,6 @@
     "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 28,
     "dt_movto": "2026-08-12"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 28.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 28.5,
-    "dt_movto": "2026-07-25"
   },
   {
     "fonte_comercial": "STK",
@@ -79498,246 +80866,6 @@
     "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 28.5,
     "dt_movto": "2026-08-14"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29,
-    "dt_movto": "2026-07-25"
   },
   {
     "fonte_comercial": "STK",
@@ -80314,342 +81442,6 @@
     "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 29.4,
     "dt_movto": "2026-08-13"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29.5,
-    "dt_movto": "2026-07-25"
   },
   {
     "fonte_comercial": "STK",
@@ -81621,102 +82413,6 @@
     "orig_movto": 2,
     "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 30,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 30,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 30,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 30,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 30,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 30,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 30,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 30,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 30,
     "dt_movto": "2026-08-01"
   },
   {
@@ -82196,18 +82892,6 @@
     "subgrupo": 1,
     "orig_movto": 2,
     "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 31.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 32,
     "dt_movto": "2026-08-10"
   },
@@ -82234,30 +82918,6 @@
     "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 32,
     "dt_movto": "2026-08-12"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 32.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 32.5,
-    "dt_movto": "2026-07-25"
   },
   {
     "fonte_comercial": "STK",
@@ -82365,18 +83025,6 @@
     "orig_movto": 2,
     "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 34,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 34,
     "dt_movto": "2026-08-01"
   },
   {
@@ -82424,92 +83072,8 @@
     "subgrupo": 1,
     "orig_movto": 2,
     "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 34.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 34.7,
     "dt_movto": "2026-08-12"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 35,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 35,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 35,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 35,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 35,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 35,
-    "dt_movto": "2026-07-25"
   },
   {
     "fonte_comercial": "STK",
@@ -82725,18 +83289,6 @@
     "orig_movto": 2,
     "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 36.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 36.5,
     "dt_movto": "2026-08-11"
   },
   {
@@ -82784,30 +83336,6 @@
     "subgrupo": 1,
     "orig_movto": 2,
     "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 37.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 37.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 38.5,
     "dt_movto": "2026-08-11"
   },
@@ -82821,30 +83349,6 @@
     "orig_movto": 2,
     "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 39,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 39,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 39,
     "dt_movto": "2026-08-01"
   },
   {
@@ -82882,18 +83386,6 @@
     "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 39,
     "dt_movto": "2026-08-04"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 39.5,
-    "dt_movto": "2026-07-25"
   },
   {
     "fonte_comercial": "STK",
@@ -82906,54 +83398,6 @@
     "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 39.5,
     "dt_movto": "2026-08-13"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 40,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 40,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 40,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 40,
-    "dt_movto": "2026-07-25"
   },
   {
     "fonte_comercial": "STK",
@@ -83038,18 +83482,6 @@
     "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 40,
     "dt_movto": "2026-08-13"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "14626",
-    "produto": "14626",
-    "desc_completa": "CAMURCAO LONDON PU 1.2 (V O/I 25) -IMPORTADO*197280*CACAU",
-    "grupo": 13,
-    "subgrupo": 1,
-    "orig_movto": 3,
-    "descr_orig_movto": "Movimento mês anterior",
-    "qtd_movimentada": 844.5,
-    "dt_movto": "2026-07-25"
   },
   {
     "fonte_comercial": "STK",
@@ -85218,6 +85650,18 @@
     "desc_completa": "METALIZADO PITON SAARA DOURADO",
     "grupo": 2,
     "subgrupo": 2,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 203,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "14862",
+    "produto": "14862",
+    "desc_completa": "METALIZADO PITON SAARA DOURADO",
+    "grupo": 2,
+    "subgrupo": 2,
     "orig_movto": 38,
     "descr_orig_movto": "Cálculo de valor de movimentos",
     "qtd_movimentada": 0,
@@ -85954,6 +86398,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 10.5,
     "dt_movto": "2026-08-12"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "14925",
+    "produto": "14925",
+    "desc_completa": "RESINA NOVOTEX - AL233",
+    "grupo": 9,
+    "subgrupo": 5,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 10.66,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -88100,6 +88556,18 @@
     "subgrupo": 41,
     "orig_movto": 17,
     "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 3,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "15212",
+    "produto": "15212",
+    "desc_completa": "BORGONHA TITANIO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
     "qtd_movimentada": 25,
     "dt_movto": "2026-08-12"
   },
@@ -88186,6 +88654,18 @@
     "descr_orig_movto": "Cálculo de valor de movimentos",
     "qtd_movimentada": 0,
     "dt_movto": "2026-07-31"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "15233",
+    "produto": "15233",
+    "desc_completa": "LINHA DE SACARIA",
+    "grupo": 15,
+    "subgrupo": 0,
+    "orig_movto": 39,
+    "descr_orig_movto": "Requisição do estoque",
+    "qtd_movimentada": 1,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -88438,6 +88918,18 @@
     "descr_orig_movto": "Separação de pedidos",
     "qtd_movimentada": 5,
     "dt_movto": "2026-08-21"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "15247",
+    "produto": "15247",
+    "desc_completa": "OPHIDIA PRETO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 5,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -91158,6 +91650,18 @@
     "desc_completa": "LISSE OFF WHITE",
     "grupo": 39,
     "subgrupo": 41,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 44.5,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "15380",
+    "produto": "15380",
+    "desc_completa": "LISSE OFF WHITE",
+    "grupo": 39,
+    "subgrupo": 41,
     "orig_movto": 38,
     "descr_orig_movto": "Cálculo de valor de movimentos",
     "qtd_movimentada": 0,
@@ -92154,6 +92658,18 @@
     "desc_completa": "MIRAGE OURO ROSADO",
     "grupo": 39,
     "subgrupo": 41,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 39,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "15535",
+    "produto": "15535",
+    "desc_completa": "MIRAGE OURO ROSADO",
+    "grupo": 39,
+    "subgrupo": 41,
     "orig_movto": 17,
     "descr_orig_movto": "Separação de pedidos",
     "qtd_movimentada": 5,
@@ -92338,6 +92854,18 @@
     "descr_orig_movto": "Separação de pedidos",
     "qtd_movimentada": 39,
     "dt_movto": "2026-08-05"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "15621",
+    "produto": "15621",
+    "desc_completa": "NAPA LINHO DAKAR BELLINI",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 76,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -95144,6 +95672,18 @@
     "subgrupo": 1,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 3.7,
+    "dt_movto": "2026-08-24"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "15781",
+    "produto": "15781",
+    "desc_completa": "LACA 1569",
+    "grupo": 6,
+    "subgrupo": 1,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 5,
     "dt_movto": "2026-08-10"
   },
@@ -96022,330 +96562,6 @@
     "descr_orig_movto": "Cálculo de valor de movimentos",
     "qtd_movimentada": 0,
     "dt_movto": "2026-07-31"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "15826",
-    "produto": "15826",
-    "desc_completa": "NAPA NEW NANCY BRANCO OFF 526",
-    "grupo": 2,
-    "subgrupo": 2,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 23.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "15826",
-    "produto": "15826",
-    "desc_completa": "NAPA NEW NANCY BRANCO OFF 526",
-    "grupo": 2,
-    "subgrupo": 2,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 25,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "15826",
-    "produto": "15826",
-    "desc_completa": "NAPA NEW NANCY BRANCO OFF 526",
-    "grupo": 2,
-    "subgrupo": 2,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 28,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "15826",
-    "produto": "15826",
-    "desc_completa": "NAPA NEW NANCY BRANCO OFF 526",
-    "grupo": 2,
-    "subgrupo": 2,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 29,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "15826",
-    "produto": "15826",
-    "desc_completa": "NAPA NEW NANCY BRANCO OFF 526",
-    "grupo": 2,
-    "subgrupo": 2,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 30,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "15826",
-    "produto": "15826",
-    "desc_completa": "NAPA NEW NANCY BRANCO OFF 526",
-    "grupo": 2,
-    "subgrupo": 2,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 30,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "15826",
-    "produto": "15826",
-    "desc_completa": "NAPA NEW NANCY BRANCO OFF 526",
-    "grupo": 2,
-    "subgrupo": 2,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 30,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "15826",
-    "produto": "15826",
-    "desc_completa": "NAPA NEW NANCY BRANCO OFF 526",
-    "grupo": 2,
-    "subgrupo": 2,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 33,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "15826",
-    "produto": "15826",
-    "desc_completa": "NAPA NEW NANCY BRANCO OFF 526",
-    "grupo": 2,
-    "subgrupo": 2,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 37.5,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "15826",
-    "produto": "15826",
-    "desc_completa": "NAPA NEW NANCY BRANCO OFF 526",
-    "grupo": 2,
-    "subgrupo": 2,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 40,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "15826",
-    "produto": "15826",
-    "desc_completa": "NAPA NEW NANCY BRANCO OFF 526",
-    "grupo": 2,
-    "subgrupo": 2,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 40,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "15826",
-    "produto": "15826",
-    "desc_completa": "NAPA NEW NANCY BRANCO OFF 526",
-    "grupo": 2,
-    "subgrupo": 2,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 40,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "15826",
-    "produto": "15826",
-    "desc_completa": "NAPA NEW NANCY BRANCO OFF 526",
-    "grupo": 2,
-    "subgrupo": 2,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 40,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "15826",
-    "produto": "15826",
-    "desc_completa": "NAPA NEW NANCY BRANCO OFF 526",
-    "grupo": 2,
-    "subgrupo": 2,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 40,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "15826",
-    "produto": "15826",
-    "desc_completa": "NAPA NEW NANCY BRANCO OFF 526",
-    "grupo": 2,
-    "subgrupo": 2,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 40,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "15826",
-    "produto": "15826",
-    "desc_completa": "NAPA NEW NANCY BRANCO OFF 526",
-    "grupo": 2,
-    "subgrupo": 2,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 40,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "15826",
-    "produto": "15826",
-    "desc_completa": "NAPA NEW NANCY BRANCO OFF 526",
-    "grupo": 2,
-    "subgrupo": 2,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 40,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "15826",
-    "produto": "15826",
-    "desc_completa": "NAPA NEW NANCY BRANCO OFF 526",
-    "grupo": 2,
-    "subgrupo": 2,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 40,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "15826",
-    "produto": "15826",
-    "desc_completa": "NAPA NEW NANCY BRANCO OFF 526",
-    "grupo": 2,
-    "subgrupo": 2,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 40,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "15826",
-    "produto": "15826",
-    "desc_completa": "NAPA NEW NANCY BRANCO OFF 526",
-    "grupo": 2,
-    "subgrupo": 2,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 40,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "15826",
-    "produto": "15826",
-    "desc_completa": "NAPA NEW NANCY BRANCO OFF 526",
-    "grupo": 2,
-    "subgrupo": 2,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 40,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "15826",
-    "produto": "15826",
-    "desc_completa": "NAPA NEW NANCY BRANCO OFF 526",
-    "grupo": 2,
-    "subgrupo": 2,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 40,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "15826",
-    "produto": "15826",
-    "desc_completa": "NAPA NEW NANCY BRANCO OFF 526",
-    "grupo": 2,
-    "subgrupo": 2,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 40,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "15826",
-    "produto": "15826",
-    "desc_completa": "NAPA NEW NANCY BRANCO OFF 526",
-    "grupo": 2,
-    "subgrupo": 2,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 40,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "15826",
-    "produto": "15826",
-    "desc_completa": "NAPA NEW NANCY BRANCO OFF 526",
-    "grupo": 2,
-    "subgrupo": 2,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 40,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "15826",
-    "produto": "15826",
-    "desc_completa": "NAPA NEW NANCY BRANCO OFF 526",
-    "grupo": 2,
-    "subgrupo": 2,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 40,
-    "dt_movto": "2026-07-25"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "15826",
-    "produto": "15826",
-    "desc_completa": "NAPA NEW NANCY BRANCO OFF 526",
-    "grupo": 2,
-    "subgrupo": 2,
-    "orig_movto": 2,
-    "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 41,
-    "dt_movto": "2026-07-25"
   },
   {
     "fonte_comercial": "STK",
@@ -97290,6 +97506,30 @@
     "desc_completa": "NAPA DESTROYER PRETO (NAPA DESTROYER) - 0 SEM GTIN",
     "grupo": 13,
     "subgrupo": 1,
+    "orig_movto": 1,
+    "descr_orig_movto": "Manutenção de movimentos",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "15906",
+    "produto": "15906",
+    "desc_completa": "NAPA DESTROYER PRETO (NAPA DESTROYER) - 0 SEM GTIN",
+    "grupo": 13,
+    "subgrupo": 1,
+    "orig_movto": 1,
+    "descr_orig_movto": "Manutenção de movimentos",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "15906",
+    "produto": "15906",
+    "desc_completa": "NAPA DESTROYER PRETO (NAPA DESTROYER) - 0 SEM GTIN",
+    "grupo": 13,
+    "subgrupo": 1,
     "orig_movto": 10,
     "descr_orig_movto": "Emissão de nota FAT",
     "qtd_movimentada": 40,
@@ -97306,6 +97546,30 @@
     "descr_orig_movto": "Emissão de nota FAT",
     "qtd_movimentada": 40,
     "dt_movto": "2026-08-10"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "15906",
+    "produto": "15906",
+    "desc_completa": "NAPA DESTROYER PRETO (NAPA DESTROYER) - 0 SEM GTIN",
+    "grupo": 13,
+    "subgrupo": 1,
+    "orig_movto": 10,
+    "descr_orig_movto": "Emissão de nota FAT",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "15908",
+    "produto": "15908",
+    "desc_completa": "NAPA DESTROYER PRETO",
+    "grupo": 2,
+    "subgrupo": 3,
+    "orig_movto": 1,
+    "descr_orig_movto": "Manutenção de movimentos",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -97330,6 +97594,18 @@
     "descr_orig_movto": "Separação de pedidos",
     "qtd_movimentada": 40,
     "dt_movto": "2026-07-30"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "15908",
+    "produto": "15908",
+    "desc_completa": "NAPA DESTROYER PRETO",
+    "grupo": 2,
+    "subgrupo": 3,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -97906,6 +98182,18 @@
     "descr_orig_movto": "Requisição do estoque",
     "qtd_movimentada": 2,
     "dt_movto": "2026-08-10"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "15988",
+    "produto": "15988",
+    "desc_completa": "LAMINA PARA ESTILETE 18MM STARFER",
+    "grupo": 16,
+    "subgrupo": 6,
+    "orig_movto": 39,
+    "descr_orig_movto": "Requisição do estoque",
+    "qtd_movimentada": 2,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -98936,6 +99224,18 @@
     "subgrupo": 1,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 26.171,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "16370",
+    "produto": "16370",
+    "desc_completa": "LACA 1250",
+    "grupo": 5,
+    "subgrupo": 1,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 27.464,
     "dt_movto": "2026-07-28"
   },
@@ -99202,6 +99502,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 66.799,
     "dt_movto": "2026-08-05"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "16370",
+    "produto": "16370",
+    "desc_completa": "LACA 1250",
+    "grupo": 5,
+    "subgrupo": 1,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 88.529,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -103062,6 +103374,18 @@
     "desc_completa": "SAVOY GLAM GRAFITE",
     "grupo": 39,
     "subgrupo": 41,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 5,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "16578",
+    "produto": "16578",
+    "desc_completa": "SAVOY GLAM GRAFITE",
+    "grupo": 39,
+    "subgrupo": 41,
     "orig_movto": 35,
     "descr_orig_movto": "Ajuste de inventário",
     "qtd_movimentada": 1,
@@ -103201,6 +103525,18 @@
   },
   {
     "fonte_comercial": "STK",
+    "cod_prod": "16593",
+    "produto": "16593",
+    "desc_completa": "MIST JR SAVOY LUX PRATA SG-14072",
+    "grupo": 6,
+    "subgrupo": 2,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 84.51,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
     "cod_prod": "16594",
     "produto": "16594",
     "desc_completa": "SAVOY LUX PRATA",
@@ -103210,6 +103546,78 @@
     "descr_orig_movto": "Ajuste de inventário",
     "qtd_movimentada": 8.8,
     "dt_movto": "2026-07-31"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "16604",
+    "produto": "16604",
+    "desc_completa": "METAL SATINY PLUS  PRATA",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 4.5,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "16604",
+    "produto": "16604",
+    "desc_completa": "METAL SATINY PLUS  PRATA",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 12,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "16604",
+    "produto": "16604",
+    "desc_completa": "METAL SATINY PLUS  PRATA",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 24,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "16604",
+    "produto": "16604",
+    "desc_completa": "METAL SATINY PLUS  PRATA",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 29,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "16604",
+    "produto": "16604",
+    "desc_completa": "METAL SATINY PLUS  PRATA",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 37.5,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "16604",
+    "produto": "16604",
+    "desc_completa": "METAL SATINY PLUS  PRATA",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -104050,6 +104458,18 @@
     "descr_orig_movto": "Separação de pedidos",
     "qtd_movimentada": 300,
     "dt_movto": "2026-08-17"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "16605",
+    "produto": "16605",
+    "desc_completa": "NAPA FLOATER VENEZIA DOURADO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 304.5,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -107564,6 +107984,30 @@
     "subgrupo": 2,
     "orig_movto": 17,
     "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 396.5,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "16703",
+    "produto": "16703",
+    "desc_completa": "NAPA SEVILLE CAMEL 1165",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 400,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "16703",
+    "produto": "16703",
+    "desc_completa": "NAPA SEVILLE CAMEL 1165",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
     "qtd_movimentada": 403,
     "dt_movto": "2026-08-03"
   },
@@ -107938,6 +108382,54 @@
     "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 41,
     "dt_movto": "2026-07-30"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "16707",
+    "produto": "16707",
+    "desc_completa": "SEVILLE  PRETO",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "16707",
+    "produto": "16707",
+    "desc_completa": "SEVILLE  PRETO",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 69,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "16707",
+    "produto": "16707",
+    "desc_completa": "SEVILLE  PRETO",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 80,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "16707",
+    "produto": "16707",
+    "desc_completa": "SEVILLE  PRETO",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 248,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -108478,6 +108970,18 @@
     "descr_orig_movto": "Separação de pedidos",
     "qtd_movimentada": 200,
     "dt_movto": "2026-08-12"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "16732",
+    "produto": "16732",
+    "desc_completa": "NAPA SEVILLE CACAU 1277",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 200,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -110072,6 +110576,18 @@
     "subgrupo": 2,
     "orig_movto": 17,
     "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 203.2,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "16878",
+    "produto": "16878",
+    "desc_completa": "NAPA SEVILLE AVELA 1248",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
     "qtd_movimentada": 298.6,
     "dt_movto": "2026-08-17"
   },
@@ -110588,6 +111104,18 @@
     "subgrupo": 2,
     "orig_movto": 39,
     "descr_orig_movto": "Requisição do estoque",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "16904",
+    "produto": "16904",
+    "desc_completa": "BASE SHANGHAI PU 1.05 - CASTANHO",
+    "grupo": 13,
+    "subgrupo": 2,
+    "orig_movto": 39,
+    "descr_orig_movto": "Requisição do estoque",
     "qtd_movimentada": 800,
     "dt_movto": "2026-08-17"
   },
@@ -110722,6 +111250,30 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 500,
     "dt_movto": "2026-08-10"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "16905",
+    "produto": "16905",
+    "desc_completa": "BASE SHANGHAI PU 1.05 - OFF WHITE",
+    "grupo": 13,
+    "subgrupo": 2,
+    "orig_movto": 37,
+    "descr_orig_movto": "Transferência de local por NF",
+    "qtd_movimentada": 13200,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "16905",
+    "produto": "16905",
+    "desc_completa": "BASE SHANGHAI PU 1.05 - OFF WHITE",
+    "grupo": 13,
+    "subgrupo": 2,
+    "orig_movto": 37,
+    "descr_orig_movto": "Transferência de local por NF",
+    "qtd_movimentada": 13200,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -111658,18 +112210,6 @@
     "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 60,
     "dt_movto": "2026-08-13"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "17000",
-    "produto": "17000",
-    "desc_completa": "MISTURA ESTAMPA INCOLOR NAPA MARSELHA PRETO SG-14355",
-    "grupo": 6,
-    "subgrupo": 1,
-    "orig_movto": 20,
-    "descr_orig_movto": "Item de ordem de produção",
-    "qtd_movimentada": 20,
-    "dt_movto": "2026-07-25"
   },
   {
     "fonte_comercial": "STK",
@@ -113902,6 +114442,18 @@
     "descr_orig_movto": "Separação de pedidos",
     "qtd_movimentada": 200,
     "dt_movto": "2026-08-18"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17011",
+    "produto": "17011",
+    "desc_completa": "NAPA RAVENA BRANCO OFF",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 200,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -117150,6 +117702,30 @@
     "desc_completa": "OPHIDIA BORDO",
     "grupo": 39,
     "subgrupo": 41,
+    "orig_movto": 1,
+    "descr_orig_movto": "Manutenção de movimentos",
+    "qtd_movimentada": 5,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17123",
+    "produto": "17123",
+    "desc_completa": "OPHIDIA BORDO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 1,
+    "descr_orig_movto": "Manutenção de movimentos",
+    "qtd_movimentada": 5,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17123",
+    "produto": "17123",
+    "desc_completa": "OPHIDIA BORDO",
+    "grupo": 39,
+    "subgrupo": 41,
     "orig_movto": 17,
     "descr_orig_movto": "Separação de pedidos",
     "qtd_movimentada": 1,
@@ -117186,6 +117762,18 @@
     "desc_completa": "OPHIDIA BORDO",
     "grupo": 39,
     "subgrupo": 41,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 5,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17123",
+    "produto": "17123",
+    "desc_completa": "OPHIDIA BORDO",
+    "grupo": 39,
+    "subgrupo": 41,
     "orig_movto": 35,
     "descr_orig_movto": "Ajuste de inventário",
     "qtd_movimentada": 2,
@@ -117214,6 +117802,18 @@
     "descr_orig_movto": "Separação de pedidos",
     "qtd_movimentada": 1,
     "dt_movto": "2026-08-24"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17125",
+    "produto": "17125",
+    "desc_completa": "NAMIBIA BORDO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 5,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -118436,6 +119036,66 @@
     "subgrupo": 41,
     "orig_movto": 2,
     "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 21.5,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17231",
+    "produto": "17231",
+    "desc_completa": "DENVER ESPRESSO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 22.1,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17231",
+    "produto": "17231",
+    "desc_completa": "DENVER ESPRESSO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 22.5,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17231",
+    "produto": "17231",
+    "desc_completa": "DENVER ESPRESSO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 29,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17231",
+    "produto": "17231",
+    "desc_completa": "DENVER ESPRESSO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 32.5,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17231",
+    "produto": "17231",
+    "desc_completa": "DENVER ESPRESSO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 36.5,
     "dt_movto": "2026-08-11"
   },
@@ -118448,8 +119108,20 @@
     "subgrupo": 41,
     "orig_movto": 2,
     "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 40,
-    "dt_movto": "2026-08-11"
+    "qtd_movimentada": 36.5,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17231",
+    "produto": "17231",
+    "desc_completa": "DENVER ESPRESSO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 36.5,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -118558,6 +119230,102 @@
     "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 40,
     "dt_movto": "2026-08-11"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17231",
+    "produto": "17231",
+    "desc_completa": "DENVER ESPRESSO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-11"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17231",
+    "produto": "17231",
+    "desc_completa": "DENVER ESPRESSO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17231",
+    "produto": "17231",
+    "desc_completa": "DENVER ESPRESSO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17231",
+    "produto": "17231",
+    "desc_completa": "DENVER ESPRESSO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17231",
+    "produto": "17231",
+    "desc_completa": "DENVER ESPRESSO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17231",
+    "produto": "17231",
+    "desc_completa": "DENVER ESPRESSO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17231",
+    "produto": "17231",
+    "desc_completa": "DENVER ESPRESSO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17231",
+    "produto": "17231",
+    "desc_completa": "DENVER ESPRESSO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -120894,6 +121662,30 @@
     "desc_completa": "CAMURCA FLEX 0.30+FLANELA 475/11 0.40 - BRANCO OFF*60121*526",
     "grupo": 13,
     "subgrupo": 1,
+    "orig_movto": 1,
+    "descr_orig_movto": "Manutenção de movimentos",
+    "qtd_movimentada": 2.5,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17300",
+    "produto": "17300",
+    "desc_completa": "CAMURCA FLEX 0.30+FLANELA 475/11 0.40 - BRANCO OFF*60121*526",
+    "grupo": 13,
+    "subgrupo": 1,
+    "orig_movto": 1,
+    "descr_orig_movto": "Manutenção de movimentos",
+    "qtd_movimentada": 2.5,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17300",
+    "produto": "17300",
+    "desc_completa": "CAMURCA FLEX 0.30+FLANELA 475/11 0.40 - BRANCO OFF*60121*526",
+    "grupo": 13,
+    "subgrupo": 1,
     "orig_movto": 9,
     "descr_orig_movto": "Movimento livros ficais",
     "qtd_movimentada": 38.8,
@@ -120910,6 +121702,30 @@
     "descr_orig_movto": "Movimento livros ficais",
     "qtd_movimentada": 130.9,
     "dt_movto": "2026-08-12"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17300",
+    "produto": "17300",
+    "desc_completa": "CAMURCA FLEX 0.30+FLANELA 475/11 0.40 - BRANCO OFF*60121*526",
+    "grupo": 13,
+    "subgrupo": 1,
+    "orig_movto": 10,
+    "descr_orig_movto": "Emissão de nota FAT",
+    "qtd_movimentada": 38.8,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17300",
+    "produto": "17300",
+    "desc_completa": "CAMURCA FLEX 0.30+FLANELA 475/11 0.40 - BRANCO OFF*60121*526",
+    "grupo": 13,
+    "subgrupo": 1,
+    "orig_movto": 10,
+    "descr_orig_movto": "Emissão de nota FAT",
+    "qtd_movimentada": 130.9,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -123548,8 +124364,68 @@
     "subgrupo": 41,
     "orig_movto": 2,
     "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 7,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17420",
+    "produto": "17420",
+    "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 17,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17420",
+    "produto": "17420",
+    "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 27.5,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17420",
+    "produto": "17420",
+    "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 29,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17420",
+    "produto": "17420",
+    "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 29.5,
     "dt_movto": "2026-07-27"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17420",
+    "produto": "17420",
+    "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 30,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -123596,8 +124472,44 @@
     "subgrupo": 41,
     "orig_movto": 2,
     "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 32.5,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17420",
+    "produto": "17420",
+    "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 34,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17420",
+    "produto": "17420",
+    "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 35,
     "dt_movto": "2026-08-24"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17420",
+    "produto": "17420",
+    "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 35.5,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -124016,6 +124928,114 @@
     "subgrupo": 41,
     "orig_movto": 2,
     "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17420",
+    "produto": "17420",
+    "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17420",
+    "produto": "17420",
+    "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17420",
+    "produto": "17420",
+    "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17420",
+    "produto": "17420",
+    "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17420",
+    "produto": "17420",
+    "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17420",
+    "produto": "17420",
+    "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17420",
+    "produto": "17420",
+    "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17420",
+    "produto": "17420",
+    "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17420",
+    "produto": "17420",
+    "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 42.5,
     "dt_movto": "2026-08-11"
   },
@@ -124138,6 +125158,42 @@
     "descr_orig_movto": "Separação de pedidos",
     "qtd_movimentada": 143.5,
     "dt_movto": "2026-08-17"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17420",
+    "produto": "17420",
+    "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 160,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17420",
+    "produto": "17420",
+    "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 176.5,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17420",
+    "produto": "17420",
+    "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 240,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -125914,6 +126970,18 @@
     "descr_orig_movto": "Separação de pedidos",
     "qtd_movimentada": 188,
     "dt_movto": "2026-08-14"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17454",
+    "produto": "17454",
+    "desc_completa": "METALIZADO PITON SAAR BROWN 1570",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 200,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -128000,6 +129068,30 @@
     "subgrupo": 1,
     "orig_movto": 1,
     "descr_orig_movto": "Manutenção de movimentos",
+    "qtd_movimentada": 0.2,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17563",
+    "produto": "17563",
+    "desc_completa": "CAMURCA FLEX 0.30+FLANELA 475/11 0.40",
+    "grupo": 13,
+    "subgrupo": 1,
+    "orig_movto": 1,
+    "descr_orig_movto": "Manutenção de movimentos",
+    "qtd_movimentada": 0.2,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17563",
+    "produto": "17563",
+    "desc_completa": "CAMURCA FLEX 0.30+FLANELA 475/11 0.40",
+    "grupo": 13,
+    "subgrupo": 1,
+    "orig_movto": 1,
+    "descr_orig_movto": "Manutenção de movimentos",
     "qtd_movimentada": 1.6,
     "dt_movto": "2026-08-12"
   },
@@ -128038,6 +129130,18 @@
     "descr_orig_movto": "Movimento livros ficais",
     "qtd_movimentada": 119,
     "dt_movto": "2026-08-06"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17563",
+    "produto": "17563",
+    "desc_completa": "CAMURCA FLEX 0.30+FLANELA 475/11 0.40",
+    "grupo": 13,
+    "subgrupo": 1,
+    "orig_movto": 10,
+    "descr_orig_movto": "Emissão de nota FAT",
+    "qtd_movimentada": 10,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -134144,8 +135248,32 @@
     "subgrupo": 2,
     "orig_movto": 2,
     "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 0.565,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17709",
+    "produto": "17709",
+    "desc_completa": "MISTURA JR NAPA MALAGA CHOCOLATE 1271 SG-14884",
+    "grupo": 6,
+    "subgrupo": 2,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 33,
     "dt_movto": "2026-07-27"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17709",
+    "produto": "17709",
+    "desc_completa": "MISTURA JR NAPA MALAGA CHOCOLATE 1271 SG-14884",
+    "grupo": 6,
+    "subgrupo": 2,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 0.565,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -138236,6 +139364,18 @@
     "subgrupo": 40,
     "orig_movto": 9,
     "descr_orig_movto": "Movimento livros ficais",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20015",
+    "produto": "20015",
+    "desc_completa": "NAPA LINHO DAKAR NATURAL - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 9,
+    "descr_orig_movto": "Movimento livros ficais",
     "qtd_movimentada": 80,
     "dt_movto": "2026-08-07"
   },
@@ -138596,6 +139736,18 @@
     "subgrupo": 40,
     "orig_movto": 17,
     "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 200,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20015",
+    "produto": "20015",
+    "desc_completa": "NAPA LINHO DAKAR NATURAL - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
     "qtd_movimentada": 300,
     "dt_movto": "2026-07-27"
   },
@@ -138790,6 +139942,18 @@
     "descr_orig_movto": "Separação de pedidos",
     "qtd_movimentada": 40,
     "dt_movto": "2026-08-21"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20016",
+    "produto": "20016",
+    "desc_completa": "NAPA LINHO DAKAR CARAMELO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -139357,6 +140521,42 @@
   },
   {
     "fonte_comercial": "STK",
+    "cod_prod": "20034",
+    "produto": "20034",
+    "desc_completa": "NAPA BARI PRETO - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 2000,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20034",
+    "produto": "20034",
+    "desc_completa": "NAPA BARI PRETO - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 39,
+    "descr_orig_movto": "Requisição do estoque",
+    "qtd_movimentada": 2000,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20034",
+    "produto": "20034",
+    "desc_completa": "NAPA BARI PRETO - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 39,
+    "descr_orig_movto": "Requisição do estoque",
+    "qtd_movimentada": 2000,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
     "cod_prod": "20036",
     "produto": "20036",
     "desc_completa": "NAPA METAL LYON BRONZE - PU 0.9MM",
@@ -139654,6 +140854,18 @@
     "descr_orig_movto": "Separação de pedidos",
     "qtd_movimentada": 40,
     "dt_movto": "2026-08-18"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20078",
+    "produto": "20078",
+    "desc_completa": "NAPA METAL CHARM NUDE - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -141169,6 +142381,30 @@
   },
   {
     "fonte_comercial": "STK",
+    "cod_prod": "30086",
+    "produto": "30086",
+    "desc_completa": "MISTURA JR NAPA MARSELHA CHOCOLATE 1271 SG-14402",
+    "grupo": 6,
+    "subgrupo": 2,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 3.3,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "30086",
+    "produto": "30086",
+    "desc_completa": "MISTURA JR NAPA MARSELHA CHOCOLATE 1271 SG-14402",
+    "grupo": 6,
+    "subgrupo": 2,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 3.3,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
     "cod_prod": "30087",
     "produto": "30087",
     "desc_completa": "NAPA MARSELHA CHOCOLATE 1271",
@@ -141850,6 +143086,18 @@
     "descr_orig_movto": "Separação de pedidos",
     "qtd_movimentada": 2,
     "dt_movto": "2026-08-17"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "30095",
+    "produto": "30095",
+    "desc_completa": "BORGONHA WHISKY",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 3,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -143113,6 +144361,30 @@
   },
   {
     "fonte_comercial": "STK",
+    "cod_prod": "30127",
+    "produto": "30127",
+    "desc_completa": "CAMURÇA PARIS GLAM BRANCO OFF 526/ PRATA/ CRU 20",
+    "grupo": 2,
+    "subgrupo": 3,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 38.2,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "30127",
+    "produto": "30127",
+    "desc_completa": "CAMURÇA PARIS GLAM BRANCO OFF 526/ PRATA/ CRU 20",
+    "grupo": 2,
+    "subgrupo": 3,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 126.5,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
     "cod_prod": "30129",
     "produto": "30129",
     "desc_completa": "MACKAY OFF WHITE",
@@ -143697,7 +144969,7 @@
     "orig_movto": 2,
     "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 3,
-    "dt_movto": "2026-08-24"
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -143744,6 +145016,18 @@
     "subgrupo": 2,
     "orig_movto": 2,
     "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 29,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "30177",
+    "produto": "30177",
+    "desc_completa": "NAPA MARSELHA LARANJA 1506",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 30,
     "dt_movto": "2026-08-17"
   },
@@ -143757,7 +145041,7 @@
     "orig_movto": 2,
     "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 30,
-    "dt_movto": "2026-08-24"
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -143768,8 +145052,8 @@
     "subgrupo": 2,
     "orig_movto": 2,
     "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 34.5,
-    "dt_movto": "2026-08-24"
+    "qtd_movimentada": 34,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -143781,7 +145065,7 @@
     "orig_movto": 2,
     "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 39,
-    "dt_movto": "2026-08-24"
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -143816,8 +145100,8 @@
     "subgrupo": 2,
     "orig_movto": 2,
     "descr_orig_movto": "Ordem de produção",
-    "qtd_movimentada": 41.5,
-    "dt_movto": "2026-08-24"
+    "qtd_movimentada": 41,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -143840,7 +145124,7 @@
     "subgrupo": 2,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
-    "qtd_movimentada": 185.5,
+    "qtd_movimentada": 185,
     "dt_movto": "2026-08-24"
   },
   {
@@ -143853,7 +145137,7 @@
     "orig_movto": 39,
     "descr_orig_movto": "Requisição do estoque",
     "qtd_movimentada": 188,
-    "dt_movto": "2026-08-24"
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -143865,7 +145149,7 @@
     "orig_movto": 39,
     "descr_orig_movto": "Requisição do estoque",
     "qtd_movimentada": 188,
-    "dt_movto": "2026-08-24"
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -144250,6 +145534,18 @@
     "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 50,
     "dt_movto": "2026-08-11"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "50008",
+    "produto": "50008",
+    "desc_completa": "CAMURÇA PARIS GLAM + FLANELA / CHOCOLATE 1271- DOURADO/PRETO",
+    "grupo": 2,
+    "subgrupo": 3,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 5.5,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -144750,6 +146046,18 @@
     "desc_completa": "FLORENZA CAFE",
     "grupo": 39,
     "subgrupo": 41,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 5,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "900022",
+    "produto": "900022",
+    "desc_completa": "FLORENZA CAFE",
+    "grupo": 39,
+    "subgrupo": 41,
     "orig_movto": 39,
     "descr_orig_movto": "Requisição do estoque",
     "qtd_movimentada": 1,
@@ -144946,6 +146254,42 @@
     "descr_orig_movto": "Ajuste de inventário",
     "qtd_movimentada": 10,
     "dt_movto": "2026-07-28"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9000110",
+    "produto": "9000110",
+    "desc_completa": "MIST INCOLOR 100% LW9365",
+    "grupo": 6,
+    "subgrupo": 1,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 1.12,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9000110",
+    "produto": "9000110",
+    "desc_completa": "MIST INCOLOR 100% LW9365",
+    "grupo": 6,
+    "subgrupo": 1,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 3.6,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9000110",
+    "produto": "9000110",
+    "desc_completa": "MIST INCOLOR 100% LW9365",
+    "grupo": 6,
+    "subgrupo": 1,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 3.6,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -145174,6 +146518,30 @@
     "descr_orig_movto": "Separação de pedidos",
     "qtd_movimentada": 5,
     "dt_movto": "2026-08-24"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9000134",
+    "produto": "9000134",
+    "desc_completa": "BERGAMO CARAMELO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 5,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9000134",
+    "produto": "9000134",
+    "desc_completa": "BERGAMO CARAMELO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 25,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
@@ -145976,6 +147344,30 @@
     "subgrupo": 2,
     "orig_movto": 17,
     "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 389,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9100083",
+    "produto": "9100083",
+    "desc_completa": "NAPA CALF PU 0.9 MOCCA 1398",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
+    "qtd_movimentada": 400,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9100083",
+    "produto": "9100083",
+    "desc_completa": "NAPA CALF PU 0.9 MOCCA 1398",
+    "grupo": 2,
+    "subgrupo": 2,
+    "orig_movto": 17,
+    "descr_orig_movto": "Separação de pedidos",
     "qtd_movimentada": 471.5,
     "dt_movto": "2026-07-31"
   },
@@ -146168,6 +147560,18 @@
     "subgrupo": 2,
     "orig_movto": 2,
     "descr_orig_movto": "Ordem de produção",
+    "qtd_movimentada": 139.7,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9100110",
+    "produto": "9100110",
+    "desc_completa": "MISTURA JR NAPA MARSELHA OSTRA 1431 SG-14364",
+    "grupo": 6,
+    "subgrupo": 2,
+    "orig_movto": 2,
+    "descr_orig_movto": "Ordem de produção",
     "qtd_movimentada": 159.5,
     "dt_movto": "2026-08-06"
   },
@@ -146192,6 +147596,18 @@
     "subgrupo": 2,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 16,
+    "dt_movto": "2026-08-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9100110",
+    "produto": "9100110",
+    "desc_completa": "MISTURA JR NAPA MARSELHA OSTRA 1431 SG-14364",
+    "grupo": 6,
+    "subgrupo": 2,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 39,
     "dt_movto": "2026-08-12"
   },
@@ -146206,6 +147622,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 117,
     "dt_movto": "2026-08-12"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "9100110",
+    "produto": "9100110",
+    "desc_completa": "MISTURA JR NAPA MARSELHA OSTRA 1431 SG-14364",
+    "grupo": 6,
+    "subgrupo": 2,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 120.5,
+    "dt_movto": "2026-08-25"
   },
   {
     "fonte_comercial": "STK",
