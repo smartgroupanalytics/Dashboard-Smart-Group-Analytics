@@ -25,6 +25,18 @@
   },
   {
     "fonte_comercial": "STK",
+    "nro_op": "6876",
+    "produto": "15535",
+    "desc_completa": "MIRAGE OURO ROSADO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 186.5,
+    "dt_saida": "2026-06-17",
+    "centro_custo": 10,
+    "abreviacao": "REV 1"
+  },
+  {
+    "fonte_comercial": "STK",
     "nro_op": "6911",
     "produto": "14180",
     "desc_completa": "HELSINKI OFF WHITE - 1.2MM",
@@ -133,18 +145,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "7513",
-    "produto": "17231",
-    "desc_completa": "DENVER ESPRESSO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 520.5,
-    "dt_saida": "2026-07-29",
-    "centro_custo": 10,
-    "abreviacao": "REV 1"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "7623",
     "produto": "12398",
     "desc_completa": "LILLY PRETO",
@@ -181,18 +181,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "7687",
-    "produto": "17420",
-    "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 577,
-    "dt_saida": "2026-08-12",
-    "centro_custo": 10,
-    "abreviacao": "REV 1"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "7693",
     "produto": "14789",
     "desc_completa": "OPHIDIA METAL OURO LIGHT",
@@ -200,8 +188,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-08-13",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -212,8 +200,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-08-19",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "centro_custo": 3,
+    "abreviacao": "GR 1"
   },
   {
     "fonte_comercial": "STK",
@@ -224,8 +212,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-08-14",
-    "centro_custo": 8,
-    "abreviacao": "CALAND"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -289,13 +277,13 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "7895",
-    "produto": "11903",
-    "desc_completa": "NAPA MADRID BEGE - PU 0.9MM",
+    "nro_op": "7912",
+    "produto": "11844",
+    "desc_completa": "BORGONHA PRATA",
     "grupo": 39,
-    "subgrupo": 40,
-    "qtd_produzir": 320,
-    "dt_saida": "2026-08-18",
+    "subgrupo": 0,
+    "qtd_produzir": 1000,
+    "dt_saida": "2026-08-26",
     "centro_custo": 0,
     "abreviacao": ""
   },
@@ -320,8 +308,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-08-27",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -346,5 +334,89 @@
     "dt_saida": "2026-08-24",
     "centro_custo": 13,
     "abreviacao": "JUMBO 1"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "7989",
+    "produto": "16642",
+    "desc_completa": "NAPA BARI FOSCO PRETO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 2000,
+    "dt_saida": "2026-08-31",
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "7994",
+    "produto": "15363",
+    "desc_completa": "LENNY PRETO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 600,
+    "dt_saida": "2026-08-31",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "7995",
+    "produto": "17231",
+    "desc_completa": "DENVER ESPRESSO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 1000,
+    "dt_saida": "2026-08-31",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8000",
+    "produto": "17416",
+    "desc_completa": "DENVER NUDE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 600,
+    "dt_saida": "2026-08-31",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8002",
+    "produto": "13708",
+    "desc_completa": "MERIDA PRETO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 1000,
+    "dt_saida": "2026-08-31",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8003",
+    "produto": "16605",
+    "desc_completa": "NAPA FLOATER VENEZIA DOURADO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 1000,
+    "dt_saida": "2026-08-31",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8004",
+    "produto": "11779",
+    "desc_completa": "SORRENTO OFF WHITE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 400,
+    "dt_saida": "2026-08-31",
+    "centro_custo": 0,
+    "abreviacao": ""
   }
 ]
