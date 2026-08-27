@@ -1,16 +1,6 @@
 [
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "6034",
-    "produto": "16898",
-    "desc_completa": "NAPA SEVILLE ROSA TESTE 1 PROGRAMACAO",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 100,
-    "dt_saida": "2026-04-15",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "6035",
     "produto": "16900",
     "desc_completa": "NAPA SEVILLE AVELA TESTE 2 PROGRAMACAO",
@@ -175,7 +165,7 @@
     "produto": "17001",
     "desc_completa": "NAPA MARSELHA PRETO",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 1000,
+    "qtd_produzir": 681,
     "dt_saida": "2026-08-24",
     "abreviacao": ""
   },
@@ -271,6 +261,16 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "7963",
+    "produto": "17680",
+    "desc_completa": "TRAMADO BERLIM MANTEIGA 1394",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 400,
+    "dt_saida": "2026-08-27",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "7964",
     "produto": "17688",
     "desc_completa": "NAPA MARSELHA MOSTARDA 644",
@@ -306,6 +306,16 @@
     "desc_completa": "NOBUCK TUNISIA PU 1.2 NUDE 658 (VENDA BEIRA RIO)",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 400,
+    "dt_saida": "2026-08-27",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "7970",
+    "produto": "12275",
+    "desc_completa": "NOBUCK TUNISIA PU 1.2 MARINHO 1071",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 250,
     "dt_saida": "2026-08-27",
     "abreviacao": ""
   },
@@ -351,11 +361,31 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "7977",
+    "produto": "17714",
+    "desc_completa": "NAPA DALLAS  MANTEIGA 1394",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 400,
+    "dt_saida": "2026-08-27",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "7978",
     "produto": "16509",
     "desc_completa": "NAPA SEVILLE BRANCO OFF 526",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 800,
+    "dt_saida": "2026-08-27",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "7980",
+    "produto": "16707",
+    "desc_completa": "SEVILLE  PRETO",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 1000,
     "dt_saida": "2026-08-27",
     "abreviacao": ""
   },
@@ -376,6 +406,16 @@
     "desc_completa": "METALIZADO NANCY PU 1.0 PRATA",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 1000,
+    "dt_saida": "2026-08-27",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "7983",
+    "produto": "9895",
+    "desc_completa": "METALIZADO NANCY PU 1.0 OURO ROSADO",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 600,
     "dt_saida": "2026-08-27",
     "abreviacao": ""
   }
