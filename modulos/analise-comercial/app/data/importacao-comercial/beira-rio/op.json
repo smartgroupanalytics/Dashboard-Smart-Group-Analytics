@@ -161,32 +161,12 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "7917",
-    "produto": "17001",
-    "desc_completa": "NAPA MARSELHA PRETO",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 681,
-    "dt_saida": "2026-08-24",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "7919",
     "produto": "9100112",
     "desc_completa": "NAPA MARSELHA OSTRA",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 700,
     "dt_saida": "2026-08-25",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "7921",
-    "produto": "16122",
-    "desc_completa": "NAPA NEW NANCY NUDE 658",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 400,
-    "dt_saida": "2026-08-24",
     "abreviacao": ""
   },
   {
@@ -417,6 +397,36 @@
     "grupo": "BEIRA RIO",
     "qtd_produzir": 600,
     "dt_saida": "2026-08-27",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8030",
+    "produto": "17005",
+    "desc_completa": "NAPA RAVENA PRETO",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 563.5,
+    "dt_saida": "2026-09-04",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8032",
+    "produto": "17444",
+    "desc_completa": "BRILHO ITALIA BROWN 1570",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 880,
+    "dt_saida": "2026-09-04",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8033",
+    "produto": "9100083",
+    "desc_completa": "NAPA CALF PU 0.9 MOCCA 1398",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 800,
+    "dt_saida": "2026-09-01",
     "abreviacao": ""
   }
 ]
