@@ -1,8 +1,8 @@
 {
-  "atualizadoEm": "2026-08-30T09:11:26.311Z",
-  "ultimaAtualizacaoValida": "2026-08-30T09:11:26.311Z",
+  "atualizadoEm": "2026-08-31T08:11:43.479Z",
+  "ultimaAtualizacaoValida": "2026-08-31T08:11:43.479Z",
   "status": "ATENCAO",
-  "mensagem": "9 de 9 relatórios atualizados com sucesso. 9 relatório(s) está(ão) atrasado(s).",
+  "mensagem": "9 de 9 relatórios atualizados com sucesso. 8 relatório(s) está(ão) atrasado(s).",
   "modo": "PARCIAL_SEGURO",
   "totalEsperado": 9,
   "totalRecebido": 9,
@@ -32,10 +32,10 @@
     },
     {
       "arquivo": "OP.xlsx",
-      "status": "ATRASADO",
-      "recebidoEm": "2026-08-28T08:00:24.000Z",
-      "linhasValidas": 44,
-      "mensagem": "Atualizado com o anexo mais recente disponível, porém atrasado."
+      "status": "OK",
+      "recebidoEm": "2026-08-31T08:00:20.000Z",
+      "linhasValidas": 42,
+      "mensagem": "Atualizado com sucesso."
     },
     {
       "arquivo": "VENDAS.xlsx",
