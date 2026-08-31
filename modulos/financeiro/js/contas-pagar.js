@@ -84,6 +84,10 @@ function preencherSelectPagar(id, valores) {
 }
 
 function aplicarFiltrosContasPagar() {
+    /*
+     * pagarTodos contém a base completa de fornecedores. Vencimento inicial/final
+     * formam o período-base; Status e os demais campos apenas refinam esse período.
+     */
     const busca = normalizarTexto(valorCampo("pagarBusca"));
     const status = valorCampo("pagarStatus");
     const documento = valorCampo("pagarTipoDocumento");

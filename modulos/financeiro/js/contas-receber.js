@@ -132,30 +132,16 @@ function aplicarFiltrosContasReceber() {
     const fim =
         lerDataInput("receberDataFim");
 
-    const inicioGeral = lerDataInput("periodoInicio");
-    const fimGeral = lerDataInput("periodoFim");
-    const pessoasSelecionadas =
-        typeof filtroPessoas !== "undefined"
-            ? filtroPessoas.selecionadas
-            : new Set();
-    const todasPessoasSelecionadas =
-        typeof filtroPessoas !== "undefined" &&
-        filtroPessoas.opcoes.length > 0 &&
-        pessoasSelecionadas.size === filtroPessoas.opcoes.length;
-    const representanteGeral =
-        document.getElementById("representante")?.value || "";
-    const bancosGerais = typeof bancosSelecionadosNoFiltro === "function"
-        ? bancosSelecionadosNoFiltro()
-        : new Set();
-    const todosBancosGerais = typeof filtroBancos === "undefined" ||
-        filtroBancos.opcoes.length === 0 ||
-        bancosGerais.size === filtroBancos.opcoes.length;
-    const planoGeral =
-        document.getElementById("planoFinanceiro")?.value || "";
-    const situacaoGeral =
-        document.getElementById("situacao")?.value || "";
-    const tipoDocumentoGeral =
-        document.getElementById("tipoDocumento")?.value || "";
+    /*
+     * A aba Contas a Receber trabalha sempre sobre a base completa de clientes.
+     * Os filtros desta própria aba (principalmente Vencimento inicial/final)
+     * definem o período-base. Depois, Status/Cliente/Banco/Representante/Pesquisa
+     * refinam somente os títulos desse período.
+     *
+     * Importante: os filtros gerais do botão "Filtros" não entram aqui. Isso
+     * evita que uma seleção feita na Visão Geral esconda títulos que pertencem
+     * ao vencimento escolhido nesta aba.
+     */
 
     receberFiltrados = receberTodos.filter((item) => {
         const texto = normalizarTexto([
@@ -189,44 +175,6 @@ function aplicarFiltrosContasReceber() {
             fim &&
             (!item.vencimento || inicioDoDia(item.vencimento) > fim)
         ) return false;
-
-        const dataReferenciaGeral =
-            item.dataPagamento || item.vencimento || item.dataMovimento;
-
-        if (
-            inicioGeral &&
-            (!dataReferenciaGeral || dataReferenciaGeral < inicioGeral)
-        ) return false;
-
-        if (
-            fimGeral &&
-            (!dataReferenciaGeral || dataReferenciaGeral > fimGeral)
-        ) return false;
-
-        if (
-            typeof filtroPessoas !== "undefined" &&
-            filtroPessoas.opcoes.length > 0 &&
-            !todasPessoasSelecionadas &&
-            !pessoasSelecionadas.has(item.razaoSocial)
-        ) return false;
-
-        if (
-            representanteGeral &&
-            item.representante !== representanteGeral
-        ) return false;
-
-        if (planoGeral && item.planoFinanceiro !== planoGeral) return false;
-        if (situacaoGeral && item.situacao !== situacaoGeral) return false;
-
-        if (
-            tipoDocumentoGeral &&
-            item.tipoDocumento !== tipoDocumentoGeral
-        ) return false;
-
-        if (!todosBancosGerais) {
-            const identidade = identificarBanco(item.banco, "");
-            if (!bancosGerais.has(identidade.id)) return false;
-        }
 
         return true;
     });

@@ -385,13 +385,16 @@ function aplicarFiltrosDashboard() {
 
     atualizarDashboardCompleto(lancamentosFiltrados);
 
-    if (typeof atualizarContasPagar === "function") atualizarContasPagar(lancamentosFiltrados);
+    /*
+     * Contas a Receber e Contas a Pagar possuem filtros próprios e devem partir
+     * da base completa importada. Assim, ao escolher um intervalo de vencimento
+     * dentro dessas abas, todos os títulos do período aparecem primeiro; depois
+     * Status e os demais filtros locais podem refinar o resultado.
+     *
+     * O painel geral continua filtrando Visão Geral, Fluxo de Caixa e Bancos.
+     */
     if (typeof atualizarFluxoCaixa === "function") atualizarFluxoCaixa(lancamentosFiltrados);
     if (typeof renderizarBancos === "function") renderizarBancos(agruparBancosDosLancamentos(lancamentosFiltrados));
-
-    if (typeof aplicarFiltrosContasReceber === "function") {
-        aplicarFiltrosContasReceber();
-    }
 
     atualizarTextoPeriodo(inicio, fim);
 }
