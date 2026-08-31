@@ -141,16 +141,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "7902",
-    "produto": "9516",
-    "desc_completa": "VERNIZ LONDON 1.0 ROSA 942",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 213.5,
-    "dt_saida": "2026-08-21",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "7915",
     "produto": "9516",
     "desc_completa": "VERNIZ LONDON 1.0 ROSA 942",
@@ -167,26 +157,6 @@
     "grupo": "BEIRA RIO",
     "qtd_produzir": 700,
     "dt_saida": "2026-08-25",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "7941",
-    "produto": "17446",
-    "desc_completa": "VERNIZ LONDON ALFAZEMA 1497",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 150,
-    "dt_saida": "2026-08-25",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "7943",
-    "produto": "9516",
-    "desc_completa": "VERNIZ LONDON 1.0 ROSA 942",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 50,
-    "dt_saida": "2026-08-21",
     "abreviacao": ""
   },
   {
@@ -221,16 +191,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "7959",
-    "produto": "17711",
-    "desc_completa": "NAPA MALAGA CHOCOLATE 1271",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 400,
-    "dt_saida": "2026-08-27",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "7961",
     "produto": "17676",
     "desc_completa": "TRAMADO BERLIM BRANCO OFF 526",
@@ -256,16 +216,6 @@
     "desc_completa": "NAPA MARSELHA MOSTARDA 644",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 200,
-    "dt_saida": "2026-08-27",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "7966",
-    "produto": "30087",
-    "desc_completa": "NAPA MARSELHA CHOCOLATE 1271",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 400,
     "dt_saida": "2026-08-27",
     "abreviacao": ""
   },
@@ -427,6 +377,16 @@
     "grupo": "BEIRA RIO",
     "qtd_produzir": 800,
     "dt_saida": "2026-09-01",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8038",
+    "produto": "17444",
+    "desc_completa": "BRILHO ITALIA BROWN 1570",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 1000,
+    "dt_saida": "2026-09-09",
     "abreviacao": ""
   }
 ]
