@@ -1,0 +1,50 @@
+.btn-atualizar:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+.cabecalho-sensivel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  margin: 0 0 13px;
+  padding: 10px 12px;
+  border: 1px solid #c9d7e7;
+  border-radius: 7px;
+  background: #f5f8fc;
+  color: #1663aa;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.35px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.cabecalho-sensivel:hover {
+  background: #eaf4ff;
+  border-color: #9ec8ec;
+}
+
+.cabecalho-sensivel span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cabecalho-sensivel .fa-lock {
+  color: #bd6b00;
+}
+
+.cabecalho-sensivel-caixa {
+  margin: 0;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  color: #182742;
+}
+
+.cabecalho-sensivel-caixa:hover {
+  border-color: var(--line);
+}

@@ -1,4 +1,4 @@
-import { db } from "../../firebase-config.js";
+import { auth, db } from "../../firebase-config.js";
 
 import {
   collection,
@@ -11,6 +11,9 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 const usuario = window.usuarioAnalytics || {};
+
+/* Cole aqui a URL /exec gerada ao implantar o Código.gs como Aplicativo da Web. */
+const URL_SINCRONIZACAO_RH = "https://script.google.com/macros/s/AKfycbzEyjTxgD1K0RkM0jbwkoLTtvfdC6pUFzZp1xw29lHdCrddLo1eR-nmWQe8hbciEgKmJQ/exec";
 const elementos = {
   escopoAcesso: document.getElementById("escopoAcesso"),
   btnSelecionarArquivos: document.getElementById("btnSelecionarArquivos"),
@@ -46,6 +49,7 @@ inicializar();
 async function inicializar() {
   configurarEscopo();
   configurarEventos();
+  configurarBlocosSensiveis();
   await carregarColaboradores();
 }
 
@@ -66,6 +70,7 @@ function configurarEscopo() {
     elementos.btnSelecionarArquivos.hidden = false;
     elementos.btnImportarVazio.hidden = false;
     elementos.filtroDepartamento.disabled = false;
+    elementos.btnAtualizar.title = "Sincronizar planilhas do Drive agora";
   } else {
     elementos.escopoAcesso.innerHTML = `<i class="fa-solid fa-lock"></i> Departamento: ${escaparHtml(setor || "não informado")}`;
     elementos.filtroDepartamento.disabled = true;
@@ -79,7 +84,7 @@ function configurarEventos() {
     elementos.painelImportacao.hidden = true;
   });
   elementos.arquivosExcel.addEventListener("change", importarArquivos);
-  elementos.btnAtualizar.addEventListener("click", carregarColaboradores);
+  elementos.btnAtualizar.addEventListener("click", sincronizarOuAtualizarRH);
   elementos.pesquisaColaborador.addEventListener("input", aplicarFiltrosColaboradores);
   elementos.filtroDepartamento.addEventListener("change", aplicarFiltrosColaboradores);
   elementos.seletorColaborador.addEventListener("change", selecionarColaborador);
@@ -88,6 +93,84 @@ function configurarEventos() {
 
   document.querySelectorAll(".aba-rh").forEach(botao => {
     botao.addEventListener("click", () => abrirAba(botao.dataset.aba));
+  });
+}
+
+async function sincronizarOuAtualizarRH() {
+  if (!estado.podeAdministrar) {
+    await carregarColaboradores();
+    return;
+  }
+
+  if (!URL_SINCRONIZACAO_RH.startsWith("https://script.google.com/macros/s/") ||
+      !URL_SINCRONIZACAO_RH.endsWith("/exec")) {
+    mostrarToast("Configure a URL do Apps Script no arquivo rh.js.", true);
+    return;
+  }
+
+  const usuarioFirebase = auth.currentUser;
+  if (!usuarioFirebase) {
+    mostrarToast("Sua sessão expirou. Entre novamente no Analytics.", true);
+    return;
+  }
+
+  mostrarCarregamento("Sincronizando as planilhas do Google Drive...");
+  elementos.btnAtualizar.disabled = true;
+
+  try {
+    const idToken = await usuarioFirebase.getIdToken(true);
+    const resposta = await fetch(URL_SINCRONIZACAO_RH, {
+      method: "POST",
+      redirect: "follow",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ acao: "sincronizar_rh", idToken })
+    });
+
+    if (!resposta.ok) throw new Error(`Falha HTTP ${resposta.status}.`);
+
+    const resultado = await resposta.json();
+    if (!resultado.ok) {
+      throw new Error(resultado.erro || "A sincronização não foi concluída.");
+    }
+
+    elementos.textoCarregando.textContent = "Atualizando os dados do RH...";
+    await carregarColaboradores();
+
+    const resumo = resultado.resumo || {};
+    mostrarToast(
+      `${Number(resumo.atualizados || 0)} colaborador(es) atualizado(s). ` +
+      `${Number(resumo.ignoradosSemAlteracao || 0)} arquivo(s) sem alteração.`
+    );
+  } catch (erro) {
+    console.error("Erro na sincronização imediata do RH:", erro);
+    mostrarToast(erro.message || "Não foi possível sincronizar o RH agora.", true);
+  } finally {
+    elementos.btnAtualizar.disabled = false;
+    ocultarCarregamento();
+  }
+}
+
+function configurarBlocosSensiveis() {
+  document.querySelectorAll("[data-bloco-sensivel]").forEach((botao) => {
+    botao.addEventListener("click", () => {
+      const alvo = document.getElementById(botao.getAttribute("aria-controls"));
+      if (!alvo) return;
+      const abrir = alvo.hidden;
+      alvo.hidden = !abrir;
+      botao.setAttribute("aria-expanded", String(abrir));
+      botao.querySelector("i")?.classList.toggle("fa-chevron-down", !abrir);
+      botao.querySelector("i")?.classList.toggle("fa-chevron-up", abrir);
+    });
+  });
+}
+
+function fecharBlocosSensiveis() {
+  document.querySelectorAll("[data-bloco-sensivel]").forEach((botao) => {
+    const alvo = document.getElementById(botao.getAttribute("aria-controls"));
+    if (alvo) alvo.hidden = true;
+    botao.setAttribute("aria-expanded", "false");
+    botao.querySelector("i")?.classList.remove("fa-chevron-up");
+    botao.querySelector("i")?.classList.add("fa-chevron-down");
   });
 }
 
@@ -602,6 +685,7 @@ function extrairMatrizHabilidades(linhas) {
 }
 
 function renderizarColaborador(colaborador) {
+  fecharBlocosSensiveis();
   renderizarIdentificacao(colaborador);
   renderizarHistorico(colaborador.historico || []);
   renderizarRemuneracao(colaborador.remuneracao || {});
