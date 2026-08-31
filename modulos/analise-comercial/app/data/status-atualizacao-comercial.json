@@ -1,8 +1,8 @@
 {
-  "atualizadoEm": "2026-08-31T15:11:41.781Z",
-  "ultimaAtualizacaoValida": "2026-08-31T15:11:41.781Z",
-  "status": "ATENCAO",
-  "mensagem": "9 de 9 relatórios atualizados com sucesso. 3 relatório(s) está(ão) atrasado(s).",
+  "atualizadoEm": "2026-08-31T19:26:58.805Z",
+  "ultimaAtualizacaoValida": "2026-08-31T19:26:58.805Z",
+  "status": "OK",
+  "mensagem": "9 de 9 relatórios atualizados com sucesso.",
   "modo": "PARCIAL_SEGURO",
   "totalEsperado": 9,
   "totalRecebido": 9,
@@ -12,8 +12,8 @@
     {
       "arquivo": "ESTOQUE.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-08-31T15:02:42.000Z",
-      "linhasValidas": 2696,
+      "recebidoEm": "2026-08-31T19:18:10.000Z",
+      "linhasValidas": 2697,
       "mensagem": "Atualizado com sucesso."
     },
     {
@@ -39,10 +39,10 @@
     },
     {
       "arquivo": "VENDAS.xlsx",
-      "status": "ATRASADO",
-      "recebidoEm": "2026-08-28T08:51:25.000Z",
-      "linhasValidas": 5937,
-      "mensagem": "Atualizado com o anexo mais recente disponível, porém atrasado."
+      "status": "OK",
+      "recebidoEm": "2026-08-31T19:20:34.000Z",
+      "linhasValidas": 6063,
+      "mensagem": "Atualizado com sucesso."
     },
     {
       "arquivo": "PEDIDOS EM ABERTO.xlsx",
@@ -53,10 +53,10 @@
     },
     {
       "arquivo": "ESTOQUEBR.xlsx",
-      "status": "ATRASADO",
-      "recebidoEm": "2026-08-28T08:05:23.000Z",
+      "status": "OK",
+      "recebidoEm": "2026-08-31T19:19:31.000Z",
       "linhasValidas": 891,
-      "mensagem": "Atualizado com o anexo mais recente disponível, porém atrasado."
+      "mensagem": "Atualizado com sucesso."
     },
     {
       "arquivo": "OPBR.xlsx",
@@ -67,10 +67,10 @@
     },
     {
       "arquivo": "VENDASBR.xlsx",
-      "status": "ATRASADO",
-      "recebidoEm": "2026-08-28T08:10:26.000Z",
-      "linhasValidas": 1720,
-      "mensagem": "Atualizado com o anexo mais recente disponível, porém atrasado."
+      "status": "OK",
+      "recebidoEm": "2026-08-31T19:19:42.000Z",
+      "linhasValidas": 1728,
+      "mensagem": "Atualizado com sucesso."
     }
   ]
 }
