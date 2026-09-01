@@ -31,6 +31,10 @@ const elementos = {
   carregandoRh: document.getElementById("carregandoRh"),
   textoCarregando: document.getElementById("textoCarregando"),
   toast: document.getElementById("toast"),
+  alertaIntegridade: document.getElementById("alertaIntegridade"),
+  resumoAlertasIntegridade: document.getElementById("resumoAlertasIntegridade"),
+  quantidadeAlertasIntegridade: document.getElementById("quantidadeAlertasIntegridade"),
+  listaAlertasIntegridade: document.getElementById("listaAlertasIntegridade"),
   pesquisaHabilidade: document.getElementById("pesquisaHabilidade"),
   filtroSituacaoHabilidade: document.getElementById("filtroSituacaoHabilidade")
 };
@@ -40,6 +44,7 @@ const estado = {
   filtrados: [],
   selecionado: null,
   habilidadesVisiveis: [],
+  alertasIntegridade: [],
   podeAdministrar: false,
   departamentoChave: ""
 };
@@ -90,6 +95,13 @@ function configurarEventos() {
   elementos.seletorColaborador.addEventListener("change", selecionarColaborador);
   elementos.pesquisaHabilidade.addEventListener("input", renderizarHabilidades);
   elementos.filtroSituacaoHabilidade.addEventListener("change", renderizarHabilidades);
+  elementos.listaAlertasIntegridade?.addEventListener("click", evento => {
+    const botao = evento.target.closest("[data-localizar-colaborador]");
+    if (!botao) return;
+    elementos.pesquisaColaborador.value = botao.dataset.localizarColaborador || "";
+    aplicarFiltrosColaboradores();
+    elementos.pesquisaColaborador.focus();
+  });
 
   document.querySelectorAll(".aba-rh").forEach(botao => {
     botao.addEventListener("click", () => abrirAba(botao.dataset.aba));
@@ -199,7 +211,23 @@ async function carregarColaboradores() {
     }
 
     const resultado = await getDocs(consulta);
-    const carregados = resultado.docs.map(item => ({ id: item.id, ...item.data() }));
+    const todosDocumentos = resultado.docs.map(item => ({ id: item.id, ...item.data() }));
+    const controleIntegridade = todosDocumentos.find(item =>
+      item.id === "__alertas_integridade__" ||
+      item.tipoDocumento === "controle_integridade_rh"
+    );
+    const carregados = todosDocumentos.filter(item =>
+      item.id !== "__alertas_integridade__" &&
+      item.tipoDocumento !== "controle_integridade_rh"
+    );
+
+    estado.alertasIntegridade = estado.podeAdministrar
+      ? combinarAlertasIntegridade(
+          Array.isArray(controleIntegridade?.alertas) ? controleIntegridade.alertas : [],
+          detectarNomesDuplicadosLocais(carregados)
+        )
+      : [];
+    renderizarAlertasIntegridade();
 
     // Segurança contra registros duplicados antigos.
     // Se a mesma pessoa existir mais de uma vez, prioriza o documento
@@ -215,6 +243,8 @@ async function carregarColaboradores() {
     console.error("Erro ao consultar a base de RH:", erro);
     estado.colaboradores = [];
     estado.filtrados = [];
+    estado.alertasIntegridade = [];
+    renderizarAlertasIntegridade();
     elementos.mensagemVazia.textContent =
       erro.message.includes("setor")
         ? erro.message
@@ -224,6 +254,88 @@ async function carregarColaboradores() {
   } finally {
     ocultarCarregamento();
   }
+}
+
+function detectarNomesDuplicadosLocais(lista) {
+  const porNome = new Map();
+  const alertas = [];
+
+  lista.forEach(item => {
+    const chave = normalizarTexto(item.nomeChave || item.nome);
+    if (!chave) return;
+    const existente = porNome.get(chave);
+    if (!existente) {
+      porNome.set(chave, item);
+      return;
+    }
+    if (existente.id === item.id) return;
+
+    alertas.push({
+      id: `nome-local|${existente.id}|${item.id}`,
+      tipo: "nome_duplicado",
+      documentoId: item.id,
+      nomeNovo: item.nome || "Nome não informado",
+      nomeExistente: existente.nome || "Nome não informado",
+      arquivoNovo: item.origemArquivo || "Arquivo não informado",
+      arquivoExistente: existente.origemArquivo || "Arquivo não informado",
+      mensagem: `O nome “${item.nome || existente.nome}” aparece em mais de um cadastro.`
+    });
+  });
+
+  return alertas;
+}
+
+function combinarAlertasIntegridade(...grupos) {
+  const mapa = new Map();
+  grupos.flat().forEach(alerta => {
+    if (!alerta) return;
+    const chave = alerta.id || [
+      alerta.tipo,
+      alerta.documentoId,
+      alerta.arquivoNovo,
+      alerta.arquivoExistente
+    ].join("|");
+    mapa.set(chave, alerta);
+  });
+  return [...mapa.values()];
+}
+
+function renderizarAlertasIntegridade() {
+  if (!elementos.alertaIntegridade) return;
+  const alertas = estado.podeAdministrar ? estado.alertasIntegridade : [];
+  elementos.alertaIntegridade.hidden = !alertas.length;
+  if (!alertas.length) {
+    elementos.listaAlertasIntegridade.innerHTML = "";
+    return;
+  }
+
+  elementos.quantidadeAlertasIntegridade.textContent = String(alertas.length);
+  elementos.resumoAlertasIntegridade.textContent =
+    `${alertas.length} conflito(s) podem impedir ou substituir o cadastro correto.`;
+
+  elementos.listaAlertasIntegridade.innerHTML = alertas.map(alerta => {
+    const identificador = alerta.documentoId
+      ? `<span class="alerta-identificador">Matrícula/ID: ${escaparHtml(alerta.documentoId)}</span>`
+      : "";
+    const nomes = [alerta.nomeExistente, alerta.nomeNovo].filter(Boolean).join(" × ");
+    const arquivos = [alerta.arquivoExistente, alerta.arquivoNovo].filter(Boolean).join(" × ");
+    const localizar = alerta.nomeExistente || alerta.nomeNovo || "";
+
+    return `
+      <article class="item-alerta-integridade">
+        <div class="item-alerta-conteudo">
+          <div class="item-alerta-titulo">
+            <strong>${escaparHtml(alerta.mensagem || "Cadastro duplicado localizado.")}</strong>
+            ${identificador}
+          </div>
+          <p><b>Pessoas:</b> ${escaparHtml(nomes || "Verifique os cadastros envolvidos")}</p>
+          <p><b>Arquivos:</b> ${escaparHtml(arquivos || "Arquivo não informado")}</p>
+        </div>
+        <button type="button" data-localizar-colaborador="${escaparAtributo(localizar)}">
+          <i class="fa-solid fa-magnifying-glass"></i> Localizar
+        </button>
+      </article>`;
+  }).join("");
 }
 
 function preencherDepartamentos() {
@@ -332,6 +444,24 @@ async function importarArquivos(evento) {
         const colaborador = await processarPlanilha(arquivo);
         const id = criarIdColaborador(colaborador);
         const dadosColaborador = limparObjeto(colaborador);
+        const conflitoId = estado.colaboradores.find(item =>
+          item.id === id && normalizarTexto(item.nome) !== normalizarTexto(colaborador.nome)
+        );
+        const conflitoNome = estado.colaboradores.find(item =>
+          item.id !== id &&
+          normalizarTexto(item.nome) === normalizarTexto(colaborador.nome)
+        );
+
+        if (conflitoId) {
+          throw new Error(
+            `A matrícula/identificador ${id} já pertence a ${conflitoId.nome}. Corrija a planilha antes de importar.`
+          );
+        }
+        if (conflitoNome) {
+          throw new Error(
+            `O nome ${colaborador.nome} já existe com outro identificador. Verifique a matrícula antes de importar.`
+          );
+        }
 
         // Uma falha pontual na leitura da imagem não deve apagar uma foto
         // que já esteja salva no cadastro do colaborador.

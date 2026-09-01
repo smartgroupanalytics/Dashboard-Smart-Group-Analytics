@@ -48,3 +48,125 @@
 .cabecalho-sensivel-caixa:hover {
   border-color: var(--line);
 }
+
+.alerta-integridade {
+  margin-bottom: 14px;
+  overflow: hidden;
+  border: 1px solid #efb24f;
+  border-left: 5px solid #d97706;
+  border-radius: 10px;
+  background: #fff8e8;
+  color: #6b4205;
+  box-shadow: 0 4px 14px rgba(122, 76, 5, 0.08);
+}
+
+.alerta-integridade-cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 16px;
+  background: #ffefc7;
+}
+
+.alerta-integridade-cabecalho strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+
+.alerta-integridade-cabecalho strong i {
+  margin-right: 6px;
+  color: #c45e05;
+}
+
+.alerta-integridade-cabecalho p,
+.orientacao-alerta-integridade {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.alerta-integridade-cabecalho > span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  height: 34px;
+  padding: 0 9px;
+  border-radius: 999px;
+  background: #c45e05;
+  color: #fff;
+  font-weight: 800;
+}
+
+.lista-alertas-integridade {
+  display: grid;
+  gap: 8px;
+  padding: 11px 13px 6px;
+}
+
+.item-alerta-integridade {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 11px 12px;
+  border: 1px solid #f0d59c;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.item-alerta-titulo {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 6px;
+  color: #7a3100;
+  font-size: 12px;
+}
+
+.item-alerta-integridade p {
+  margin: 3px 0 0;
+  color: #6d5737;
+  font-size: 11px;
+}
+
+.alerta-identificador {
+  padding: 4px 7px;
+  border-radius: 999px;
+  background: #ffe2a8;
+  color: #7b4200;
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.item-alerta-integridade button {
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 7px;
+  background: #b65308;
+  color: #fff;
+  padding: 8px 10px;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.orientacao-alerta-integridade {
+  padding: 5px 15px 12px;
+  color: #795b28;
+}
+
+@media (max-width: 760px) {
+  .item-alerta-integridade {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .item-alerta-integridade button {
+    width: 100%;
+  }
+}
