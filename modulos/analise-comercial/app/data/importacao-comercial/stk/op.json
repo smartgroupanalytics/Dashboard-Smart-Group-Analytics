@@ -138,10 +138,10 @@
     "desc_completa": "NAPA MADRID CONHAQUE",
     "grupo": 39,
     "subgrupo": 41,
-    "qtd_produzir": 44,
+    "qtd_produzir": 84,
     "dt_saida": "2026-07-20",
-    "centro_custo": 10,
-    "abreviacao": "REV 1"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -212,8 +212,8 @@
     "subgrupo": 0,
     "qtd_produzir": 1000,
     "dt_saida": "2026-08-26",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 1,
+    "abreviacao": "RECOB"
   },
   {
     "fonte_comercial": "STK",
@@ -236,20 +236,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-08-26",
-    "centro_custo": 1,
-    "abreviacao": "RECOB"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "7924",
-    "produto": "13154",
-    "desc_completa": "DOHA GRAFITE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 200,
-    "dt_saida": "2026-08-27",
-    "centro_custo": 23,
-    "abreviacao": "RAMA"
+    "centro_custo": 3,
+    "abreviacao": "GR 1"
   },
   {
     "fonte_comercial": "STK",
@@ -265,30 +253,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "7935",
-    "produto": "16594",
-    "desc_completa": "SAVOY LUX PRATA",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 400,
-    "dt_saida": "2026-08-24",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "7940",
-    "produto": "16571",
-    "desc_completa": "SAVOY LUX BRANCO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 200,
-    "dt_saida": "2026-08-24",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "7990",
     "produto": "16737",
     "desc_completa": "NAPA BARI FOSCO CARAMELO",
@@ -296,8 +260,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-08-31",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -308,8 +272,8 @@
     "subgrupo": 41,
     "qtd_produzir": 2000,
     "dt_saida": "2026-08-31",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -320,8 +284,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-08-31",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -334,18 +298,6 @@
     "dt_saida": "2026-08-31",
     "centro_custo": 0,
     "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "7994",
-    "produto": "15363",
-    "desc_completa": "LENNY PRETO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 600,
-    "dt_saida": "2026-08-31",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -452,8 +404,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-08-31",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 1,
+    "abreviacao": "RECOB"
   },
   {
     "fonte_comercial": "STK",
@@ -469,6 +421,18 @@
   },
   {
     "fonte_comercial": "STK",
+    "nro_op": "8013",
+    "produto": "15360",
+    "desc_completa": "LENNY MANTEIGA",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 120,
+    "dt_saida": "2026-08-28",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
     "nro_op": "8034",
     "produto": "15727",
     "desc_completa": "TWIST METAL BELLINI/MAGENTA",
@@ -476,8 +440,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-08-31",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -488,8 +452,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-08-31",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -500,6 +464,90 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-08-31",
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8046",
+    "produto": "17883",
+    "desc_completa": "ASPEN PRATA",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-09-01",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8047",
+    "produto": "17884",
+    "desc_completa": "ASPEN OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-09-01",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8048",
+    "produto": "17882",
+    "desc_completa": "ASPEN GRAFITE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-09-01",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8049",
+    "produto": "17881",
+    "desc_completa": "ASPEN BRONZE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-09-01",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8050",
+    "produto": "17878",
+    "desc_completa": "ASPEN WHISKY",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-09-01",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8054",
+    "produto": "17890",
+    "desc_completa": "ASPEN BROWN",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-09-01",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8071",
+    "produto": "17323",
+    "desc_completa": "MACKAY GLAM GRAFITE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 400,
+    "dt_saida": "2026-09-03",
     "centro_custo": 0,
     "abreviacao": ""
   }

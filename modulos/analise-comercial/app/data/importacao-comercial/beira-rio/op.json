@@ -131,16 +131,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "7892",
-    "produto": "9873",
-    "desc_completa": "METALIZADO NANCY PU 1.0 DOURADO",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 2000,
-    "dt_saida": "2026-08-21",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "7915",
     "produto": "9516",
     "desc_completa": "VERNIZ LONDON 1.0 ROSA 942",
@@ -151,12 +141,12 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "7919",
-    "produto": "9100112",
-    "desc_completa": "NAPA MARSELHA OSTRA",
+    "nro_op": "7920",
+    "produto": "30084",
+    "desc_completa": "NAPA MARSELHA CAMEL 1165",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 700,
-    "dt_saida": "2026-08-25",
+    "qtd_produzir": 600,
+    "dt_saida": "2026-08-24",
     "abreviacao": ""
   },
   {
@@ -225,7 +215,7 @@
     "produto": "11013",
     "desc_completa": "NOBUCK TUNISIA PU 1.2 BRANCO OFF (VENDA BEIRA RIO)",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 1000,
+    "qtd_produzir": 439,
     "dt_saida": "2026-08-27",
     "abreviacao": ""
   },
@@ -387,6 +377,86 @@
     "grupo": "BEIRA RIO",
     "qtd_produzir": 1000,
     "dt_saida": "2026-09-09",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8045",
+    "produto": "13588",
+    "desc_completa": "NAPA LEZARD EVORA PRETO",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 400,
+    "dt_saida": "2026-09-02",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8066",
+    "produto": "16703",
+    "desc_completa": "NAPA SEVILLE CAMEL 1165",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 197,
+    "dt_saida": "2026-09-04",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8069",
+    "produto": "16732",
+    "desc_completa": "NAPA SEVILLE CACAU 1277",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 600,
+    "dt_saida": "2026-09-02",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8070",
+    "produto": "17562",
+    "desc_completa": "NAPA DALLAS PRETO",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 600,
+    "dt_saida": "2026-09-03",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8073",
+    "produto": "12683",
+    "desc_completa": "NAPA CALF PU 0.9 BRANCO OFF",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 480,
+    "dt_saida": "2026-09-09",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8074",
+    "produto": "9100083",
+    "desc_completa": "NAPA CALF PU 0.9 MOCCA 1398",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 500,
+    "dt_saida": "2026-09-09",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8077",
+    "produto": "8165",
+    "desc_completa": "NAPA METAL SOFT STRETCH BAG NEO 0.9 PRATA",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 200,
+    "dt_saida": "2026-09-04",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8078",
+    "produto": "8168",
+    "desc_completa": "NAPA SOFT BAG PIGMENTADA DOURADO",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 200,
+    "dt_saida": "2026-09-04",
     "abreviacao": ""
   }
 ]
