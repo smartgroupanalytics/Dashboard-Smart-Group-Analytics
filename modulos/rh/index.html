@@ -4,7 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Recursos Humanos - Smart Group Analytics</title>
-  <link rel="stylesheet" href="rh.css?v=4">
+  <link rel="stylesheet" href="rh.css?v=5">
+  <link rel="stylesheet" href="rh-faixas.css?v=1">
   <link rel="stylesheet" href="rh-privacidade.css?v=2">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>html{visibility:hidden}</style>
@@ -98,7 +99,7 @@
             <div class="tabela-scroll" id="conteudoHistoricoEmpresa" hidden><table class="tabela-rh"><thead><tr><th>Data</th><th>Cargo / Evento</th><th>Salário</th><th>Motivo</th><th>Observações</th></tr></thead><tbody id="historicoCorpo"></tbody></table></div>
           </section>
 
-          <section class="bloco-rh duas-colunas">
+          <section class="bloco-rh grade-cards-perfil">
             <div class="caixa-rh">
               <button class="cabecalho-sensivel cabecalho-sensivel-caixa" type="button" data-bloco-sensivel aria-controls="conteudoResumoSalarial" aria-expanded="false">
                 <span><i class="fa-solid fa-lock"></i> RESUMO SALARIAL</span>
@@ -107,6 +108,15 @@
               <div id="conteudoResumoSalarial" hidden><table class="tabela-detalhes"><tbody id="resumoSalarial"></tbody></table></div>
             </div>
             <div class="caixa-rh">
+              <button class="cabecalho-sensivel cabecalho-sensivel-caixa" type="button" data-bloco-sensivel aria-controls="conteudoEnquadramentoSalarial" aria-expanded="false">
+                <span><i class="fa-solid fa-lock"></i> ENQUADRAMENTO DE FAIXA SALARIAL</span>
+                <i class="fa-solid fa-chevron-down"></i>
+              </button>
+              <div class="tabela-scroll" id="conteudoEnquadramentoSalarial" hidden>
+                <table class="tabela-faixas"><thead id="faixasCabecalho"></thead><tbody id="faixasCorpo"></tbody></table>
+              </div>
+            </div>
+            <div class="caixa-rh matriz-resumo-card">
               <h3>MATRIZ DE HABILIDADES</h3>
               <div class="atingimento">
                 <div class="anel-progresso" id="anelAtingimento"><strong id="nivelAtingimento">0%</strong></div>
@@ -186,7 +196,7 @@
     import { protegerModulo } from "../../module-guard.js?v=3";
     try {
       await protegerModulo("rh");
-      await import("./rh.js?v=5");
+      await import("./rh.js?v=6");
     } catch (erro) {
       console.warn("Acesso ao módulo de RH interrompido:", erro.message);
     }

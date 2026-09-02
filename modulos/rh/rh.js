@@ -170,8 +170,9 @@ function configurarBlocosSensiveis() {
       const abrir = alvo.hidden;
       alvo.hidden = !abrir;
       botao.setAttribute("aria-expanded", String(abrir));
-      botao.querySelector("i")?.classList.toggle("fa-chevron-down", !abrir);
-      botao.querySelector("i")?.classList.toggle("fa-chevron-up", abrir);
+      const seta = botao.querySelector(":scope > i");
+      seta?.classList.toggle("fa-chevron-down", !abrir);
+      seta?.classList.toggle("fa-chevron-up", abrir);
     });
   });
 }
@@ -181,8 +182,9 @@ function fecharBlocosSensiveis() {
     const alvo = document.getElementById(botao.getAttribute("aria-controls"));
     if (alvo) alvo.hidden = true;
     botao.setAttribute("aria-expanded", "false");
-    botao.querySelector("i")?.classList.remove("fa-chevron-up");
-    botao.querySelector("i")?.classList.add("fa-chevron-down");
+    const seta = botao.querySelector(":scope > i");
+    seta?.classList.remove("fa-chevron-up");
+    seta?.classList.add("fa-chevron-down");
   });
 }
 
@@ -564,6 +566,7 @@ async function processarPlanilha(arquivo) {
       mobilidade: valorAoLado(perfil, "Mobilidade"),
       totalBruto: valorAoLado(perfil, "Total bruto")
     },
+    enquadramentoSalarial: extrairEnquadramentoSalarial(perfil),
     nivelAtingimento: numeroPercentual(valorAoLado(perfil, "Nível de ating. da Matriz de Habilidades")),
     treinamentos: extrairTreinamentos(perfil),
     pdi: extrairPdi(perfil),
@@ -668,6 +671,47 @@ function extrairHistorico(linhas) {
     };
     return Object.values(item).some(valor => valor !== "" && valor != null) ? item : null;
   });
+}
+
+function extrairEnquadramentoSalarial(linhas) {
+  const inicio = encontrarLinha(linhas, linha =>
+    contemNaLinha(linha, "enquadramento de faixa salarial")
+  );
+  if (inicio < 0) return { cargo: "", faixas: [] };
+
+  let linhaCabecalho = -1;
+  for (let r = inicio + 1; r < Math.min(linhas.length, inicio + 10); r += 1) {
+    if ((linhas[r] || []).some(valor => /^faixa\s*\d+$/i.test(texto(valor)))) {
+      linhaCabecalho = r;
+      break;
+    }
+  }
+  if (linhaCabecalho < 0) return { cargo: "", faixas: [] };
+
+  const cabecalho = linhas[linhaCabecalho] || [];
+  const colunas = cabecalho
+    .map((valor, indice) => ({ nome: texto(valor), indice }))
+    .filter(item => /^faixa\s*\d+$/i.test(item.nome));
+  if (!colunas.length) return { cargo: "", faixas: [] };
+
+  for (let r = linhaCabecalho + 1; r < Math.min(linhas.length, linhaCabecalho + 8); r += 1) {
+    const linha = linhas[r] || [];
+    const faixas = colunas
+      .map(item => ({ nome: item.nome, valor: celula(linha, item.indice) }))
+      .filter(item => temValor(item.valor));
+    if (!faixas.length) continue;
+
+    let cargo = "";
+    for (let c = colunas[0].indice - 1; c >= 0; c -= 1) {
+      if (temValor(linha[c])) {
+        cargo = texto(linha[c]);
+        break;
+      }
+    }
+    return { cargo, faixas };
+  }
+
+  return { cargo: "", faixas: [] };
 }
 
 function extrairTreinamentos(linhas) {
@@ -819,6 +863,7 @@ function renderizarColaborador(colaborador) {
   renderizarIdentificacao(colaborador);
   renderizarHistorico(colaborador.historico || []);
   renderizarRemuneracao(colaborador.remuneracao || {});
+  renderizarEnquadramentoSalarial(colaborador.enquadramentoSalarial || {});
   renderizarAtingimento(colaborador.nivelAtingimento || 0);
   renderizarTreinamentos(colaborador.treinamentos || []);
   renderizarPdi(colaborador.pdi || []);
@@ -888,6 +933,25 @@ function renderizarRemuneracao(item) {
   document.getElementById("resumoSalarial").innerHTML = linhas.map(([rotulo, valor]) =>
     `<tr><td>${rotulo}</td><td>${formatarMoeda(valor)}</td></tr>`
   ).join("");
+}
+
+function renderizarEnquadramentoSalarial(item) {
+  const faixas = Array.isArray(item.faixas) ? item.faixas : [];
+  const cabecalho = document.getElementById("faixasCabecalho");
+  const corpo = document.getElementById("faixasCorpo");
+
+  if (!faixas.length) {
+    cabecalho.innerHTML = "";
+    corpo.innerHTML = '<tr><td class="sem-dados">Nenhuma faixa salarial cadastrada.</td></tr>';
+    return;
+  }
+
+  cabecalho.innerHTML = `<tr><th>Cargo / Nível</th>${faixas.map(faixa =>
+    `<th>${escaparHtml(faixa.nome)}</th>`
+  ).join("")}</tr>`;
+  corpo.innerHTML = `<tr><td>${escaparHtml(item.cargo || "—")}</td>${faixas.map(faixa =>
+    `<td>${formatarMoeda(faixa.valor)}</td>`
+  ).join("")}</tr>`;
 }
 
 function renderizarAtingimento(valor) {

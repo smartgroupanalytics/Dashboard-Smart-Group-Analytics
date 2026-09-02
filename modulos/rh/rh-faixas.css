@@ -1,0 +1,52 @@
+.grade-cards-perfil {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 15px;
+}
+
+.matriz-resumo-card {
+  grid-column: 1 / -1;
+}
+
+.tabela-faixas {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.tabela-faixas th,
+.tabela-faixas td {
+  padding: 10px 8px;
+  border: 1px solid #e1e8f1;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.tabela-faixas th {
+  background: #f7f9fc;
+  color: #40516b;
+  font-size: 10px;
+}
+
+.tabela-faixas td:first-child {
+  background: #fbfcfe;
+  font-weight: bold;
+  text-align: left;
+}
+
+.tabela-faixas .sem-dados {
+  background: #fff !important;
+  color: #8290a4;
+  font-weight: normal !important;
+  text-align: center !important;
+}
+
+@media (max-width: 760px) {
+  .grade-cards-perfil {
+    grid-template-columns: 1fr;
+  }
+
+  .matriz-resumo-card {
+    grid-column: auto;
+  }
+}
