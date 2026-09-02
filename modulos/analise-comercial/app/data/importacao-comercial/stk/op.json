@@ -133,6 +133,18 @@
   },
   {
     "fonte_comercial": "STK",
+    "nro_op": "7428",
+    "produto": "16475",
+    "desc_completa": "CANYON LIMONCELLO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 400,
+    "dt_saida": "2026-07-27",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
     "nro_op": "7489",
     "produto": "9000183",
     "desc_completa": "NAPA MADRID CONHAQUE",
@@ -169,42 +181,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "7809",
-    "produto": "16466",
-    "desc_completa": "SAVOY GLAM OURO LIGHT",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 94,
-    "dt_saida": "2026-08-19",
-    "centro_custo": 10,
-    "abreviacao": "REV 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "7834",
-    "produto": "11845",
-    "desc_completa": "BORGONHA OURO LIGHT",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 0,
-    "dt_saida": "2026-08-21",
-    "centro_custo": 10,
-    "abreviacao": "REV 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "7837",
-    "produto": "9000134",
-    "desc_completa": "BERGAMO CARAMELO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 8.5,
-    "dt_saida": "2026-08-19",
-    "centro_custo": 10,
-    "abreviacao": "REV 1"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "7912",
     "produto": "11844",
     "desc_completa": "BORGONHA PRATA",
@@ -224,20 +200,8 @@
     "subgrupo": 41,
     "qtd_produzir": 150,
     "dt_saida": "2026-08-26",
-    "centro_custo": 0,
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "7914",
-    "produto": "17420",
-    "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 1000,
-    "dt_saida": "2026-08-26",
-    "centro_custo": 3,
-    "abreviacao": "GR 1"
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -260,20 +224,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-08-31",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "7991",
-    "produto": "16650",
-    "desc_completa": "NAPA BARI FOSCO CAFE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 2000,
-    "dt_saida": "2026-08-31",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "centro_custo": 23,
+    "abreviacao": "RAMA"
   },
   {
     "fonte_comercial": "STK",
@@ -284,8 +236,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-08-31",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -296,8 +248,8 @@
     "subgrupo": 41,
     "qtd_produzir": 2000,
     "dt_saida": "2026-08-31",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -440,8 +392,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-08-31",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -450,10 +402,10 @@
     "desc_completa": "MIRAGE OURO LIGHT",
     "grupo": 39,
     "subgrupo": 41,
-    "qtd_produzir": 400,
+    "qtd_produzir": 270.5,
     "dt_saida": "2026-08-31",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 10,
+    "abreviacao": "REV 1"
   },
   {
     "fonte_comercial": "STK",
@@ -464,8 +416,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-08-31",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -500,8 +452,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-01",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -512,8 +464,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-01",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -524,6 +476,18 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-01",
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8051",
+    "produto": "15651",
+    "desc_completa": "SALERNO LIMONCELLO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-09-09",
     "centro_custo": 0,
     "abreviacao": ""
   },
@@ -536,8 +500,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-01",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -548,7 +512,7 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-09-03",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   }
 ]
