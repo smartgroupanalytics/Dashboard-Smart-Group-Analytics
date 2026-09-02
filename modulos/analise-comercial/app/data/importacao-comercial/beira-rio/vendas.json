@@ -36591,5 +36591,28 @@
     "abreviacao": "",
     "vlr_comissao_rep": 0,
     "cod_altern_1": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "dt_entrada": "2026-08-28",
+    "dt_faturam": "2026-09-01",
+    "produto": "13433",
+    "desc_completa": "METALIZADO FLOATHER VENEZIA PU 0.9 BRONZE",
+    "pedido": "",
+    "cfop": "",
+    "grupo": "BEIRA RIO",
+    "cliente": "15",
+    "razao_social": "",
+    "qtd_faturada": 206,
+    "qtd_item": 0,
+    "nota": "",
+    "vlr_un": 0,
+    "vlr_liq_item": 0,
+    "sig_emp": "",
+    "posicao_item": "",
+    "representante": "",
+    "abreviacao": "",
+    "vlr_comissao_rep": 0,
+    "cod_altern_1": ""
   }
 ]
