@@ -1,6 +1,6 @@
 {
-  "atualizadoEm": "2026-09-02T08:11:40.189Z",
-  "ultimaAtualizacaoValida": "2026-09-02T08:11:40.189Z",
+  "atualizadoEm": "2026-09-02T08:26:25.285Z",
+  "ultimaAtualizacaoValida": "2026-09-02T08:26:25.285Z",
   "status": "OK",
   "mensagem": "9 de 9 relatórios atualizados com sucesso.",
   "modo": "PARCIAL_SEGURO",
@@ -12,8 +12,8 @@
     {
       "arquivo": "ESTOQUE.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-09-01T11:22:03.000Z",
-      "linhasValidas": 2113,
+      "recebidoEm": "2026-09-02T08:15:23.000Z",
+      "linhasValidas": 2703,
       "mensagem": "Atualizado com sucesso."
     },
     {
@@ -61,8 +61,8 @@
     {
       "arquivo": "OPBR.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-09-01T11:21:50.000Z",
-      "linhasValidas": 46,
+      "recebidoEm": "2026-09-02T08:25:17.000Z",
+      "linhasValidas": 51,
       "mensagem": "Atualizado com sucesso."
     },
     {
