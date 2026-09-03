@@ -217,30 +217,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "7990",
-    "produto": "16737",
-    "desc_completa": "NAPA BARI FOSCO CARAMELO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 1000,
-    "dt_saida": "2026-08-31",
-    "centro_custo": 23,
-    "abreviacao": "RAMA"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "7992",
-    "produto": "16644",
-    "desc_completa": "NAPA BARI FOSCO OFF WHITE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 1000,
-    "dt_saida": "2026-08-31",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "7993",
     "produto": "16643",
     "desc_completa": "NAPA BARI FOSCO BEGE",
@@ -248,8 +224,8 @@
     "subgrupo": 41,
     "qtd_produzir": 2000,
     "dt_saida": "2026-08-31",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 23,
+    "abreviacao": "RAMA"
   },
   {
     "fonte_comercial": "STK",
@@ -296,8 +272,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-08-31",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -308,8 +284,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-08-31",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -392,8 +368,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-08-31",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "centro_custo": 3,
+    "abreviacao": "GR 1"
   },
   {
     "fonte_comercial": "STK",
@@ -428,8 +404,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-01",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -512,7 +488,43 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-09-03",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8097",
+    "produto": "13708",
+    "desc_completa": "MERIDA PRETO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 2000,
+    "dt_saida": "2026-09-10",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8098",
+    "produto": "15534",
+    "desc_completa": "MIRAGE OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 400,
+    "dt_saida": "2026-09-10",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8099",
+    "produto": "15533",
+    "desc_completa": "MIRAGE PRATA",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-09-10",
+    "centro_custo": 0,
+    "abreviacao": ""
   }
 ]
