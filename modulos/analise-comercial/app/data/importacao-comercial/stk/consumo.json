@@ -4609,6 +4609,18 @@
   },
   {
     "fonte_comercial": "STK",
+    "cod_prod": "11904",
+    "produto": "11904",
+    "desc_completa": "NAPA MADRID NUDE - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 1000,
+    "dt_movto": "2026-09-02"
+  },
+  {
+    "fonte_comercial": "STK",
     "cod_prod": "11905",
     "produto": "11905",
     "desc_completa": "NAPA MADRID CARAMELO - PU 0.9MM",
@@ -16270,6 +16282,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 2000,
     "dt_movto": "2026-08-31"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20084",
+    "produto": "20084",
+    "desc_completa": "SEVILLA PRETO - 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 997,
+    "dt_movto": "2026-09-02"
   },
   {
     "fonte_comercial": "STK",
