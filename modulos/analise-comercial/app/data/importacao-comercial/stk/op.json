@@ -217,18 +217,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "7993",
-    "produto": "16643",
-    "desc_completa": "NAPA BARI FOSCO BEGE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 2000,
-    "dt_saida": "2026-08-31",
-    "centro_custo": 23,
-    "abreviacao": "RAMA"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "7995",
     "produto": "17231",
     "desc_completa": "DENVER ESPRESSO",
@@ -236,8 +224,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-08-31",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "centro_custo": 3,
+    "abreviacao": "GR 1"
   },
   {
     "fonte_comercial": "STK",
@@ -260,8 +248,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-08-31",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -356,8 +344,8 @@
     "subgrupo": 41,
     "qtd_produzir": 120,
     "dt_saida": "2026-08-28",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -390,10 +378,10 @@
     "desc_completa": "MACKAY GLAM OURO LIGHT",
     "grupo": 39,
     "subgrupo": 41,
-    "qtd_produzir": 400,
+    "qtd_produzir": 395,
     "dt_saida": "2026-08-31",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "centro_custo": 10,
+    "abreviacao": "REV 1"
   },
   {
     "fonte_comercial": "STK",
@@ -464,8 +452,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-09",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -490,6 +478,30 @@
     "dt_saida": "2026-09-03",
     "centro_custo": 2,
     "abreviacao": "GRAV"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8092",
+    "produto": "30096",
+    "desc_completa": "BORGONHA BROWN",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 600,
+    "dt_saida": "2026-09-10",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8096",
+    "produto": "17256",
+    "desc_completa": "DENVER CANELA",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 1000,
+    "dt_saida": "2026-09-10",
+    "centro_custo": 0,
+    "abreviacao": ""
   },
   {
     "fonte_comercial": "STK",
@@ -524,6 +536,42 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-10",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8104",
+    "produto": "16477",
+    "desc_completa": "CANYON BEGE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 300,
+    "dt_saida": "2026-09-08",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8123",
+    "produto": "11847",
+    "desc_completa": "BORGONHA GRAFITE",
+    "grupo": 39,
+    "subgrupo": 0,
+    "qtd_produzir": 400,
+    "dt_saida": "2026-09-11",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8126",
+    "produto": "30095",
+    "desc_completa": "BORGONHA WHISKY",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 400,
+    "dt_saida": "2026-09-11",
     "centro_custo": 0,
     "abreviacao": ""
   }
