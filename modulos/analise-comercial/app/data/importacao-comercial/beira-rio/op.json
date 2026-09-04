@@ -125,7 +125,7 @@
     "produto": "12478",
     "desc_completa": "METALIZADO PREMIUM PU 0.9 BRONZE 1402",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 74,
+    "qtd_produzir": 558.5,
     "dt_saida": "2026-08-11",
     "abreviacao": ""
   },
@@ -161,6 +161,16 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "7956",
+    "produto": "14863",
+    "desc_completa": "METALIZADO PITON SAARA  PRATA",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 400,
+    "dt_saida": "2026-08-27",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "7957",
     "produto": "17561",
     "desc_completa": "METALIZADO TRAMADO BERLIM BR DOURADO",
@@ -171,9 +181,19 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "7962",
-    "produto": "17674",
-    "desc_completa": "TRAMADO BERLIM CAMEL 1165",
+    "nro_op": "7958",
+    "produto": "17019",
+    "desc_completa": "NAPA MALAGA BRANCO OFF",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 1000,
+    "dt_saida": "2026-08-27",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "7961",
+    "produto": "17676",
+    "desc_completa": "TRAMADO BERLIM BRANCO OFF 526",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 600,
     "dt_saida": "2026-08-27",
@@ -186,6 +206,16 @@
     "desc_completa": "TRAMADO BERLIM MANTEIGA 1394",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 400,
+    "dt_saida": "2026-08-27",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "7964",
+    "produto": "17688",
+    "desc_completa": "NAPA MARSELHA MOSTARDA 644",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 60,
     "dt_saida": "2026-08-27",
     "abreviacao": ""
   },
@@ -265,7 +295,7 @@
     "produto": "16509",
     "desc_completa": "NAPA SEVILLE BRANCO OFF 526",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 11,
+    "qtd_produzir": 800,
     "dt_saida": "2026-08-27",
     "abreviacao": ""
   },
@@ -296,6 +326,16 @@
     "desc_completa": "NAPA RAVENA BRANCO OFF",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 400,
+    "dt_saida": "2026-08-27",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "7982",
+    "produto": "9902",
+    "desc_completa": "METALIZADO NANCY PU 1.0 PRATA",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 1000,
     "dt_saida": "2026-08-27",
     "abreviacao": ""
   },
@@ -467,66 +507,6 @@
     "grupo": "BEIRA RIO",
     "qtd_produzir": 2080,
     "dt_saida": "2026-09-09",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8105",
-    "produto": "30084",
-    "desc_completa": "NAPA MARSELHA CAMEL 1165",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 1000,
-    "dt_saida": "2026-09-08",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8106",
-    "produto": "9100114",
-    "desc_completa": "NAPA MARSELHA AVELA",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 600,
-    "dt_saida": "2026-09-08",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8110",
-    "produto": "15823",
-    "desc_completa": "NAPA NEW NANCY AVELA 1248",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 600,
-    "dt_saida": "2026-09-08",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8113",
-    "produto": "17019",
-    "desc_completa": "NAPA MALAGA BRANCO OFF",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 2000,
-    "dt_saida": "2026-09-08",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8114",
-    "produto": "30126",
-    "desc_completa": "NAPA MALAGA CAMEL 1165",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 400,
-    "dt_saida": "2026-09-08",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8138",
-    "produto": "14295",
-    "desc_completa": "NAPA FLOATHER NATURE PU 1.0 BRANCO 99",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 1000,
-    "dt_saida": "2026-09-11",
     "abreviacao": ""
   }
 ]
