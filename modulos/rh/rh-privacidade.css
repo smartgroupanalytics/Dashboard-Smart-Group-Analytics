@@ -3,6 +3,14 @@
   opacity: 0.6;
 }
 
+.btn-atualizar.sincronizando i {
+  animation: girar-sincronizacao-rh 0.8s linear infinite;
+}
+
+@keyframes girar-sincronizacao-rh {
+  to { transform: rotate(360deg); }
+}
+
 .cabecalho-sensivel {
   display: flex;
   align-items: center;

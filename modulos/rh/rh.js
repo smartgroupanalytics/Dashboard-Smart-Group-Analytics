@@ -14,6 +14,8 @@ const usuario = window.usuarioAnalytics || {};
 
 /* Cole aqui a URL /exec gerada ao implantar o Código.gs como Aplicativo da Web. */
 const URL_SINCRONIZACAO_RH = "https://script.google.com/macros/s/AKfycbzEyjTxgD1K0RkM0jbwkoLTtvfdC6pUFzZp1xw29lHdCrddLo1eR-nmWQe8hbciEgKmJQ/exec";
+const TEMPO_LIMITE_SINCRONIZACAO_RH_MS = 300000;
+const DOCUMENTO_ALERTAS_INTEGRIDADE_RH = "controle_alertas_integridade_rh";
 const elementos = {
   escopoAcesso: document.getElementById("escopoAcesso"),
   btnSelecionarArquivos: document.getElementById("btnSelecionarArquivos"),
@@ -128,19 +130,40 @@ async function sincronizarOuAtualizarRH() {
 
   mostrarCarregamento("Sincronizando as planilhas do Google Drive...");
   elementos.btnAtualizar.disabled = true;
+  elementos.btnAtualizar.classList.add("sincronizando");
+  const controlador = new AbortController();
+  const tempoLimite = window.setTimeout(
+    () => controlador.abort(),
+    TEMPO_LIMITE_SINCRONIZACAO_RH_MS
+  );
 
   try {
     const idToken = await usuarioFirebase.getIdToken(true);
     const resposta = await fetch(URL_SINCRONIZACAO_RH, {
       method: "POST",
       redirect: "follow",
+      cache: "no-store",
       headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify({ acao: "sincronizar_rh", idToken })
+      body: JSON.stringify({ acao: "sincronizar_rh", idToken }),
+      signal: controlador.signal
     });
 
-    if (!resposta.ok) throw new Error(`Falha HTTP ${resposta.status}.`);
+    if (resposta.status === 401 || resposta.status === 403) {
+      throw new Error(
+        "O Google bloqueou o acesso ao sincronizador. Publique o Apps Script como Aplicativo da Web, executando como você e com acesso para qualquer pessoa."
+      );
+    }
+    if (!resposta.ok) throw new Error(`O sincronizador retornou HTTP ${resposta.status}.`);
 
-    const resultado = await resposta.json();
+    const conteudo = await resposta.text();
+    let resultado;
+    try {
+      resultado = JSON.parse(conteudo);
+    } catch (erroJson) {
+      throw new Error(
+        "O Apps Script não retornou a resposta esperada. Atualize a implantação do Aplicativo da Web e tente novamente."
+      );
+    }
     if (!resultado.ok) {
       throw new Error(resultado.erro || "A sincronização não foi concluída.");
     }
@@ -149,15 +172,44 @@ async function sincronizarOuAtualizarRH() {
     await carregarColaboradores();
 
     const resumo = resultado.resumo || {};
+    const atualizados = Number(
+      resumo.atualizados ?? resumo.colaboradoresAtualizados ?? 0
+    );
+    const semAlteracao = Number(
+      resumo.ignoradosSemAlteracao ?? resumo.arquivosIgnorados ?? 0
+    );
+    const removidos = Number(resumo.removidos || 0);
+    const bloqueados = Number(
+      resumo.bloqueados ?? (Array.isArray(resumo.erros) ? resumo.erros.length : 0)
+    );
+    const continuacao = resumo.limiteAtingido
+      ? " Os demais arquivos continuarão automaticamente."
+      : "";
+    const parteRemovidos = removidos
+      ? ` ${removidos} cadastro(s) antigo(s) removido(s).`
+      : "";
+    const parteBloqueados = bloqueados
+      ? ` ${bloqueados} arquivo(s) ainda precisam de verificação.`
+      : "";
+
     mostrarToast(
-      `${Number(resumo.atualizados || 0)} colaborador(es) atualizado(s). ` +
-      `${Number(resumo.ignoradosSemAlteracao || 0)} arquivo(s) sem alteração.`
+      `${atualizados} colaborador(es) atualizado(s). ` +
+      `${semAlteracao} arquivo(s) sem alteração.` +
+      parteRemovidos + parteBloqueados + continuacao,
+      bloqueados > 0
     );
   } catch (erro) {
     console.error("Erro na sincronização imediata do RH:", erro);
-    mostrarToast(erro.message || "Não foi possível sincronizar o RH agora.", true);
+    const mensagem = erro.name === "AbortError"
+      ? "A sincronização ultrapassou 5 minutos. O processamento poderá continuar automaticamente; aguarde um minuto e atualize novamente."
+      : erro instanceof TypeError
+      ? "O Google não permitiu acessar o sincronizador. Atualize a implantação do Apps Script para acesso “Qualquer pessoa” e tente novamente."
+      : erro.message || "Não foi possível sincronizar o RH agora.";
+    mostrarToast(mensagem, true);
   } finally {
+    window.clearTimeout(tempoLimite);
     elementos.btnAtualizar.disabled = false;
+    elementos.btnAtualizar.classList.remove("sincronizando");
     ocultarCarregamento();
   }
 }
@@ -214,12 +266,18 @@ async function carregarColaboradores() {
 
     const resultado = await getDocs(consulta);
     const todosDocumentos = resultado.docs.map(item => ({ id: item.id, ...item.data() }));
-    const controleIntegridade = todosDocumentos.find(item =>
+    const documentosControleIntegridade = todosDocumentos.filter(item =>
       item.id === "__alertas_integridade__" ||
+      item.id === DOCUMENTO_ALERTAS_INTEGRIDADE_RH ||
       item.tipoDocumento === "controle_integridade_rh"
     );
+    const controleIntegridade =
+      documentosControleIntegridade.find(
+        item => item.id === DOCUMENTO_ALERTAS_INTEGRIDADE_RH
+      ) || documentosControleIntegridade[0];
     const carregados = todosDocumentos.filter(item =>
       item.id !== "__alertas_integridade__" &&
+      item.id !== DOCUMENTO_ALERTAS_INTEGRIDADE_RH &&
       item.tipoDocumento !== "controle_integridade_rh"
     );
 
