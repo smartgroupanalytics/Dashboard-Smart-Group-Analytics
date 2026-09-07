@@ -219,7 +219,11 @@ function criarLancamento(linha, colunas, numeroLinha) {
     if (tipoOriginal.includes("fornecedor")) tipoCadastro = "fornecedor";
     if (!tipoCadastro) return null;
 
-    const dataPagamento = converterDataExcel(valor("dataPagamento"));
+    const dataPagamentoOriginal = valor("dataPagamento");
+    const dataPagamentoEmAberto = dataFinanceiraSemData(dataPagamentoOriginal);
+    const dataPagamento = dataPagamentoEmAberto
+        ? null
+        : converterDataExcel(dataPagamentoOriginal);
     const vencimento = converterDataExcel(valor("vencimento"));
     const dataMovimento = converterDataExcel(valor("dataMovimento"));
     const dataFluxo = converterDataExcel(valor("dataFluxo"));
@@ -249,6 +253,13 @@ function criarLancamento(linha, colunas, numeroLinha) {
         dataMovimento,
         vencimento,
         dataPagamento,
+        /*
+         * Regra específica do Fluxo de Caixa:
+         * Dt.pgto vazio ou 00/00/0000 significa título em aberto, mesmo que
+         * Vlr.líq.pago tenha algum valor no relatório.
+         */
+        dataPagamentoEmAberto,
+        dataPagamentoOriginal: String(dataPagamentoOriginal ?? "").trim(),
         dataFluxo,
         valorDocumento,
         valorLiquidoPago,

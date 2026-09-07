@@ -183,8 +183,32 @@ function gerarSiglaBanco(nome) {
         .toUpperCase() || "BK";
 }
 
+function dataFinanceiraSemData(valor) {
+    if (valor === null || valor === undefined || valor === "") return true;
+
+    /*
+     * O SIGER usa 00/00/0000 para indicar que não existe data.
+     * Dependendo de como o Excel foi gravado, o mesmo valor também pode
+     * chegar ao navegador como zero ou como uma data do início de 1900.
+     * Todos esses casos precisam ser tratados como campo vazio.
+     */
+    if (typeof valor === "number") {
+        return !Number.isFinite(valor) || valor <= 0;
+    }
+
+    if (valor instanceof Date) {
+        return Number.isNaN(valor.getTime()) || valor.getFullYear() <= 1900;
+    }
+
+    const texto = String(valor).trim();
+    if (!texto) return true;
+
+    return /^(?:0{1,2})\/(?:0{1,2})\/(?:0{4})$/.test(texto) ||
+        texto === "0";
+}
+
 function converterDataExcel(valor) {
-    if (!valor || valor === "00/00/0000") return null;
+    if (dataFinanceiraSemData(valor)) return null;
 
     if (valor instanceof Date && !Number.isNaN(valor.getTime())) {
         return inicioDoDia(valor);
@@ -192,21 +216,37 @@ function converterDataExcel(valor) {
 
     if (typeof valor === "number" && Number.isFinite(valor)) {
         const partes = XLSX.SSF.parse_date_code(valor);
-        if (!partes) return null;
+        if (!partes || partes.y <= 1900) return null;
         return new Date(partes.y, partes.m - 1, partes.d);
     }
 
     const texto = String(valor).trim();
-    if (!texto || texto === "00/00/0000") return null;
 
     const br = texto.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
     if (br) {
-        const data = new Date(Number(br[3]), Number(br[2]) - 1, Number(br[1]));
-        return Number.isNaN(data.getTime()) ? null : data;
+        const dia = Number(br[1]);
+        const mes = Number(br[2]);
+        const ano = Number(br[3]);
+
+        if (dia <= 0 || mes <= 0 || ano <= 1900) return null;
+
+        const data = new Date(ano, mes - 1, dia);
+        if (
+            Number.isNaN(data.getTime()) ||
+            data.getFullYear() !== ano ||
+            data.getMonth() !== mes - 1 ||
+            data.getDate() !== dia
+        ) {
+            return null;
+        }
+
+        return data;
     }
 
     const iso = new Date(texto);
-    return Number.isNaN(iso.getTime()) ? null : inicioDoDia(iso);
+    return Number.isNaN(iso.getTime()) || iso.getFullYear() <= 1900
+        ? null
+        : inicioDoDia(iso);
 }
 
 function inicioDoDia(data) {

@@ -102,14 +102,20 @@ function criarMovimentacoesFluxo(item) {
      * REGRA OFICIAL DO FLUXO DE CAIXA:
      *
      * Dt.pgto preenchida  -> REALIZADO
-     * Dt.pgto em branco   -> PREVISTO
+     * Dt.pgto vazio ou 00/00/0000 -> PREVISTO
      *
      * A classificação do cenário NÃO depende mais de `pago` nem de
-     * Vlr.líq.pago. Assim, todo título de CLIENTE sem Dt.pgto alimenta
-     * "Entradas previstas" e todo título de FORNECEDOR sem Dt.pgto
+     * Vlr.líq.pago. Assim, todo título de CLIENTE com Dt.pgto vazio/00/00/0000 alimenta
+     * "Entradas previstas" e todo título de FORNECEDOR com Dt.pgto vazio/00/00/0000
      * alimenta "Saídas previstas".
      */
+    const pagamentoEmAbertoPorDtPgto =
+        item.dataPagamentoEmAberto === true ||
+        !(item.dataPagamento instanceof Date) ||
+        dataFinanceiraSemData(item.dataPagamento);
+
     const temDataPagamento =
+        !pagamentoEmAbertoPorDtPgto &&
         item.dataPagamento instanceof Date;
 
     /*
@@ -125,7 +131,7 @@ function criarMovimentacoesFluxo(item) {
             : 0;
 
     /*
-     * Para títulos em aberto (Dt.pgto em branco), o previsto é o valor
+     * Para títulos em aberto (Dt.pgto vazio/00/00/0000), o previsto é o valor
      * integral do documento. Isso segue exatamente a regra solicitada:
      * a ausência da data de pagamento é o que define o título em aberto.
      */
@@ -135,13 +141,18 @@ function criarMovimentacoesFluxo(item) {
             : 0;
 
     /*
-     * A data que posiciona o previsto no gráfico continua sendo Dt.flx.cx;
-     * quando ela não existir, usamos o Vencimento como alternativa.
+     * REGRA DO PERÍODO PARA PREVISÃO:
+     *
+     * A Dt.pgto (coluna O) define se o título está em aberto.
+     * Quando Dt.pgto = 00/00/0000, o período do Fluxo de Caixa deve ser
+     * filtrado pelo VENCIMENTO (coluna N), exatamente como na conferência
+     * feita diretamente no Excel. Dt.flx.cx não participa da seleção dos
+     * títulos previstos.
      */
     const dataPrevista =
-        item.dataFluxo instanceof Date
-            ? item.dataFluxo
-            : item.vencimento;
+        item.vencimento instanceof Date
+            ? item.vencimento
+            : null;
 
     const movimentos = [];
 
