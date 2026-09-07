@@ -155,7 +155,12 @@
     DET.splice(0,DET.length,...RAW.det.map(r=>({d:r[0],mes:r[0].slice(0,7),seg:r[1],orig:r[2],rep:r[3],tag:r[4],cli:r[5],fam:r[6],cor:r[7],st:r[8],q:r[9],dias:r[10]})));
     VD.splice(0,VD.length,...RAW.venddet.map(r=>({mes:r[0],seg:r[1],tag:r[2],rep:r[3],fam:r[4],cor:r[5],raz:r[6],q:r[7],val:r[8]})));
     MESES.splice(0,MESES.length,...[...new Set([...FAT.map(r=>r.mes),...AM.map(r=>r.mes)])].sort());REPS.splice(0,REPS.length,...[...new Set([...AM.map(r=>r.rep),...FAT.map(r=>r.rep)])].sort());
-    F.ini=MESES[0];F.fim=MESES.at(-1);F.rep="";F.segs=new Set(SEGS);F.tags=new Set(TAGS);F.origs=new Set(ORIG);
+    // Não substitua estes Sets: os botões de filtro mantêm referência a eles.
+    // Apenas renovar o conteúdo preserva os eventos depois da importação.
+    F.ini=MESES[0];F.fim=MESES.at(-1);F.rep="";
+    F.segs.clear();SEGS.forEach(s=>F.segs.add(s));
+    F.tags.clear();TAGS.forEach(t=>F.tags.add(t));
+    F.origs.clear();ORIG.forEach(o=>F.origs.add(o));
     selI.innerHTML="";selF.innerHTML="";MESES.forEach(m=>{selI.add(new Option(mesBR(m),m));selF.add(new Option(mesBR(m),m))});selI.value=F.ini;selF.value=F.fim;
     repSel.innerHTML='<option value="">Todos</option>';REPS.forEach(r=>repSel.add(new Option(r,r)));
     BC=false;document.querySelectorAll('#bcChips .chip').forEach(x=>x.classList.toggle('on',x.dataset.k==='bcfalse'));
