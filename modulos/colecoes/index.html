@@ -24,7 +24,7 @@ h1 .accent{color:var(--stk)}
 .fgroup label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--tx2)}
 select{background:var(--panel2);color:var(--tx);border:1px solid var(--line);border-radius:6px;padding:5px 8px;font-size:12px}
 .chips{display:flex;gap:6px;flex-wrap:wrap}
-.chip{appearance:none;font-family:inherit;line-height:normal;cursor:pointer;user-select:none;border:1px solid var(--line);border-radius:14px;padding:4px 11px;font-size:11.5px;color:var(--tx2);background:var(--panel2);transition:.15s}
+.chip{cursor:pointer;user-select:none;border:1px solid var(--line);border-radius:14px;padding:4px 11px;font-size:11.5px;color:var(--tx2);background:var(--panel2);transition:.15s}
 .chip.on{color:#0d1117;font-weight:600}
 .chip[data-k="STK"].on{background:var(--stk);border-color:var(--stk)}
 .chip[data-k="BEIRA RIO"].on{background:var(--br);border-color:var(--br)}
@@ -41,7 +41,6 @@ select{background:var(--panel2);color:var(--tx);border:1px solid var(--line);bor
 #bcChips .chip.on{background:var(--carry);border-color:var(--carry);color:#0d1117;font-weight:600}
 .btn{cursor:pointer;background:transparent;border:1px solid var(--line);color:var(--tx2);border-radius:6px;padding:6px 12px;font-size:11.5px}
 .btn:hover{color:var(--tx);border-color:var(--tx2)}
-
 .import-box{margin-left:auto;align-self:center;display:flex;align-items:center;gap:9px;min-width:275px;justify-content:flex-end}
 .btn-import{background:var(--stk);border-color:var(--stk);color:#0d1117;font-weight:700;padding:8px 14px}
 .btn-import:hover{background:#7bd4f8;border-color:#7bd4f8;color:#0d1117}
@@ -85,10 +84,13 @@ padding:7px 11px;border-radius:7px;font-size:12px;line-height:1.45;pointer-event
 max-width:280px;box-shadow:0 4px 18px rgba(0,0,0,.5);white-space:pre-line}
 #modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;z-index:1000;align-items:center;justify-content:center;padding:16px}
 #modal .box{background:var(--panel);border:1px solid var(--stk);border-radius:12px;width:min(1320px,96vw);max-height:92vh;display:flex;flex-direction:column;box-shadow:0 10px 40px rgba(0,0,0,.6);overflow:hidden}
-#modal .box h3{font-size:13.5px;margin:0;padding:12px 16px 2px}
+#modal .box h3{font-size:13.5px;margin:0;padding:2px 16px 2px}
 #modal .box .sub{font-size:11px;color:var(--tx2);padding:0 16px 8px}
-#modal .close{position:absolute;right:26px;top:22px;cursor:pointer;color:var(--tx2);font-size:18px;line-height:1;z-index:2}
-#modal .close:hover{color:var(--tx)}
+#modal .modalHead{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 6px;gap:10px}
+#modal .close{cursor:pointer;color:var(--tx2);font-size:16px;line-height:1;width:26px;height:26px;min-width:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--panel2);flex-shrink:0}
+#modal .close:hover{background:var(--line);color:var(--tx)}
+#modal .voltar{visibility:hidden;cursor:pointer;color:var(--stk);font-size:12px;font-weight:600;display:inline-flex;align-items:center;gap:5px;background:#1a2230;border:1px solid var(--line);border-radius:6px;padding:5px 12px;flex-shrink:0}
+#modal .voltar:hover{background:#232d3d}
 #modal #mBody{overflow:auto;padding:0 16px 14px;flex:1;min-height:0}
 #modal table{font-size:10.5px;width:100%}
 #modal td{white-space:normal;word-break:break-word}
@@ -128,6 +130,7 @@ max-width:280px;box-shadow:0 4px 18px rgba(0,0,0,.5);white-space:pre-line}
 
 <div class="kpis">
   <div class="kpi"><div class="l">Faturamento</div><div class="v" id="kFat">–</div><div class="d" id="kFatD"></div></div>
+  <div class="kpi"><div class="l">Faturamento bruto <span style="color:var(--warn)">(c/ amostras)</span></div><div class="v" id="kFatBruto">–</div><div class="d">inclui amostras faturadas ≤5m — não é venda real</div></div>
   <div class="kpi"><div class="l">Metros faturados</div><div class="v" id="kMet">–</div></div>
   <div class="kpi"><div class="l">Amostras solicitadas</div><div class="v" id="kAm">–</div><div class="d" id="kAmQ"></div></div>
   <div class="kpi"><div class="l">Amostras convertidas</div><div class="v" id="kConv">–</div><div class="d" id="kConvD"></div></div>
@@ -250,13 +253,13 @@ max-width:280px;box-shadow:0 4px 18px rgba(0,0,0,.5);white-space:pre-line}
   </tr></thead><tbody></tbody></table>
 </div>
 
-<div id="modal"><div class="box" style="position:relative"><span class="close" onclick="document.getElementById('modal').style.display='none'">✕</span><h3 id="mTitle"></h3><div class="sub" id="mSub"></div><div id="mBody"></div></div></div>
+<div id="modal"><div class="box"><div class="modalHead"><span class="voltar" id="mVoltar" onclick="modalVoltar()">← Voltar</span><span class="close" onclick="fecharModal()">✕</span></div><h3 id="mTitle"></h3><div class="sub" id="mSub"></div><div id="mBody"></div></div></div>
 
 <div class="foot">
 <b>Critérios</b> · Segmentos: <b>STK</b> = faturamento do Grupo 39 (STK Line) e amostras de materiais da linha de coleções; <b>BEIRA RIO</b> = cliente Beira Rio (amostras já incluídas; faturamento será adicionado); <b>OUTROS</b> = demais grupos (Produção, Catálogo) e materiais fora da linha. ·
 Conversão: amostra convertida quando o mesmo cliente fatura o material amostrado em data igual ou posterior à amostra (produto+cor ou produto). ·
 Coleção do material: SKU exclusivo recebe o nome da coleção; presente em 2+ coleções = CARRY-OVER; ausente do resumo de SKUs = FORA DE COLEÇÃO. ·
-Origem das amostras: MOSTRUÁRIO (4 arquivos de solicitação) e FATURADO ≤5M (linhas de venda com até 5,00m). Vendas reais = quantidade acima de 5,00m; linhas com quantidade zerada contam apenas em valor e não aparecem na lista de materiais. Conversão exige venda real posterior à amostra. Taxa de conversão = amostras convertidas ÷ total de amostras solicitadas. Linhas faturadas ou amostradas para a Beira Rio recebem a coleção BEIRA RIO. Ao selecionar um representante, TODO o painel é filtrado: amostras que ele solicitou (conversão apurada no cliente para quem solicitou) e vendas faturadas na abreviação dele De-para de clientes validado por código (Via Marte=Calçados Marte cód.832 · Piccadilly=A.Grings cód.30 · Lia Line=Irmãos Soares cód.50, entre outros). Ajustes de representantes definidos pela gestão: Cris=Cristiano · Compor=Televendas · Oscar=One Way · Fabio (teste) excluído · Direto, Regis e Henrique mantidos separados. Fontes: amostras Jan/2025–Ago/2026 e relatório de faturamento Rech 0000136 (06/01/2025 a 14/08/2026), incl. CALCADOS BEIRA RIO S/A FL. 17. Amostras: base consolidada AMOSTRAS_CONSOLIDADO (13.269 solicitações, jan/25–ago/26) · cliente e material casados por CÓDIGO como chave primária contra o Faturamento (casamento por nome como retaguarda para cadastros sem código). Estoque: saldo físico do relatório (foto na data da exportação), classificado por código de material. Painel offline — dados embutidos.
+Origem das amostras: MOSTRUÁRIO (4 arquivos de solicitação) e FATURADO ≤5M (linhas de venda com até 5,00m). Vendas reais = quantidade acima de 5,00m; linhas com quantidade zerada contam apenas em valor e não aparecem na lista de materiais. Conversão exige venda real posterior à amostra. Taxa de conversão = amostras convertidas ÷ total de amostras solicitadas. Linhas faturadas ou amostradas para a Beira Rio recebem a coleção BEIRA RIO. Ao selecionar um representante, TODO o painel é filtrado: amostras que ele solicitou (conversão apurada no cliente para quem solicitou) e vendas faturadas na abreviação dele De-para de clientes validado por código (Via Marte=Calçados Marte cód.832 · Piccadilly=A.Grings cód.30 · Lia Line=Irmãos Soares cód.50, entre outros). Ajustes de representantes definidos pela gestão: Cris=Cristiano · Compor=Televendas · Oscar=One Way · Fabio (teste) excluído · Direto, Regis e Henrique mantidos separados. Fontes: amostras <span id="footAmostrasPeriodo">–</span> e relatório de faturamento Rech 0000136 (<span id="footFaturamentoPeriodo">–</span>), incl. CALCADOS BEIRA RIO S/A FL. 17. Amostras: base consolidada AMOSTRAS_CONSOLIDADO · cliente e material casados por CÓDIGO como chave primária contra o Faturamento (casamento por nome como retaguarda para cadastros sem código). Estoque: saldo físico do relatório (foto na data da exportação), classificado por código de material. <b>Data da última atualização: <span id="footUltimaAtualizacao">–</span></b> (data do lançamento de faturamento mais recente da planilha). Painel offline — dados embutidos.
 </div>
 
 <script>
@@ -316,31 +319,27 @@ selI.onchange=()=>{F.ini=selI.value;if(F.fim<F.ini){F.fim=F.ini;selF.value=F.fim
 selF.onchange=()=>{F.fim=selF.value;if(F.fim<F.ini){F.ini=F.fim;selI.value=F.ini}render()};
 function chips(el,keys,set){
   el.innerHTML='';
-  keys.forEach(k=>{const c=document.createElement('button');c.type='button';c.className='chip on';c.dataset.k=k;c.textContent=k;c.setAttribute('aria-pressed','true');if(k==='CARRY-OVER')c.title='Materiais presentes em 2 ou mais coleções (linha contínua)';
-    c.addEventListener('click',()=>{
-      // Com todos ativos, o primeiro clique passa a filtrar somente o item escolhido.
-      // Depois disso, os demais cliques permitem combinar mais de uma opção.
-      if(set.size===keys.length){set.clear();set.add(k)}
-      else if(set.has(k)){set.delete(k)}else{set.add(k)}
-      if(!set.size)keys.forEach(x=>set.add(x));
-      syncChips();render()
-    });el.appendChild(c)});
+  keys.forEach(k=>{const c=document.createElement('div');c.className='chip on';c.dataset.k=k;c.textContent=k;if(k==='CARRY-OVER')c.title='Materiais presentes em 2 ou mais coleções (linha contínua)';
+    c.onclick=()=>{set.has(k)?set.delete(k):set.add(k);if(!set.size)keys.forEach(x=>set.add(x));syncChips();render()};el.appendChild(c)});
 }
-function syncChips(){document.querySelectorAll('#segChips .chip').forEach(c=>{const ativo=F.segs.has(c.dataset.k);c.classList.toggle('on',ativo);c.setAttribute('aria-pressed',String(ativo))});
-document.querySelectorAll('#colChips .chip').forEach(c=>{const ativo=F.tags.has(c.dataset.k);c.classList.toggle('on',ativo);c.setAttribute('aria-pressed',String(ativo))})}
+function syncChips(){document.querySelectorAll('#segChips .chip').forEach(c=>c.classList.toggle('on',F.segs.has(c.dataset.k)));
+document.querySelectorAll('#colChips .chip').forEach(c=>c.classList.toggle('on',F.tags.has(c.dataset.k)))}
 chips(document.getElementById('segChips'),SEGS,F.segs);
 chips(document.getElementById('colChips'),TAGS,F.tags);
 (function(){const el=document.getElementById('origChips');
 ORIG.forEach(k=>{const c=document.createElement('div');c.className='chip on';c.dataset.k=k;c.textContent=ORIGL[k];
 c.style.setProperty('--oc',k==='MOSTRUARIO'?'#aed581':'#ff8a65');
-c.onclick=()=>{if(F.origs.size===ORIG.length){F.origs.clear();F.origs.add(k)}else if(F.origs.has(k)){F.origs.delete(k)}else{F.origs.add(k)}if(!F.origs.size)ORIG.forEach(x=>F.origs.add(x));
+c.onclick=()=>{F.origs.has(k)?F.origs.delete(k):F.origs.add(k);if(!F.origs.size)ORIG.forEach(x=>F.origs.add(x));
 document.querySelectorAll('#origChips .chip').forEach(x=>x.classList.toggle('on',F.origs.has(x.dataset.k)));render()};
 el.appendChild(c)})})();
 const repSel=document.getElementById('repSel');
 REPS.forEach(r=>repSel.add(new Option(r,r)));
 repSel.onchange=()=>{F.rep=repSel.value;render();document.getElementById('periodoNota').style.color=F.rep?'var(--stk)':'';};
 document.getElementById('limpar').onclick=()=>{F.ini=MESES[0];F.fim=MESES[MESES.length-1];F.segs.clear();SEGS.forEach(s=>F.segs.add(s));F.tags.clear();TAGS.forEach(t=>F.tags.add(t));F.origs.clear();ORIG.forEach(o=>F.origs.add(o));document.querySelectorAll('#origChips .chip').forEach(x=>x.classList.add('on'));document.querySelectorAll('#anoChips .chip').forEach(x=>x.classList.toggle('on',x.dataset.k==='TODOS'));F.rep='';selI.value=F.ini;selF.value=F.fim;repSel.value='';syncChips();render()};
-document.getElementById('periodoNota').textContent='Base: amostras de '+mesBR(MESES[0])+' a '+mesBR(MESES[MESES.length-1])+' · faturamento até 14/08/2026 · segmentos STK (Grupo 39) / Beira Rio / Outros';
+document.getElementById('periodoNota').textContent='Base: amostras de '+mesBR(MESES[0])+' a '+mesBR(MESES[MESES.length-1])+' · faturamento até '+(RAW.ultima_data_faturamento||'–')+' · segmentos STK (Grupo 39) / Beira Rio / Outros';
+document.getElementById('footAmostrasPeriodo').textContent=mesBR(MESES[0])+'–'+mesBR(MESES[MESES.length-1]);
+document.getElementById('footFaturamentoPeriodo').textContent=(RAW.primeira_data_faturamento||'–')+' a '+(RAW.ultima_data_faturamento||'–');
+document.getElementById('footUltimaAtualizacao').textContent=RAW.ultima_data_faturamento||'–';
 
 // ---------- KPIs ----------
 function kpis(){
@@ -361,11 +360,13 @@ function kpis(){
   document.getElementById('kMat').textContent=fI(fams.size);
   const f5v=F5.filter(r=>inP(r.mes)&&F.segs.has(r.seg)&&(!F.rep||r.rep===F.rep)).reduce((s,r)=>s+r.val,0);
   document.getElementById('kF5').textContent=fRS(f5v);
+  document.getElementById('kFatBruto').textContent=fRS(val+f5v);
   const dups=(F.origs.has('MOSTRUARIO')&&F.origs.has('FATURADO'))?a.reduce((s,r)=>s+r.dup,0):null;
   document.getElementById('kDup').textContent=dups===null?'–':fI(dups);
 }
 function mesBRcurta(iso){if(!iso)return '–';const p=iso.split('-');return p[2]+'/'+p[1]+'/'+p[0].slice(2)}
-document.getElementById('kpiDup').onclick=function(){
+function modalDuplicidades(){
+  registrarNavegacao('modalDuplicidades',[]);
   const rows=RAW.duppares||[];
   let h='<table><thead><tr><th>Cliente</th><th>Material</th><th>Cor (Mostruário)</th><th>Cor (Faturado)</th><th>Data Mostruário</th><th>Data Faturado</th><th>Dias</th><th>Rep.</th></tr></thead><tbody id="tbDup"></tbody></table>';
   openModal('Possíveis duplicidades — mostruário × faturado ≤5m', rows.length+' pares · mesmo cliente e material, com 0 ou 1 dia de diferença entre as datas', h);
@@ -376,7 +377,8 @@ document.getElementById('kpiDup').onclick=function(){
     +'<td'+(corDif?' style="background:#3e2f16;color:var(--warn)"':'')+'>'+r[3]+'</td>'
     +'<td>'+mesBRcurta(r[4])+'</td><td>'+mesBRcurta(r[5])+'</td><td>'+r[6]+'</td><td>'+r[7]+'</td>';
     tb.appendChild(tr)});
-};
+}
+document.getElementById('kpiDup').onclick=modalDuplicidades;
 
 // ---------- gráfico mensal empilhado ----------
 function chMensal(){
@@ -617,6 +619,7 @@ function chLT(){
   el.querySelectorAll('rect[data-bk]').forEach(r=>r.onclick=()=>modalLeadTime(r.getAttribute('data-bk')));
 }
 function modalLeadTime(bk,lim){
+  registrarNavegacao('modalLeadTime',[bk,lim]);
   lim=lim||'15';
   const rows=DET.filter(r=>r.dias>=0&&bucketDias(r.dias)===bk&&inP(r.mes)&&F.segs.has(r.seg)&&F.origs.has(r.orig)&&F.tags.has(r.tag)&&(!F.rep||r.rep===F.rep));
   rows.sort((a,b)=>a.dias-b.dias);
@@ -662,6 +665,7 @@ function hitSkuList(t){
   return Object.keys(per).map(k=>per[k]);
 }
 function modalHit(t,thr){
+  registrarNavegacao('modalHit',[t,thr]);
   const arr=hitSkuList(t);
   const thrNum=+thr;
   const filtered=arr.filter(o=>thrNum===0?o.met>0:o.met>=thrNum).sort((x,y)=>y.val-x.val);
@@ -773,12 +777,28 @@ const STL={'CONV_PC':'CONVERTIDA (produto+cor)','CONV_P':'CONVERTIDA (produto)',
 const STC={'CONV_PC':'#66bb6a','CONV_P':'#aed581','NAO_CONV':'#ef5350','SEM_FAT':'#5b6575'};
 const dBR=s=>s.slice(8,10)+'/'+s.slice(5,7)+'/'+s.slice(2,4);
 function detF(){return DET.filter(r=>inP(r.mes)&&F.segs.has(r.seg)&&F.origs.has(r.orig)&&F.tags.has(r.tag)&&(!F.rep||r.rep===F.rep))}
-function openModal(title,sub,html){document.getElementById('mTitle').textContent=title;document.getElementById('mSub').textContent=sub;document.getElementById('mBody').innerHTML=html;document.getElementById('modal').style.display='flex'}
-document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')e.target.style.display='none'});
-document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('modal').style.display='none'});
+let modalHistoria=[];
+let modalNavegando=false;
+function openModal(title,sub,html){
+  document.getElementById('mTitle').textContent=title;document.getElementById('mSub').textContent=sub;document.getElementById('mBody').innerHTML=html;document.getElementById('modal').style.display='flex';
+  document.getElementById('mVoltar').style.visibility=modalHistoria.length>1?'visible':'hidden';
+}
+function fecharModal(){document.getElementById('modal').style.display='none';modalHistoria=[]}
+function modalVoltar(){
+  if(modalHistoria.length<2)return;
+  modalHistoria.pop();
+  const anterior=modalHistoria[modalHistoria.length-1];
+  modalNavegando=true;
+  window[anterior.nome].apply(null,anterior.args);
+  modalNavegando=false;
+}
+function registrarNavegacao(nome,args){if(!modalNavegando)modalHistoria.push({nome:nome,args:Array.prototype.slice.call(args)})}
+document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')fecharModal()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')fecharModal()});
 function stTag(st){return '<span class="tag" style="background:'+STC[st]+'22;color:'+STC[st]+';border:1px solid '+STC[st]+'55">'+STL[st]+'</span>'}
 // Detalhe de cliente órfão: materiais, data, quantidade
 function modalCliente(cli){
+  registrarNavegacao('modalCliente',[cli]);
   const rows=detF().filter(r=>r.cli===cli).sort((a,b)=>b.d.localeCompare(a.d));
   const tot=rows.reduce((s,r)=>s+r.q,0);
   let h='<table><thead><tr><th>Data</th><th>Material</th><th>Cor</th><th>Qtd</th><th>Origem</th><th>Representante</th></tr></thead><tbody>';
@@ -789,6 +809,7 @@ function modalCliente(cli){
 // Detalhe de representante: convertidas × não convertidas, para quem
 let mTab='CONV';
 function modalRep(rep){
+  registrarNavegacao('modalRep',[rep]);
   const rows=detF().filter(r=>r.rep===rep);
   const cv=rows.filter(r=>r.st.startsWith('CONV')), nc=rows.filter(r=>!r.st.startsWith('CONV'));
   const tx=rows.length?Math.round(100*cv.length/rows.length):0;
@@ -805,6 +826,7 @@ function modalRep(rep){
   openModal(rep+' — conversão por cliente', rows.length+' amostras · '+cv.length+' convertidas · taxa '+tx+'% · recorte atual', tabs+tbl(mTab==='CONV'?cv:nc));
 }
 function modalConv(tag){
+  registrarNavegacao('modalConv',[tag]);
   const rows=detF().filter(r=>r.tag===tag&&r.st.startsWith('CONV'));
   const f=fatF().filter(r=>r.tag===tag&&r.fam!=='__VAL__');
   const agg={};
@@ -822,6 +844,7 @@ const VD=RAW.venddet.map(r=>({mes:r[0],seg:r[1],tag:r[2],rep:r[3],fam:r[4],cor:r
 function vdF(){return VD.filter(r=>inP(r.mes)&&F.segs.has(r.seg)&&F.tags.has(r.tag)&&(!F.rep||r.rep===F.rep))}
 function normCor(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().trim()}
 function modalCorCliente(fam,cor){
+  registrarNavegacao('modalCorCliente',[fam,cor]);
   const rows=vdF().filter(r=>r.fam===fam&&r.cor===cor);
   const agg={};
   rows.forEach(r=>{const o=agg[r.raz]=agg[r.raz]||{raz:r.raz,q:0,val:0,n:0};o.q+=r.q;o.val+=r.val;o.n++});
@@ -881,12 +904,16 @@ function tbMatMes(){
 }
 document.getElementById('buscaMatMes').oninput=()=>tbMatMes();
 document.getElementById('limMatMes').onchange=()=>tbMatMes();
-function modalMatMes(fam){
+function modalMatMes(fam,corFiltro){
+  registrarNavegacao('modalMatMes',[fam,corFiltro]);
+  corFiltro=corFiltro||'';
   const lm=launchMonths();
   const inicio=lm[fam]||MESES[0];
   const fimAtual=F.fim||MESES[MESES.length-1];
   const mesesJanela=MESES.filter(m=>m>=inicio&&m<=fimAtual);
-  const f=FAT.filter(r=>r.fam===fam&&r.mes>=inicio&&r.mes<=fimAtual&&F.segs.has(r.seg)&&F.tags.has(r.tag)&&(!F.rep||r.rep===F.rep));
+  const fTodas=FAT.filter(r=>r.fam===fam&&r.mes>=inicio&&r.mes<=fimAtual&&F.segs.has(r.seg)&&F.tags.has(r.tag)&&(!F.rep||r.rep===F.rep));
+  const coresDisponiveis=[...new Set(fTodas.map(r=>r.cor))].filter(Boolean).sort();
+  const f=corFiltro?fTodas.filter(r=>r.cor===corFiltro):fTodas;
   const cores={};
   f.forEach(r=>{const o=cores[r.cor]=cores[r.cor]||{cor:r.cor,porMes:{}};
     o.porMes[r.mes]=(o.porMes[r.mes]||0)+r.met});
@@ -912,11 +939,16 @@ function modalMatMes(fam){
   chart+='</svg>';
   const legendaCores=listaCores.slice(0,10).map((c,i)=>'<span data-coridx="'+i+'" style="cursor:pointer;display:inline-flex;align-items:center;gap:5px;margin-right:12px;margin-bottom:4px;font-size:11px;color:var(--tx2)"><i style="width:9px;height:9px;border-radius:2px;background:'+corDaSerie(c)+';display:inline-block"></i>'+c+'</span>').join('')
     +(listaCores.length>10?'<span style="font-size:11px;color:var(--tx3)">+ '+(listaCores.length-10)+' outras (veja na tabela)</span>':'');
-  if(!mesesJanela.length||!f.length){chart='<p style="color:var(--tx2)">Nenhuma venda real deste material no recorte atual.</p>';}
+  if(!mesesJanela.length||!f.length){chart='<p style="color:var(--tx2)">Nenhuma venda real deste material'+(corFiltro?' nesta cor':'')+' no recorte atual.</p>';}
 
-  let h='<div class="hint" style="margin-bottom:6px">Metros vendidos por mês, por cor (venda real, &gt;5m) · clique numa cor (legenda ou tabela) para ver o desempenho dela sozinha</div>'
+  const seletorCor='<div style="margin-bottom:12px;display:flex;align-items:center;gap:8px"><label style="font-size:11px;color:var(--tx2)">Filtrar por cor específica:</label>'
+    +'<select id="selMatMesCor"><option value=""'+(!corFiltro?' selected':'')+'>Todas as cores ('+coresDisponiveis.length+')</option>'
+    +coresDisponiveis.map(c=>'<option value="'+c.replace(/"/g,'&quot;')+'"'+(c===corFiltro?' selected':'')+'>'+c+'</option>').join('')+'</select></div>';
+
+  let h=seletorCor
+    +'<div class="hint" style="margin-bottom:6px">Metros vendidos por mês'+(corFiltro?' — '+corFiltro:', por cor')+' (venda real, &gt;5m) · '+(corFiltro?'use o seletor acima para trocar de cor ou ver todas juntas':'use o seletor acima para uma cor específica, ou clique numa cor (legenda/tabela) para ver o desempenho dela em todos os materiais')+'</div>'
     +chart+'<div style="margin:6px 0 14px">'+legendaCores+'</div>'
-    +'<div class="hint" style="margin-bottom:6px">Tabela completa — cor × mês · clique numa linha para abrir a cor</div>'
+    +'<div class="hint" style="margin-bottom:6px">Tabela completa — cor × mês · clique numa linha para ver a cor em todos os materiais</div>'
     +'<div style="overflow:auto;max-width:100%"><table><thead><tr><th style="position:sticky;left:0;background:var(--panel);z-index:2">Cor</th>'
     +mesesJanela.map(m=>'<th>'+mesBR(m)+'</th>').join('')+'<th>Total</th></tr></thead><tbody>';
   listaCores.forEach((cor,i)=>{
@@ -930,7 +962,8 @@ function modalMatMes(fam){
     +mesesJanela.map(m=>{const v=listaCores.reduce((s,c)=>s+(cores[c].porMes[m]||0),0);return '<td>'+(v>0?fmt(v):'–')+'</td>'}).join('')
     +'<td>'+fmt(totGeral)+'</td></tr>';
   h+='</tbody></table></div><div style="margin-top:8px;color:var(--tx2);font-size:11px">Em branco = sem venda naquele mês</div>';
-  openModal(fam+' — venda por cor, mês a mês', listaCores.length+' cores · desde '+mesBR(inicio)+' (1º mês com atividade)', h);
+  openModal(fam+(corFiltro?' — '+corFiltro:'')+' — venda por cor, mês a mês', (corFiltro?'1 cor filtrada de '+coresDisponiveis.length+' disponíveis':listaCores.length+' cores')+' · desde '+mesBR(inicio)+' (1º mês com atividade)', h);
+  document.getElementById('selMatMesCor').onchange=function(){modalMatMes(fam,this.value)};
   document.querySelectorAll('#mBody [data-coridx]').forEach(el=>{
     el.onclick=(ev)=>{ev.stopPropagation();modalCorPerf(listaCores[+el.getAttribute('data-coridx')],'10')};
   });
@@ -961,6 +994,7 @@ function tbCorPerf(){
 document.getElementById('limCor').onchange=()=>tbCorPerf();
 function corIdxs(cor){const s=new Set();Object.keys(RAW.skus).forEach(fam=>{const o=RAW.skus[fam];if(o&&o[cor])o[cor].forEach(i=>s.add(i))});return [...s].sort()}
 function modalCorPerf(cor,lim){
+  registrarNavegacao('modalCorPerf',[cor,lim]);
   lim=lim||'10';
   const fAll=fatF();
   const f=fAll.filter(r=>r.fam!=='__VAL__'&&r.cor===cor);
@@ -1016,6 +1050,7 @@ function modalCorPerf(cor,lim){
     tb.appendChild(tr)});
 }
 function modalCorMat(cor,lim){
+  registrarNavegacao('modalCorMat',[cor,lim]);
   const fAll=fatF();
   const f=fAll.filter(r=>r.fam!=='__VAL__'&&r.cor===cor);
   const a=amF().filter(r=>r.cor===cor);
@@ -1056,9 +1091,8 @@ document.addEventListener('pointermove',e=>{if(e.pointerType!=='mouse')return;co
   t?tipShow(t,e.clientX,e.clientY):tipHide()});
 window.addEventListener('scroll',tipHide,true);
 </script>
-
 <script src="xlsx.full.min.js"></script>
-<script src="importador.js?v=5"></script>
+<script src="importador.js?v=3"></script>
 <script type="module">
   import { protegerModulo } from "../../module-guard.js";
   protegerModulo("colecoes");

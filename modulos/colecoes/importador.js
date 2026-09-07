@@ -132,7 +132,6 @@
     FATR.forEach(r=>{if(r.qtd>5||r.qtd===0){const fam=r.qtd===0?"__VAL__":r.familia,cor=r.qtd===0?"":r.cor,k=key(r.mes,r.segmento,r.tag,fam,cor,r.representante,r.qtd===0?0:r.bc);inc(fat,k,()=>[0,0],v=>{v[0]+=r.valor;v[1]+=r.qtd})}else{const k=key(r.mes,r.segmento,r.representante);f5.set(k,(f5.get(k)||0)+r.valor)}});
     AMR.forEach(a=>{const k=key(a.mes,a.segmento,a.origem,a.representante,a.tag,a.familia,a.cor,a.status,a.bc);inc(am,k,()=>[0,0,0],v=>{v[0]++;v[1]+=a.qtd;v[2]+=a.duplicado});if(a.status.startsWith("CONV")&&a.dias>=0){const l=key(a.mes,a.segmento,a.origem,a.representante,a.tag,faixa(a.dias));inc(lt,l,()=>[0,0],v=>{v[0]++;v[1]+=a.dias})}if(orf.has(a.cliente)){const o=key(a.cliente,a.mes,a.segmento,a.tag,a.representante,a.origem);inc(orfrows,o,()=>[0,0],v=>{v[0]++;v[1]+=a.qtd})}});
     const skus={};codInfo.forEach(info=>{skus[info.fam]??={};skus[info.fam][info.cor]=[...new Set([...(skus[info.fam][info.cor]||[]),...[...info.cols].map(c=>ORDEM.indexOf(c))])].sort()});nameCols.forEach((cols,k)=>{const [fam,cor]=JSON.parse(k);skus[fam]??={};skus[fam][cor]=[...new Set([...(skus[fam][cor]||[]),...[...cols].map(c=>ORDEM.indexOf(c))])].sort()});
-    const datasFaturamento=FATR.map(r=>r.data).filter(Boolean).sort((a,b)=>a-b);
     return {anchors,skus,
       fat:[...fat].map(([k,v])=>[...JSON.parse(k),Math.round(v[0]*100)/100,Math.round(v[1]*10)/10]).sort(),
       f5:[...f5].map(([k,v])=>[...JSON.parse(k),Math.round(v*100)/100]).sort(),
@@ -140,9 +139,7 @@
       lt:[...lt].map(([k,v])=>[...JSON.parse(k),v[0],v[1]]).sort(),
       orfrows:[...orfrows].map(([k,v])=>[...JSON.parse(k),v[0],Math.round(v[1]*10)/10,0]).sort(),stk,
       det:AMR.map(a=>[ymd(a.data),a.segmento,a.origem,a.representante,a.tag,a.cliente.slice(0,40),a.familia,a.cor,a.status,Math.round(a.qtd*10)/10,a.dias]),
-      venddet:FATR.filter(r=>r.qtd>5).map(r=>[r.mes,r.segmento,r.tag,r.representante,r.familia,r.cor,r.razao,Math.round(r.qtd*10)/10,Math.round(r.valor*100)/100]),duppares,
-      primeira_data_faturamento:datasFaturamento.length?datasFaturamento[0].toLocaleDateString("pt-BR"):"–",
-      ultima_data_faturamento:datasFaturamento.length?datasFaturamento.at(-1).toLocaleDateString("pt-BR"):"–"};
+      venddet:FATR.filter(r=>r.qtd>5).map(r=>[r.mes,r.segmento,r.tag,r.representante,r.familia,r.cor,r.razao,Math.round(r.qtd*10)/10,Math.round(r.valor*100)/100]),duppares};
   }
 
   function aplicar(novo) {
@@ -155,16 +152,10 @@
     DET.splice(0,DET.length,...RAW.det.map(r=>({d:r[0],mes:r[0].slice(0,7),seg:r[1],orig:r[2],rep:r[3],tag:r[4],cli:r[5],fam:r[6],cor:r[7],st:r[8],q:r[9],dias:r[10]})));
     VD.splice(0,VD.length,...RAW.venddet.map(r=>({mes:r[0],seg:r[1],tag:r[2],rep:r[3],fam:r[4],cor:r[5],raz:r[6],q:r[7],val:r[8]})));
     MESES.splice(0,MESES.length,...[...new Set([...FAT.map(r=>r.mes),...AM.map(r=>r.mes)])].sort());REPS.splice(0,REPS.length,...[...new Set([...AM.map(r=>r.rep),...FAT.map(r=>r.rep)])].sort());
-    // Não substitua estes Sets: os botões de filtro mantêm referência a eles.
-    // Apenas renovar o conteúdo preserva os eventos depois da importação.
-    F.ini=MESES[0];F.fim=MESES.at(-1);F.rep="";
-    F.segs.clear();SEGS.forEach(s=>F.segs.add(s));
-    F.tags.clear();TAGS.forEach(t=>F.tags.add(t));
-    F.origs.clear();ORIG.forEach(o=>F.origs.add(o));
+    F.ini=MESES[0];F.fim=MESES.at(-1);F.rep="";F.segs=new Set(SEGS);F.tags=new Set(TAGS);F.origs=new Set(ORIG);
     selI.innerHTML="";selF.innerHTML="";MESES.forEach(m=>{selI.add(new Option(mesBR(m),m));selF.add(new Option(mesBR(m),m))});selI.value=F.ini;selF.value=F.fim;
     repSel.innerHTML='<option value="">Todos</option>';REPS.forEach(r=>repSel.add(new Option(r,r)));
-    BC=false;document.querySelectorAll('#bcChips .chip').forEach(x=>x.classList.toggle('on',x.dataset.k==='bcfalse'));
-    document.getElementById("periodoNota").textContent=`Base importada: amostras de ${mesBR(MESES[0])} a ${mesBR(MESES.at(-1))} · faturamento até ${RAW.ultima_data_faturamento||"–"} · segmentos STK (Grupo 39) / Beira Rio / Outros`;
+    document.getElementById("periodoNota").textContent=`Base importada: amostras de ${mesBR(MESES[0])} a ${mesBR(MESES.at(-1))} · segmentos STK (Grupo 39) / Beira Rio / Outros`;
     syncChips();render();
   }
 
@@ -177,6 +168,5 @@
   window.__processarColecoes = processar;
   const input=document.getElementById("arquivoColecoes"),btn=document.getElementById("btnImportarColecoes"),status=document.getElementById("statusImportacao");
   btn.addEventListener("click",()=>input.click());
-  input.addEventListener("change",async()=>{const file=input.files?.[0];if(!file)return;btn.disabled=true;const set=t=>{status.textContent=t;status.hidden=false};try{set("Lendo planilha…");await new Promise(requestAnimationFrame);const wb=XLSX.read(await file.arrayBuffer(),{type:"array",cellDates:true});const obrig=["AMOSTRAS","ESTOQUE","Faturamento"];const faltam=obrig.filter(n=>!wb.SheetNames.some(s=>nrm(s)===nrm(n)));if(faltam.length)throw new Error("Abas não encontradas: "+faltam.join(", "));const novo=await processar(wb,set);if(!novo.fat.length&&!novo.am.length)throw new Error("A planilha foi lida, mas não gerou dados. Confira os cabeçalhos e o conteúdo das abas.");aplicar(novo);await salvarBase(novo);set(`Planilha importada: ${novo.fat.length.toLocaleString("pt-BR")} grupos de vendas e ${novo.am.length.toLocaleString("pt-BR")} grupos de amostras`);setTimeout(()=>status.hidden=true,7000)}catch(e){console.error(e);set("Erro: "+e.message);alert("Não foi possível importar a planilha.\n\n"+e.message)}finally{btn.disabled=false;input.value=""}});
-  recuperarBase().then(dados=>{if(dados){aplicar(dados);status.textContent="Última planilha importada carregada";status.hidden=false;setTimeout(()=>status.hidden=true,3000)}}).catch(console.warn);
+  input.addEventListener("change",async()=>{const file=input.files?.[0];if(!file)return;btn.disabled=true;const set=t=>{status.textContent=t;status.hidden=false};try{set("Lendo planilha…");const wb=XLSX.read(await file.arrayBuffer(),{type:"array",cellDates:true});const obrig=["AMOSTRAS","ESTOQUE","Faturamento"];const faltam=obrig.filter(n=>!wb.SheetNames.some(s=>nrm(s)===nrm(n)));if(faltam.length)throw new Error("Abas não encontradas: "+faltam.join(", "));const novo=await processar(wb,set);aplicar(novo);set("Planilha importada com sucesso");setTimeout(()=>status.hidden=true,5000)}catch(e){console.error(e);set("Erro: "+e.message);alert("Não foi possível importar a planilha.\n\n"+e.message)}finally{btn.disabled=false;input.value=""}});
 })();
