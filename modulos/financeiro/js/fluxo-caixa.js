@@ -63,7 +63,7 @@ function atualizarFluxoCaixa(lancamentos) {
 
     fluxoMovimentacoes =
         fluxoLancamentos
-            .map(criarMovimentacaoFluxo)
+            .flatMap(criarMovimentacoesFluxo)
             .filter(Boolean);
 
     preencherLocaisFluxo();
@@ -74,19 +74,7 @@ function atualizarFluxoCaixa(lancamentos) {
     aplicarFiltrosFluxoCaixa();
 }
 
-function criarMovimentacaoFluxo(item) {
-    const realizado =
-        Boolean(item.pago);
-
-    const data =
-        realizado
-            ? item.dataPagamento
-            : item.vencimento;
-
-    if (!(data instanceof Date)) {
-        return null;
-    }
-
+function criarMovimentacoesFluxo(item) {
     const tipo =
         item.tipoCadastro === "cliente"
             ? "entrada"
@@ -95,36 +83,107 @@ function criarMovimentacaoFluxo(item) {
                 : "";
 
     if (!tipo) {
-        return null;
+        return [];
     }
 
-    const saldoAberto =
+    const valorDocumento =
         Math.max(
             0,
-            Number(item.valorDocumento || 0) -
+            Number(item.valorDocumento || 0)
+        );
+
+    const valorPagoInformado =
+        Math.max(
+            0,
             Number(item.valorLiquidoPago || 0)
         );
 
-    const valor =
-        realizado
+    /*
+     * O relatório financeiro pode ter um título parcialmente liquidado.
+     * Nesse caso o mesmo documento precisa aparecer em dois cenários:
+     * - realizado: o que efetivamente foi pago/recebido;
+     * - previsto: o saldo que ainda permanece em aberto.
+     *
+     * A versão anterior criava apenas UM movimento por título. Como o campo
+     * `pago` fica verdadeiro quando existe qualquer valor liquidado, o saldo
+     * remanescente desaparecia do cenário "Somente previsto".
+     */
+    const valorRealizado =
+        item.dataPagamento instanceof Date
             ? Number(
-                item.valorLiquidoPago ||
-                item.valorDocumento ||
-                0
+                valorPagoInformado ||
+                (item.pago ? valorDocumento : 0)
             )
-            : saldoAberto;
+            : 0;
 
-    if (!(valor > 0)) {
-        return null;
+    const saldoPrevisto =
+        item.pago && valorPagoInformado <= 0
+            ? 0
+            : Math.max(
+                0,
+                valorDocumento -
+                valorPagoInformado
+            );
+
+    /*
+     * Para previsão, Dt.flx.cx é a data própria do fluxo de caixa do SIGER.
+     * Quando ela não vier preenchida, o vencimento continua como fallback.
+     */
+    const dataPrevista =
+        item.dataFluxo instanceof Date
+            ? item.dataFluxo
+            : item.vencimento;
+
+    const movimentos = [];
+
+    if (
+        item.dataPagamento instanceof Date &&
+        valorRealizado > 0
+    ) {
+        movimentos.push(
+            montarMovimentacaoFluxo(
+                item,
+                tipo,
+                "realizado",
+                item.dataPagamento,
+                valorRealizado,
+                `${item.id || "linha"}-realizado`
+            )
+        );
     }
 
+    if (
+        dataPrevista instanceof Date &&
+        saldoPrevisto > 0
+    ) {
+        movimentos.push(
+            montarMovimentacaoFluxo(
+                item,
+                tipo,
+                "previsto",
+                dataPrevista,
+                saldoPrevisto,
+                `${item.id || "linha"}-previsto`
+            )
+        );
+    }
+
+    return movimentos;
+}
+
+function montarMovimentacaoFluxo(
+    item,
+    tipo,
+    cenario,
+    data,
+    valor,
+    id
+) {
     return {
-        id: item.id,
+        id,
+        idLancamento: item.id,
         data,
-        cenario:
-            realizado
-                ? "realizado"
-                : "previsto",
+        cenario,
         tipo,
         valor,
         impacto:
@@ -138,6 +197,8 @@ function criarMovimentacaoFluxo(item) {
             item.documento || "",
         vencimento:
             item.vencimento,
+        dataFluxo:
+            item.dataFluxo,
         dataPagamento:
             item.dataPagamento,
         local:
@@ -152,7 +213,9 @@ function criarMovimentacaoFluxo(item) {
             item.descricaoTipoDocumento ||
             "",
         situacao:
-            item.situacao
+            cenario === "previsto"
+                ? (item.atrasado ? "atrasado" : "aberto")
+                : item.situacao
     };
 }
 

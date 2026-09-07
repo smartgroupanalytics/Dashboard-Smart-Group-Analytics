@@ -7,6 +7,7 @@ const CHAVE_SALDOS_DISPONIVEIS =
 
 let bancoDetalheAtual = null;
 const saldosDisponiveisAtuais = new Map();
+const saldosInvestimentosAtuais = new Map();
 
 function configurarPainelBanco() {
     const painel =
@@ -192,7 +193,7 @@ function renderizarBancos(listaBancos = bancosFinanceiros) {
 
 
             <div class="banco-saldo">
-                <span>Saldo disponível</span>
+                <span>Saldo caixa</span>
                 <strong data-saldo-banco="${escaparHtml(obterChaveBancoSaldo(banco))}">${formatarMoeda(saldosDisponiveisAtuais.get(obterChaveBancoSaldo(banco)) || 0)}</strong>
             </div>
 
@@ -213,7 +214,17 @@ function renderizarBancos(listaBancos = bancosFinanceiros) {
 
     const soma =
         listaBancos.reduce(
-            (total, banco) => total + Number(saldosDisponiveisAtuais.get(obterChaveBancoSaldo(banco)) || 0),
+            (total, banco) => {
+                const chave = obterChaveBancoSaldo(banco);
+                const saldoCaixa = Number(
+                    saldosDisponiveisAtuais.get(chave) || 0
+                );
+                const saldoInvestimento = Number(
+                    saldosInvestimentosAtuais.get(chave) || 0
+                );
+
+                return total + saldoCaixa + saldoInvestimento;
+            },
             0
         );
 
@@ -232,28 +243,118 @@ function renderizarBancos(listaBancos = bancosFinanceiros) {
 
 async function carregarSaldosDisponiveisGerais(listaBancos = bancosFinanceiros) {
     await Promise.all(listaBancos.map(async (banco) => {
+        const chaveBanco = obterChaveBancoSaldo(banco);
+
         try {
             const registros = await obterSaldosBanco(banco);
             const ultimo = registros[registros.length - 1];
-            saldosDisponiveisAtuais.set(obterChaveBancoSaldo(banco), Number(ultimo?.valor || 0));
+            saldosDisponiveisAtuais.set(
+                chaveBanco,
+                Number(ultimo?.valor || 0)
+            );
         } catch (erro) {
-            console.warn("Saldo disponível não carregado:", banco.nome, erro);
+            console.warn("Saldo caixa não carregado:", banco.nome, erro);
+        }
+
+        if (!bancoPossuiInvestimento(banco)) {
+            saldosInvestimentosAtuais.delete(chaveBanco);
+            return;
+        }
+
+        try {
+            const registrosInvestimento =
+                await obterSaldosBanco(
+                    bancoInvestimentoVirtual(banco)
+                );
+
+            const ultimoInvestimento =
+                registrosInvestimento[
+                    registrosInvestimento.length - 1
+                ];
+
+            saldosInvestimentosAtuais.set(
+                chaveBanco,
+                Number(ultimoInvestimento?.valor || 0)
+            );
+        } catch (erro) {
+            saldosInvestimentosAtuais.set(chaveBanco, 0);
+            console.warn(
+                "Saldo de investimento não carregado:",
+                banco.nome,
+                erro
+            );
         }
     }));
+
     listaBancos.forEach((banco) => {
-        document.querySelectorAll(`[data-saldo-banco="${obterChaveBancoSaldo(banco)}"]`)
-            .forEach((el) => el.textContent = formatarMoeda(saldosDisponiveisAtuais.get(obterChaveBancoSaldo(banco)) || 0));
+        document.querySelectorAll(
+            `[data-saldo-banco="${obterChaveBancoSaldo(banco)}"]`
+        ).forEach((el) => {
+            el.textContent = formatarMoeda(
+                saldosDisponiveisAtuais.get(
+                    obterChaveBancoSaldo(banco)
+                ) || 0
+            );
+        });
     });
+
     atualizarSaldoDisponivelGeral(listaBancos);
 }
 
 function atualizarSaldoDisponivelGeral(listaBancos) {
-    const selecionados = typeof bancosSelecionadosNoFiltro === "function" ? bancosSelecionadosNoFiltro() : null;
-    const base = Array.isArray(listaBancos) ? listaBancos : bancosFinanceiros.filter((banco) => !selecionados || selecionados.has(banco.id));
-    const total = base.reduce((soma, banco) => soma + Number(saldosDisponiveisAtuais.get(obterChaveBancoSaldo(banco)) || 0), 0);
-    preencherTexto("kpiSaldoDisponivelGeral", formatarMoeda(total));
-    preencherTexto("saldoBancarioTotal", formatarMoeda(total));
-    preencherTexto("legendaSaldoDisponivelGeral", `${base.length} banco${base.length === 1 ? "" : "s"} selecionado${base.length === 1 ? "" : "s"}`);
+    const selecionados =
+        typeof bancosSelecionadosNoFiltro === "function"
+            ? bancosSelecionadosNoFiltro()
+            : null;
+
+    const base = Array.isArray(listaBancos)
+        ? listaBancos
+        : bancosFinanceiros.filter(
+            (banco) =>
+                !selecionados ||
+                selecionados.has(banco.id)
+        );
+
+    const totalCaixa = base.reduce(
+        (soma, banco) =>
+            soma + Number(
+                saldosDisponiveisAtuais.get(
+                    obterChaveBancoSaldo(banco)
+                ) || 0
+            ),
+        0
+    );
+
+    const totalInvestimentos = base.reduce(
+        (soma, banco) =>
+            soma + Number(
+                saldosInvestimentosAtuais.get(
+                    obterChaveBancoSaldo(banco)
+                ) || 0
+            ),
+        0
+    );
+
+    const total =
+        totalCaixa +
+        totalInvestimentos;
+
+    preencherTexto(
+        "kpiSaldoDisponivelGeral",
+        formatarMoeda(total)
+    );
+
+    preencherTexto(
+        "saldoBancarioTotal",
+        formatarMoeda(total)
+    );
+
+    preencherTexto(
+        "legendaSaldoDisponivelGeral",
+        totalInvestimentos > 0
+            ? `${base.length} banco${base.length === 1 ? "" : "s"} selecionado${base.length === 1 ? "" : "s"} • inclui ${formatarMoeda(totalInvestimentos)} em investimentos`
+            : `${base.length} banco${base.length === 1 ? "" : "s"} selecionado${base.length === 1 ? "" : "s"}`
+    );
 }
 
 function criarLogoBanco(banco, tamanho = "normal") {
@@ -591,6 +692,7 @@ async function salvarSaldoInvestimentoAtual() {
         await window.financeiroSaldosFirestore.salvarSaldoDisponivel({ bancoId: virtual.id, bancoNome: virtual.nome, semana: semana.chave, rotuloSemana: semana.rotulo, valor });
     } else salvarSaldoDisponivelLocal(virtual.id, semana, valor);
     await atualizarPainelSaldoInvestimento(bancoDetalheAtual);
+    await carregarSaldosDisponiveisGerais(bancosFinanceiros);
 }
 
 async function limparSaldoInvestimentoAtual() {
@@ -601,6 +703,7 @@ async function limparSaldoInvestimentoAtual() {
     if (window.financeiroSaldosFirestore?.excluirSaldoDisponivel) await window.financeiroSaldosFirestore.excluirSaldoDisponivel(virtual.id, semana.chave);
     else excluirSaldoDisponivelLocal(virtual.id, semana.chave);
     await atualizarPainelSaldoInvestimento(bancoDetalheAtual);
+    await carregarSaldosDisponiveisGerais(bancosFinanceiros);
 }
 
 function formatarDataSaldo(registro) {
