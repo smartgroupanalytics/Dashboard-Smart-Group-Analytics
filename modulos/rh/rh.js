@@ -374,9 +374,13 @@ function renderizarAlertasIntegridade() {
     `${alertas.length} conflito(s) podem impedir ou substituir o cadastro correto.`;
 
   elementos.listaAlertasIntegridade.innerHTML = alertas.map(alerta => {
-    const identificador = alerta.documentoId
-      ? `<span class="alerta-identificador">Matrícula/ID: ${escaparHtml(alerta.documentoId)}</span>`
-      : "";
+    const conflitoDeNome = alerta.tipo === "nome_duplicado";
+    const matricula = alerta.matriculaNova || alerta.documentoId || "";
+    const identificador = conflitoDeNome
+      ? '<span class="alerta-identificador">NOME DUPLICADO</span>'
+      : matricula
+        ? `<span class="alerta-identificador">MATRÍCULA: ${escaparHtml(matricula)}</span>`
+        : '<span class="alerta-identificador">IDENTIFICADOR DUPLICADO</span>';
     const nomes = [alerta.nomeExistente, alerta.nomeNovo].filter(Boolean).join(" × ");
     const arquivos = [alerta.arquivoExistente, alerta.arquivoNovo].filter(Boolean).join(" × ");
     const localizar = alerta.nomeExistente || alerta.nomeNovo || "";
@@ -1244,7 +1248,7 @@ function criarIdColaborador(item) {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
 
-  return (cpf || matricula || nome || `colaborador-${Date.now()}`).slice(0, 120);
+  return (matricula || cpf || nome || `colaborador-${Date.now()}`).slice(0, 120);
 }
 
 function deduplicarColaboradores(lista) {
@@ -1259,7 +1263,7 @@ function deduplicarColaboradores(lista) {
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/^-+|-+$/g, "");
 
-    const chave = cpf || matricula || nome || item.id;
+    const chave = matricula || cpf || nome || item.id;
     const atual = mapa.get(chave);
 
     if (!atual) {
