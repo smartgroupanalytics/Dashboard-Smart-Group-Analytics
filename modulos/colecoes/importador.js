@@ -7,6 +7,7 @@
   const REP_FIX = { CRIS: "CRISTIANO", "": "SEM REP", COMPOR: "TELEVENDAS", OSCAR: "ONE WAY" };
   const CORES_EXTRAS = "BRANCO OFF|MOCCA|AREIA|CAMEL|TERRACOTA|OSTRA|VERMELHO|CHERRY|CHOCOLATE|AVELA|ROSA|OLIVE|DOURADO|PRATA|BRONZE|OURO ROSADO|VERDE LUNA|MANTEIGA|MARINHO|MOSTARDA|PINK|CARAMELO|FENDI|GELO|VINHO|GRAFITE|CHUMBO|AZUL|VERDE|AMARELO|LARANJA|LILAS|ROXO|VIOLETA|SALMAO|COBRE|ONIX|PEROLA|CRISTAL|TIFFANY|MARROM|NATURAL|COLONIAL|WHISKY|TABACO|CACAU|CREME|PALHA|RATO|CINZA|BORDO|ROSE|NUDE|PRETO|BRANCO|OFF WHITE|BEGE|VERMELHO RUBY|AZUL SKY|VERDE SKIN|SOLARE|RUBY|PRATA VELHA|OURO VELHO|CHAMPAGNE|OURO LIGHT|LASER PRATA|TITANIO|ROSE GOLD".split("|");
   const TERMOS_TECNICOS = new Set(["PU","PVC","MM","DUBLADO","DUBL","REP","PRINT"]);
+  const GRAFIA_BASE = new Set(typeof RAW!=="undefined"&&Array.isArray(RAW.orfrows)?RAW.orfrows.filter(r=>r[8]).map(r=>r[0]):[]);
 
   const nrm = v => String(v ?? "").trim().toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/(\w)-(\w)/g, "$1$2").replace(/[^A-Z0-9 ]/g, " ").replace(/\s+/g, " ").trim();
   const num = v => {
@@ -49,6 +50,19 @@
     return 0;
   }
 
+  function coluna(cabecalhos, ...nomes) {
+    for (const nome of nomes) {
+      const i = cabecalhos.indexOf(nrm(nome));
+      if (i >= 0) return i;
+    }
+    return -1;
+  }
+
+  function validarColunas(indices, aba) {
+    const faltam = Object.entries(indices).filter(([,i])=>i<0).map(([nome])=>nome);
+    if (faltam.length) throw new Error(`Colunas não encontradas na aba ${aba}: ${faltam.join(", ")}`);
+  }
+
   function mapearNomes(nomes, razoes) {
     const rt = new Map(razoes.map(r => [r, new Set(tokens(r))]));
     const rc = new Map(razoes.map(r => [r, concat(r)]));
@@ -70,7 +84,7 @@
     const base=String(desc??"").toUpperCase().replace(/\(.*?\)/g,"");
     const limpo=nrm(base).split(" ").filter(t=>!/^\d+(MM|M)?$/.test(t)&&!TERMOS_TECNICOS.has(t)).join(" ");
     let cor="";
-    for (const c of cores) { if(limpo===c) break; if(limpo.endsWith(" "+c)){cor=c;break} }
+    for(const c of cores){if(limpo===c)break;if(limpo.endsWith(" "+c)){cor=c;break}}
     const fam=cor?limpo.slice(0,-cor.length).trim():limpo;
     return [fam||limpo,cor];
   }
@@ -83,7 +97,8 @@
     ];
     for (const [aba,col] of abas) {
       const r=linhas(wb,aba); if(!r.length) continue; const hi=cabecalho(r,4); const h=r[hi].map(nrm);
-      const fi=h.indexOf("FAMILIA"), ci=h.indexOf("COR"), pi=h.includes("CODIGO")?h.indexOf("CODIGO"):h.indexOf("ITEM");
+      const fi=coluna(h,"FAMILIA"), ci=coluna(h,"COR 2","COR"), pi=coluna(h,"CODIGO","ITEM","PRODUTO");
+      validarColunas({familia:fi,cor:ci,codigo:pi},aba);
       for(let i=hi+1;i<r.length;i++){
         if(!r[i][fi]||!r[i][ci])continue; const fam=nrm(r[i][fi]),cor=nrm(r[i][ci]),cod=Math.trunc(num(r[i][pi]));
         if(!nameCols.has(key(fam,cor)))nameCols.set(key(fam,cor),new Set()); nameCols.get(key(fam,cor)).add(col);
@@ -95,13 +110,18 @@
     const cores=[...new Set([...CORES_EXTRAS,...[...nameCols.keys()].map(k=>JSON.parse(k)[1])])].map(nrm).sort((a,b)=>b.length-a.length);
     progresso("Lendo faturamento…");
     const fr=linhas(wb,"Faturamento"), FATR=[], codCliRaz=new Map();
-    for(let i=8;i<fr.length;i++){
-      const row=fr[i], de=asDate(row[0]), df=asDate(row[1]); if(!de&&!df||!row[4])continue;
-      const representante=rep(row[17]);if(representante==="FABIO")continue; const dt=df||de, raz=String(row[16]??"").trim();
-      const codCli=row[15]!=null?Math.trunc(num(row[15])):null;if(codCli!=null&&raz)codCliRaz.set(codCli,raz);
-      const seg=nrm(raz).includes("BEIRA RIO")?"BEIRA RIO":num(row[5])===39?"STK":"OUTROS", cod=Math.trunc(num(row[3]));
-      const mc=codInfo.get(cod);const [fam,cor]=mc?[mc.fam,mc.cor]:parseMaterial(row[4],cores);const tm=tagMaterial(cod,fam,cor);
-      FATR.push({data:dt,mes:mes(dt),codigo:cod,familia:fam,cor,tag:seg==="BEIRA RIO"?"BEIRA RIO":seg==="STK"?tm:"FORA DE COLEÇÃO",bc:seg==="BEIRA RIO"&&tm==="CARRY-OVER"?1:0,segmento:seg,representante,razao:raz,codCliente:codCli,qtd:num(row[9]),valor:num(row[12])});
+    const fhi=cabecalho(fr,12), fh=(fr[fhi]||[]).map(nrm);
+    const fConstr=coluna(fh,"CONSTR"), fCorDescricao=fh.findIndex((v,i)=>i>fConstr&&v==="DESCRICAO");
+    const fc={de:coluna(fh,"DT ENT ITEM"),df:coluna(fh,"DT FATURAM"),cod:coluna(fh,"PRODUTO","ITEM"),desc:coluna(fh,"DESC COMPLETA","DESCRICAO COMPLETA"),corRelatorio:coluna(fh,"COR 2","COR"),corCadastro:fCorDescricao>=0?fCorDescricao:coluna(fh,"COR 2","COR"),grupo:coluna(fh,"GRUPO"),qtd:coluna(fh,"QTD ITEM FT","QTD ITEM/FAT"),valor:coluna(fh,"VALOR FAT VALOR IPI VALOR FRETE"),cliente:coluna(fh,"CLIENTE"),razao:coluna(fh,"RAZAO SOCIAL"),rep:coluna(fh,"ABREVIACAO")};
+    validarColunas(fc,"Faturamento");
+    for(let i=fhi+1;i<fr.length;i++){
+      const row=fr[i], de=asDate(row[fc.de]), df=asDate(row[fc.df]); if((!de&&!df)||!row[fc.desc])continue;
+      const representante=rep(row[fc.rep]);if(representante==="FABIO")continue; const dt=df||de, raz=String(row[fc.razao]??"").trim();
+      const codCli=row[fc.cliente]!=null?Math.trunc(num(row[fc.cliente])):null;if(codCli!=null&&raz)codCliRaz.set(codCli,raz);
+      const seg=nrm(raz).includes("BEIRA RIO")?"BEIRA RIO":num(row[fc.grupo])===39?"STK":"OUTROS", cod=Math.trunc(num(row[fc.cod]));
+      const mc=codInfo.get(cod),pc=mc?[mc.fam,mc.cor]:parseMaterial(row[fc.desc],cores),fam=pc[0];
+      const cor=mc?pc[1]:(String(row[fc.corCadastro]??"").trim()?nrm(row[fc.corRelatorio]):pc[1]);const tm=tagMaterial(cod,fam,cor);
+      FATR.push({data:dt,mes:mes(dt),codigo:cod,familia:fam,cor,tag:seg==="BEIRA RIO"?"BEIRA RIO":seg==="STK"?tm:"FORA DE COLEÇÃO",bc:seg==="BEIRA RIO"&&tm==="CARRY-OVER"?1:0,segmento:seg,representante,razao:raz,codCliente:codCli,qtd:num(row[fc.qtd]),valor:num(row[fc.valor])});
     }
     const vendasCod=new Map(),vendasRaz=new Map();
     FATR.filter(x=>x.qtd>5).forEach(x=>{if(x.codCliente!=null){if(!vendasCod.has(x.codCliente))vendasCod.set(x.codCliente,[]);vendasCod.get(x.codCliente).push([x.data,x.codigo,x.familia])}if(!vendasRaz.has(x.razao))vendasRaz.set(x.razao,[]);vendasRaz.get(x.razao).push([x.data,x.codigo,x.familia])});
@@ -112,7 +132,7 @@
     for(let i=1;i<ar.length;i++){
       const row=ar[i],cli=String(row[ai.CLIENTE]??"").trim(),prod=row[ai.PRODUTO],dt=asDate(row[ai.DATA]);if(!cli||!prod||!dt)continue;
       const representante=rep(row[ai.REPRESENTANTE]);if(representante==="FABIO")continue;let raw=row[ai["COD PRODUTO"]];if(raw instanceof Date)raw=excelSerial(raw);const cod=Math.trunc(num(raw));
-      const mc=codInfo.get(cod),fam=mc?mc.fam:nrm(prod),cor=mc?mc.cor:nrm(row[ai.COR]||"SEM COR"),seg=nrm(cli).includes("BEIRA RIO")?"BEIRA RIO":codInfo.has(cod)||famCols.has(fam)?"STK":"OUTROS",tm=tagMaterial(cod,fam,cor),tag=seg==="BEIRA RIO"?"BEIRA RIO":seg==="STK"?tm:"FORA DE COLEÇÃO";
+      const mc=codInfo.get(cod),fam=mc?mc.fam:nrm(prod),cor=mc?mc.cor:nrm(row[coluna(ah,"COR 2","COR")]||"SEM COR"),seg=nrm(cli).includes("BEIRA RIO")?"BEIRA RIO":codInfo.has(cod)||famCols.has(fam)?"STK":"OUTROS",tm=tagMaterial(cod,fam,cor),tag=seg==="BEIRA RIO"?"BEIRA RIO":seg==="STK"?tm:"FORA DE COLEÇÃO";
       const codCli=Number.isInteger(row[ai["COD CLIENTE"]])?row[ai["COD CLIENTE"]]:null;let match=null,vl=[];
       if(codCli!=null&&(vendasCod.has(codCli)||codCliRaz.has(codCli))){match=["codigo",codCli];vl=vendasCod.get(codCli)||[]}else if(mapa.has(cli)){match=["razao",mapa.get(cli)];vl=mapa.get(cli).flatMap(r=>vendasRaz.get(r)||[])}
       const [status,dias]=match?casar(vl,cod,fam,dt):["SEM_FAT",-1];const ex=codInfo.has(cod)&&(nameCols.get(key(fam,cor))||codInfo.get(cod).cols).size===1;
@@ -124,22 +144,24 @@
     AMR.filter(a=>a.origem==="FATURADO").forEach(a=>{const k=key(a.codCliente?"c"+a.codCliente:"n"+a.cliente,a.familia);const b=(most.get(k)||[]).find(m=>Math.abs((a.data-m.data)/86400000)<=1);if(b){a.duplicado=1;duppares.push([a.cliente,a.familia,b.cor,a.cor,ymd(b.data),ymd(a.data),Math.abs(Math.round((a.data-b.data)/86400000)),b.representante,a.representante,b.qtd,a.qtd])}});
     const anchors={};ORDEM.forEach(c=>{const counts=new Map();AMR.filter(a=>a.exclusivo&&a.tag===c).forEach(a=>counts.set(a.mes,(counts.get(a.mes)||0)+1));let ac=0;for(const m of [...counts.keys()].sort()){ac+=counts.get(m);if(ac>=5){anchors[c]=m;break}}if(!anchors[c])anchors[c]="2025-01"});
     const comprou=new Map();AMR.filter(a=>a.origem==="MOSTRUARIO").forEach(a=>{const k=a.codCliente??a.cliente;if(comprou.has(k))return;comprou.set(k,(a.codCliente!=null&&vendasCod.has(a.codCliente))||(a.match?.[0]==="razao"&&a.match[1].some(r=>vendasRaz.has(r))))});
-    const orf=new Set();AMR.forEach(a=>{if(a.origem==="MOSTRUARIO"){if(!comprou.get(a.codCliente??a.cliente))orf.add(a.cliente)}else if(!vendasCod.has(a.codCliente)&&!vendasRaz.has(a.cliente))orf.add(a.cliente)});
+    const semVenda=a=>a.origem==="MOSTRUARIO"?!comprou.get(a.codCliente??a.cliente):!vendasCod.has(a.codCliente)&&!vendasRaz.has(a.cliente);
     const sr=linhas(wb,"ESTOQUE"), stk=[]; // coluna D (índice 3) é COR, mesmo sem cabeçalho
-    for(let i=7;i<sr.length;i++){const row=sr[i];if(!row[0])continue;const cod=Math.trunc(num(row[0])),mc=codInfo.get(cod),pc=mc?[mc.fam,mc.cor]:parseMaterial(row[2],cores),fam=pc[0],cor=nrm(row[3])||pc[1],alt=nrm(row[1]),grupo=Math.trunc(num(row[6]));const tag=alt.includes("BEIRA RIO")?"BEIRA RIO":grupo===39?tagMaterial(cod,fam,cor):"FORA DE COLEÇÃO";stk.push([cod,fam,cor,tag,grupo,Math.round(num(row[4])*10)/10,Math.round(num(row[5])*100)/100])}
+    for(let i=7;i<sr.length;i++){const row=sr[i];if(!row[0])continue;const cod=Math.trunc(num(row[0])),mc=codInfo.get(cod),pc=mc?[mc.fam,mc.cor]:parseMaterial(row[2],cores),fam=pc[0],cor=mc?pc[1]:(nrm(row[3])||pc[1]),alt=nrm(row[1]),grupo=Math.trunc(num(row[6]));const tag=alt.includes("BEIRA RIO")?"BEIRA RIO":grupo===39?tagMaterial(cod,fam,cor):"FORA DE COLEÇÃO";stk.push([cod,fam,cor,tag,grupo,Math.round(num(row[4])*10)/10,Math.round(num(row[5])*100)/100])}
     progresso("Montando indicadores…");
     const fat=new Map(),f5=new Map(),am=new Map(),lt=new Map(),orfrows=new Map();
     FATR.forEach(r=>{if(r.qtd>5||r.qtd===0){const fam=r.qtd===0?"__VAL__":r.familia,cor=r.qtd===0?"":r.cor,k=key(r.mes,r.segmento,r.tag,fam,cor,r.representante,r.qtd===0?0:r.bc);inc(fat,k,()=>[0,0],v=>{v[0]+=r.valor;v[1]+=r.qtd})}else{const k=key(r.mes,r.segmento,r.representante);f5.set(k,(f5.get(k)||0)+r.valor)}});
-    AMR.forEach(a=>{const k=key(a.mes,a.segmento,a.origem,a.representante,a.tag,a.familia,a.cor,a.status,a.bc);inc(am,k,()=>[0,0,0],v=>{v[0]++;v[1]+=a.qtd;v[2]+=a.duplicado});if(a.status.startsWith("CONV")&&a.dias>=0){const l=key(a.mes,a.segmento,a.origem,a.representante,a.tag,faixa(a.dias));inc(lt,l,()=>[0,0],v=>{v[0]++;v[1]+=a.dias})}if(orf.has(a.cliente)){const o=key(a.cliente,a.mes,a.segmento,a.tag,a.representante,a.origem);inc(orfrows,o,()=>[0,0],v=>{v[0]++;v[1]+=a.qtd})}});
+    AMR.forEach(a=>{const k=key(a.mes,a.segmento,a.origem,a.representante,a.tag,a.familia,a.cor,a.status,a.bc);inc(am,k,()=>[0,0,0],v=>{v[0]++;v[1]+=a.qtd;v[2]+=a.duplicado});if(a.status.startsWith("CONV")&&a.dias>=0){const l=key(a.mes,a.segmento,a.origem,a.representante,a.tag,faixa(a.dias));inc(lt,l,()=>[0,0],v=>{v[0]++;v[1]+=a.dias})}if(semVenda(a)){const o=key(a.cliente,a.mes,a.segmento,a.tag,a.representante,a.origem);inc(orfrows,o,()=>[0,0],v=>{v[0]++;v[1]+=a.qtd})}});
     const skus={};codInfo.forEach(info=>{skus[info.fam]??={};skus[info.fam][info.cor]=[...new Set([...(skus[info.fam][info.cor]||[]),...[...info.cols].map(c=>ORDEM.indexOf(c))])].sort()});nameCols.forEach((cols,k)=>{const [fam,cor]=JSON.parse(k);skus[fam]??={};skus[fam][cor]=[...new Set([...(skus[fam][cor]||[]),...[...cols].map(c=>ORDEM.indexOf(c))])].sort()});
+    const datasFat=FATR.map(r=>r.data).filter(Boolean).sort((a,b)=>a-b), br=d=>d?`${String(d.getDate()).padStart(2,"0")}/${String(d.getMonth()+1).padStart(2,"0")}/${d.getFullYear()}`:"";
     return {anchors,skus,
       fat:[...fat].map(([k,v])=>[...JSON.parse(k),Math.round(v[0]*100)/100,Math.round(v[1]*10)/10]).sort(),
       f5:[...f5].map(([k,v])=>[...JSON.parse(k),Math.round(v*100)/100]).sort(),
       am:[...am].map(([k,v])=>[...JSON.parse(k),v[0],Math.round(v[1]*10)/10,v[2]]).sort(),
       lt:[...lt].map(([k,v])=>[...JSON.parse(k),v[0],v[1]]).sort(),
-      orfrows:[...orfrows].map(([k,v])=>[...JSON.parse(k),v[0],Math.round(v[1]*10)/10,0]).sort(),stk,
+      orfrows:[...orfrows].map(([k,v])=>{const p=JSON.parse(k);return [...p,v[0],Math.round(v[1]*10)/10,GRAFIA_BASE.has(p[0])?1:0]}).sort(),stk,
       det:AMR.map(a=>[ymd(a.data),a.segmento,a.origem,a.representante,a.tag,a.cliente.slice(0,40),a.familia,a.cor,a.status,Math.round(a.qtd*10)/10,a.dias]),
-      venddet:FATR.filter(r=>r.qtd>5).map(r=>[r.mes,r.segmento,r.tag,r.representante,r.familia,r.cor,r.razao,Math.round(r.qtd*10)/10,Math.round(r.valor*100)/100]),duppares};
+      venddet:FATR.filter(r=>r.qtd>5).map(r=>[r.mes,r.segmento,r.tag,r.representante,r.familia,r.cor,r.razao,Math.round(r.qtd*10)/10,Math.round(r.valor*100)/100]),duppares,
+      ultima_data_faturamento:br(datasFat.at(-1)),primeira_data_faturamento:br(datasFat[0])};
   }
 
   function aplicar(novo) {
