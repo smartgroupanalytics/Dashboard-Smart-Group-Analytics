@@ -24,7 +24,7 @@ h1 .accent{color:var(--stk)}
 .fgroup label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--tx2)}
 select{background:var(--panel2);color:var(--tx);border:1px solid var(--line);border-radius:6px;padding:5px 8px;font-size:12px}
 .chips{display:flex;gap:6px;flex-wrap:wrap}
-.chip{cursor:pointer;user-select:none;border:1px solid var(--line);border-radius:14px;padding:4px 11px;font-size:11.5px;color:var(--tx2);background:var(--panel2);transition:.15s}
+.chip{appearance:none;font-family:inherit;line-height:normal;cursor:pointer;user-select:none;border:1px solid var(--line);border-radius:14px;padding:4px 11px;font-size:11.5px;color:var(--tx2);background:var(--panel2);transition:.15s}
 .chip.on{color:#0d1117;font-weight:600}
 .chip[data-k="STK"].on{background:var(--stk);border-color:var(--stk)}
 .chip[data-k="BEIRA RIO"].on{background:var(--br);border-color:var(--br)}
@@ -316,18 +316,18 @@ selI.onchange=()=>{F.ini=selI.value;if(F.fim<F.ini){F.fim=F.ini;selF.value=F.fim
 selF.onchange=()=>{F.fim=selF.value;if(F.fim<F.ini){F.ini=F.fim;selI.value=F.ini}render()};
 function chips(el,keys,set){
   el.innerHTML='';
-  keys.forEach(k=>{const c=document.createElement('div');c.className='chip on';c.dataset.k=k;c.textContent=k;if(k==='CARRY-OVER')c.title='Materiais presentes em 2 ou mais coleções (linha contínua)';
-    c.onclick=()=>{
+  keys.forEach(k=>{const c=document.createElement('button');c.type='button';c.className='chip on';c.dataset.k=k;c.textContent=k;c.setAttribute('aria-pressed','true');if(k==='CARRY-OVER')c.title='Materiais presentes em 2 ou mais coleções (linha contínua)';
+    c.addEventListener('click',()=>{
       // Com todos ativos, o primeiro clique passa a filtrar somente o item escolhido.
       // Depois disso, os demais cliques permitem combinar mais de uma opção.
       if(set.size===keys.length){set.clear();set.add(k)}
       else if(set.has(k)){set.delete(k)}else{set.add(k)}
       if(!set.size)keys.forEach(x=>set.add(x));
       syncChips();render()
-    };el.appendChild(c)});
+    });el.appendChild(c)});
 }
-function syncChips(){document.querySelectorAll('#segChips .chip').forEach(c=>c.classList.toggle('on',F.segs.has(c.dataset.k)));
-document.querySelectorAll('#colChips .chip').forEach(c=>c.classList.toggle('on',F.tags.has(c.dataset.k)))}
+function syncChips(){document.querySelectorAll('#segChips .chip').forEach(c=>{const ativo=F.segs.has(c.dataset.k);c.classList.toggle('on',ativo);c.setAttribute('aria-pressed',String(ativo))});
+document.querySelectorAll('#colChips .chip').forEach(c=>{const ativo=F.tags.has(c.dataset.k);c.classList.toggle('on',ativo);c.setAttribute('aria-pressed',String(ativo))})}
 chips(document.getElementById('segChips'),SEGS,F.segs);
 chips(document.getElementById('colChips'),TAGS,F.tags);
 (function(){const el=document.getElementById('origChips');
@@ -1058,7 +1058,7 @@ window.addEventListener('scroll',tipHide,true);
 </script>
 
 <script src="xlsx.full.min.js"></script>
-<script src="importador.js?v=3"></script>
+<script src="importador.js?v=4"></script>
 <script type="module">
   import { protegerModulo } from "../../module-guard.js";
   protegerModulo("colecoes");
