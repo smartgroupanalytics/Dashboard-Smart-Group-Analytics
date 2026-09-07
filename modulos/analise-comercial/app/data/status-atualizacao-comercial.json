@@ -1,8 +1,8 @@
 {
-  "atualizadoEm": "2026-09-07T08:26:37.991Z",
-  "ultimaAtualizacaoValida": "2026-09-07T08:26:37.991Z",
+  "atualizadoEm": "2026-09-07T08:41:25.889Z",
+  "ultimaAtualizacaoValida": "2026-09-07T08:41:25.889Z",
   "status": "ATENCAO",
-  "mensagem": "9 de 9 relatórios atualizados com sucesso. 3 relatório(s) está(ão) atrasado(s).",
+  "mensagem": "9 de 9 relatórios atualizados com sucesso. 2 relatório(s) está(ão) atrasado(s).",
   "modo": "PARCIAL_SEGURO",
   "totalEsperado": 9,
   "totalRecebido": 9,
@@ -25,10 +25,10 @@
     },
     {
       "arquivo": "CONSUMO.xlsx",
-      "status": "ATRASADO",
-      "recebidoEm": "2026-09-04T08:40:19.000Z",
-      "linhasValidas": 1378,
-      "mensagem": "Atualizado com o anexo mais recente disponível, porém atrasado."
+      "status": "OK",
+      "recebidoEm": "2026-09-07T08:40:19.000Z",
+      "linhasValidas": 1380,
+      "mensagem": "Atualizado com sucesso."
     },
     {
       "arquivo": "OP.xlsx",

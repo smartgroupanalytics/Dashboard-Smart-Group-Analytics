@@ -15949,6 +15949,18 @@
   },
   {
     "fonte_comercial": "STK",
+    "cod_prod": "20043",
+    "produto": "20043",
+    "desc_completa": "NAPA METAL LYON GRAFITE - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 100,
+    "dt_movto": "2026-09-04"
+  },
+  {
+    "fonte_comercial": "STK",
     "cod_prod": "20082",
     "produto": "20082",
     "desc_completa": "NAPA BARI CAFE - PU 0.7MM",
@@ -16354,6 +16366,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 198,
     "dt_movto": "2026-09-03"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20100",
+    "produto": "20100",
+    "desc_completa": "NAPA MADRID LIMONCELLO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 396,
+    "dt_movto": "2026-09-04"
   },
   {
     "fonte_comercial": "STK",
