@@ -99,35 +99,44 @@ function criarMovimentacoesFluxo(item) {
         );
 
     /*
-     * O relatório financeiro pode ter um título parcialmente liquidado.
-     * Nesse caso o mesmo documento precisa aparecer em dois cenários:
-     * - realizado: o que efetivamente foi pago/recebido;
-     * - previsto: o saldo que ainda permanece em aberto.
+     * REGRA OFICIAL DO FLUXO DE CAIXA:
      *
-     * A versão anterior criava apenas UM movimento por título. Como o campo
-     * `pago` fica verdadeiro quando existe qualquer valor liquidado, o saldo
-     * remanescente desaparecia do cenário "Somente previsto".
+     * Dt.pgto preenchida  -> REALIZADO
+     * Dt.pgto em branco   -> PREVISTO
+     *
+     * A classificação do cenário NÃO depende mais de `pago` nem de
+     * Vlr.líq.pago. Assim, todo título de CLIENTE sem Dt.pgto alimenta
+     * "Entradas previstas" e todo título de FORNECEDOR sem Dt.pgto
+     * alimenta "Saídas previstas".
+     */
+    const temDataPagamento =
+        item.dataPagamento instanceof Date;
+
+    /*
+     * O valor realizado prioriza Vlr.líq.pago. Se o relatório tiver a
+     * Dt.pgto preenchida mas não trouxer o líquido, usa Vlr.docto.
      */
     const valorRealizado =
-        item.dataPagamento instanceof Date
+        temDataPagamento
             ? Number(
                 valorPagoInformado ||
-                (item.pago ? valorDocumento : 0)
+                valorDocumento
             )
             : 0;
 
-    const saldoPrevisto =
-        item.pago && valorPagoInformado <= 0
-            ? 0
-            : Math.max(
-                0,
-                valorDocumento -
-                valorPagoInformado
-            );
+    /*
+     * Para títulos em aberto (Dt.pgto em branco), o previsto é o valor
+     * integral do documento. Isso segue exatamente a regra solicitada:
+     * a ausência da data de pagamento é o que define o título em aberto.
+     */
+    const valorPrevisto =
+        !temDataPagamento
+            ? valorDocumento
+            : 0;
 
     /*
-     * Para previsão, Dt.flx.cx é a data própria do fluxo de caixa do SIGER.
-     * Quando ela não vier preenchida, o vencimento continua como fallback.
+     * A data que posiciona o previsto no gráfico continua sendo Dt.flx.cx;
+     * quando ela não existir, usamos o Vencimento como alternativa.
      */
     const dataPrevista =
         item.dataFluxo instanceof Date
@@ -137,7 +146,7 @@ function criarMovimentacoesFluxo(item) {
     const movimentos = [];
 
     if (
-        item.dataPagamento instanceof Date &&
+        temDataPagamento &&
         valorRealizado > 0
     ) {
         movimentos.push(
@@ -153,8 +162,9 @@ function criarMovimentacoesFluxo(item) {
     }
 
     if (
+        !temDataPagamento &&
         dataPrevista instanceof Date &&
-        saldoPrevisto > 0
+        valorPrevisto > 0
     ) {
         movimentos.push(
             montarMovimentacaoFluxo(
@@ -162,7 +172,7 @@ function criarMovimentacoesFluxo(item) {
                 tipo,
                 "previsto",
                 dataPrevista,
-                saldoPrevisto,
+                valorPrevisto,
                 `${item.id || "linha"}-previsto`
             )
         );
