@@ -212,8 +212,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-08-31",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -308,18 +308,6 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-08-31",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8013",
-    "produto": "15360",
-    "desc_completa": "LENNY MANTEIGA",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 120,
-    "dt_saida": "2026-08-28",
     "centro_custo": 2,
     "abreviacao": "GRAV"
   },
@@ -356,8 +344,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-01",
-    "centro_custo": 1,
-    "abreviacao": "RECOB"
+    "centro_custo": 3,
+    "abreviacao": "GR 1"
   },
   {
     "fonte_comercial": "STK",
@@ -368,8 +356,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-01",
-    "centro_custo": 1,
-    "abreviacao": "RECOB"
+    "centro_custo": 3,
+    "abreviacao": "GR 1"
   },
   {
     "fonte_comercial": "STK",
@@ -416,8 +404,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-09",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -428,8 +416,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-01",
-    "centro_custo": 1,
-    "abreviacao": "RECOB"
+    "centro_custo": 3,
+    "abreviacao": "GR 1"
   },
   {
     "fonte_comercial": "STK",
@@ -464,8 +452,8 @@
     "subgrupo": 41,
     "qtd_produzir": 600,
     "dt_saida": "2026-09-10",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -476,8 +464,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-09-10",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -487,6 +475,18 @@
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 300,
+    "dt_saida": "2026-09-10",
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8095",
+    "produto": "17231",
+    "desc_completa": "DENVER ESPRESSO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 1000,
     "dt_saida": "2026-09-10",
     "centro_custo": 0,
     "abreviacao": ""
@@ -560,8 +560,8 @@
     "subgrupo": 0,
     "qtd_produzir": 400,
     "dt_saida": "2026-09-11",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -572,8 +572,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-09-11",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -584,8 +584,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1700,
     "dt_saida": "2026-09-11",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -596,7 +596,7 @@
     "subgrupo": 41,
     "qtd_produzir": 100,
     "dt_saida": "2026-09-09",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   }
 ]

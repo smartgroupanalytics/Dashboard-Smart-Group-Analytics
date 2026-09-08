@@ -5312,6 +5312,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 100,
+    "dt_movto": "2026-09-07"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11906",
+    "produto": "11906",
+    "desc_completa": "NAPA MADRID MANTEIGA - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 117,
     "dt_movto": "2026-09-03"
   },

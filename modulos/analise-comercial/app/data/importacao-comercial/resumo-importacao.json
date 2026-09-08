@@ -1,5 +1,5 @@
 {
-  "importadoEm": "2026-09-07T09:11:27.715Z",
+  "importadoEm": "2026-09-08T09:11:29.300Z",
   "pastaEntrada": "/home/runner/work/Dashboard-Smart-Group-Analytics/Dashboard-Smart-Group-Analytics/_automacao/entrada-relatorios",
   "modo": "ATUALIZACAO_PARCIAL_PROTEGIDA",
   "status": "OK",
@@ -11,7 +11,7 @@
       "linhasOriginais": 2451,
       "linhasValidas": 2450,
       "produtosDistintos": 859,
-      "quantidade": 429612.14999999985
+      "quantidade": 429116.64999999985
     },
     "COMPRAS": {
       "arquivo": "COMPRAS.xlsx",
@@ -26,10 +26,10 @@
       "arquivo": "CONSUMO.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 1380,
-      "linhasValidas": 1380,
+      "linhasOriginais": 1381,
+      "linhasValidas": 1381,
       "produtosDistintos": 145,
-      "quantidade": 223550.74
+      "quantidade": 223650.74
     },
     "OP": {
       "arquivo": "OP.xlsx",
@@ -37,8 +37,8 @@
       "linhaCabecalho": 1,
       "linhasOriginais": 50,
       "linhasValidas": 50,
-      "produtosDistintos": 43,
-      "quantidade": 21477
+      "produtosDistintos": 44,
+      "quantidade": 22357
     },
     "VENDAS": {
       "arquivo": "VENDAS.xlsx",
@@ -53,11 +53,11 @@
       "arquivo": "PEDIDOS EM ABERTO.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 326,
-      "linhasValidas": 325,
+      "linhasOriginais": 327,
+      "linhasValidas": 326,
       "produtosDistintos": 213,
-      "quantidade": 39087.89,
-      "valor": 1513139.4199999997,
+      "quantidade": 39094.89,
+      "valor": 1513566.4399999997,
       "pedidosDistintos": 211,
       "clientesDistintos": 51
     },
@@ -65,19 +65,19 @@
       "arquivo": "ESTOQUEBR.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 893,
-      "linhasValidas": 893,
+      "linhasOriginais": 894,
+      "linhasValidas": 894,
       "produtosDistintos": 521,
-      "quantidade": 34700.4
+      "quantidade": 38729.49999999999
     },
     "OPBR": {
       "arquivo": "OPBR.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 51,
-      "linhasValidas": 51,
-      "produtosDistintos": 45,
-      "quantidade": 28185
+      "linhasOriginais": 49,
+      "linhasValidas": 49,
+      "produtosDistintos": 42,
+      "quantidade": 30058
     },
     "VENDASBR": {
       "arquivo": "VENDASBR.xlsx",
