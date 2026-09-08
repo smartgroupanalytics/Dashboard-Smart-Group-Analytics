@@ -377,6 +377,56 @@ function definirPeriodoInicialFluxo() {
     }
 }
 
+function movimentacaoPassaNosFiltrosFluxo(
+    item,
+    {
+        cenario = "consolidado",
+        tipo = "",
+        local = "",
+        inicio = null,
+        fim = null
+    } = {}
+) {
+    if (
+        cenario !== "consolidado" &&
+        item.cenario !== cenario
+    ) {
+        return false;
+    }
+
+    if (tipo && item.tipo !== tipo) {
+        return false;
+    }
+
+    if (local && item.local !== local) {
+        return false;
+    }
+
+    /*
+     * Data inicial e final são inclusivas e consultam exclusivamente o
+     * Vencimento (coluna N), armazenado em item.data. A Dt.pgto não entra na
+     * comparação do período; ela foi usada somente para definir o cenário.
+     */
+    if (
+        !(item.data instanceof Date) ||
+        Number.isNaN(item.data.getTime())
+    ) {
+        return false;
+    }
+
+    const data = inicioDoDia(item.data);
+
+    if (inicio && data < inicio) {
+        return false;
+    }
+
+    if (fim && data > fim) {
+        return false;
+    }
+
+    return true;
+}
+
 function aplicarFiltrosFluxoCaixa() {
     const cenario =
         document.getElementById(
@@ -405,62 +455,17 @@ function aplicarFiltrosFluxoCaixa() {
         );
 
     fluxoFiltrado =
-        fluxoMovimentacoes.filter(
-            (item) => {
-                if (
-                    cenario !==
-                        "consolidado" &&
-                    item.cenario !==
-                        cenario
-                ) {
-                    return false;
+        fluxoMovimentacoes.filter((item) =>
+            movimentacaoPassaNosFiltrosFluxo(
+                item,
+                {
+                    cenario,
+                    tipo,
+                    local,
+                    inicio,
+                    fim
                 }
-
-                if (
-                    tipo &&
-                    item.tipo !== tipo
-                ) {
-                    return false;
-                }
-
-                if (
-                    local &&
-                    item.local !== local
-                ) {
-                    return false;
-                }
-
-                /*
-                 * O período do Fluxo é SEMPRE o Vencimento (coluna N).
-                 * A movimentação já é criada com item.data = vencimento,
-                 * mas mantemos a validação abaixo para impedir que uma data
-                 * inválida faça todo o filtro retornar zero.
-                 */
-                if (
-                    !(item.data instanceof Date) ||
-                    Number.isNaN(item.data.getTime())
-                ) {
-                    return false;
-                }
-
-                const data = inicioDoDia(item.data);
-
-                if (
-                    inicio &&
-                    data < inicio
-                ) {
-                    return false;
-                }
-
-                if (
-                    fim &&
-                    data > fim
-                ) {
-                    return false;
-                }
-
-                return true;
-            }
+            )
         );
 
     fluxoFiltrado.sort(

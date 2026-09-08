@@ -9,6 +9,23 @@ let bancoDetalheAtual = null;
 const saldosDisponiveisAtuais = new Map();
 const saldosInvestimentosAtuais = new Map();
 
+/*
+ * Card independente solicitado para dinheiro em caixa.
+ * Ele reutiliza a mesma gravação/histórico dos bancos, mas não pertence à
+ * lista de contas bancárias e nunca participa do total consolidado do topo.
+ */
+const BANCO_SALDO_CAIXA_MANUAL = Object.freeze({
+    id: "saldo-caixa-manual",
+    nome: "SALDO CAIXA",
+    sigla: "CX",
+    cor: "#1683ff",
+    saldoCaixaIndependente: true,
+    totalRecebido: 0,
+    totalPago: 0,
+    emAberto: 0,
+    emAtraso: 0
+});
+
 function configurarPainelBanco() {
     const painel =
         document.getElementById("painelBanco");
@@ -106,6 +123,13 @@ function abrirDetalhesBanco(banco) {
     preencherTexto(
         "detalheBancoNome",
         banco.nome
+    );
+
+    preencherTexto(
+        "detalheBancoDescricao",
+        banco.saldoCaixaIndependente
+            ? "Valor de caixa informado manualmente"
+            : "Movimentações consolidadas do banco"
     );
 
 
@@ -212,6 +236,10 @@ function renderizarBancos(listaBancos = bancosFinanceiros) {
         grade.appendChild(card);
     });
 
+    grade.appendChild(
+        criarCardSaldoCaixaManual()
+    );
+
     const soma =
         listaBancos.reduce(
             (total, banco) => {
@@ -242,7 +270,12 @@ function renderizarBancos(listaBancos = bancosFinanceiros) {
 }
 
 async function carregarSaldosDisponiveisGerais(listaBancos = bancosFinanceiros) {
-    await Promise.all(listaBancos.map(async (banco) => {
+    const bancosParaCarregar = [
+        ...listaBancos,
+        BANCO_SALDO_CAIXA_MANUAL
+    ];
+
+    await Promise.all(bancosParaCarregar.map(async (banco) => {
         const chaveBanco = obterChaveBancoSaldo(banco);
 
         try {
@@ -256,7 +289,10 @@ async function carregarSaldosDisponiveisGerais(listaBancos = bancosFinanceiros) 
             console.warn("Saldo caixa não carregado:", banco.nome, erro);
         }
 
-        if (!bancoPossuiInvestimento(banco)) {
+        if (
+            banco.saldoCaixaIndependente ||
+            !bancoPossuiInvestimento(banco)
+        ) {
             saldosInvestimentosAtuais.delete(chaveBanco);
             return;
         }
@@ -286,7 +322,7 @@ async function carregarSaldosDisponiveisGerais(listaBancos = bancosFinanceiros) 
         }
     }));
 
-    listaBancos.forEach((banco) => {
+    bancosParaCarregar.forEach((banco) => {
         document.querySelectorAll(
             `[data-saldo-banco="${obterChaveBancoSaldo(banco)}"]`
         ).forEach((el) => {
@@ -299,6 +335,56 @@ async function carregarSaldosDisponiveisGerais(listaBancos = bancosFinanceiros) 
     });
 
     atualizarSaldoDisponivelGeral(listaBancos);
+}
+
+function criarCardSaldoCaixaManual() {
+    const banco = BANCO_SALDO_CAIXA_MANUAL;
+    const chave = obterChaveBancoSaldo(banco);
+    const card = document.createElement("button");
+
+    card.type = "button";
+    card.className = "card-banco card-saldo-caixa-manual";
+    card.setAttribute(
+        "aria-label",
+        "Abrir SALDO CAIXA para informar o valor manualmente"
+    );
+
+    card.innerHTML = `
+        <div class="card-banco-topo">
+            <div class="banco-identidade">
+                <div class="banco-logo">
+                    ${criarLogoBanco(banco)}
+                </div>
+
+                <div>
+                    <h3>SALDO CAIXA</h3>
+                    <p>Valor informado manualmente</p>
+                </div>
+            </div>
+
+            <i class="fa-solid fa-chevron-right card-banco-seta"></i>
+        </div>
+
+        <div class="banco-saldo">
+            <span>Saldo caixa</span>
+            <strong data-saldo-banco="${escaparHtml(chave)}">${formatarMoeda(
+                saldosDisponiveisAtuais.get(chave) || 0
+            )}</strong>
+        </div>
+
+        <div class="banco-rodape">
+            <span>
+                <i class="fa-solid fa-pen-to-square"></i>
+                Clique para digitar o saldo
+            </span>
+        </div>
+    `;
+
+    card.addEventListener("click", () => {
+        abrirDetalhesBanco(banco);
+    });
+
+    return card;
 }
 
 function obterSaldoCaixaTotalSelecionado(listaBancos) {
@@ -379,6 +465,14 @@ function atualizarSaldoDisponivelGeral(listaBancos) {
 }
 
 function criarLogoBanco(banco, tamanho = "normal") {
+    if (banco.saldoCaixaIndependente) {
+        return `
+            <span class="logo-caixa-manual ${tamanho === "grande" ? "logo-caixa-manual-grande" : ""}">
+                <i class="fa-solid fa-cash-register"></i>
+            </span>
+        `;
+    }
+
     const classe =
         tamanho === "grande"
             ? "logo-banco-imagem logo-banco-imagem-grande"

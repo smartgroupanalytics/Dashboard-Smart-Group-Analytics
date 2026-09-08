@@ -386,49 +386,21 @@ function preencherSelectUnico(id, valores) {
 
 function obterLancamentosBaseFluxoCaixa() {
     /*
-     * O Fluxo de Caixa possui dois filtros próprios que são soberanos:
+     * O Fluxo de Caixa possui filtros próprios que são soberanos:
      *   - Data inicial/final -> Vencimento (coluna N)
      *   - Cenário -> Dt.pgto (coluna O)
+     *   - Tipo -> Cliente/Fornecedor
+     *   - Local -> Local de cobrança
      *
-     * Por isso NÃO aplicamos aqui o período nem a situação do painel geral.
-     * Mantemos somente os demais refinamentos (cliente/fornecedor, pessoa,
-     * representante, banco, plano e tipo de documento). Isso impede o
-     * "Somente previsto" de ficar zerado por um filtro externo.
+     * A base precisa ser sempre a planilha completa. Nenhum filtro da Visão
+     * Geral (período, situação, pessoa, representante, banco, plano ou tipo de
+     * documento) pode eliminar títulos antes de o Fluxo aplicar seus próprios
+     * controles. Isso garante que todo Cliente e Fornecedor com Dt.pgto
+     * 00/00/0000 seja considerado como previsto no Vencimento selecionado.
      */
-    const pessoasSelecionadas = filtroPessoas.selecionadas;
-    const todasPessoasSelecionadas =
-        filtroPessoas.opcoes.length === 0 ||
-        pessoasSelecionadas.size === filtroPessoas.opcoes.length;
-
-    const tiposCadastroSelecionados = tiposCadastroSelecionadosNoFiltro();
-    const representante = document.getElementById("representante")?.value || "";
-    const bancosSelecionados = bancosSelecionadosNoFiltro();
-    const todosBancosSelecionados =
-        filtroBancos.opcoes.length === 0 ||
-        bancosSelecionados.size === filtroBancos.opcoes.length;
-    const plano = document.getElementById("planoFinanceiro")?.value || "";
-    const tipoDocumento = document.getElementById("tipoDocumento")?.value || "";
-
-    return lancamentosFinanceiros.filter((item) => {
-        if (!tiposCadastroSelecionados.has(item.tipoCadastro)) return false;
-
-        if (
-            filtroPessoas.opcoes.length > 0 &&
-            !todasPessoasSelecionadas &&
-            !pessoasSelecionadas.has(item.razaoSocial)
-        ) return false;
-
-        if (representante && item.representante !== representante) return false;
-        if (plano && item.planoFinanceiro !== plano) return false;
-        if (tipoDocumento && item.tipoDocumento !== tipoDocumento) return false;
-
-        if (!todosBancosSelecionados) {
-            const identidade = identificarLocalCobranca(item.banco);
-            if (!bancosSelecionados.has(identidade.id)) return false;
-        }
-
-        return true;
-    });
+    return Array.isArray(lancamentosFinanceiros)
+        ? lancamentosFinanceiros.slice()
+        : [];
 }
 
 function aplicarFiltrosDashboard() {
@@ -489,8 +461,8 @@ function aplicarFiltrosDashboard() {
      * dentro dessas abas, todos os títulos do período aparecem primeiro; depois
      * Status e os demais filtros locais podem refinar o resultado.
      *
-     * O painel geral continua filtrando a Visão Geral e Bancos. No Fluxo,
-     * o período e o cenário permanecem exclusivos dos controles locais.
+     * O painel geral continua filtrando a Visão Geral e Bancos. O Fluxo sempre
+     * recebe a base completa e usa exclusivamente seus controles locais.
      */
     if (typeof atualizarFluxoCaixa === "function") {
         atualizarFluxoCaixa(obterLancamentosBaseFluxoCaixa());
