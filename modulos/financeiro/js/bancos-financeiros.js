@@ -370,12 +370,6 @@ function atualizarSaldoDisponivelGeral(listaBancos) {
         formatarMoeda(total)
     );
 
-    /* Mesmo saldo exibido no novo card do Fluxo de Caixa. */
-    preencherTexto(
-        "fluxoSaldoCaixa",
-        formatarMoeda(total)
-    );
-
     preencherTexto(
         "legendaSaldoDisponivelGeral",
         totalInvestimentos > 0

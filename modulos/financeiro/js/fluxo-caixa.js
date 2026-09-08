@@ -546,20 +546,6 @@ function atualizarKpisFluxo() {
         entradaPrevista -
         saidaPrevista;
 
-    /*
-     * Saldo caixa é informado manualmente em Bancos e inclui os
-     * investimentos já somados no resumo bancário.
-     */
-    const saldoCaixa =
-        typeof obterSaldoCaixaTotalSelecionado === "function"
-            ? obterSaldoCaixaTotalSelecionado()
-            : 0;
-
-    preencherTexto(
-        "fluxoSaldoCaixa",
-        formatarMoeda(saldoCaixa)
-    );
-
     preencherTexto(
         "fluxoEntradasRealizadas",
         formatarMoeda(
