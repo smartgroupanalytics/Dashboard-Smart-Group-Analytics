@@ -1441,3 +1441,42 @@ button {
     font-size: 10px;
     text-align: right;
 }
+
+
+/* Filtro por tipo de cadastro: Cliente / Fornecedor */
+.filtro-tipo-cadastro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.filtro-tipo-cadastro-opcao {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 44px;
+    padding: 0 12px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    background: var(--cor-superficie);
+    color: var(--cor-texto);
+    cursor: pointer;
+    user-select: none;
+}
+
+.filtro-tipo-cadastro-opcao:hover {
+    border-color: var(--cor-primaria);
+}
+
+.filtro-tipo-cadastro-opcao input {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    accent-color: var(--cor-primaria);
+    cursor: pointer;
+}
+
+.filtro-tipo-cadastro-opcao span {
+    font-size: 13px;
+    font-weight: 600;
+}

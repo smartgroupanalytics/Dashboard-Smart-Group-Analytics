@@ -17,7 +17,7 @@
 
     <link
         rel="stylesheet"
-        href="financeiro.css?v=26"
+        href="financeiro.css?v=27"
     >
     <link rel="stylesheet" href="css/graficos-financeiros.css?v=13">
     <link rel="stylesheet" href="css/bancos-financeiros.css?v=14">
@@ -1058,6 +1058,35 @@
             </div>
 
             <div class="campo-filtro">
+                <label>Tipo de cadastro</label>
+
+                <div
+                    class="filtro-tipo-cadastro"
+                    id="filtroTipoCadastro"
+                >
+                    <label class="filtro-tipo-cadastro-opcao">
+                        <input
+                            type="checkbox"
+                            id="filtroTipoCliente"
+                            value="cliente"
+                            checked
+                        >
+                        <span>Clientes</span>
+                    </label>
+
+                    <label class="filtro-tipo-cadastro-opcao">
+                        <input
+                            type="checkbox"
+                            id="filtroTipoFornecedor"
+                            value="fornecedor"
+                            checked
+                        >
+                        <span>Fornecedores</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="campo-filtro">
                 <label for="representante">Representante</label>
                 <select id="representante" name="representante">
                     <option value="">Todos</option>
@@ -1317,7 +1346,7 @@
     <script src="js/indicadores-financeiros.js?v=10"></script>
     <script src="js/graficos-financeiros.js?v=16"></script>
     <script src="js/bancos-financeiros.js?v=13"></script>
-    <script src="js/filtros-financeiro.js?v=28"></script>
+    <script src="js/filtros-financeiro.js?v=29"></script>
     <script src="js/importacao-planilha.js?v=7"></script>
     <script src="js/contas-receber.js?v=24"></script>
     <script src="js/contas-pagar.js?v=22"></script>

@@ -24,6 +24,7 @@ function configurarPainelFiltros() {
 
     configurarMultiselectPessoas();
     configurarMultiselectBancos();
+    configurarFiltroTipoCadastro();
 
     const abrir = () => {
         painel.classList.add("aberto");
@@ -59,6 +60,41 @@ function configurarPainelFiltros() {
             fechar();
         });
     }
+}
+
+function configurarFiltroTipoCadastro() {
+    const cliente = document.getElementById("filtroTipoCliente");
+    const fornecedor = document.getElementById("filtroTipoFornecedor");
+
+    if (!cliente || !fornecedor) return;
+
+    /*
+     * O filtro deve permitir exatamente o comportamento solicitado:
+     * Cliente, Fornecedor ou ambos. Evitamos deixar os dois desmarcados
+     * para que o painel nunca fique em um estado sem tipo selecionado.
+     */
+    const manterAoMenosUm = (evento) => {
+        if (!cliente.checked && !fornecedor.checked) {
+            evento.target.checked = true;
+        }
+    };
+
+    cliente.addEventListener("change", manterAoMenosUm);
+    fornecedor.addEventListener("change", manterAoMenosUm);
+}
+
+function tiposCadastroSelecionadosNoFiltro() {
+    const selecionados = new Set();
+
+    if (document.getElementById("filtroTipoCliente")?.checked) {
+        selecionados.add("cliente");
+    }
+
+    if (document.getElementById("filtroTipoFornecedor")?.checked) {
+        selecionados.add("fornecedor");
+    }
+
+    return selecionados;
 }
 
 function configurarMultiselectBancos() {
@@ -345,6 +381,7 @@ function aplicarFiltrosDashboard() {
         filtroPessoas.opcoes.length > 0 &&
         pessoasSelecionadas.size === filtroPessoas.opcoes.length;
 
+    const tiposCadastroSelecionados = tiposCadastroSelecionadosNoFiltro();
     const representante = document.getElementById("representante")?.value || "";
     const bancosSelecionados = bancosSelecionadosNoFiltro();
     /*
@@ -364,6 +401,9 @@ function aplicarFiltrosDashboard() {
 
         if (inicio && (!dataReferencia || dataReferencia < inicio)) return false;
         if (fim && (!dataReferencia || dataReferencia > fim)) return false;
+
+        if (!tiposCadastroSelecionados.has(item.tipoCadastro)) return false;
+
         if (
             filtroPessoas.opcoes.length > 0 &&
             !todasPessoasSelecionadas &&
