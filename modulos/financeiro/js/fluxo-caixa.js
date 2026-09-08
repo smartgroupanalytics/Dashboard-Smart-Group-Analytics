@@ -55,7 +55,7 @@ function inicializarFluxoCaixa() {
         });
 }
 
-function atualizarFluxoCaixa(lancamentos) {
+function atualizarFluxoCaixa(lancamentos, opcoes = {}) {
     fluxoLancamentos =
         Array.isArray(lancamentos)
             ? lancamentos
@@ -68,7 +68,23 @@ function atualizarFluxoCaixa(lancamentos) {
 
     preencherLocaisFluxo();
 
-    definirPeriodoInicialFluxo();
+    /*
+     * As datas locais do Fluxo de Caixa pertencem ao próprio Fluxo.
+     * Recalculamos o intervalo pela coluna N (Vencimento) somente na
+     * carga de uma nova planilha ou quando os campos ainda estão vazios.
+     * Assim, aplicar um filtro geral não apaga o período escolhido aqui.
+     */
+    const inicioInput = document.getElementById("fluxoDataInicio");
+    const fimInput = document.getElementById("fluxoDataFim");
+    const redefinirPeriodo = opcoes.redefinirPeriodo === true;
+
+    if (
+        redefinirPeriodo ||
+        !inicioInput?.value ||
+        !fimInput?.value
+    ) {
+        definirPeriodoInicialFluxo();
+    }
 
     fluxoPaginaAtual = 1;
     aplicarFiltrosFluxoCaixa();
@@ -414,10 +430,20 @@ function aplicarFiltrosFluxoCaixa() {
                     return false;
                 }
 
-                const data =
-                    inicioDoDia(
-                        item.data
-                    );
+                /*
+                 * O período do Fluxo é SEMPRE o Vencimento (coluna N).
+                 * A movimentação já é criada com item.data = vencimento,
+                 * mas mantemos a validação abaixo para impedir que uma data
+                 * inválida faça todo o filtro retornar zero.
+                 */
+                if (
+                    !(item.data instanceof Date) ||
+                    Number.isNaN(item.data.getTime())
+                ) {
+                    return false;
+                }
+
+                const data = inicioDoDia(item.data);
 
                 if (
                     inicio &&
@@ -519,6 +545,20 @@ function atualizarKpisFluxo() {
         saldoRealizado +
         entradaPrevista -
         saidaPrevista;
+
+    /*
+     * Saldo caixa é informado manualmente em Bancos e inclui os
+     * investimentos já somados no resumo bancário.
+     */
+    const saldoCaixa =
+        typeof obterSaldoCaixaTotalSelecionado === "function"
+            ? obterSaldoCaixaTotalSelecionado()
+            : 0;
+
+    preencherTexto(
+        "fluxoSaldoCaixa",
+        formatarMoeda(saldoCaixa)
+    );
 
     preencherTexto(
         "fluxoEntradasRealizadas",

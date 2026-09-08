@@ -84,13 +84,24 @@ function configurarFiltroTipoCadastro() {
 }
 
 function tiposCadastroSelecionadosNoFiltro() {
-    const selecionados = new Set();
+    const cliente = document.getElementById("filtroTipoCliente");
+    const fornecedor = document.getElementById("filtroTipoFornecedor");
 
-    if (document.getElementById("filtroTipoCliente")?.checked) {
-        selecionados.add("cliente");
+    /*
+     * Compatibilidade defensiva: se o HTML antigo ainda estiver em cache
+     * e os checkboxes não existirem, não devemos zerar o Financeiro.
+     */
+    if (!cliente && !fornecedor) {
+        return new Set(["cliente", "fornecedor"]);
     }
 
-    if (document.getElementById("filtroTipoFornecedor")?.checked) {
+    const selecionados = new Set();
+
+    if (cliente?.checked) selecionados.add("cliente");
+    if (fornecedor?.checked) selecionados.add("fornecedor");
+
+    if (!selecionados.size) {
+        selecionados.add("cliente");
         selecionados.add("fornecedor");
     }
 
@@ -373,6 +384,53 @@ function preencherSelectUnico(id, valores) {
         });
 }
 
+function obterLancamentosBaseFluxoCaixa() {
+    /*
+     * O Fluxo de Caixa possui dois filtros próprios que são soberanos:
+     *   - Data inicial/final -> Vencimento (coluna N)
+     *   - Cenário -> Dt.pgto (coluna O)
+     *
+     * Por isso NÃO aplicamos aqui o período nem a situação do painel geral.
+     * Mantemos somente os demais refinamentos (cliente/fornecedor, pessoa,
+     * representante, banco, plano e tipo de documento). Isso impede o
+     * "Somente previsto" de ficar zerado por um filtro externo.
+     */
+    const pessoasSelecionadas = filtroPessoas.selecionadas;
+    const todasPessoasSelecionadas =
+        filtroPessoas.opcoes.length === 0 ||
+        pessoasSelecionadas.size === filtroPessoas.opcoes.length;
+
+    const tiposCadastroSelecionados = tiposCadastroSelecionadosNoFiltro();
+    const representante = document.getElementById("representante")?.value || "";
+    const bancosSelecionados = bancosSelecionadosNoFiltro();
+    const todosBancosSelecionados =
+        filtroBancos.opcoes.length === 0 ||
+        bancosSelecionados.size === filtroBancos.opcoes.length;
+    const plano = document.getElementById("planoFinanceiro")?.value || "";
+    const tipoDocumento = document.getElementById("tipoDocumento")?.value || "";
+
+    return lancamentosFinanceiros.filter((item) => {
+        if (!tiposCadastroSelecionados.has(item.tipoCadastro)) return false;
+
+        if (
+            filtroPessoas.opcoes.length > 0 &&
+            !todasPessoasSelecionadas &&
+            !pessoasSelecionadas.has(item.razaoSocial)
+        ) return false;
+
+        if (representante && item.representante !== representante) return false;
+        if (plano && item.planoFinanceiro !== plano) return false;
+        if (tipoDocumento && item.tipoDocumento !== tipoDocumento) return false;
+
+        if (!todosBancosSelecionados) {
+            const identidade = identificarLocalCobranca(item.banco);
+            if (!bancosSelecionados.has(identidade.id)) return false;
+        }
+
+        return true;
+    });
+}
+
 function aplicarFiltrosDashboard() {
     const inicio = lerDataInput("periodoInicio");
     const fim = lerDataInput("periodoFim");
@@ -431,9 +489,12 @@ function aplicarFiltrosDashboard() {
      * dentro dessas abas, todos os títulos do período aparecem primeiro; depois
      * Status e os demais filtros locais podem refinar o resultado.
      *
-     * O painel geral continua filtrando Visão Geral, Fluxo de Caixa e Bancos.
+     * O painel geral continua filtrando a Visão Geral e Bancos. No Fluxo,
+     * o período e o cenário permanecem exclusivos dos controles locais.
      */
-    if (typeof atualizarFluxoCaixa === "function") atualizarFluxoCaixa(lancamentosFiltrados);
+    if (typeof atualizarFluxoCaixa === "function") {
+        atualizarFluxoCaixa(obterLancamentosBaseFluxoCaixa());
+    }
     if (typeof renderizarBancos === "function") renderizarBancos(agruparBancosDosLancamentos(lancamentosFiltrados));
 
     atualizarTextoPeriodo(inicio, fim);

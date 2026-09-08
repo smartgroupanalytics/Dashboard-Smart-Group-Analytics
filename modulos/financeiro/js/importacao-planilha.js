@@ -32,7 +32,10 @@ function configurarImportacaoPlanilha() {
             }
 
             if (typeof atualizarFluxoCaixa === "function") {
-                atualizarFluxoCaixa(lancamentosFinanceiros);
+                atualizarFluxoCaixa(
+                    lancamentosFinanceiros,
+                    { redefinirPeriodo: true }
+                );
             }
 
             preencherFiltrosComDados();

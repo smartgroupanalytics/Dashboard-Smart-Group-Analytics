@@ -301,6 +301,29 @@ async function carregarSaldosDisponiveisGerais(listaBancos = bancosFinanceiros) 
     atualizarSaldoDisponivelGeral(listaBancos);
 }
 
+function obterSaldoCaixaTotalSelecionado(listaBancos) {
+    const selecionados =
+        typeof bancosSelecionadosNoFiltro === "function"
+            ? bancosSelecionadosNoFiltro()
+            : null;
+
+    const base = Array.isArray(listaBancos)
+        ? listaBancos
+        : bancosFinanceiros.filter(
+            (banco) =>
+                !selecionados ||
+                !selecionados.size ||
+                selecionados.has(banco.id)
+        );
+
+    return base.reduce((soma, banco) => {
+        const chave = obterChaveBancoSaldo(banco);
+        const saldoCaixa = Number(saldosDisponiveisAtuais.get(chave) || 0);
+        const saldoInvestimento = Number(saldosInvestimentosAtuais.get(chave) || 0);
+        return soma + saldoCaixa + saldoInvestimento;
+    }, 0);
+}
+
 function atualizarSaldoDisponivelGeral(listaBancos) {
     const selecionados =
         typeof bancosSelecionadosNoFiltro === "function"
@@ -335,9 +358,7 @@ function atualizarSaldoDisponivelGeral(listaBancos) {
         0
     );
 
-    const total =
-        totalCaixa +
-        totalInvestimentos;
+    const total = obterSaldoCaixaTotalSelecionado(base);
 
     preencherTexto(
         "kpiSaldoDisponivelGeral",
@@ -346,6 +367,12 @@ function atualizarSaldoDisponivelGeral(listaBancos) {
 
     preencherTexto(
         "saldoBancarioTotal",
+        formatarMoeda(total)
+    );
+
+    /* Mesmo saldo exibido no novo card do Fluxo de Caixa. */
+    preencherTexto(
+        "fluxoSaldoCaixa",
         formatarMoeda(total)
     );
 
