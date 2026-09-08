@@ -156,8 +156,23 @@ function criarMovimentacoesFluxo(item) {
 
     const movimentos = [];
 
+    /*
+     * REGRA ÚNICA DE PERÍODO DO FLUXO DE CAIXA:
+     *
+     * Data inicial/final, gráfico e tabela são sempre posicionados pelo
+     * VENCIMENTO (coluna N), tanto para REALIZADO quanto para PREVISTO.
+     * A Dt.pgto (coluna O) serve SOMENTE para definir o cenário:
+     *   - data válida      => REALIZADO
+     *   - 00/00/0000/vazio => PREVISTO
+     */
+    const dataPeriodo =
+        item.vencimento instanceof Date
+            ? item.vencimento
+            : null;
+
     if (
         temDataPagamento &&
+        dataPeriodo instanceof Date &&
         valorRealizado > 0
     ) {
         movimentos.push(
@@ -165,7 +180,7 @@ function criarMovimentacoesFluxo(item) {
                 item,
                 tipo,
                 "realizado",
-                item.dataPagamento,
+                dataPeriodo,
                 valorRealizado,
                 `${item.id || "linha"}-realizado`
             )
@@ -311,19 +326,21 @@ function definirPeriodoInicialFluxo() {
             "fluxoDataFim"
         );
 
-    if (
-        inicioInput?.value ||
-        fimInput?.value
-    ) {
-        return;
-    }
-
+    /*
+     * O intervalo automático do Fluxo de Caixa vem EXCLUSIVAMENTE do
+     * Vencimento (coluna N). Não usamos Dt.pgto para montar a data inicial
+     * ou final; Dt.pgto continua sendo usada apenas para o cenário.
+     *
+     * O período é recalculado sempre que a base do fluxo é atualizada para
+     * não manter datas antigas de uma planilha carregada anteriormente.
+     */
     const datas =
-        fluxoMovimentacoes
-            .map((item) => item.data)
+        fluxoLancamentos
+            .map((item) => item.vencimento)
             .filter(
                 (data) =>
-                    data instanceof Date
+                    data instanceof Date &&
+                    !Number.isNaN(data.getTime())
             )
             .sort((a, b) => a - b);
 
