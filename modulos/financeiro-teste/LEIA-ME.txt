@@ -1,0 +1,21 @@
+CORREÇÃO — FINANCEIRO TESTE NO MENU
+
+O seu projeto JÁ possui a pasta:
+  modulos/financeiro-teste/
+
+Por isso copiar essa pasta novamente não gera alteração no Git.
+Para o módulo aparecer no portal, substitua SOMENTE estes dois arquivos na RAIZ do repositório:
+  index.html
+  app.js
+
+Caminho correto da raiz:
+  Dashboard-Smart-Group-Analytics/index.html
+  Dashboard-Smart-Group-Analytics/app.js
+
+Depois da substituição, o GitHub Desktop deve mostrar exatamente estes dois arquivos como modificados:
+  M index.html
+  M app.js
+
+Não copie para dentro de modulos/financeiro nem de modulos/financeiro-teste.
+
+Após Commit + Push, aguarde o GitHub Pages publicar e use Ctrl+F5.
