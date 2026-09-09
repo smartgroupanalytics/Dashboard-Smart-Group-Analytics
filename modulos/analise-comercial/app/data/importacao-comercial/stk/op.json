@@ -85,18 +85,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "7025",
-    "produto": "17416",
-    "desc_completa": "DENVER NUDE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 120,
-    "dt_saida": "2026-06-26",
-    "centro_custo": 0,
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "7425",
     "produto": "16633",
     "desc_completa": "CANYON CASTOR",
@@ -212,8 +200,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-08-31",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 7,
+    "abreviacao": "ESTAM"
   },
   {
     "fonte_comercial": "STK",
@@ -224,8 +212,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-08-31",
-    "centro_custo": 1,
-    "abreviacao": "RECOB"
+    "centro_custo": 25,
+    "abreviacao": "TRANSFE"
   },
   {
     "fonte_comercial": "STK",
@@ -337,57 +325,9 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8046",
-    "produto": "17883",
-    "desc_completa": "ASPEN PRATA",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 200,
-    "dt_saida": "2026-09-01",
-    "centro_custo": 3,
-    "abreviacao": "GR 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8047",
-    "produto": "17884",
-    "desc_completa": "ASPEN OURO LIGHT",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 200,
-    "dt_saida": "2026-09-01",
-    "centro_custo": 3,
-    "abreviacao": "GR 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8048",
-    "produto": "17882",
-    "desc_completa": "ASPEN GRAFITE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 200,
-    "dt_saida": "2026-09-01",
-    "centro_custo": 1,
-    "abreviacao": "RECOB"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8049",
     "produto": "17881",
     "desc_completa": "ASPEN BRONZE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 200,
-    "dt_saida": "2026-09-01",
-    "centro_custo": 1,
-    "abreviacao": "RECOB"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8050",
-    "produto": "17878",
-    "desc_completa": "ASPEN WHISKY",
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 200,
@@ -402,22 +342,10 @@
     "desc_completa": "SALERNO LIMONCELLO",
     "grupo": 39,
     "subgrupo": 41,
-    "qtd_produzir": 200,
+    "qtd_produzir": 42,
     "dt_saida": "2026-09-09",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8054",
-    "produto": "17890",
-    "desc_completa": "ASPEN BROWN",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 200,
-    "dt_saida": "2026-09-01",
-    "centro_custo": 3,
-    "abreviacao": "GR 1"
+    "centro_custo": 10,
+    "abreviacao": "REV 1"
   },
   {
     "fonte_comercial": "STK",
@@ -428,8 +356,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-09-03",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 7,
+    "abreviacao": "ESTAM"
   },
   {
     "fonte_comercial": "STK",
@@ -440,8 +368,8 @@
     "subgrupo": 41,
     "qtd_produzir": 300,
     "dt_saida": "2026-09-10",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -524,8 +452,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-09-10",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -536,8 +464,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-10",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -598,5 +526,17 @@
     "dt_saida": "2026-09-09",
     "centro_custo": 2,
     "abreviacao": "GRAV"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8164",
+    "produto": "14903",
+    "desc_completa": "HELSINKI CAFE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 249,
+    "dt_saida": "2026-09-08",
+    "centro_custo": 0,
+    "abreviacao": ""
   }
 ]
