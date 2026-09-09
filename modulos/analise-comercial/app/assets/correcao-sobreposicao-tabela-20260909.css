@@ -1,0 +1,16 @@
+/*
+ * Impede que textos longos da tabela invadam a coluna seguinte.
+ * A coluna de cor pode quebrar em mais de uma linha para manter o nome legível.
+ */
+.sg-products-table-fit .sg-product-row td {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.sg-products-table-fit .sg-cell-color {
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+  word-break: normal !important;
+  line-height: 1.2 !important;
+}
+
