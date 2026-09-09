@@ -1,0 +1,19 @@
+.pagar-cabecalho,.pagar-resumo,.pagar-paginacao{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.btn-exportar-pagar,.btn-limpar-pagar,.pagar-paginacao button{border:1px solid rgba(72,154,255,.3);border-radius:9px;background:#0b315e;color:#dcecff;padding:10px 14px;font-weight:700;cursor:pointer}
+.pagar-kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:14px 0}
+.pagar-kpis article{padding:17px;border:1px solid rgba(111,169,226,.18);border-radius:13px;background:linear-gradient(145deg,#133a66,#082344)}
+.pagar-kpis span,.pagar-kpis small{display:block;color:#9bb6d3;font-size:10px}.pagar-kpis strong{display:block;margin:8px 0 6px;font-size:clamp(16px,1.45vw,24px)}
+#pagarKpiAberto{color:#4ca3ff}#pagarKpiAtrasado{color:#ff6b63}#pagarKpiPago{color:#29d681}#pagarKpiVencer{color:#f6c84c}
+.pagar-painel{overflow:hidden;border:1px solid rgba(101,163,224,.2);border-radius:14px;background:rgba(8,34,66,.9)}
+.pagar-filtros{display:grid;grid-template-columns:minmax(230px,1.5fr) repeat(7,minmax(135px,1fr)) auto;align-items:end;gap:10px;padding:15px}
+.pagar-filtros label{display:grid;gap:6px}.pagar-filtros span{color:#92abc7;font-size:9px;font-weight:700;text-transform:uppercase}
+.pagar-filtros input,.pagar-filtros select,.pagar-resumo select{height:36px;padding:0 10px;border:1px solid rgba(111,171,230,.23);border-radius:8px;background:#09294f;color:#e9f3ff}
+.pagar-resumo{padding:11px 15px;color:#9db5ce;font-size:10px}.pagar-resumo select{width:70px}
+.pagar-tabela-wrapper{overflow:auto;border-block:1px solid rgba(101,163,224,.12)}
+.pagar-tabela{width:100%;min-width:1580px;border-collapse:collapse;font-size:10px}
+.pagar-tabela th{padding:12px 13px;background:#071f3d;color:#8faac6;font-size:8px;text-align:left;text-transform:uppercase;white-space:nowrap}
+.pagar-tabela td{padding:11px 13px;border-bottom:1px solid rgba(111,171,230,.08);color:#d5e4f4;white-space:nowrap}
+.pagar-tabela tbody tr:hover{background:rgba(43,124,213,.08)}.pagar-valor{text-align:right;font-weight:700}.pagar-valor.pago{color:#29d681}.pagar-valor.aberto{color:#4ca3ff}
+.pagar-status{display:inline-flex;padding:5px 9px;border-radius:999px;font-size:8px;font-weight:800;text-transform:uppercase}.pagar-status.pago{background:rgba(41,214,129,.13);color:#42e595}.pagar-status.aberto{background:rgba(76,163,255,.13);color:#6eb7ff}.pagar-status.atrasado{background:rgba(255,107,99,.13);color:#ff837c}
+.pagar-vazio{height:160px;text-align:center}.pagar-paginacao{justify-content:center;padding:13px}.pagar-paginacao button:disabled{opacity:.35}
+@media(max-width:1500px){.pagar-kpis{grid-template-columns:repeat(3,1fr)}.pagar-filtros{grid-template-columns:repeat(4,1fr)}}@media(max-width:800px){.pagar-kpis,.pagar-filtros{grid-template-columns:1fr 1fr}}

@@ -1,0 +1,24 @@
+MÓDULO FINANCEIRO — AMBIENTE DE TESTE
+
+Pasta de produção (permaneceu intacta):
+  modulos/financeiro/
+
+Pasta de teste criada:
+  modulos/financeiro-teste/
+
+Acesso direto depois de publicar o projeto:
+  /modulos/financeiro-teste/index.html
+
+O QUE FOI ISOLADO
+- HTML, CSS, JavaScript e assets foram copiados para uma pasta própria.
+- O menu e o app principal NÃO foram alterados, portanto o pessoal continuará abrindo o Financeiro de produção.
+- Os saldos do ambiente de teste NÃO gravam no Firestore de produção.
+- Os saldos de teste ficam somente no localStorage do navegador e usam chaves exclusivas de teste.
+
+COMO TRABALHAR
+1. Faça mudanças somente dentro de modulos/financeiro-teste/.
+2. Abra /modulos/financeiro-teste/index.html para conferir.
+3. Quando a mudança estiver aprovada, transfira somente os arquivos aprovados para modulos/financeiro/.
+
+IMPORTANTE
+Não renomeie modulos/financeiro/ enquanto ele estiver em uso. O ambiente de teste é independente justamente para preservar a versão atual.

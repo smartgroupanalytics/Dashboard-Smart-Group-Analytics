@@ -1,0 +1,349 @@
+/*
+==========================================================
+SMART GROUP ANALYTICS — FLUXO DE CAIXA
+==========================================================
+*/
+
+.fluxo-cabecalho,
+.fluxo-card-titulo,
+.fluxo-tabela-topo,
+.fluxo-paginacao {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.btn-exportar-fluxo,
+.btn-limpar-fluxo,
+.fluxo-paginacao button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 38px;
+    padding: 0 14px;
+    border: 1px solid rgba(72, 154, 255, 0.3);
+    border-radius: 9px;
+    background: rgba(20, 105, 218, 0.18);
+    color: #dcecff;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.fluxo-filtros {
+    display: grid;
+    grid-template-columns:
+        repeat(6, minmax(145px, 1fr))
+        auto;
+    align-items: end;
+    gap: 10px;
+    margin: 14px 0;
+    padding: 14px;
+    border: 1px solid rgba(101, 163, 224, 0.18);
+    border-radius: 13px;
+    background: rgba(8, 34, 66, 0.88);
+}
+
+.fluxo-filtros label {
+    display: grid;
+    gap: 6px;
+    min-width: 0;
+}
+
+.fluxo-filtros label > span {
+    color: #92abc7;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.fluxo-filtros input,
+.fluxo-filtros select,
+.fluxo-tabela-topo select {
+    width: 100%;
+    height: 36px;
+    padding: 0 10px;
+    border: 1px solid rgba(111, 171, 230, 0.23);
+    border-radius: 8px;
+    outline: none;
+    background: #09294f;
+    color: #e9f3ff;
+    font: inherit;
+    font-size: 10px;
+}
+
+.fluxo-kpis {
+    display: grid;
+    grid-template-columns:
+        repeat(7, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.fluxo-kpis article {
+    min-width: 0;
+    padding: 16px;
+    border: 1px solid rgba(111, 169, 226, 0.18);
+    border-radius: 13px;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(19, 58, 102, 0.96),
+            rgba(8, 35, 68, 0.98)
+        );
+}
+
+.fluxo-kpis span,
+.fluxo-kpis small {
+    display: block;
+    color: #9bb6d3;
+    font-size: 9px;
+}
+
+.fluxo-kpis strong {
+    display: block;
+    margin: 8px 0 6px;
+    color: #ffffff;
+    font-size: clamp(15px, 1.25vw, 22px);
+    line-height: 1;
+}
+
+.fluxo-kpis strong.positivo {
+    color: #29d681;
+}
+
+.fluxo-kpis strong.negativo {
+    color: #ff6b63;
+}
+
+.fluxo-kpis strong.previsto {
+    color: #4ca3ff;
+}
+
+.fluxo-kpis strong.alerta {
+    color: #f6c84c;
+}
+
+.fluxo-grafico-card,
+.fluxo-tabela-card {
+    overflow: hidden;
+    margin-bottom: 14px;
+    border: 1px solid rgba(101, 163, 224, 0.2);
+    border-radius: 14px;
+    background: rgba(8, 34, 66, 0.9);
+}
+
+.fluxo-card-titulo,
+.fluxo-tabela-topo {
+    padding: 15px;
+}
+
+.fluxo-card-titulo h3,
+.fluxo-tabela-topo h3 {
+    margin: 0 0 4px;
+    color: #ffffff;
+    font-size: 13px;
+}
+
+.fluxo-card-titulo p,
+.fluxo-tabela-topo p {
+    margin: 0;
+    color: #8fa9c5;
+    font-size: 9px;
+}
+
+.fluxo-legenda {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: #abc0d5;
+    font-size: 9px;
+}
+
+.fluxo-legenda span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.fluxo-legenda i {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+}
+
+.fluxo-legenda .entrada {
+    background: #29d681;
+}
+
+.fluxo-legenda .saida {
+    background: #ff6b63;
+}
+
+.fluxo-legenda .saldo {
+    background: #4ca3ff;
+}
+
+.fluxo-grafico-area {
+    height: 380px;
+    padding: 5px 15px 15px;
+}
+
+.fluxo-tabela-topo label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #9db5ce;
+    font-size: 10px;
+}
+
+.fluxo-tabela-topo select {
+    width: 72px;
+}
+
+.fluxo-tabela-wrapper {
+    width: 100%;
+    overflow: auto;
+    border-top: 1px solid rgba(101, 163, 224, 0.12);
+    border-bottom: 1px solid rgba(101, 163, 224, 0.12);
+}
+
+.fluxo-tabela {
+    width: 100%;
+    min-width: 1500px;
+    border-collapse: collapse;
+    font-size: 10px;
+}
+
+.fluxo-tabela th {
+    padding: 12px 13px;
+    background: #071f3d;
+    color: #8faac6;
+    font-size: 8px;
+    letter-spacing: 0.05em;
+    text-align: left;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.fluxo-tabela td {
+    padding: 11px 13px;
+    border-bottom: 1px solid rgba(111, 171, 230, 0.08);
+    color: #d5e4f4;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.fluxo-tabela tbody tr:hover {
+    background: rgba(43, 124, 213, 0.08);
+}
+
+.fluxo-badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 22px;
+    padding: 0 9px;
+    border-radius: 999px;
+    font-size: 8px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.fluxo-badge.realizado {
+    background: rgba(41, 214, 129, 0.13);
+    color: #42e595;
+}
+
+.fluxo-badge.previsto {
+    background: rgba(76, 163, 255, 0.13);
+    color: #6eb7ff;
+}
+
+.fluxo-badge.entrada {
+    background: rgba(41, 214, 129, 0.13);
+    color: #42e595;
+}
+
+.fluxo-badge.saida {
+    background: rgba(255, 107, 99, 0.13);
+    color: #ff837c;
+}
+
+.fluxo-valor,
+.fluxo-impacto {
+    font-weight: 700;
+    text-align: right;
+}
+
+.fluxo-impacto.entrada {
+    color: #29d681;
+}
+
+.fluxo-impacto.saida {
+    color: #ff6b63;
+}
+
+.fluxo-vazio {
+    height: 160px;
+    color: #7794b2 !important;
+    text-align: center;
+}
+
+.fluxo-paginacao {
+    justify-content: center;
+    padding: 13px;
+    color: #a8bdd2;
+    font-size: 10px;
+}
+
+.fluxo-paginacao button {
+    width: 34px;
+    min-height: 30px;
+    padding: 0;
+}
+
+.fluxo-paginacao button:disabled {
+    cursor: default;
+    opacity: 0.35;
+}
+
+@media (max-width: 1500px) {
+    .fluxo-kpis {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+
+    .fluxo-filtros {
+        grid-template-columns:
+            repeat(4, minmax(145px, 1fr));
+    }
+}
+
+@media (max-width: 850px) {
+    .fluxo-cabecalho,
+    .fluxo-card-titulo,
+    .fluxo-tabela-topo {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .fluxo-kpis,
+    .fluxo-filtros {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .fluxo-legenda {
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 520px) {
+    .fluxo-kpis,
+    .fluxo-filtros {
+        grid-template-columns: 1fr;
+    }
+}

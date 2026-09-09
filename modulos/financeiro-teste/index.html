@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Financeiro - AMBIENTE DE TESTE</title>
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="financeiro.css?v=27"
+    >
+    <link rel="stylesheet" href="css/graficos-financeiros.css?v=13">
+    <link rel="stylesheet" href="css/bancos-financeiros.css?v=14">
+    <link rel="stylesheet" href="css/tabelas-financeiras.css?v=13">
+    <link rel="stylesheet" href="css/contas-receber.css?v=20">
+    <link rel="stylesheet" href="css/contas-pagar.css?v=21">
+    <link rel="stylesheet" href="css/fluxo-caixa.css?v=23">
+</head>
+
+<body>
+    <div id="financeiroAmbienteTeste" style="position:sticky;top:0;z-index:99999;background:#fff3cd;color:#664d03;border-bottom:1px solid #ffecb5;padding:10px 16px;text-align:center;font:700 13px/1.4 Arial,sans-serif;letter-spacing:.02em;">
+        AMBIENTE DE TESTE — alterações feitas nesta pasta não modificam o módulo Financeiro de produção. Saldos deste ambiente ficam somente neste navegador.
+    </div>
+
+    <div class="financeiro-app">
+
+        <header class="financeiro-header">
+
+            <div class="financeiro-titulo">
+
+                <div class="financeiro-icone">
+                    <i class="fa-solid fa-wallet"></i>
+                </div>
+
+                <div>
+                    <h1>Financeiro</h1>
+                    <p>Gestão financeira e fluxo de caixa</p>
+                </div>
+
+            </div>
+
+            <div class="financeiro-acoes">
+
+                <span class="ultima-atualizacao">
+                    <i class="fa-solid fa-rotate"></i>
+                    Atualizado em
+                    <strong id="dataAtualizacao">--</strong>
+                </span>
+
+                <button
+                    type="button"
+                    class="btn-carregar-planilha"
+                    id="btnCarregarPlanilha"
+                >
+                    <i class="fa-solid fa-file-excel"></i>
+                    Carregar planilha
+                </button>
+
+                <input
+                    type="file"
+                    id="inputPlanilha"
+                    accept=".xlsx,.xls"
+                    hidden
+                >
+
+                <button
+                    type="button"
+                    class="btn-filtros"
+                    id="btnAbrirFiltros"
+                >
+                    <i class="fa-solid fa-filter"></i>
+                    Filtros
+                </button>
+
+                <button
+                    type="button"
+                    class="btn-exportar"
+                    id="btnExportar"
+                >
+                    <i class="fa-solid fa-download"></i>
+                    Exportar
+                </button>
+
+            </div>
+
+        </header>
+
+        <div
+            class="status-importacao"
+            id="statusImportacao"
+            hidden
+        >
+            <i class="fa-solid fa-circle-info"></i>
+
+            <span id="textoStatusImportacao">
+                Nenhuma planilha carregada.
+            </span>
+        </div>
+
+        <nav
+            class="financeiro-abas"
+            aria-label="Navegação do módulo financeiro"
+        >
+
+            <button
+                type="button"
+                class="aba-financeiro ativa"
+                data-pagina="visao-geral"
+            >
+                <i class="fa-solid fa-chart-pie"></i>
+                Visão Geral
+            </button>
+
+            <button
+                type="button"
+                class="aba-financeiro"
+                data-pagina="contas-receber"
+            >
+                <i class="fa-solid fa-file-invoice-dollar"></i>
+                Contas a Receber
+            </button>
+
+            <button
+                type="button"
+                class="aba-financeiro"
+                data-pagina="contas-pagar"
+            >
+                <i class="fa-solid fa-money-check-dollar"></i>
+                Contas a Pagar
+            </button>
+
+            <button
+                type="button"
+                class="aba-financeiro"
+                data-pagina="fluxo-caixa"
+            >
+                <i class="fa-solid fa-chart-line"></i>
+                Fluxo de Caixa
+            </button>
+
+            <button
+                type="button"
+                class="aba-financeiro"
+                data-pagina="bancos"
+            >
+                <i class="fa-solid fa-building-columns"></i>
+                Bancos
+            </button>
+
+            <button
+                type="button"
+                class="aba-financeiro"
+                data-pagina="relatorios"
+            >
+                <i class="fa-solid fa-file-lines"></i>
+                Relatórios
+            </button>
+
+        </nav>
+
+        <main
+            class="financeiro-conteudo"
+            id="financeiroConteudo"
+        >
+
+            <section class="pagina-financeiro ativa" id="visao-geral">
+
+                <div class="pagina-cabecalho">
+                    <div>
+                        <h2>Visão Geral</h2>
+                        <p>Indicadores e movimentações extraídos da planilha carregada.</p>
+                    </div>
+                    <div class="filtro-cenario-visao" role="group" aria-label="Cenário da Visão Geral">
+                        <span>Exibir</span>
+                        <button type="button" class="ativo" data-modo-visao="todos">Todos</button>
+                        <button type="button" data-modo-visao="realizado">Realizado</button>
+                        <button type="button" data-modo-visao="previsto">Previsto</button>
+                    </div>
+                    <span class="periodo-dashboard" id="periodoDashboard">
+                        Carregue uma planilha para visualizar os dados
+                    </span>
+                </div>
+
+                <section class="grade-kpis" aria-label="Indicadores financeiros">
+                    <article
+                        class="card-kpi card-kpi-filtro kpi-recebido"
+                        data-detalhe-kpi="entradas"
+                        role="button"
+                        tabindex="0"
+                        aria-controls="detalhesIndicadorFinanceiro"
+                        aria-pressed="false"
+                        aria-label="Exibir lançamentos do Total de Entradas"
+                    >
+                        <div class="kpi-icone"><i class="fa-solid fa-dollar-sign"></i></div>
+                        <div class="kpi-conteudo">
+                            <span class="kpi-titulo">Total de Entradas</span>
+                            <strong class="kpi-valor" id="kpiTotalRecebido">R$ 0,00</strong>
+                            <span class="kpi-legenda" id="legendaTotalRecebido">Recebimentos de clientes</span>
+                            <span class="kpi-acao"><i class="fa-solid fa-list-ul"></i> Ver lançamentos</span>
+                        </div>
+                    </article>
+
+                    <article
+                        class="card-kpi card-kpi-filtro kpi-receber"
+                        data-detalhe-kpi="receber"
+                        role="button"
+                        tabindex="0"
+                        aria-controls="detalhesIndicadorFinanceiro"
+                        aria-pressed="false"
+                        aria-label="Exibir lançamentos a receber"
+                    >
+                        <div class="kpi-icone"><i class="fa-solid fa-calendar-days"></i></div>
+                        <div class="kpi-conteudo">
+                            <span class="kpi-titulo">A Receber</span>
+                            <strong class="kpi-valor" id="kpiAReceber">R$ 0,00</strong>
+                            <span class="kpi-legenda" id="legendaAReceber">Títulos de clientes em aberto</span>
+                            <span class="kpi-acao"><i class="fa-solid fa-list-ul"></i> Ver lançamentos</span>
+                        </div>
+                    </article>
+
+                    <article
+                        class="card-kpi card-kpi-filtro kpi-atraso"
+                        data-detalhe-kpi="inadimplencia"
+                        role="button"
+                        tabindex="0"
+                        aria-controls="detalhesIndicadorFinanceiro"
+                        aria-pressed="true"
+                        aria-label="Exibir lançamentos da Inadimplência"
+                    >
+                        <div class="kpi-icone"><i class="fa-regular fa-clock"></i></div>
+                        <div class="kpi-conteudo">
+                            <span class="kpi-titulo">Inadimplência</span>
+                            <strong class="kpi-valor" id="kpiEmAtraso">R$ 0,00</strong>
+                            <span class="kpi-legenda" id="legendaEmAtraso">Clientes vencidos e não pagos</span>
+                            <span class="kpi-acao"><i class="fa-solid fa-list-ul"></i> Ver lançamentos</span>
+                        </div>
+                    </article>
+
+                    <article
+                        class="card-kpi card-kpi-filtro kpi-saidas"
+                        data-detalhe-kpi="saidas"
+                        role="button"
+                        tabindex="0"
+                        aria-controls="detalhesIndicadorFinanceiro"
+                        aria-pressed="false"
+                        aria-label="Exibir lançamentos do Total de Saídas"
+                    >
+                        <div class="kpi-icone">
+                            <i class="fa-solid fa-money-bill-transfer"></i>
+                        </div>
+
+                        <div class="kpi-conteudo">
+                            <span class="kpi-titulo">Total de Saídas</span>
+
+                            <strong class="kpi-valor" id="kpiTotalSaidas">
+                                R$ 0,00
+                            </strong>
+
+                            <span class="kpi-legenda" id="legendaTotalSaidas">
+                                Pagamentos a fornecedores
+                            </span>
+                            <span class="kpi-acao"><i class="fa-solid fa-list-ul"></i> Ver lançamentos</span>
+                        </div>
+                    </article>
+
+                    <article
+                        class="card-kpi card-kpi-filtro kpi-pagar"
+                        data-detalhe-kpi="pagar"
+                        role="button"
+                        tabindex="0"
+                        aria-controls="detalhesIndicadorFinanceiro"
+                        aria-pressed="false"
+                        aria-label="Exibir lançamentos a pagar"
+                    >
+                        <div class="kpi-icone">
+                            <i class="fa-solid fa-file-invoice-dollar"></i>
+                        </div>
+                        <div class="kpi-conteudo">
+                            <span class="kpi-titulo">A Pagar</span>
+                            <strong class="kpi-valor" id="kpiAPagar">R$ 0,00</strong>
+                            <span class="kpi-legenda" id="legendaAPagar">Títulos de fornecedores em aberto</span>
+                            <span class="kpi-acao"><i class="fa-solid fa-list-ul"></i> Ver lançamentos</span>
+                        </div>
+                    </article>
+
+                    <article class="card-kpi kpi-ticket">
+                        <div class="kpi-icone"><i class="fa-solid fa-receipt"></i></div>
+                        <div class="kpi-conteudo">
+                            <span class="kpi-titulo">Saldo Caixa</span>
+                            <strong class="kpi-valor" id="kpiSaldoDisponivelGeral">R$ 0,00</strong>
+                            <span class="kpi-legenda" id="legendaSaldoDisponivelGeral">Bancos + investimentos selecionados</span>
+                        </div>
+                    </article>
+                </section>
+
+                <section class="grade-graficos grade-graficos-principal">
+                    <article class="card-grafico card-grafico-largo">
+                        <div class="card-grafico-header">
+                            <div>
+                                <h3 id="tituloFluxoVisao">Fluxo de Caixa</h3>
+                                <p id="descricaoFluxoVisao">Realizado e previsto por mês</p>
+                            </div>
+                        </div>
+                        <div class="grafico-container grafico-alto">
+                            <canvas id="graficoFluxoCaixa"></canvas>
+                        </div>
+                    </article>
+
+                    <article class="card-grafico">
+                        <div class="card-grafico-header">
+                            <div>
+                                <h3 id="tituloRecebimentosDia">Entradas por Dia</h3>
+                                <p id="descricaoRecebimentosDia">Pagamento para realizado e vencimento para previsto</p>
+                            </div>
+                        </div>
+                        <div class="grafico-container grafico-alto">
+                            <canvas id="graficoRecebimentosDia"></canvas>
+                        </div>
+                    </article>
+                </section>
+
+                <section class="grade-graficos grade-graficos-secundaria">
+                    <article class="card-grafico card-top-clientes">
+                        <div class="card-grafico-header">
+                            <div>
+                                <h3 id="tituloTopClientes">Top 10 Clientes por Pagamentos</h3>
+                                <p id="descricaoTopClientes">Clientes com maiores valores realizados e previstos</p>
+                            </div>
+                            <label class="controle-ranking" for="limiteTopClientes">
+                                <span>Exibir</span>
+                                <select id="limiteTopClientes" aria-label="Quantidade de clientes no ranking">
+                                    <option value="5">Top 5</option>
+                                    <option value="10" selected>Top 10</option>
+                                    <option value="15">Top 15</option>
+                                    <option value="20">Top 20</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="grafico-container">
+                            <canvas id="graficoTopClientes"></canvas>
+                        </div>
+                    </article>
+
+                    <article class="card-grafico">
+                        <div class="card-grafico-header">
+                            <div>
+                                <h3 id="tituloRecebimentosBanco">Entradas por Banco</h3>
+                                <p>Somente registros com banco informado</p>
+                            </div>
+                        </div>
+                        <div class="grafico-container">
+                            <canvas id="graficoRecebimentosBanco"></canvas>
+                        </div>
+                    </article>
+
+                    <article class="card-grafico">
+                        <div class="card-grafico-header">
+                            <div>
+                                <h3 id="tituloPlanoFinanceiroVisao">Entradas por Plano Financeiro</h3>
+                                <p id="descricaoPlanoFinanceiroVisao">Realizado e previsto pela conta de planejamento</p>
+                            </div>
+                        </div>
+                        <div class="grafico-container">
+                            <canvas id="graficoPlanoFinanceiro"></canvas>
+                        </div>
+                    </article>
+                </section>
+
+                <section class="grade-graficos grade-graficos-terciaria">
+                    <article class="card-resumo card-resumo-prazo">
+                        <span>Prazo Médio de Recebimento</span>
+                        <strong id="prazoMedioRecebimento">0 dias</strong>
+                        <small>Da movimentação até o pagamento</small>
+                    </article>
+
+                    <article class="card-resumo card-resumo-inadimplencia">
+                        <span>Inadimplência</span>
+                        <strong id="taxaInadimplencia">0,0%</strong>
+                        <small>Valor vencido sobre a carteira de clientes</small>
+                    </article>
+
+                    <article class="card-grafico">
+                        <div class="card-grafico-header">
+                            <div>
+                                <h3>Situação das Contas a Receber</h3>
+                                <p>Pago, em aberto e em atraso</p>
+                            </div>
+                        </div>
+                        <div class="grafico-container">
+                            <canvas id="graficoSituacaoReceber"></canvas>
+                        </div>
+                    </article>
+                </section>
+
+                <section
+                    class="card-tabela-atrasos card-detalhes-kpi"
+                    id="detalhesIndicadorFinanceiro"
+                    aria-live="polite"
+                >
+                    <div class="card-grafico-header">
+                        <div>
+                            <h3>
+                                <i class="fa-solid fa-list-ul" aria-hidden="true"></i>
+                                <span id="tituloDetalhesKpi">Detalhes da Inadimplência</span>
+                            </h3>
+                            <p id="descricaoDetalhesKpi">Clientes com títulos vencidos e sem pagamento</p>
+                        </div>
+                        <span class="contador-atrasos" id="contadorDetalhesKpi">0</span>
+                    </div>
+
+                    <div class="tabela-responsiva">
+                        <table class="tabela-atrasos">
+                            <thead>
+                                <tr>
+                                    <th>Pessoa</th>
+                                    <th>Cadastro</th>
+                                    <th>Documento</th>
+                                    <th>Emissão</th>
+                                    <th>Vencimento</th>
+                                    <th>Pagamento</th>
+                                    <th>Situação</th>
+                                    <th>Dias em atraso</th>
+                                    <th>Valor</th>
+                                    <th>Banco</th>
+                                    <th>Plano financeiro</th>
+                                    <th>Representante</th>
+                                </tr>
+                            </thead>
+                            <tbody id="corpoTabelaDetalhesKpi">
+                                <tr>
+                                    <td colspan="12" class="tabela-vazia">
+                                        Carregue uma planilha para visualizar.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+            </section>
+            <section class="pagina-financeiro" id="contas-receber">
+
+                <div class="pagina-cabecalho receber-cabecalho">
+                    <div>
+                        <h2>Contas a Receber</h2>
+                        <p>Controle completo dos títulos de clientes.</p>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="btn-exportar-receber"
+                        id="btnExportarReceber"
+                    >
+                        <i class="fa-solid fa-file-csv"></i>
+                        Exportar filtrados
+                    </button>
+                </div>
+
+                <section class="receber-kpis" aria-label="Indicadores de contas a receber">
+                    <article class="receber-kpi">
+                        <span>Total da carteira</span>
+                        <strong id="receberKpiCarteira">R$ 0,00</strong>
+                        <small id="receberQtdCarteira">0 títulos</small>
+                    </article>
+
+                    <article class="receber-kpi receber-kpi-aberto">
+                        <span>Em aberto</span>
+                        <strong id="receberKpiAberto">R$ 0,00</strong>
+                        <small id="receberQtdAberto">0 títulos</small>
+                    </article>
+
+                    <article class="receber-kpi receber-kpi-atrasado">
+                        <span>Em atraso</span>
+                        <strong id="receberKpiAtrasado">R$ 0,00</strong>
+                        <small id="receberQtdAtrasado">0 títulos</small>
+                    </article>
+
+                    <article class="receber-kpi receber-kpi-pago">
+                        <span>Recebido</span>
+                        <strong id="receberKpiPago">R$ 0,00</strong>
+                        <small id="receberQtdPago">0 títulos</small>
+                    </article>
+
+                    <article class="receber-kpi receber-kpi-vencer">
+                        <span>A vencer</span>
+                        <strong id="receberKpiVencer">R$ 0,00</strong>
+                        <small id="receberQtdVencer">0 títulos</small>
+                    </article>
+                </section>
+
+                <section class="receber-painel">
+                    <div class="receber-filtros">
+                        <label class="receber-busca">
+                            <span>Pesquisar</span>
+                            <div>
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input
+                                    type="search"
+                                    id="receberBusca"
+                                    placeholder="Cliente, documento ou representante"
+                                    autocomplete="off"
+                                >
+                            </div>
+                        </label>
+
+                        <label>
+                            <span>Status</span>
+                            <select id="receberStatus">
+                                <option value="">Todos</option>
+                                <option value="aberto">Em aberto</option>
+                                <option value="atrasado">Em atraso</option>
+                                <option value="pago">Pago</option>
+                            </select>
+                        </label>
+
+                        <label>
+                            <span>Cliente</span>
+                            <select id="receberCliente">
+                                <option value="">Todos</option>
+                            </select>
+                        </label>
+
+                        <label>
+                            <span>Local de cobrança</span>
+                            <select id="receberBanco">
+                                <option value="">Todos</option>
+                            </select>
+                        </label>
+
+                        <label>
+                            <span>Representante</span>
+                            <select id="receberRepresentante">
+                                <option value="">Todos</option>
+                            </select>
+                        </label>
+
+                        <label>
+                            <span>Vencimento inicial</span>
+                            <input type="date" id="receberDataInicio">
+                        </label>
+
+                        <label>
+                            <span>Vencimento final</span>
+                            <input type="date" id="receberDataFim">
+                        </label>
+
+                        <button
+                            type="button"
+                            class="btn-limpar-receber"
+                            id="btnLimparReceber"
+                        >
+                            <i class="fa-solid fa-eraser"></i>
+                            Limpar
+                        </button>
+                    </div>
+
+                    <div class="receber-resumo-filtro">
+                        <span id="receberResumoFiltro">
+                            Carregue uma planilha para visualizar os títulos.
+                        </span>
+
+                        <label>
+                            Exibir
+                            <select id="receberPorPagina">
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <div class="receber-tabela-wrapper">
+                        <table class="receber-tabela">
+                            <thead>
+                                <tr>
+                                    <th>Cliente</th>
+                                    <th>Documento</th>
+                                    <th>Vencimento</th>
+                                    <th>Pagamento</th>
+                                    <th>Status</th>
+                                    <th>Dias</th>
+                                    <th>Valor documento</th>
+                                    <th>Valor pago</th>
+                                    <th>Saldo em aberto</th>
+                                    <th>Local de cobrança</th>
+                                    <th>Representante</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="receberTabelaCorpo">
+                                <tr>
+                                    <td colspan="11" class="receber-vazio">
+                                        Carregue uma planilha para visualizar.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="receber-paginacao">
+                        <button type="button" id="receberPaginaAnterior">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+
+                        <span id="receberInfoPagina">Página 1 de 1</span>
+
+                        <button type="button" id="receberProximaPagina">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </section>
+
+            </section>
+            <section class="pagina-financeiro" id="contas-pagar">
+                <div class="pagina-cabecalho pagar-cabecalho">
+                    <div>
+                        <h2>Contas a Pagar</h2>
+                        <p>Controle de compromissos e pagamentos de fornecedores.</p>
+                    </div>
+                    <button type="button" class="btn-exportar-pagar" id="btnExportarPagar">
+                        <i class="fa-solid fa-file-csv"></i> Exportar filtrados
+                    </button>
+                </div>
+
+                <section class="pagar-kpis">
+                    <article><span>Total dos compromissos</span><strong id="pagarKpiCarteira">R$ 0,00</strong><small id="pagarQtdCarteira">0 títulos</small></article>
+                    <article><span>Em aberto</span><strong id="pagarKpiAberto">R$ 0,00</strong><small id="pagarQtdAberto">0 títulos</small></article>
+                    <article><span>Em atraso</span><strong id="pagarKpiAtrasado">R$ 0,00</strong><small id="pagarQtdAtrasado">0 títulos</small></article>
+                    <article><span>Pago</span><strong id="pagarKpiPago">R$ 0,00</strong><small id="pagarQtdPago">0 títulos</small></article>
+                    <article><span>A vencer</span><strong id="pagarKpiVencer">R$ 0,00</strong><small id="pagarQtdVencer">0 títulos</small></article>
+                </section>
+
+                <section class="pagar-painel">
+                    <div class="pagar-filtros">
+                        <label class="pagar-busca"><span>Pesquisar</span><input type="search" id="pagarBusca" placeholder="Fornecedor ou documento"></label>
+                        <label><span>Status</span><select id="pagarStatus"><option value="">Todos</option><option value="aberto">Em aberto</option><option value="atrasado">Em atraso</option><option value="pago">Pago</option></select></label>
+                        <label><span>Descr.Tp.doc</span><select id="pagarTipoDocumento"><option value="">Todos</option></select></label>
+                        <label><span>Fornecedor</span><select id="pagarFornecedor"><option value="">Todos</option></select></label>
+                        <label><span>Local de cobrança</span><select id="pagarLocal"><option value="">Todos</option></select></label>
+                        <label><span>Plano financeiro</span><select id="pagarPlano"><option value="">Todos</option></select></label>
+                        <label><span>Vencimento inicial</span><input type="date" id="pagarInicio"></label>
+                        <label><span>Vencimento final</span><input type="date" id="pagarFim"></label>
+                        <button type="button" class="btn-limpar-pagar" id="btnLimparPagar"><i class="fa-solid fa-eraser"></i> Limpar</button>
+                    </div>
+
+                    <div class="pagar-resumo">
+                        <span id="pagarResumo">Carregue uma planilha para visualizar.</span>
+                        <label>Exibir <select id="pagarPorPagina"><option>25</option><option>50</option><option>100</option></select></label>
+                    </div>
+
+                    <div class="pagar-tabela-wrapper">
+                        <table class="pagar-tabela">
+                            <thead><tr>
+                                <th>Fornecedor</th><th>Documento</th><th>Descr.Tp.doc</th>
+                                <th>Vencimento</th><th>Pagamento</th><th>Status</th><th>Dias</th>
+                                <th>Valor documento</th><th>Valor pago</th><th>Saldo em aberto</th>
+                                <th>Local de cobrança</th><th>Plano financeiro</th>
+                            </tr></thead>
+                            <tbody id="pagarTabelaCorpo"><tr><td colspan="12" class="pagar-vazio">Carregue uma planilha para visualizar.</td></tr></tbody>
+                        </table>
+                    </div>
+
+                    <div class="pagar-paginacao">
+                        <button type="button" id="pagarAnterior"><i class="fa-solid fa-chevron-left"></i></button>
+                        <span id="pagarPaginaInfo">Página 1 de 1</span>
+                        <button type="button" id="pagarProxima"><i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+                </section>
+            </section>
+            <section class="pagina-financeiro" id="fluxo-caixa">
+
+                <div class="pagina-cabecalho fluxo-cabecalho">
+                    <div>
+                        <h2>Fluxo de Caixa</h2>
+                        <p>Entradas, saídas, saldos e projeções financeiras.</p>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="btn-exportar-fluxo"
+                        id="btnExportarFluxo"
+                    >
+                        <i class="fa-solid fa-file-csv"></i>
+                        Exportar movimentações
+                    </button>
+                </div>
+
+                <section class="fluxo-filtros">
+                    <label>
+                        <span>Visão</span>
+                        <select id="fluxoVisao">
+                            <option value="diario">Diária</option>
+                            <option value="semanal">Semanal</option>
+                            <option value="mensal" selected>Mensal</option>
+                        </select>
+                    </label>
+
+                    <label>
+                        <span>Cenário</span>
+                        <select id="fluxoCenario">
+                            <option value="consolidado">Realizado + previsto</option>
+                            <option value="realizado">Somente realizado</option>
+                            <option value="previsto">Somente previsto</option>
+                        </select>
+                    </label>
+
+                    <label>
+                        <span>Data inicial</span>
+                        <input type="date" id="fluxoDataInicio">
+                    </label>
+
+                    <label>
+                        <span>Data final</span>
+                        <input type="date" id="fluxoDataFim">
+                    </label>
+
+                    <label>
+                        <span>Tipo</span>
+                        <select id="fluxoTipo">
+                            <option value="">Entradas e saídas</option>
+                            <option value="entrada">Somente entradas</option>
+                            <option value="saida">Somente saídas</option>
+                        </select>
+                    </label>
+
+                    <label>
+                        <span>Local de cobrança</span>
+                        <select id="fluxoLocal">
+                            <option value="">Todos</option>
+                        </select>
+                    </label>
+
+                    <button
+                        type="button"
+                        class="btn-limpar-fluxo"
+                        id="btnLimparFluxo"
+                    >
+                        <i class="fa-solid fa-eraser"></i>
+                        Limpar
+                    </button>
+                </section>
+
+                <section class="fluxo-kpis">
+                    <article>
+                        <span>Entradas realizadas</span>
+                        <strong class="positivo" id="fluxoEntradasRealizadas">R$ 0,00</strong>
+                        <small id="fluxoQtdEntradasRealizadas">0 movimentações</small>
+                    </article>
+
+                    <article>
+                        <span>Saídas realizadas</span>
+                        <strong class="negativo" id="fluxoSaidasRealizadas">R$ 0,00</strong>
+                        <small id="fluxoQtdSaidasRealizadas">0 movimentações</small>
+                    </article>
+
+                    <article>
+                        <span>Saldo realizado</span>
+                        <strong id="fluxoSaldoRealizado">R$ 0,00</strong>
+                        <small>Entradas menos saídas pagas</small>
+                    </article>
+
+                    <article>
+                        <span>Entradas previstas</span>
+                        <strong class="previsto" id="fluxoEntradasPrevistas">R$ 0,00</strong>
+                        <small id="fluxoQtdEntradasPrevistas">0 títulos</small>
+                    </article>
+
+                    <article>
+                        <span>Saídas previstas</span>
+                        <strong class="alerta" id="fluxoSaidasPrevistas">R$ 0,00</strong>
+                        <small id="fluxoQtdSaidasPrevistas">0 títulos</small>
+                    </article>
+
+                    <article>
+                        <span>Saldo projetado</span>
+                        <strong id="fluxoSaldoProjetado">R$ 0,00</strong>
+                        <small>Realizado + previsão líquida</small>
+                    </article>
+                </section>
+
+                <section class="fluxo-grafico-card">
+                    <div class="fluxo-card-titulo">
+                        <div>
+                            <h3>Evolução do Fluxo de Caixa</h3>
+                            <p>Entradas, saídas e saldo acumulado do período.</p>
+                        </div>
+
+                        <div class="fluxo-legenda">
+                            <span><i class="entrada"></i>Entradas</span>
+                            <span><i class="saida"></i>Saídas</span>
+                            <span><i class="saldo"></i>Saldo acumulado</span>
+                        </div>
+                    </div>
+
+                    <div class="fluxo-grafico-area">
+                        <canvas id="graficoFluxoCaixaDetalhado"></canvas>
+                    </div>
+                </section>
+
+                <section class="fluxo-tabela-card">
+                    <div class="fluxo-tabela-topo">
+                        <div>
+                            <h3>Movimentações do Fluxo</h3>
+                            <p id="fluxoResumoTabela">Carregue uma planilha para visualizar.</p>
+                        </div>
+
+                        <label>
+                            Exibir
+                            <select id="fluxoPorPagina">
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <div class="fluxo-tabela-wrapper">
+                        <table class="fluxo-tabela">
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Cenário</th>
+                                    <th>Tipo</th>
+                                    <th>Cliente/Fornecedor</th>
+                                    <th>Documento</th>
+                                    <th>Vencimento</th>
+                                    <th>Pagamento</th>
+                                    <th>Local de cobrança</th>
+                                    <th>Plano financeiro</th>
+                                    <th>Valor</th>
+                                    <th>Impacto</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="fluxoTabelaCorpo">
+                                <tr>
+                                    <td colspan="11" class="fluxo-vazio">
+                                        Carregue uma planilha para visualizar.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="fluxo-paginacao">
+                        <button type="button" id="fluxoPaginaAnterior">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+
+                        <span id="fluxoInfoPagina">Página 1 de 1</span>
+
+                        <button type="button" id="fluxoProximaPagina">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </section>
+
+            </section>
+
+<section class="pagina-financeiro" id="bancos">
+
+                <div class="pagina-cabecalho">
+                    <div>
+                        <h2>Bancos e Contas</h2>
+                        <p>
+                            Visão consolidada das contas e movimentações bancárias.
+                        </p>
+                    </div>
+                </div>
+
+                <section class="resumo-bancario">
+
+                    <div class="resumo-bancario-icone">
+                        <i class="fa-solid fa-building-columns"></i>
+                    </div>
+
+                    <div class="resumo-bancario-conteudo">
+                        <span>Saldo caixa</span>
+
+                        <strong id="saldoBancarioTotal">
+                            R$ 0,00
+                        </strong>
+
+                        <small id="quantidadeContas">
+                            0 contas cadastradas
+                        </small>
+                    </div>
+
+                </section>
+
+                <section
+                    class="grade-bancos"
+                    id="gradeBancos"
+                    aria-label="Contas bancárias"
+                ></section>
+
+            </section>
+
+            <section class="pagina-financeiro" id="relatorios">
+
+                <div class="pagina-cabecalho">
+                    <div>
+                        <h2>Relatórios</h2>
+                        <p>
+                            Relatórios financeiros e exportação de informações.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="estado-inicial">
+                    <div class="estado-inicial-icone">
+                        <i class="fa-solid fa-file-lines"></i>
+                    </div>
+
+                    <h3>Relatórios Financeiros</h3>
+                    <p>Conteúdo em preparação.</p>
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <div
+        class="filtros-overlay"
+        id="filtrosOverlay"
+    ></div>
+
+    <aside
+        class="painel-filtros"
+        id="painelFiltros"
+        aria-hidden="true"
+    >
+
+        <div class="painel-filtros-header">
+
+            <div>
+                <h2>Filtros</h2>
+                <p>Refine os dados exibidos</p>
+            </div>
+
+            <button
+                type="button"
+                class="btn-fechar-filtros"
+                id="btnFecharFiltros"
+                aria-label="Fechar filtros"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+        <form
+            class="form-filtros"
+            id="formFiltros"
+        >
+
+            <div class="campo-filtro">
+                <label for="periodoInicio">Data inicial</label>
+                <input
+                    type="date"
+                    id="periodoInicio"
+                    name="periodoInicio"
+                >
+            </div>
+
+            <div class="campo-filtro">
+                <label for="periodoFim">Data final</label>
+                <input
+                    type="date"
+                    id="periodoFim"
+                    name="periodoFim"
+                >
+            </div>
+
+            <div class="campo-filtro">
+                <label>Cliente / Fornecedor</label>
+
+                <div
+                    class="multiselect-pessoas"
+                    id="multiselectPessoas"
+                >
+                    <button
+                        type="button"
+                        class="multiselect-pessoas-botao"
+                        id="multiselectPessoasBotao"
+                        aria-expanded="false"
+                    >
+                        <span id="multiselectPessoasResumo">
+                            Todos
+                        </span>
+
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+
+                    <div
+                        class="multiselect-pessoas-painel"
+                        id="multiselectPessoasPainel"
+                        hidden
+                    >
+                        <div class="multiselect-pessoas-busca">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+
+                            <input
+                                type="search"
+                                id="multiselectPessoasBusca"
+                                placeholder="Pesquisar..."
+                                autocomplete="off"
+                            >
+                        </div>
+
+                        <div class="multiselect-pessoas-acoes">
+                            <button
+                                type="button"
+                                id="btnMarcarTodasPessoas"
+                            >
+                                Marcar todos
+                            </button>
+
+                            <button
+                                type="button"
+                                id="btnDesmarcarTodasPessoas"
+                            >
+                                Desmarcar todos
+                            </button>
+                        </div>
+
+                        <label class="multiselect-pessoas-todos">
+                            <input
+                                type="checkbox"
+                                id="checkboxTodasPessoas"
+                                checked
+                            >
+
+                            <span>Todos</span>
+                        </label>
+
+                        <div
+                            class="multiselect-pessoas-lista"
+                            id="multiselectPessoasLista"
+                        ></div>
+
+                        <div class="multiselect-pessoas-rodape">
+                            <span id="multiselectPessoasContador">
+                                Todos selecionados
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="campo-filtro">
+                <label>Tipo de cadastro</label>
+
+                <div
+                    class="filtro-tipo-cadastro"
+                    id="filtroTipoCadastro"
+                >
+                    <label class="filtro-tipo-cadastro-opcao">
+                        <input
+                            type="checkbox"
+                            id="filtroTipoCliente"
+                            value="cliente"
+                            checked
+                        >
+                        <span>Clientes</span>
+                    </label>
+
+                    <label class="filtro-tipo-cadastro-opcao">
+                        <input
+                            type="checkbox"
+                            id="filtroTipoFornecedor"
+                            value="fornecedor"
+                            checked
+                        >
+                        <span>Fornecedores</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="campo-filtro">
+                <label for="representante">Representante</label>
+                <select id="representante" name="representante">
+                    <option value="">Todos</option>
+                </select>
+            </div>
+
+            <div class="campo-filtro">
+                <label>Banco / Conta</label>
+                <div class="multiselect-pessoas" id="multiselectBancos">
+                    <button type="button" class="multiselect-pessoas-botao" id="multiselectBancosBotao" aria-expanded="false">
+                        <span id="multiselectBancosResumo">Todos</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="multiselect-pessoas-painel" id="multiselectBancosPainel" hidden>
+                        <div class="multiselect-pessoas-acoes">
+                            <button type="button" id="btnMarcarTodosBancos">Marcar todos</button>
+                            <button type="button" id="btnDesmarcarTodosBancos">Desmarcar todos</button>
+                        </div>
+                        <label class="multiselect-pessoas-todos">
+                            <input type="checkbox" id="checkboxTodosBancos" checked>
+                            <span>Todos</span>
+                        </label>
+                        <div class="multiselect-pessoas-lista" id="multiselectBancosLista"></div>
+                        <div class="multiselect-pessoas-rodape"><span id="multiselectBancosContador">Todos selecionados</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="campo-filtro">
+                <label for="planoFinanceiro">Plano Financeiro</label>
+                <select id="planoFinanceiro" name="planoFinanceiro">
+                    <option value="">Todos</option>
+                </select>
+            </div>
+
+            <div class="campo-filtro">
+                <label for="situacao">Situação</label>
+                <select id="situacao" name="situacao">
+                    <option value="">Todas</option>
+                    <option value="pago">Pago</option>
+                    <option value="aberto">Em aberto</option>
+                    <option value="atrasado">Em atraso</option>
+                </select>
+            </div>
+
+            <div class="campo-filtro">
+                <label for="tipoDocumento">Tipo de documento</label>
+                <select id="tipoDocumento" name="tipoDocumento">
+                    <option value="">Todos</option>
+                </select>
+            </div>
+
+            <div class="acoes-filtros">
+
+                <button
+                    type="button"
+                    class="btn-limpar"
+                    id="btnLimparFiltros"
+                >
+                    <i class="fa-solid fa-eraser"></i>
+                    Limpar
+                </button>
+
+                <button
+                    type="submit"
+                    class="btn-aplicar"
+                >
+                    <i class="fa-solid fa-check"></i>
+                    Aplicar filtros
+                </button>
+
+            </div>
+
+        </form>
+
+    </aside>
+
+    <div
+        class="banco-overlay"
+        id="bancoOverlay"
+    ></div>
+
+    <aside
+        class="painel-banco"
+        id="painelBanco"
+        aria-hidden="true"
+    >
+
+        <div class="painel-banco-header">
+
+            <div class="painel-banco-identidade">
+
+                <div
+                    class="painel-banco-logo"
+                    id="detalheBancoLogo"
+                ></div>
+
+                <div>
+                    <h2 id="detalheBancoNome">Banco</h2>
+                    <p>Movimentações consolidadas do banco</p>
+                </div>
+
+            </div>
+
+            <button
+                type="button"
+                class="btn-fechar-banco"
+                id="btnFecharBanco"
+                aria-label="Fechar detalhes do banco"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+        <div class="painel-banco-conteudo">
+
+            <div class="detalhe-saldo">
+                <span>Saldo caixa</span>
+                <strong id="detalheBancoSaldo">R$ 0,00</strong>
+            </div>
+
+            <div class="detalhe-grade">
+
+                <article>
+                    <span>Total recebido</span>
+                    <strong id="detalheBancoRecebido">R$ 0,00</strong>
+                </article>
+
+                <article>
+                    <span>Total pago</span>
+                    <strong id="detalheBancoPago">R$ 0,00</strong>
+                </article>
+
+                <article>
+                    <span>Em aberto</span>
+                    <strong id="detalheBancoAberto">R$ 0,00</strong>
+                </article>
+
+                <article>
+                    <span>Em atraso</span>
+                    <strong id="detalheBancoAtraso">R$ 0,00</strong>
+                </article>
+
+            </div>
+
+            <section
+                class="saldo-disponivel-card"
+                aria-label="Saldo caixa informado manualmente"
+            >
+                <div class="saldo-disponivel-topo">
+                    <div>
+                        <span>Saldo caixa</span>
+                        <strong id="saldoDisponivelAtual">R$ 0,00</strong>
+                    </div>
+
+                    <span
+                        class="saldo-disponivel-semana"
+                        id="saldoDisponivelSemana"
+                    >
+                        Semana atual
+                    </span>
+                </div>
+
+                <label
+                    class="saldo-disponivel-campo"
+                    for="inputSaldoDisponivel"
+                >
+                    Digitar saldo do banco
+                </label>
+
+                <div class="saldo-disponivel-form">
+                    <input
+                        type="text"
+                        id="inputSaldoDisponivel"
+                        inputmode="decimal"
+                        placeholder="Ex.: 581.094,05"
+                        autocomplete="off"
+                    >
+
+                    <button
+                        type="button"
+                        id="btnSalvarSaldoDisponivel"
+                    >
+                        Salvar
+                    </button>
+                </div>
+
+                <button
+                    type="button"
+                    class="btn-limpar-saldo-disponivel"
+                    id="btnLimparSaldoDisponivel"
+                >
+                    <i class="fa-solid fa-trash-can"></i>
+                    Limpar saldo desta semana
+                </button>
+
+                <div
+                    class="saldo-disponivel-comparativo"
+                    id="saldoDisponivelComparativo"
+                >
+                    Salve o saldo desta semana para iniciar o histórico.
+                </div>
+
+                <div
+                    class="saldo-disponivel-historico"
+                    id="saldoDisponivelHistorico"
+                ></div>
+            </section>
+
+            <section class="saldo-disponivel-card" id="saldoInvestimentoCard" aria-label="Saldo de investimento informado manualmente" hidden>
+                <div class="saldo-disponivel-topo">
+                    <div><span>Saldo de investimento</span><strong id="saldoInvestimentoAtual">R$ 0,00</strong></div>
+                    <span class="saldo-disponivel-semana" id="saldoInvestimentoSemana">Sem registro</span>
+                </div>
+                <label class="saldo-disponivel-campo" for="inputSaldoInvestimento">Digitar saldo de investimento</label>
+                <div class="saldo-disponivel-form">
+                    <input type="text" id="inputSaldoInvestimento" inputmode="decimal" placeholder="Ex.: 250.000,00" autocomplete="off">
+                    <button type="button" id="btnSalvarSaldoInvestimento">Salvar</button>
+                </div>
+                <button type="button" class="btn-limpar-saldo-disponivel" id="btnLimparSaldoInvestimento">
+                    <i class="fa-solid fa-trash-can"></i> Limpar investimento registrado
+                </button>
+                <div class="saldo-disponivel-comparativo" id="saldoInvestimentoComparativo">Salve o saldo desta semana para iniciar o histórico.</div>
+                <div class="saldo-disponivel-historico" id="saldoInvestimentoHistorico"></div>
+            </section>
+
+            <div class="movimentacoes-placeholder">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+
+                <div>
+                    <h3>Movimentações recentes</h3>
+                    <p>
+                        O extrato deste banco será conectado aos dados reais
+                        em uma etapa futura.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+    </aside>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+
+    <script
+        src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"
+    ></script>
+
+    <script
+        type="module"
+        src="js/saldos-disponiveis-firestore.js?v=2"
+    ></script>
+
+    <script src="js/utilitarios-financeiros.js?v=8"></script>
+    <script src="js/processador-financeiro.js?v=22"></script>
+    <script src="js/indicadores-financeiros.js?v=10"></script>
+    <script src="js/graficos-financeiros.js?v=16"></script>
+    <script src="js/bancos-financeiros.js?v=15"></script>
+    <script src="js/filtros-financeiro.js?v=30"></script>
+    <script src="js/importacao-planilha.js?v=8"></script>
+    <script src="js/contas-receber.js?v=24"></script>
+    <script src="js/contas-pagar.js?v=22"></script>
+    <script src="js/fluxo-caixa.js?v=32"></script>
+    <script src="financeiro.js?v=9"></script>
+
+</body>
+</html>

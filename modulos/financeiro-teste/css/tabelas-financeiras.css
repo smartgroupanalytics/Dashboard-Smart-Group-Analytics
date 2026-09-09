@@ -1,0 +1,272 @@
+/*
+==========================================================
+SMART GROUP ANALYTICS
+Tabelas Financeiras
+==========================================================
+*/
+
+.card-tabela-atrasos {
+    margin-top: 18px;
+    overflow: hidden;
+    scroll-margin-top: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(12, 42, 79, 0.96),
+            rgba(6, 28, 55, 0.98)
+        );
+
+    border: 1px solid rgba(92, 155, 219, 0.20);
+    border-radius: 16px;
+
+    box-shadow:
+        0 14px 35px rgba(0, 0, 0, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.025);
+}
+
+.card-tabela-atrasos .card-grafico-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+
+    margin: 0;
+    padding: 18px 20px;
+
+    background: rgba(9, 37, 70, 0.65);
+    border-bottom: 1px solid rgba(109, 168, 226, 0.14);
+}
+
+.card-tabela-atrasos .card-grafico-header h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin: 0;
+
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.card-tabela-atrasos .card-grafico-header h3 > i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 34px;
+    height: 34px;
+
+    background: rgba(82, 163, 255, 0.14);
+    border: 1px solid rgba(82, 163, 255, 0.28);
+    border-radius: 10px;
+
+    color: #72b8ff;
+    font-size: 14px;
+}
+
+.card-tabela-atrasos .card-grafico-header p {
+    margin: 6px 0 0 44px;
+
+    color: #91abc9;
+    font-size: 10px;
+}
+
+.contador-atrasos {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    min-width: 38px;
+    height: 30px;
+    padding: 0 12px;
+
+    background: rgba(82, 163, 255, 0.16);
+    border: 1px solid rgba(82, 163, 255, 0.32);
+    border-radius: 999px;
+
+    color: #8ac5ff;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.tabela-responsiva {
+    width: 100%;
+    max-height: 540px;
+    overflow: auto;
+}
+
+.tabela-atrasos {
+    width: 100%;
+    min-width: 1480px;
+
+    border-collapse: separate;
+    border-spacing: 0;
+
+    font-size: 10px;
+}
+
+.tabela-atrasos thead {
+    background: rgba(5, 27, 53, 0.76);
+}
+
+.tabela-atrasos th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+
+    padding: 12px 15px;
+
+    background: #071d39;
+    border-bottom: 1px solid rgba(113, 170, 225, 0.16);
+
+    color: #8eabc9;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-align: left;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.tabela-atrasos td {
+    padding: 11px 15px;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.055);
+
+    color: #d8e7f7;
+    font-size: 10px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.tabela-atrasos tbody tr:nth-child(even) {
+    background: rgba(20, 62, 103, 0.15);
+}
+
+.tabela-atrasos tbody tr:hover {
+    background: rgba(26, 113, 201, 0.14);
+}
+
+.tabela-atrasos tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.tabela-atrasos th:first-child,
+.tabela-atrasos td:first-child {
+    min-width: 240px;
+}
+
+.tabela-atrasos td:first-child {
+    color: #ffffff;
+    font-weight: 650;
+}
+
+.tabela-atrasos th:nth-child(7),
+.tabela-atrasos td:nth-child(7),
+.tabela-atrasos th:nth-child(8),
+.tabela-atrasos td:nth-child(8) {
+    text-align: center;
+}
+
+.tabela-atrasos th:nth-child(9),
+.tabela-atrasos td:nth-child(9) {
+    text-align: right;
+}
+
+.valor-financeiro {
+    color: #72e6ad !important;
+    font-weight: 750;
+}
+
+.banco-tabela {
+    color: #72b8ff !important;
+}
+
+.representante-tabela {
+    color: #c7d6e7 !important;
+    font-weight: 600;
+}
+
+.dias-atraso {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 35px;
+    height: 25px;
+    padding: 0 9px;
+
+    background: rgba(255, 84, 76, 0.14);
+    border: 1px solid rgba(255, 84, 76, 0.24);
+    border-radius: 999px;
+
+    color: #ff7770;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.status-detalhe {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 68px;
+    height: 25px;
+    padding: 0 9px;
+
+    border-radius: 999px;
+
+    font-size: 9px;
+    font-weight: 800;
+}
+
+.status-detalhe.pago {
+    color: #72e6ad;
+    background: rgba(39, 209, 127, 0.13);
+    border: 1px solid rgba(39, 209, 127, 0.24);
+}
+
+.status-detalhe.aberto {
+    color: #72b8ff;
+    background: rgba(82, 163, 255, 0.13);
+    border: 1px solid rgba(82, 163, 255, 0.24);
+}
+
+.status-detalhe.atrasado {
+    color: #ff827c;
+    background: rgba(255, 84, 76, 0.13);
+    border: 1px solid rgba(255, 84, 76, 0.24);
+}
+
+.tabela-vazia {
+    padding: 38px 20px !important;
+
+    color: #8ca7c5 !important;
+    font-size: 11px !important;
+    font-weight: 400 !important;
+    text-align: center !important;
+}
+
+@media (max-width: 900px) {
+    .card-tabela-atrasos .card-grafico-header {
+        align-items: flex-start;
+        padding: 16px;
+    }
+
+    .card-tabela-atrasos .card-grafico-header p {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 600px) {
+    .card-tabela-atrasos {
+        border-radius: 12px;
+    }
+
+    .card-tabela-atrasos .card-grafico-header {
+        padding: 14px;
+    }
+}

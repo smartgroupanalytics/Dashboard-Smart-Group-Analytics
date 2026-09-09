@@ -1,0 +1,295 @@
+/*
+==========================================================
+SMART GROUP ANALYTICS
+Gráficos Financeiros
+==========================================================
+*/
+
+.periodo-dashboard {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 8px 12px;
+
+    background: rgba(8, 29, 57, 0.55);
+    border: 1px solid rgba(92, 155, 219, 0.18);
+    border-radius: 8px;
+
+    color: var(--cor-texto-secundario);
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.kpi-legenda {
+    display: block;
+
+    margin-top: 8px;
+
+    color: var(--cor-texto-secundario);
+    font-size: 10px;
+}
+
+.grade-graficos {
+    display: grid;
+    gap: 14px;
+
+    margin-top: 16px;
+}
+
+.grade-graficos-principal {
+    grid-template-columns:
+        minmax(0, 1.45fr)
+        minmax(330px, 1fr);
+}
+
+.grade-graficos-secundaria {
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+}
+
+.grade-graficos-terciaria {
+    grid-template-columns:
+        minmax(185px, 0.55fr)
+        minmax(185px, 0.55fr)
+        minmax(360px, 1.4fr);
+
+    align-items: stretch;
+}
+
+.card-grafico,
+.card-resumo {
+    min-width: 0;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(12, 42, 79, 0.94),
+            rgba(6, 28, 55, 0.98)
+        );
+
+    border: 1px solid rgba(92, 155, 219, 0.18);
+    border-radius: 14px;
+
+    box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.025);
+}
+
+.card-grafico {
+    padding: 16px;
+}
+
+.card-grafico-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+
+    margin-bottom: 12px;
+}
+
+.card-grafico-header h3 {
+    margin: 0;
+
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.card-grafico-header p {
+    margin: 5px 0 0;
+
+    color: var(--cor-texto-secundario);
+    font-size: 10px;
+    line-height: 1.45;
+}
+
+.controle-ranking {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    flex-shrink: 0;
+
+    color: #91abc9;
+    font-size: 9px;
+    font-weight: 700;
+}
+
+.controle-ranking select {
+    min-width: 82px;
+    height: 32px;
+    padding: 0 27px 0 10px;
+
+    color: #e6f2ff;
+    background: #071d39;
+    border: 1px solid rgba(82, 163, 255, 0.38);
+    border-radius: 8px;
+    outline: none;
+
+    font: inherit;
+    cursor: pointer;
+}
+
+.controle-ranking select:focus-visible {
+    border-color: #52a3ff;
+    box-shadow: 0 0 0 3px rgba(82, 163, 255, 0.15);
+}
+
+.grafico-container {
+    position: relative;
+
+    width: 100%;
+    height: 255px;
+}
+
+.grafico-alto {
+    height: 300px;
+}
+
+
+/* ======================================================
+   CARDS DE PRAZO MÉDIO E INADIMPLÊNCIA
+   ====================================================== */
+
+.card-resumo {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 255px;
+    padding: 22px;
+
+    overflow: hidden;
+    text-align: center;
+}
+
+.card-resumo::before {
+    content: "";
+
+    position: absolute;
+    top: -44px;
+    right: -44px;
+
+    width: 120px;
+    height: 120px;
+
+    background: rgba(22, 131, 255, 0.08);
+    border-radius: 50%;
+}
+
+.card-resumo::after {
+    content: "\f017";
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 44px;
+    height: 44px;
+    margin-bottom: 14px;
+
+    background: rgba(22, 131, 255, 0.15);
+    border: 1px solid rgba(82, 163, 255, 0.24);
+    border-radius: 13px;
+
+    color: #52a3ff;
+    font-family: "Font Awesome 6 Free";
+    font-size: 17px;
+    font-weight: 900;
+}
+
+.card-resumo-inadimplencia::after {
+    content: "\f071";
+
+    background: rgba(255, 77, 77, 0.13);
+    border-color: rgba(255, 102, 94, 0.24);
+
+    color: #ff665c;
+}
+
+.card-resumo span {
+    color: #b7cbe1;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.card-resumo strong {
+    margin: 12px 0 8px;
+
+    color: #52a3ff;
+    font-size: clamp(24px, 2vw, 32px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+}
+
+.card-resumo-inadimplencia strong {
+    color: #ff665c;
+}
+
+.card-resumo small {
+    max-width: 160px;
+
+    color: var(--cor-texto-secundario);
+    font-size: 9px;
+    line-height: 1.45;
+}
+
+
+/* ======================================================
+   RESPONSIVIDADE
+   ====================================================== */
+
+@media (max-width: 1250px) {
+    .grade-graficos-secundaria {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .grade-graficos-terciaria {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .grade-graficos-terciaria > .card-grafico {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 900px) {
+    .grade-graficos-principal,
+    .grade-graficos-secundaria,
+    .grade-graficos-terciaria {
+        grid-template-columns: 1fr;
+    }
+
+    .grade-graficos-terciaria > .card-grafico {
+        grid-column: auto;
+    }
+
+    .periodo-dashboard {
+        white-space: normal;
+    }
+
+    .card-resumo {
+        min-height: 210px;
+    }
+}
+
+@media (max-width: 600px) {
+    .grafico-container,
+    .grafico-alto {
+        height: 245px;
+    }
+
+    .card-grafico {
+        padding: 13px;
+    }
+
+    .card-grafico-header {
+        flex-direction: column;
+    }
+}

@@ -1,0 +1,330 @@
+/*
+==========================================================
+SMART GROUP ANALYTICS — CONTAS A RECEBER
+==========================================================
+*/
+
+.receber-cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.btn-exportar-receber,
+.btn-limpar-receber {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 38px;
+    padding: 0 14px;
+    border: 1px solid rgba(72, 154, 255, 0.3);
+    border-radius: 9px;
+    background: rgba(20, 105, 218, 0.18);
+    color: #dcecff;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.receber-kpis {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px;
+    margin: 14px 0;
+}
+
+.receber-kpi {
+    min-width: 0;
+    padding: 17px;
+    border: 1px solid rgba(111, 169, 226, 0.18);
+    border-radius: 13px;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(19, 58, 102, 0.96),
+            rgba(8, 35, 68, 0.98)
+        );
+}
+
+.receber-kpi span,
+.receber-kpi small {
+    display: block;
+    color: #9bb6d3;
+    font-size: 10px;
+}
+
+.receber-kpi strong {
+    display: block;
+    margin: 8px 0 6px;
+    color: #ffffff;
+    font-size: clamp(16px, 1.45vw, 24px);
+    line-height: 1;
+}
+
+.receber-kpi-aberto strong,
+.receber-valor.aberto {
+    color: #4ca3ff;
+}
+
+.receber-kpi-atrasado strong {
+    color: #ff6b63;
+}
+
+.receber-kpi-pago strong,
+.receber-valor.pago {
+    color: #29d681;
+}
+
+.receber-kpi-vencer strong {
+    color: #f6c84c;
+}
+
+.receber-painel {
+    overflow: hidden;
+    border: 1px solid rgba(101, 163, 224, 0.2);
+    border-radius: 14px;
+    background: rgba(8, 34, 66, 0.9);
+}
+
+.receber-filtros {
+    display: grid;
+    grid-template-columns: minmax(250px, 1.7fr) repeat(6, minmax(135px, 1fr)) auto;
+    align-items: end;
+    gap: 10px;
+    padding: 15px;
+    border-bottom: 1px solid rgba(101, 163, 224, 0.15);
+}
+
+.receber-filtros label {
+    display: grid;
+    gap: 6px;
+    min-width: 0;
+}
+
+.receber-filtros label > span {
+    color: #92abc7;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.receber-filtros input,
+.receber-filtros select,
+.receber-resumo-filtro select {
+    width: 100%;
+    height: 36px;
+    padding: 0 10px;
+    border: 1px solid rgba(111, 171, 230, 0.23);
+    border-radius: 8px;
+    outline: none;
+    background: #09294f;
+    color: #e9f3ff;
+    font: inherit;
+    font-size: 10px;
+}
+
+.receber-busca > div {
+    position: relative;
+}
+
+.receber-busca i {
+    position: absolute;
+    top: 50%;
+    left: 11px;
+    color: #7192b6;
+    transform: translateY(-50%);
+}
+
+.receber-busca input {
+    padding-left: 31px;
+}
+
+.receber-resumo-filtro {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 11px 15px;
+    color: #9db5ce;
+    font-size: 10px;
+}
+
+.receber-resumo-filtro label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.receber-resumo-filtro select {
+    width: 70px;
+}
+
+.receber-tabela-wrapper {
+    width: 100%;
+    overflow: auto;
+    border-top: 1px solid rgba(101, 163, 224, 0.12);
+    border-bottom: 1px solid rgba(101, 163, 224, 0.12);
+}
+
+.receber-tabela {
+    width: 100%;
+    min-width: 1450px;
+    border-collapse: collapse;
+    font-size: 10px;
+}
+
+.receber-tabela th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    padding: 12px 13px;
+    border-bottom: 1px solid rgba(111, 171, 230, 0.18);
+    background: #071f3d;
+    color: #8faac6;
+    font-size: 8px;
+    letter-spacing: 0.06em;
+    text-align: left;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.receber-tabela td {
+    padding: 11px 13px;
+    border-bottom: 1px solid rgba(111, 171, 230, 0.08);
+    color: #d5e4f4;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.receber-tabela tbody tr:hover {
+    background: rgba(43, 124, 213, 0.08);
+}
+
+.receber-cliente {
+    display: grid;
+    gap: 3px;
+    max-width: 280px;
+}
+
+.receber-cliente strong {
+    overflow: hidden;
+    color: #ffffff;
+    font-size: 10px;
+    text-overflow: ellipsis;
+}
+
+.receber-cliente small {
+    overflow: hidden;
+    color: #7996b5;
+    font-size: 8px;
+    text-overflow: ellipsis;
+}
+
+.receber-status {
+    display: inline-flex;
+    align-items: center;
+    min-height: 22px;
+    padding: 0 9px;
+    border-radius: 999px;
+    font-size: 8px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.receber-status.pago {
+    background: rgba(41, 214, 129, 0.13);
+    color: #42e595;
+}
+
+.receber-status.aberto {
+    background: rgba(76, 163, 255, 0.13);
+    color: #6eb7ff;
+}
+
+.receber-status.atrasado {
+    background: rgba(255, 107, 99, 0.13);
+    color: #ff837c;
+}
+
+.receber-valor {
+    font-weight: 700;
+    text-align: right;
+}
+
+.receber-vazio {
+    height: 160px;
+    color: #7794b2 !important;
+    text-align: center;
+}
+
+.receber-paginacao {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 13px;
+    padding: 13px;
+    color: #a8bdd2;
+    font-size: 10px;
+}
+
+.receber-paginacao button {
+    width: 34px;
+    height: 30px;
+    border: 1px solid rgba(111, 171, 230, 0.22);
+    border-radius: 8px;
+    background: #0b315e;
+    color: #d7e9fb;
+    cursor: pointer;
+}
+
+.receber-paginacao button:disabled {
+    cursor: default;
+    opacity: 0.35;
+}
+
+@media (max-width: 1450px) {
+    .receber-kpis {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .receber-filtros {
+        grid-template-columns: repeat(4, minmax(150px, 1fr));
+    }
+
+    .receber-busca {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 850px) {
+    .receber-cabecalho {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .receber-kpis {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .receber-filtros {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .receber-busca {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 520px) {
+    .receber-kpis,
+    .receber-filtros {
+        grid-template-columns: 1fr;
+    }
+
+    .receber-busca {
+        grid-column: auto;
+    }
+}
