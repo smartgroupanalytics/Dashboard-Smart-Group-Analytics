@@ -6344,6 +6344,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 300,
+    "dt_movto": "2026-09-08"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11909",
+    "produto": "11909",
+    "desc_completa": "NAPA BARI BRANCO - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 377,
     "dt_movto": "2026-08-13"
   },

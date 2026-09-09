@@ -111,16 +111,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "7957",
-    "produto": "17561",
-    "desc_completa": "METALIZADO TRAMADO BERLIM BR DOURADO",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 600,
-    "dt_saida": "2026-08-27",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "7962",
     "produto": "17674",
     "desc_completa": "TRAMADO BERLIM CAMEL 1165",
@@ -181,26 +171,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "7980",
-    "produto": "16707",
-    "desc_completa": "SEVILLE  PRETO",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 1000,
-    "dt_saida": "2026-08-27",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "7981",
-    "produto": "17011",
-    "desc_completa": "NAPA RAVENA BRANCO OFF",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 400,
-    "dt_saida": "2026-08-27",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8032",
     "produto": "17444",
     "desc_completa": "BRILHO ITALIA BROWN 1570",
@@ -231,16 +201,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8045",
-    "produto": "13588",
-    "desc_completa": "NAPA LEZARD EVORA PRETO",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 80.5,
-    "dt_saida": "2026-09-02",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8069",
     "produto": "16732",
     "desc_completa": "NAPA SEVILLE CACAU 1277",
@@ -267,16 +227,6 @@
     "grupo": "BEIRA RIO",
     "qtd_produzir": 500,
     "dt_saida": "2026-09-09",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8078",
-    "produto": "8168",
-    "desc_completa": "NAPA SOFT BAG PIGMENTADA DOURADO",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 200,
-    "dt_saida": "2026-09-04",
     "abreviacao": ""
   },
   {
@@ -487,6 +437,76 @@
     "grupo": "BEIRA RIO",
     "qtd_produzir": 400,
     "dt_saida": "2026-09-08",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8166",
+    "produto": "12275",
+    "desc_completa": "NOBUCK TUNISIA PU 1.2 MARINHO 1071",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 220,
+    "dt_saida": "2026-09-11",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8178",
+    "produto": "17497",
+    "desc_completa": "CAMURÇA PARIS GLAM FLANELA PRETO 01/ GRAFITE/ PRETO 01",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 119.5,
+    "dt_saida": "2026-09-11",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8179",
+    "produto": "17496",
+    "desc_completa": "CAMURÇA PARIS GLAM FLEX PRETO 01/ GRAFITE/ PRETO",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 70,
+    "dt_saida": "2026-09-08",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8180",
+    "produto": "30139",
+    "desc_completa": "CAMURÇA PARIS GLAM BRANCO OFF 526/ PRATA/ BISCOITO",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 29,
+    "dt_saida": "2026-09-08",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8181",
+    "produto": "30153",
+    "desc_completa": "CAMURÇA PARIS GLAM + BASE FLEX / NUDE 658- DOURADO/ BISCOITO",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 57,
+    "dt_saida": "2026-09-08",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8182",
+    "produto": "17497",
+    "desc_completa": "CAMURÇA PARIS GLAM FLANELA PRETO 01/ GRAFITE/ PRETO 01",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 74.2,
+    "dt_saida": "2026-09-08",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8183",
+    "produto": "17498",
+    "desc_completa": "CAMURÇA PARIS GLAM FLEX CHOCOLATE 1271/ DOURADO/ PRETO 01",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 53,
+    "dt_saida": "2026-09-11",
     "abreviacao": ""
   }
 ]
