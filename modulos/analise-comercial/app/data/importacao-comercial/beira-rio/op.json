@@ -21,16 +21,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "6207",
-    "produto": "16847",
-    "desc_completa": "NAPA PELICA VERDE CAPRI 1540",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 300,
-    "dt_saida": "2026-04-29",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "6533",
     "produto": "13172",
     "desc_completa": "NOBUCK TUNISIA PU 1.2 CHOCOLATE 1271",
@@ -105,7 +95,7 @@
     "produto": "9100114",
     "desc_completa": "NAPA MARSELHA AVELA",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 600,
+    "qtd_produzir": 597,
     "dt_saida": "2026-08-24",
     "abreviacao": ""
   },
@@ -115,7 +105,7 @@
     "produto": "17674",
     "desc_completa": "TRAMADO BERLIM CAMEL 1165",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 600,
+    "qtd_produzir": 597,
     "dt_saida": "2026-08-27",
     "abreviacao": ""
   },
@@ -171,61 +161,11 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8032",
-    "produto": "17444",
-    "desc_completa": "BRILHO ITALIA BROWN 1570",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 880,
-    "dt_saida": "2026-09-04",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8033",
-    "produto": "9100083",
-    "desc_completa": "NAPA CALF PU 0.9 MOCCA 1398",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 800,
-    "dt_saida": "2026-09-01",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8038",
     "produto": "17444",
     "desc_completa": "BRILHO ITALIA BROWN 1570",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 1000,
-    "dt_saida": "2026-09-09",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8069",
-    "produto": "16732",
-    "desc_completa": "NAPA SEVILLE CACAU 1277",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 600,
-    "dt_saida": "2026-09-02",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8073",
-    "produto": "12683",
-    "desc_completa": "NAPA CALF PU 0.9 BRANCO OFF",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 480,
-    "dt_saida": "2026-09-09",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8074",
-    "produto": "9100083",
-    "desc_completa": "NAPA CALF PU 0.9 MOCCA 1398",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 500,
+    "qtd_produzir": 299.5,
     "dt_saida": "2026-09-09",
     "abreviacao": ""
   },
@@ -405,7 +345,7 @@
     "produto": "16509",
     "desc_completa": "NAPA SEVILLE BRANCO OFF 526",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 800,
+    "qtd_produzir": 366,
     "dt_saida": "2026-09-09",
     "abreviacao": ""
   },

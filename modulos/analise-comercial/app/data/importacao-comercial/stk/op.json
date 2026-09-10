@@ -193,18 +193,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "7996",
-    "produto": "6411",
-    "desc_completa": "BERGAMO NATURAL",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 42.5,
-    "dt_saida": "2026-08-31",
-    "centro_custo": 10,
-    "abreviacao": "REV 1"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "7998",
     "produto": "17420",
     "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
@@ -284,8 +272,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-08-31",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -320,8 +308,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-01",
-    "centro_custo": 1,
-    "abreviacao": "RECOB"
+    "centro_custo": 3,
+    "abreviacao": "GR 1"
   },
   {
     "fonte_comercial": "STK",
@@ -512,8 +500,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-09-17",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",

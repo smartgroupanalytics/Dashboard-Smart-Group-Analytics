@@ -3848,6 +3848,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 300,
+    "dt_movto": "2026-09-09"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11903",
+    "produto": "11903",
+    "desc_completa": "NAPA MADRID BEGE - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 305,
     "dt_movto": "2026-04-08"
   },
@@ -8072,6 +8084,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 200,
+    "dt_movto": "2026-09-09"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11925",
+    "produto": "11925",
+    "desc_completa": "NAPA METAL LYON OURO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 201,
     "dt_movto": "2026-02-05"
   },
@@ -11998,6 +12022,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 93,
     "dt_movto": "2025-12-04"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "14181",
+    "produto": "14181",
+    "desc_completa": "HELSINKI CAFE - 1.2MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 155,
+    "dt_movto": "2026-09-09"
   },
   {
     "fonte_comercial": "STK",
