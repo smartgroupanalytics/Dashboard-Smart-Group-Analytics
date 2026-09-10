@@ -95,18 +95,8 @@
     "produto": "9100114",
     "desc_completa": "NAPA MARSELHA AVELA",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 597,
+    "qtd_produzir": 60,
     "dt_saida": "2026-08-24",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "7962",
-    "produto": "17674",
-    "desc_completa": "TRAMADO BERLIM CAMEL 1165",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 597,
-    "dt_saida": "2026-08-27",
     "abreviacao": ""
   },
   {
@@ -157,16 +147,6 @@
     "grupo": "BEIRA RIO",
     "qtd_produzir": 600,
     "dt_saida": "2026-08-27",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8038",
-    "produto": "17444",
-    "desc_completa": "BRILHO ITALIA BROWN 1570",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 299.5,
-    "dt_saida": "2026-09-09",
     "abreviacao": ""
   },
   {
@@ -363,7 +343,7 @@
     "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8160",
     "produto": "17676",
-    "desc_completa": "TRAMADO BERLIM BRANCO OFF 526",
+    "desc_completa": "NAPA TRAMADO BERLIM BRANCO OFF 526",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 600,
     "dt_saida": "2026-09-09",
@@ -381,12 +361,32 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8165",
+    "produto": "30235",
+    "desc_completa": "NAPA MARSELHA LARANJA 1506",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 200,
+    "dt_saida": "2026-09-10",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8166",
     "produto": "12275",
     "desc_completa": "NOBUCK TUNISIA PU 1.2 MARINHO 1071",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 220,
     "dt_saida": "2026-09-11",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8167",
+    "produto": "30233",
+    "desc_completa": "NAPA LISTRAS CANNES  MULTI BEGE 435",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 200,
+    "dt_saida": "2026-09-10",
     "abreviacao": ""
   },
   {
@@ -447,6 +447,96 @@
     "grupo": "BEIRA RIO",
     "qtd_produzir": 53,
     "dt_saida": "2026-09-11",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8188",
+    "produto": "30240",
+    "desc_completa": "NAPA LISTRAS CANNES MULTI PRETO 01",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 200,
+    "dt_saida": "2026-09-10",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8197",
+    "produto": "9873",
+    "desc_completa": "METALIZADO NANCY PU 1.0 DOURADO",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 2000,
+    "dt_saida": "2026-09-15",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8200",
+    "produto": "30126",
+    "desc_completa": "NAPA MALAGA CAMEL 1165",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 600,
+    "dt_saida": "2026-09-15",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8201",
+    "produto": "17672",
+    "desc_completa": "NAPA TRAMADO BERLIM CHOCOLATE 1271",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 400,
+    "dt_saida": "2026-09-15",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8202",
+    "produto": "17691",
+    "desc_completa": "NAPA DALLAS BRANCO OFF 526",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 500,
+    "dt_saida": "2026-09-15",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8203",
+    "produto": "17670",
+    "desc_completa": "NAPA DALLAS AVELA 1248",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 500,
+    "dt_saida": "2026-09-15",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8204",
+    "produto": "17641",
+    "desc_completa": "NAPA DALLAS CHOCOLATE 1271",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 500,
+    "dt_saida": "2026-09-15",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8207",
+    "produto": "17290",
+    "desc_completa": "NAPA LINHO ALABAMA AZUL SKY",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 400,
+    "dt_saida": "2026-09-15",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8210",
+    "produto": "17873",
+    "desc_completa": "METALIZADO TRAMADO BERLIM PRATA",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 400,
+    "dt_saida": "2026-09-15",
     "abreviacao": ""
   }
 ]
