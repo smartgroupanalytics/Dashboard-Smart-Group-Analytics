@@ -1,8 +1,8 @@
 {
-  "importadoEm": "2026-09-10T15:26:26.220Z",
+  "importadoEm": "2026-09-10T15:41:32.597Z",
   "pastaEntrada": "/home/runner/work/Dashboard-Smart-Group-Analytics/Dashboard-Smart-Group-Analytics/_automacao/entrada-relatorios",
   "modo": "ATUALIZACAO_PARCIAL_PROTEGIDA",
-  "status": "ATENCAO",
+  "status": "OK",
   "relatorios": {
     "ESTOQUE": {
       "arquivo": "ESTOQUE.xlsx",
@@ -29,9 +29,7 @@
       "linhasOriginais": 1385,
       "linhasValidas": 1385,
       "produtosDistintos": 145,
-      "quantidade": 224605.74,
-      "statusAtualizacao": "MANTIDO",
-      "motivo": "Bandwidth quota exceeded: https://gmail.googleapis.com/gmail/v1/users/me/messages?q=newer_than%3A30d%20has%3Aattachment%20filename%3A%22CONSUMO.xlsx%22&maxResults=50. Try reducing the rate of data transfer."
+      "quantidade": 224605.74
     },
     "OP": {
       "arquivo": "OP.xlsx",
@@ -96,12 +94,5 @@
     "beiraRio": {},
     "comum": {}
   },
-  "erros": [
-    {
-      "relatorio": "CONSUMO",
-      "arquivo": "CONSUMO.xlsx",
-      "mensagem": "Bandwidth quota exceeded: https://gmail.googleapis.com/gmail/v1/users/me/messages?q=newer_than%3A30d%20has%3Aattachment%20filename%3A%22CONSUMO.xlsx%22&maxResults=50. Try reducing the rate of data transfer.",
-      "baseAnteriorMantida": true
-    }
-  ]
+  "erros": []
 }
