@@ -1,13 +1,13 @@
 {
-  "atualizadoEm": "2026-09-10T13:20:11.572Z",
-  "ultimaAtualizacaoValida": "2026-09-10T13:20:11.572Z",
-  "status": "OK",
-  "mensagem": "9 de 9 relatórios atualizados com sucesso.",
+  "atualizadoEm": "2026-09-10T15:26:26.220Z",
+  "ultimaAtualizacaoValida": "2026-09-10T15:26:26.220Z",
+  "status": "ATENCAO",
+  "mensagem": "8 de 9 relatórios atualizados com sucesso. 1 mantido(s) na base anterior: CONSUMO.xlsx.",
   "modo": "PARCIAL_SEGURO",
   "totalEsperado": 9,
-  "totalRecebido": 9,
-  "totalAtualizado": 9,
-  "totalMantido": 0,
+  "totalRecebido": 8,
+  "totalAtualizado": 8,
+  "totalMantido": 1,
   "relatorios": [
     {
       "arquivo": "ESTOQUE.xlsx",
@@ -25,10 +25,10 @@
     },
     {
       "arquivo": "CONSUMO.xlsx",
-      "status": "OK",
-      "recebidoEm": "2026-09-10T13:11:39.000Z",
-      "linhasValidas": 1385,
-      "mensagem": "Atualizado com sucesso."
+      "status": "MANTIDO — Bandwidth quota exceeded: https://gmail.googleapis.com/gmail/v1/users/me/messages?q=newer_than%3A30d%20has%3Aattachment%20filename%3A%22CONSUMO.xlsx%22&maxResults=50. Try reducing the rate of data transfer.",
+      "recebidoEm": null,
+      "mensagem": "Bandwidth quota exceeded: https://gmail.googleapis.com/gmail/v1/users/me/messages?q=newer_than%3A30d%20has%3Aattachment%20filename%3A%22CONSUMO.xlsx%22&maxResults=50. Try reducing the rate of data transfer.",
+      "baseAnteriorMantida": true
     },
     {
       "arquivo": "OP.xlsx",
