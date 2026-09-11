@@ -1,5 +1,5 @@
 {
-  "importadoEm": "2026-09-11T10:56:39.814Z",
+  "importadoEm": "2026-09-11T11:11:26.450Z",
   "pastaEntrada": "/home/runner/work/Dashboard-Smart-Group-Analytics/Dashboard-Smart-Group-Analytics/_automacao/entrada-relatorios",
   "modo": "ATUALIZACAO_PARCIAL_PROTEGIDA",
   "status": "OK",
@@ -11,7 +11,7 @@
       "linhasOriginais": 2454,
       "linhasValidas": 2453,
       "produtosDistintos": 860,
-      "quantidade": 425337.64999999985
+      "quantidade": 423716.14999999985
     },
     "COMPRAS": {
       "arquivo": "COMPRAS.xlsx",
