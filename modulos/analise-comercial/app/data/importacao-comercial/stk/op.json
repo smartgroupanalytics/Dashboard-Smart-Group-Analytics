@@ -85,18 +85,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "7425",
-    "produto": "16633",
-    "desc_completa": "CANYON CASTOR",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 187.5,
-    "dt_saida": "2026-07-27",
-    "centro_custo": 10,
-    "abreviacao": "REV 1"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "7427",
     "produto": "16477",
     "desc_completa": "CANYON BEGE",
@@ -200,8 +188,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-08-31",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "centro_custo": 3,
+    "abreviacao": "GR 1"
   },
   {
     "fonte_comercial": "STK",
@@ -265,18 +253,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8004",
-    "produto": "11779",
-    "desc_completa": "SORRENTO OFF WHITE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 400,
-    "dt_saida": "2026-08-31",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8035",
     "produto": "15534",
     "desc_completa": "MIRAGE OURO LIGHT",
@@ -298,18 +274,6 @@
     "dt_saida": "2026-08-31",
     "centro_custo": 10,
     "abreviacao": "REV 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8049",
-    "produto": "17881",
-    "desc_completa": "ASPEN BRONZE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 200,
-    "dt_saida": "2026-09-01",
-    "centro_custo": 3,
-    "abreviacao": "GR 1"
   },
   {
     "fonte_comercial": "STK",
@@ -356,8 +320,8 @@
     "subgrupo": 41,
     "qtd_produzir": 300,
     "dt_saida": "2026-09-10",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -368,8 +332,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-09-10",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -488,8 +452,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-09-17",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -500,8 +464,20 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-09-17",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8186",
+    "produto": "17420",
+    "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 1000,
+    "dt_saida": "2026-09-17",
+    "centro_custo": 0,
+    "abreviacao": ""
   },
   {
     "fonte_comercial": "STK",
@@ -512,7 +488,7 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-09-18",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   }
 ]
