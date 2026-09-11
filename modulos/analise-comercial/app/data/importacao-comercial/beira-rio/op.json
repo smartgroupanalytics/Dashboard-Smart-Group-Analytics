@@ -91,16 +91,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "7918",
-    "produto": "9100114",
-    "desc_completa": "NAPA MARSELHA AVELA",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 60,
-    "dt_saida": "2026-08-24",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "7970",
     "produto": "12275",
     "desc_completa": "NOBUCK TUNISIA PU 1.2 MARINHO 1071",
@@ -225,7 +215,7 @@
     "produto": "14606",
     "desc_completa": "NAPA LEZARD EVORA AVELA 1248",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 400,
+    "qtd_produzir": 212,
     "dt_saida": "2026-09-08",
     "abreviacao": ""
   },
@@ -256,16 +246,6 @@
     "desc_completa": "NAPA MALAGA BRANCO OFF",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 2000,
-    "dt_saida": "2026-09-08",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8114",
-    "produto": "30126",
-    "desc_completa": "NAPA MALAGA CAMEL 1165",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 400,
     "dt_saida": "2026-09-08",
     "abreviacao": ""
   },
@@ -316,16 +296,6 @@
     "desc_completa": "METALIZADO NANCY PU 1.0 DOURADO",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 2000,
-    "dt_saida": "2026-09-09",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8158",
-    "produto": "16509",
-    "desc_completa": "NAPA SEVILLE BRANCO OFF 526",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 366,
     "dt_saida": "2026-09-09",
     "abreviacao": ""
   },
@@ -466,6 +436,16 @@
     "desc_completa": "METALIZADO NANCY PU 1.0 DOURADO",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 2000,
+    "dt_saida": "2026-09-15",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8198",
+    "produto": "9895",
+    "desc_completa": "METALIZADO NANCY PU 1.0 OURO ROSADO",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 1000,
     "dt_saida": "2026-09-15",
     "abreviacao": ""
   },
