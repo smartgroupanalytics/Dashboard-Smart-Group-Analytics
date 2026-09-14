@@ -521,7 +521,7 @@
     "produto": "11843",
     "desc_completa": "BORGONHA PRETO",
     "grupo": 39,
-    "subgrupo": 0,
+    "subgrupo": 41,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 98,
@@ -533,7 +533,7 @@
     "produto": "11843",
     "desc_completa": "BORGONHA PRETO",
     "grupo": 39,
-    "subgrupo": 0,
+    "subgrupo": 41,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 224,
@@ -545,7 +545,7 @@
     "produto": "11844",
     "desc_completa": "BORGONHA PRATA",
     "grupo": 39,
-    "subgrupo": 0,
+    "subgrupo": 41,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 3,
@@ -557,7 +557,7 @@
     "produto": "11844",
     "desc_completa": "BORGONHA PRATA",
     "grupo": 39,
-    "subgrupo": 0,
+    "subgrupo": 41,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 19,
@@ -581,7 +581,7 @@
     "produto": "11847",
     "desc_completa": "BORGONHA GRAFITE",
     "grupo": 39,
-    "subgrupo": 0,
+    "subgrupo": 41,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 39.4,
@@ -3838,6 +3838,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 300,
     "dt_movto": "2026-05-28"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11903",
+    "produto": "11903",
+    "desc_completa": "NAPA MADRID BEGE - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 300,
+    "dt_movto": "2026-09-09"
   },
   {
     "fonte_comercial": "STK",
@@ -8072,6 +8084,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 200,
+    "dt_movto": "2026-09-09"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11925",
+    "produto": "11925",
+    "desc_completa": "NAPA METAL LYON OURO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 201,
     "dt_movto": "2026-02-05"
   },
@@ -11998,6 +12022,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 93,
     "dt_movto": "2025-12-04"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "14181",
+    "produto": "14181",
+    "desc_completa": "HELSINKI CAFE - 1.2MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 155,
+    "dt_movto": "2026-09-09"
   },
   {
     "fonte_comercial": "STK",
@@ -15985,6 +16021,30 @@
   },
   {
     "fonte_comercial": "STK",
+    "cod_prod": "20077",
+    "produto": "20077",
+    "desc_completa": "NAPA METAL CHARM BRANCO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 199.5,
+    "dt_movto": "2026-09-11"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20078",
+    "produto": "20078",
+    "desc_completa": "NAPA METAL CHARM NUDE - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 199,
+    "dt_movto": "2026-09-11"
+  },
+  {
+    "fonte_comercial": "STK",
     "cod_prod": "20082",
     "produto": "20082",
     "desc_completa": "NAPA BARI CAFE - PU 0.7MM",
@@ -16402,6 +16462,30 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 396,
     "dt_movto": "2026-09-04"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20102",
+    "produto": "20102",
+    "desc_completa": "NAPA METAL CHARM OURO LIGHT - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 200,
+    "dt_movto": "2026-09-11"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20103",
+    "produto": "20103",
+    "desc_completa": "NAPA METAL CHARM PRATA - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 118,
+    "dt_movto": "2026-09-11"
   },
   {
     "fonte_comercial": "STK",
