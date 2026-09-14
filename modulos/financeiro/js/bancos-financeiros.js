@@ -447,6 +447,11 @@ function atualizarSaldoDisponivelGeral(listaBancos) {
     const total = obterSaldoCaixaTotalSelecionado(base);
 
     preencherTexto(
+        "quantidadeContas",
+        `${base.length} banco${base.length === 1 ? "" : "s"} selecionado${base.length === 1 ? "" : "s"}${totalInvestimentos > 0 ? " + investimentos" : ""}`
+    );
+
+    preencherTexto(
         "kpiSaldoDisponivelGeral",
         formatarMoeda(total)
     );
