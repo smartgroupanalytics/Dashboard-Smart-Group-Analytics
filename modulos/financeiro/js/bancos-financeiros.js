@@ -452,6 +452,21 @@ function atualizarSaldoDisponivelGeral(listaBancos) {
     );
 
     preencherTexto(
+        "tooltipSaldoBancos",
+        formatarMoeda(totalCaixa)
+    );
+
+    preencherTexto(
+        "tooltipSaldoInvestimentos",
+        formatarMoeda(totalInvestimentos)
+    );
+
+    preencherTexto(
+        "tooltipSaldoTotal",
+        formatarMoeda(total)
+    );
+
+    preencherTexto(
         "kpiSaldoDisponivelGeral",
         formatarMoeda(total)
     );

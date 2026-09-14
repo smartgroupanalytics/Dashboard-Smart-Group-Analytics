@@ -572,6 +572,84 @@ button {
     color: #a47cff;
 }
 
+.kpi-ticket {
+    cursor: help;
+}
+
+.kpi-ticket:focus-visible {
+    outline: 3px solid rgba(164, 124, 255, 0.55);
+    outline-offset: 3px;
+}
+
+.saldo-caixa-tooltip {
+    position: absolute;
+    z-index: 4;
+    inset: 8px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 7px;
+
+    padding: 12px 14px;
+
+    color: #dceaff;
+    font-size: 11px;
+    line-height: 1.25;
+
+    background: rgba(3, 18, 37, 0.97);
+    border: 1px solid rgba(164, 124, 255, 0.48);
+    border-radius: 10px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.36);
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(5px);
+    pointer-events: none;
+
+    transition:
+        opacity 0.16s ease,
+        visibility 0.16s ease,
+        transform 0.16s ease;
+}
+
+.saldo-caixa-tooltip > strong {
+    color: #ffffff;
+    font-size: 12px;
+}
+
+.saldo-caixa-tooltip span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.saldo-caixa-tooltip span b {
+    margin-left: auto;
+    color: #ffffff;
+    white-space: nowrap;
+}
+
+.saldo-caixa-tooltip i {
+    width: 13px;
+    color: #a47cff;
+    text-align: center;
+}
+
+.saldo-caixa-tooltip .saldo-caixa-tooltip-total {
+    margin-top: 2px;
+    padding-top: 7px;
+    color: #cbb6ff;
+    border-top: 1px solid rgba(164, 124, 255, 0.28);
+}
+
+.kpi-ticket:hover .saldo-caixa-tooltip,
+.kpi-ticket:focus-visible .saldo-caixa-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
 /* Placeholder */
 
 .area-proxima-etapa {

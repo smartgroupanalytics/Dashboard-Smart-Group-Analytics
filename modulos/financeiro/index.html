@@ -17,7 +17,7 @@
 
     <link
         rel="stylesheet"
-        href="financeiro.css?v=28"
+        href="financeiro.css?v=29"
     >
     <link rel="stylesheet" href="css/graficos-financeiros.css?v=13">
     <link rel="stylesheet" href="css/bancos-financeiros.css?v=14">
@@ -290,12 +290,30 @@
                         </div>
                     </article>
 
-                    <article class="card-kpi kpi-ticket">
+                    <article
+                        class="card-kpi kpi-ticket"
+                        tabindex="0"
+                        aria-describedby="tooltipSaldoCaixa"
+                    >
                         <div class="kpi-icone"><i class="fa-solid fa-receipt"></i></div>
                         <div class="kpi-conteudo">
                             <span class="kpi-titulo">Saldo Caixa</span>
                             <strong class="kpi-valor" id="kpiSaldoDisponivelGeral">R$ 0,00</strong>
                             <span class="kpi-legenda" id="legendaSaldoDisponivelGeral">Bancos + investimentos selecionados</span>
+                        </div>
+                        <div class="saldo-caixa-tooltip" id="tooltipSaldoCaixa" role="tooltip">
+                            <strong>Composição do saldo</strong>
+                            <span>
+                                <i class="fa-solid fa-building-columns"></i>
+                                Bancos: <b id="tooltipSaldoBancos">R$ 0,00</b>
+                            </span>
+                            <span>
+                                <i class="fa-solid fa-chart-line"></i>
+                                Investimentos: <b id="tooltipSaldoInvestimentos">R$ 0,00</b>
+                            </span>
+                            <span class="saldo-caixa-tooltip-total">
+                                Total: <b id="tooltipSaldoTotal">R$ 0,00</b>
+                            </span>
                         </div>
                     </article>
                 </section>
@@ -1345,7 +1363,7 @@
     <script src="js/processador-financeiro.js?v=22"></script>
     <script src="js/indicadores-financeiros.js?v=10"></script>
     <script src="js/graficos-financeiros.js?v=16"></script>
-    <script src="js/bancos-financeiros.js?v=17"></script>
+    <script src="js/bancos-financeiros.js?v=18"></script>
     <script src="js/filtros-financeiro.js?v=32"></script>
     <script src="js/importacao-planilha.js?v=8"></script>
     <script src="js/contas-receber.js?v=24"></script>
