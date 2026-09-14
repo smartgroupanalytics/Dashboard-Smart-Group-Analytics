@@ -446,7 +446,9 @@ function aplicarFiltrosDashboard() {
         if (tipoDocumento && item.tipoDocumento !== tipoDocumento) return false;
 
         if (!todosBancosSelecionados) {
-            const identidade = identificarBanco(item.banco, "");
+            // Use a mesma identificação aplicada na criação dos cards/opções.
+            // Assim, os dois Sicoob mantêm seus IDs individuais no filtro.
+            const identidade = identificarLocalCobranca(item.banco);
             if (!bancosSelecionados.has(identidade.id)) return false;
         }
 
