@@ -34,24 +34,37 @@ function renderizarGraficos(dados) {
     renderizarRecebimentosDia(clientesVisao);
     renderizarTopClientes(clientesVisao);
     renderizarRecebimentosBanco(clientesVisao);
-    renderizarPlanoFinanceiro(clientesVisao);
-
-    renderizarSituacaoReceber(clientes);
 }
 
 function prepararMovimentoVisao(item) {
-    const dataReferencia = item.pago ? item.dataPagamento : item.vencimento;
+    /*
+     * Na Visão Geral, um lançamento só é REALIZADO quando existe uma
+     * Dt.pgto (coluna O) válida. O gráfico "Entradas por Dia" deve fechar
+     * com o Excel pela data efetiva do pagamento, nunca pelo vencimento.
+     */
+    const pagamentoValido =
+        item.dataPagamento instanceof Date &&
+        !Number.isNaN(item.dataPagamento.getTime());
+
+    const dataReferencia = pagamentoValido
+        ? item.dataPagamento
+        : item.vencimento;
+
     if (!(dataReferencia instanceof Date)) return null;
 
-    const valorReferencia = item.pago
-        ? Number(item.valorLiquidoPago || item.valorDocumento || 0)
-        : Math.max(0, Number(item.valorDocumento || 0) - Number(item.valorLiquidoPago || 0));
+    const valorReferencia = pagamentoValido
+        ? Number(item.valorLiquidoPago || 0)
+        : Math.max(
+            0,
+            Number(item.valorDocumento || 0) -
+                Number(item.valorLiquidoPago || 0)
+        );
 
     return {
         ...item,
         dataPagamento: dataReferencia,
         valorLiquidoPago: valorReferencia,
-        cenarioVisao: item.pago ? "realizado" : "previsto"
+        cenarioVisao: pagamentoValido ? "realizado" : "previsto"
     };
 }
 

@@ -16,8 +16,20 @@ function atualizarDashboardCompleto(dados) {
 
 function filtrarDadosModoVisao(dados) {
     const lista = Array.isArray(dados) ? dados : [];
-    if (modoVisaoGeral === "realizado") return lista.filter((item) => item.pago);
-    if (modoVisaoGeral === "previsto") return lista.filter((item) => !item.pago);
+    const temDataPagamento = (item) =>
+        item?.dataPagamento instanceof Date &&
+        !Number.isNaN(item.dataPagamento.getTime());
+
+    // Cenário Realizado = Dt.pgto (coluna O) válida.
+    if (modoVisaoGeral === "realizado") {
+        return lista.filter(temDataPagamento);
+    }
+
+    // Cenário Previsto = sem Dt.pgto válida; usa vencimento nos gráficos.
+    if (modoVisaoGeral === "previsto") {
+        return lista.filter((item) => !temDataPagamento(item));
+    }
+
     return lista;
 }
 

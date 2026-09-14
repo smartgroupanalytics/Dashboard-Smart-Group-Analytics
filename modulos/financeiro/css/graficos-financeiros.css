@@ -37,22 +37,15 @@ Gráficos Financeiros
 }
 
 .grade-graficos-principal {
-    grid-template-columns:
-        minmax(0, 1.45fr)
-        minmax(330px, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .grade-graficos-secundaria {
-    grid-template-columns:
-        repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .grade-graficos-terciaria {
-    grid-template-columns:
-        minmax(185px, 0.55fr)
-        minmax(185px, 0.55fr)
-        minmax(360px, 1.4fr);
-
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     align-items: stretch;
 }
 
