@@ -27,6 +27,8 @@ const BANCO_SALDO_CAIXA_MANUAL = Object.freeze({
 });
 
 function configurarPainelBanco() {
+    configurarModalSaldoCaixa();
+
     const painel =
         document.getElementById("painelBanco");
 
@@ -105,6 +107,60 @@ function configurarPainelBanco() {
             }
         });
     }
+}
+
+function configurarModalSaldoCaixa() {
+    const card = document.querySelector(".kpi-ticket");
+    const overlay = document.getElementById("modalSaldoCaixaOverlay");
+    const modal = document.getElementById("modalSaldoCaixa");
+    const btnFechar = document.getElementById("btnFecharModalSaldoCaixa");
+
+    if (!card || !overlay || !modal || !btnFechar) {
+        return;
+    }
+
+    let focoAnterior = null;
+
+    const abrir = () => {
+        focoAnterior = document.activeElement;
+        overlay.classList.add("ativo");
+        overlay.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+        btnFechar.focus();
+    };
+
+    const fechar = () => {
+        if (!overlay.classList.contains("ativo")) {
+            return;
+        }
+
+        overlay.classList.remove("ativo");
+        overlay.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+
+        if (focoAnterior && typeof focoAnterior.focus === "function") {
+            focoAnterior.focus();
+        }
+    };
+
+    card.addEventListener("click", abrir);
+    card.addEventListener("keydown", (evento) => {
+        if (evento.key !== "Enter" && evento.key !== " ") {
+            return;
+        }
+
+        evento.preventDefault();
+        abrir();
+    });
+
+    btnFechar.addEventListener("click", fechar);
+    overlay.addEventListener("click", fechar);
+
+    document.addEventListener("keydown", (evento) => {
+        if (evento.key === "Escape") {
+            fechar();
+        }
+    });
 }
 
 function abrirDetalhesBanco(banco) {
@@ -463,6 +519,21 @@ function atualizarSaldoDisponivelGeral(listaBancos) {
 
     preencherTexto(
         "tooltipSaldoTotal",
+        formatarMoeda(total)
+    );
+
+    preencherTexto(
+        "modalSaldoBancos",
+        formatarMoeda(totalCaixa)
+    );
+
+    preencherTexto(
+        "modalSaldoInvestimentos",
+        formatarMoeda(totalInvestimentos)
+    );
+
+    preencherTexto(
+        "modalSaldoTotal",
         formatarMoeda(total)
     );
 

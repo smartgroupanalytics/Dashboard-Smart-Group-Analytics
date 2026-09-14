@@ -17,7 +17,7 @@
 
     <link
         rel="stylesheet"
-        href="financeiro.css?v=29"
+        href="financeiro.css?v=30"
     >
     <link rel="stylesheet" href="css/graficos-financeiros.css?v=13">
     <link rel="stylesheet" href="css/bancos-financeiros.css?v=14">
@@ -294,6 +294,10 @@
                         class="card-kpi kpi-ticket"
                         tabindex="0"
                         aria-describedby="tooltipSaldoCaixa"
+                        role="button"
+                        aria-haspopup="dialog"
+                        aria-controls="modalSaldoCaixa"
+                        aria-label="Abrir composição detalhada do saldo caixa"
                     >
                         <div class="kpi-icone"><i class="fa-solid fa-receipt"></i></div>
                         <div class="kpi-conteudo">
@@ -948,6 +952,70 @@
     </div>
 
     <div
+        class="saldo-caixa-modal-overlay"
+        id="modalSaldoCaixaOverlay"
+        aria-hidden="true"
+    >
+        <section
+            class="saldo-caixa-modal"
+            id="modalSaldoCaixa"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modalSaldoCaixaTitulo"
+            aria-describedby="modalSaldoCaixaDescricao"
+            tabindex="-1"
+        >
+            <header class="saldo-caixa-modal-header">
+                <div class="saldo-caixa-modal-titulo">
+                    <span class="saldo-caixa-modal-icone">
+                        <i class="fa-solid fa-receipt"></i>
+                    </span>
+                    <div>
+                        <h2 id="modalSaldoCaixaTitulo">Composição do Saldo Caixa</h2>
+                        <p id="modalSaldoCaixaDescricao">
+                            Valores dos bancos e investimentos selecionados.
+                        </p>
+                    </div>
+                </div>
+                <button
+                    type="button"
+                    class="saldo-caixa-modal-fechar"
+                    id="btnFecharModalSaldoCaixa"
+                    aria-label="Fechar composição do saldo caixa"
+                >
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </header>
+
+            <div class="saldo-caixa-modal-grade">
+                <article>
+                    <span>
+                        <i class="fa-solid fa-building-columns"></i>
+                        Saldo dos bancos
+                    </span>
+                    <strong id="modalSaldoBancos">R$ 0,00</strong>
+                </article>
+                <article>
+                    <span>
+                        <i class="fa-solid fa-chart-line"></i>
+                        Investimentos
+                    </span>
+                    <strong id="modalSaldoInvestimentos">R$ 0,00</strong>
+                </article>
+            </div>
+
+            <div class="saldo-caixa-modal-total">
+                <span>Total consolidado</span>
+                <strong id="modalSaldoTotal">R$ 0,00</strong>
+            </div>
+
+            <p class="saldo-caixa-modal-observacao">
+                O total acompanha os bancos selecionados no filtro do Financeiro.
+            </p>
+        </section>
+    </div>
+
+    <div
         class="filtros-overlay"
         id="filtrosOverlay"
     ></div>
@@ -1363,7 +1431,7 @@
     <script src="js/processador-financeiro.js?v=22"></script>
     <script src="js/indicadores-financeiros.js?v=10"></script>
     <script src="js/graficos-financeiros.js?v=16"></script>
-    <script src="js/bancos-financeiros.js?v=18"></script>
+    <script src="js/bancos-financeiros.js?v=19"></script>
     <script src="js/filtros-financeiro.js?v=32"></script>
     <script src="js/importacao-planilha.js?v=8"></script>
     <script src="js/contas-receber.js?v=24"></script>
