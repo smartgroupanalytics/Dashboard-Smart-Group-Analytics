@@ -181,18 +181,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "7998",
-    "produto": "17420",
-    "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 1000,
-    "dt_saida": "2026-08-31",
-    "centro_custo": 7,
-    "abreviacao": "ESTAM"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "7999",
     "produto": "17425",
     "desc_completa": "DENVER PRETO",
@@ -246,10 +234,10 @@
     "desc_completa": "NAPA FLOATER VENEZIA DOURADO",
     "grupo": 39,
     "subgrupo": 41,
-    "qtd_produzir": 1000,
+    "qtd_produzir": 624.5,
     "dt_saida": "2026-08-31",
-    "centro_custo": 1,
-    "abreviacao": "RECOB"
+    "centro_custo": 10,
+    "abreviacao": "REV 1"
   },
   {
     "fonte_comercial": "STK",
@@ -301,18 +289,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8094",
-    "produto": "6395",
-    "desc_completa": "BORGONHA BRONZE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 300,
-    "dt_saida": "2026-09-10",
-    "centro_custo": 25,
-    "abreviacao": "TRANSFE"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8095",
     "produto": "17231",
     "desc_completa": "DENVER ESPRESSO",
@@ -320,8 +296,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-09-10",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -332,8 +308,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-09-10",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -404,8 +380,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1700,
     "dt_saida": "2026-09-11",
-    "centro_custo": 1,
-    "abreviacao": "RECOB"
+    "centro_custo": 25,
+    "abreviacao": "TRANSFE"
   },
   {
     "fonte_comercial": "STK",
@@ -428,8 +404,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-09-17",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -452,8 +428,8 @@
     "subgrupo": 41,
     "qtd_produzir": 600,
     "dt_saida": "2026-09-18",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -476,8 +452,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-09-16",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -512,8 +488,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-18",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -523,6 +499,18 @@
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 200,
+    "dt_saida": "2026-09-18",
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8255",
+    "produto": "15212",
+    "desc_completa": "BORGONHA TITANIO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 390,
     "dt_saida": "2026-09-18",
     "centro_custo": 13,
     "abreviacao": "JUMBO 1"
