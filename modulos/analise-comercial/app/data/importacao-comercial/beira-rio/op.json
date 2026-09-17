@@ -111,16 +111,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "7979",
-    "produto": "16878",
-    "desc_completa": "NAPA SEVILLE AVELA 1248",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 600,
-    "dt_saida": "2026-08-27",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8107",
     "produto": "9100112",
     "desc_completa": "NAPA MARSELHA OSTRA",
@@ -161,46 +151,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8159",
-    "produto": "16703",
-    "desc_completa": "NAPA SEVILLE CAMEL 1165",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 800,
-    "dt_saida": "2026-09-09",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8160",
-    "produto": "17676",
-    "desc_completa": "NAPA TRAMADO BERLIM BRANCO OFF 526",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 600,
-    "dt_saida": "2026-09-09",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8178",
-    "produto": "17497",
-    "desc_completa": "CAMURÇA PARIS GLAM FLANELA PRETO 01/ GRAFITE/ PRETO 01",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 119.5,
-    "dt_saida": "2026-09-11",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8179",
-    "produto": "17496",
-    "desc_completa": "CAMURÇA PARIS GLAM FLEX PRETO 01/ GRAFITE/ PRETO",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 70,
-    "dt_saida": "2026-09-08",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8180",
     "produto": "30139",
     "desc_completa": "CAMURÇA PARIS GLAM BRANCO OFF 526/ PRATA/ BISCOITO",
@@ -216,16 +166,6 @@
     "desc_completa": "CAMURÇA PARIS GLAM + BASE FLEX / NUDE 658- DOURADO/ BISCOITO",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 57,
-    "dt_saida": "2026-09-08",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8182",
-    "produto": "17497",
-    "desc_completa": "CAMURÇA PARIS GLAM FLANELA PRETO 01/ GRAFITE/ PRETO 01",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 74.2,
     "dt_saida": "2026-09-08",
     "abreviacao": ""
   },
@@ -487,6 +427,26 @@
     "grupo": "BEIRA RIO",
     "qtd_produzir": 1000,
     "dt_saida": "2026-09-21",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8303",
+    "produto": "17961",
+    "desc_completa": "NAPA LISTRAS MADRI BRANCO OFF 526 VERMELHO 1025",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 200,
+    "dt_saida": "2026-09-18",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8304",
+    "produto": "17968",
+    "desc_completa": "NAPA MAXXI POA BRANCO OFF 526/ PRETO 01",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 200,
+    "dt_saida": "2026-09-18",
     "abreviacao": ""
   }
 ]
