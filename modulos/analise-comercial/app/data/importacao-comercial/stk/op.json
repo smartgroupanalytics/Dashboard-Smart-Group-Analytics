@@ -114,10 +114,10 @@
     "desc_completa": "NAPA MADRID CONHAQUE",
     "grupo": 39,
     "subgrupo": 41,
-    "qtd_produzir": 84,
+    "qtd_produzir": 44,
     "dt_saida": "2026-07-20",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "centro_custo": 10,
+    "abreviacao": "REV 1"
   },
   {
     "fonte_comercial": "STK",
@@ -193,18 +193,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8000",
-    "produto": "17416",
-    "desc_completa": "DENVER NUDE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 600,
-    "dt_saida": "2026-08-31",
-    "centro_custo": 3,
-    "abreviacao": "GR 1"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8001",
     "produto": "15686",
     "desc_completa": "LILLY ROSE",
@@ -238,18 +226,6 @@
     "dt_saida": "2026-08-31",
     "centro_custo": 10,
     "abreviacao": "REV 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8091",
-    "produto": "11845",
-    "desc_completa": "BORGONHA OURO LIGHT",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 300,
-    "dt_saida": "2026-09-10",
-    "centro_custo": 25,
-    "abreviacao": "TRANSFE"
   },
   {
     "fonte_comercial": "STK",
@@ -325,18 +301,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8104",
-    "produto": "16477",
-    "desc_completa": "CANYON BEGE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 300,
-    "dt_saida": "2026-09-08",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8123",
     "produto": "11847",
     "desc_completa": "BORGONHA GRAFITE",
@@ -349,30 +313,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8126",
-    "produto": "30095",
-    "desc_completa": "BORGONHA WHISKY",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 400,
-    "dt_saida": "2026-09-11",
-    "centro_custo": 3,
-    "abreviacao": "GR 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8142",
-    "produto": "11845",
-    "desc_completa": "BORGONHA OURO LIGHT",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 1700,
-    "dt_saida": "2026-09-11",
-    "centro_custo": 25,
-    "abreviacao": "TRANSFE"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8184",
     "produto": "6395",
     "desc_completa": "BORGONHA BRONZE",
@@ -382,18 +322,6 @@
     "dt_saida": "2026-09-17",
     "centro_custo": 1,
     "abreviacao": "RECOB"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8185",
-    "produto": "15363",
-    "desc_completa": "LENNY PRETO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 400,
-    "dt_saida": "2026-09-17",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -428,8 +356,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-09-18",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -440,8 +368,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-09-16",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -452,8 +380,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-18",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -464,8 +392,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-18",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -476,8 +404,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-18",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -488,8 +416,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-18",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -502,5 +430,77 @@
     "dt_saida": "2026-09-18",
     "centro_custo": 2,
     "abreviacao": "GRAV"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8293",
+    "produto": "11844",
+    "desc_completa": "BORGONHA PRATA",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 1000,
+    "dt_saida": "2026-09-22",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8295",
+    "produto": "16642",
+    "desc_completa": "NAPA BARI FOSCO PRETO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 1000,
+    "dt_saida": "2026-09-22",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8296",
+    "produto": "16643",
+    "desc_completa": "NAPA BARI FOSCO BEGE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 1000,
+    "dt_saida": "2026-09-22",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8297",
+    "produto": "16605",
+    "desc_completa": "NAPA FLOATER VENEZIA DOURADO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 1000,
+    "dt_saida": "2026-09-22",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8298",
+    "produto": "13144",
+    "desc_completa": "NAPA LINHO DAKAR NATURAL",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 2000,
+    "dt_saida": "2026-09-22",
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8306",
+    "produto": "14137",
+    "desc_completa": "SALERNO CARAMELO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 80,
+    "dt_saida": "2026-09-21",
+    "centro_custo": 0,
+    "abreviacao": ""
   }
 ]
