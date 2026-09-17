@@ -3884,18 +3884,6 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
-    "qtd_movimentada": 300,
-    "dt_movto": "2026-09-09"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "11903",
-    "produto": "11903",
-    "desc_completa": "NAPA MADRID BEGE - PU 0.9MM",
-    "grupo": 39,
-    "subgrupo": 40,
-    "orig_movto": 20,
-    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 305,
     "dt_movto": "2026-04-08"
   },
@@ -7052,6 +7040,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 2.4,
+    "dt_movto": "2026-09-16"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11914",
+    "produto": "11914",
+    "desc_completa": "NAPA BARI METAL OURO LIGHT - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 3,
     "dt_movto": "2026-01-13"
   },
@@ -7066,6 +7066,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 3,
     "dt_movto": "2026-02-26"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11914",
+    "produto": "11914",
+    "desc_completa": "NAPA BARI METAL OURO LIGHT - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 36.6,
+    "dt_movto": "2026-09-16"
   },
   {
     "fonte_comercial": "STK",
@@ -7102,6 +7114,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 237,
     "dt_movto": "2026-01-13"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11914",
+    "produto": "11914",
+    "desc_completa": "NAPA BARI METAL OURO LIGHT - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 395,
+    "dt_movto": "2026-09-16"
   },
   {
     "fonte_comercial": "STK",
