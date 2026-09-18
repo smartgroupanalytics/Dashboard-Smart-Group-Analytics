@@ -237,15 +237,12 @@ async function iniciarEstoque() {
 
         console.log("Estoque aberto pelo cache:", cache.dados.length);
 
-        const idade = Date.now() - Number(cache.meta.salvoEm || 0);
-
-        if (idade < TEMPO_CACHE_ESTOQUE) {
-            return;
-        }
-
+        // O cache serve apenas para abrir o modulo rapidamente.
+        // Sempre revalida no servidor em seguida para nao manter
+        // um relatorio antigo preso no navegador apos recarregar a pagina.
         setTimeout(function () {
             carregarEstoqueAutomaticamente({ silencioso: true });
-        }, 1200);
+        }, 600);
 
         return;
     }
@@ -624,7 +621,7 @@ document.addEventListener(
 
 setInterval(function () {
     carregarEstoqueAutomaticamente({ silencioso: true });
-}, 20 * 60 * 1000);
+}, TEMPO_CACHE_ESTOQUE);
 
 console.log(
     "APP.JS DO ESTOQUE CARREGADO"
