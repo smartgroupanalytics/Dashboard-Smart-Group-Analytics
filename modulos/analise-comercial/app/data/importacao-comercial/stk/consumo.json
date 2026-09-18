@@ -8,6 +8,42 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 5,
+    "dt_movto": "2026-09-17"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "2031",
+    "produto": "2031",
+    "desc_completa": "NAPA MADRID BRANCO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 5,
+    "dt_movto": "2026-09-17"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "2031",
+    "produto": "2031",
+    "desc_completa": "NAPA MADRID BRANCO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 5,
+    "dt_movto": "2026-09-17"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "2031",
+    "produto": "2031",
+    "desc_completa": "NAPA MADRID BRANCO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 40,
     "dt_movto": "2026-05-21"
   },

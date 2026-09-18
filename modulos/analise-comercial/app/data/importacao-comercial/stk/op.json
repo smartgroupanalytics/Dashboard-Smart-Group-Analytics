@@ -30,7 +30,7 @@
     "desc_completa": "MIRAGE OURO ROSADO",
     "grupo": 39,
     "subgrupo": 41,
-    "qtd_produzir": 125.5,
+    "qtd_produzir": 57.5,
     "dt_saida": "2026-06-17",
     "centro_custo": 10,
     "abreviacao": "REV 1"
@@ -145,18 +145,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "7912",
-    "produto": "11844",
-    "desc_completa": "BORGONHA PRATA",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 1000,
-    "dt_saida": "2026-08-26",
-    "centro_custo": 25,
-    "abreviacao": "TRANSFE"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "7913",
     "produto": "12400",
     "desc_completa": "LILLY OFF WHITE",
@@ -181,18 +169,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "7999",
-    "produto": "17425",
-    "desc_completa": "DENVER PRETO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 1000,
-    "dt_saida": "2026-08-31",
-    "centro_custo": 3,
-    "abreviacao": "GR 1"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8001",
     "produto": "15686",
     "desc_completa": "LILLY ROSE",
@@ -214,18 +190,6 @@
     "dt_saida": "2026-08-31",
     "centro_custo": 13,
     "abreviacao": "JUMBO 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8043",
-    "produto": "17322",
-    "desc_completa": "MACKAY GLAM OURO LIGHT",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 85,
-    "dt_saida": "2026-08-31",
-    "centro_custo": 10,
-    "abreviacao": "REV 1"
   },
   {
     "fonte_comercial": "STK",
@@ -368,8 +332,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-09-16",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -380,8 +344,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-18",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -392,8 +356,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-18",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -404,8 +368,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-18",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 3,
+    "abreviacao": "GR 1"
   },
   {
     "fonte_comercial": "STK",
@@ -416,8 +380,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-18",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -433,6 +397,30 @@
   },
   {
     "fonte_comercial": "STK",
+    "nro_op": "8291",
+    "produto": "7148",
+    "desc_completa": "BERGAMO OFF WHITE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-09-22",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8292",
+    "produto": "11845",
+    "desc_completa": "BORGONHA OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 1000,
+    "dt_saida": "2026-09-22",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
     "nro_op": "8293",
     "produto": "11844",
     "desc_completa": "BORGONHA PRATA",
@@ -442,6 +430,18 @@
     "dt_saida": "2026-09-22",
     "centro_custo": 0,
     "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8294",
+    "produto": "16477",
+    "desc_completa": "CANYON BEGE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 400,
+    "dt_saida": "2026-09-22",
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -500,6 +500,30 @@
     "subgrupo": 41,
     "qtd_produzir": 80,
     "dt_saida": "2026-09-21",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8334",
+    "produto": "12550",
+    "desc_completa": "LILLY NUDE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-09-24",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8337",
+    "produto": "13766",
+    "desc_completa": "GLOMER NATURAL",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 120,
+    "dt_saida": "2026-09-24",
     "centro_custo": 0,
     "abreviacao": ""
   }
