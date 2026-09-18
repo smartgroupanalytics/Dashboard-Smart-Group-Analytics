@@ -1,6 +1,6 @@
 {
-  "atualizadoEm": "2026-09-14T09:11:30.992Z",
-  "ultimaAtualizacaoValida": "2026-09-14T09:11:30.992Z",
+  "atualizadoEm": "2026-09-18T11:42:15.441Z",
+  "ultimaAtualizacaoValida": "2026-09-18T11:42:15.441Z",
   "status": "OK",
   "mensagem": "9 de 9 relatórios atualizados com sucesso.",
   "modo": "PARCIAL_SEGURO",
@@ -12,64 +12,64 @@
     {
       "arquivo": "ESTOQUE.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-09-14T08:15:23.000Z",
-      "linhasValidas": 2453,
+      "recebidoEm": "2026-09-18T10:55:58.000Z",
+      "linhasValidas": 2455,
       "mensagem": "Atualizado com sucesso."
     },
     {
       "arquivo": "COMPRAS.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-09-14T09:00:18.000Z",
-      "linhasValidas": 31,
+      "recebidoEm": "2026-09-18T11:26:07.000Z",
+      "linhasValidas": 26,
       "mensagem": "Atualizado com sucesso."
     },
     {
       "arquivo": "CONSUMO.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-09-14T08:40:19.000Z",
-      "linhasValidas": 1389,
+      "recebidoEm": "2026-09-18T10:56:25.000Z",
+      "linhasValidas": 1409,
       "mensagem": "Atualizado com sucesso."
     },
     {
       "arquivo": "OP.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-09-14T08:00:19.000Z",
+      "recebidoEm": "2026-09-18T10:56:47.000Z",
       "linhasValidas": 44,
       "mensagem": "Atualizado com sucesso."
     },
     {
       "arquivo": "VENDAS.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-09-14T08:51:08.000Z",
-      "linhasValidas": 6082,
+      "recebidoEm": "2026-09-18T11:20:38.000Z",
+      "linhasValidas": 6243,
       "mensagem": "Atualizado com sucesso."
     },
     {
       "arquivo": "PEDIDOS EM ABERTO.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-09-14T08:56:11.000Z",
+      "recebidoEm": "2026-09-18T11:01:56.000Z",
       "linhasValidas": 332,
       "mensagem": "Atualizado com sucesso."
     },
     {
       "arquivo": "ESTOQUEBR.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-09-14T08:05:18.000Z",
-      "linhasValidas": 922,
+      "recebidoEm": "2026-09-18T11:03:07.000Z",
+      "linhasValidas": 933,
       "mensagem": "Atualizado com sucesso."
     },
     {
       "arquivo": "OPBR.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-09-14T08:25:16.000Z",
-      "linhasValidas": 48,
+      "recebidoEm": "2026-09-18T11:03:26.000Z",
+      "linhasValidas": 51,
       "mensagem": "Atualizado com sucesso."
     },
     {
       "arquivo": "VENDASBR.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-09-14T08:10:22.000Z",
-      "linhasValidas": 1660,
+      "recebidoEm": "2026-09-18T11:03:42.000Z",
+      "linhasValidas": 1816,
       "mensagem": "Atualizado com sucesso."
     }
   ]

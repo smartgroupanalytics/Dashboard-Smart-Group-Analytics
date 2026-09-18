@@ -8,6 +8,42 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 5,
+    "dt_movto": "2026-09-17"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "2031",
+    "produto": "2031",
+    "desc_completa": "NAPA MADRID BRANCO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 5,
+    "dt_movto": "2026-09-17"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "2031",
+    "produto": "2031",
+    "desc_completa": "NAPA MADRID BRANCO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 5,
+    "dt_movto": "2026-09-17"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "2031",
+    "produto": "2031",
+    "desc_completa": "NAPA MADRID BRANCO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 40,
     "dt_movto": "2026-05-21"
   },
@@ -908,6 +944,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 14,
+    "dt_movto": "2026-09-15"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11896",
+    "produto": "11896",
+    "desc_completa": "NAPA LINHO DAKAR PRETO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 40,
     "dt_movto": "2025-09-23"
   },
@@ -925,6 +973,18 @@
   },
   {
     "fonte_comercial": "STK",
+    "cod_prod": "11896",
+    "produto": "11896",
+    "desc_completa": "NAPA LINHO DAKAR PRETO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 105,
+    "dt_movto": "2026-09-15"
+  },
+  {
+    "fonte_comercial": "STK",
     "cod_prod": "11897",
     "produto": "11897",
     "desc_completa": "NAPA LINHO DAKAR OFF WHITE - PU 0.9MM",
@@ -934,6 +994,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 38,
     "dt_movto": "2026-02-11"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11897",
+    "produto": "11897",
+    "desc_completa": "NAPA LINHO DAKAR OFF WHITE - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 38,
+    "dt_movto": "2026-09-15"
   },
   {
     "fonte_comercial": "STK",
@@ -3848,18 +3920,6 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
-    "qtd_movimentada": 300,
-    "dt_movto": "2026-09-09"
-  },
-  {
-    "fonte_comercial": "STK",
-    "cod_prod": "11903",
-    "produto": "11903",
-    "desc_completa": "NAPA MADRID BEGE - PU 0.9MM",
-    "grupo": 39,
-    "subgrupo": 40,
-    "orig_movto": 20,
-    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 305,
     "dt_movto": "2026-04-08"
   },
@@ -4448,6 +4508,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 124.4,
+    "dt_movto": "2026-09-15"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11904",
+    "produto": "11904",
+    "desc_completa": "NAPA MADRID NUDE - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 125.8,
     "dt_movto": "2026-03-19"
   },
@@ -4630,6 +4702,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 555,
     "dt_movto": "2025-12-09"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11904",
+    "produto": "11904",
+    "desc_completa": "NAPA MADRID NUDE - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 875.6,
+    "dt_movto": "2026-09-15"
   },
   {
     "fonte_comercial": "STK",
@@ -6992,6 +7076,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 2.4,
+    "dt_movto": "2026-09-16"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11914",
+    "produto": "11914",
+    "desc_completa": "NAPA BARI METAL OURO LIGHT - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 3,
     "dt_movto": "2026-01-13"
   },
@@ -7006,6 +7102,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 3,
     "dt_movto": "2026-02-26"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11914",
+    "produto": "11914",
+    "desc_completa": "NAPA BARI METAL OURO LIGHT - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 36.6,
+    "dt_movto": "2026-09-16"
   },
   {
     "fonte_comercial": "STK",
@@ -7042,6 +7150,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 237,
     "dt_movto": "2026-01-13"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11914",
+    "produto": "11914",
+    "desc_completa": "NAPA BARI METAL OURO LIGHT - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 395,
+    "dt_movto": "2026-09-16"
   },
   {
     "fonte_comercial": "STK",
@@ -7544,6 +7664,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 14.4,
+    "dt_movto": "2026-09-15"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11922",
+    "produto": "11922",
+    "desc_completa": "NAPA METAL LYON OURO LIGHT - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 15,
     "dt_movto": "2025-11-18"
   },
@@ -7654,6 +7786,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 182.1,
     "dt_movto": "2026-03-31"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11922",
+    "produto": "11922",
+    "desc_completa": "NAPA METAL LYON OURO LIGHT - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 183.6,
+    "dt_movto": "2026-09-15"
   },
   {
     "fonte_comercial": "STK",
@@ -8036,6 +8180,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 1,
+    "dt_movto": "2026-09-15"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11925",
+    "produto": "11925",
+    "desc_completa": "NAPA METAL LYON OURO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 72.5,
     "dt_movto": "2025-10-06"
   },
@@ -8086,6 +8242,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 200,
     "dt_movto": "2026-09-09"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11925",
+    "produto": "11925",
+    "desc_completa": "NAPA METAL LYON OURO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 200,
+    "dt_movto": "2026-09-15"
   },
   {
     "fonte_comercial": "STK",
@@ -8204,6 +8372,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 21,
+    "dt_movto": "2026-09-15"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11926",
+    "produto": "11926",
+    "desc_completa": "NAPA METAL LYON GRAFITE - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 26.3,
     "dt_movto": "2025-10-24"
   },
@@ -8266,6 +8446,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 120,
     "dt_movto": "2025-09-12"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11926",
+    "produto": "11926",
+    "desc_completa": "NAPA METAL LYON GRAFITE - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 179,
+    "dt_movto": "2026-09-15"
   },
   {
     "fonte_comercial": "STK",
@@ -16496,6 +16688,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 2,
+    "dt_movto": "2026-09-15"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20104",
+    "produto": "20104",
+    "desc_completa": "NAPA BARI BEGE - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 6,
     "dt_movto": "2026-09-03"
   },
@@ -16508,8 +16712,32 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 300,
+    "dt_movto": "2026-09-15"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20104",
+    "produto": "20104",
+    "desc_completa": "NAPA BARI BEGE - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 392,
     "dt_movto": "2026-09-03"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20104",
+    "produto": "20104",
+    "desc_completa": "NAPA BARI BEGE - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 498,
+    "dt_movto": "2026-09-15"
   },
   {
     "fonte_comercial": "STK",
@@ -16534,6 +16762,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 1000,
     "dt_movto": "2026-08-31"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20106",
+    "produto": "20106",
+    "desc_completa": "NAPA BARI BRANCO - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 300,
+    "dt_movto": "2026-09-15"
   },
   {
     "fonte_comercial": "STK",
