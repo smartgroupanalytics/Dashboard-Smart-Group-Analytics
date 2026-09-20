@@ -161,16 +161,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8200",
-    "produto": "30126",
-    "desc_completa": "NAPA MALAGA CAMEL 1165",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 450,
-    "dt_saida": "2026-09-15",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8201",
     "produto": "17672",
     "desc_completa": "NAPA TRAMADO BERLIM CHOCOLATE 1271",

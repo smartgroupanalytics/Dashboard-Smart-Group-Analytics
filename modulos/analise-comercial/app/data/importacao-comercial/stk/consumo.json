@@ -7165,6 +7165,18 @@
   },
   {
     "fonte_comercial": "STK",
+    "cod_prod": "11915",
+    "produto": "11915",
+    "desc_completa": "NAPA BARI METAL PRATA - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 398,
+    "dt_movto": "2026-09-18"
+  },
+  {
+    "fonte_comercial": "STK",
     "cod_prod": "11916",
     "produto": "11916",
     "desc_completa": "VERNIZ MONACO PRETO - PU 0.8MM",
@@ -16030,6 +16042,30 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 120,
     "dt_movto": "2026-02-19"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20034",
+    "produto": "20034",
+    "desc_completa": "NAPA BARI PRETO - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 477,
+    "dt_movto": "2026-09-18"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20034",
+    "produto": "20034",
+    "desc_completa": "NAPA BARI PRETO - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 517,
+    "dt_movto": "2026-09-18"
   },
   {
     "fonte_comercial": "STK",
