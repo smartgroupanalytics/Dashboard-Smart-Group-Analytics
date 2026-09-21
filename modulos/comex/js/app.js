@@ -13,6 +13,7 @@ const $ = (selector) => document.querySelector(selector);
 const els = {
   material: $("#materialFilter"),
   color: $("#colorFilter"),
+  fabric: $("#fabricFilter"),
   invoice: $("#invoiceFilter"),
   invoiceOptions: $("#invoiceOptions"),
   file: $("#fileInput"),
@@ -63,6 +64,7 @@ const VIEW_META = {
 const ALIASES = {
   material: ["material", "descricao material", "descrição material", "produto", "item", "descricao", "descrição"],
   color: ["cor", "color", "colour"],
+  fabric: ["tecido", "cor tecido", "cor do tecido", "fabric color", "backing color"],
   invoice: ["invoice", "nr invoice", "n r invoice", "n invoice", "nº invoice", "numero invoice", "número invoice", "fatura"],
   supplier: ["fornecedor", "supplier", "fabricante"],
   qty: ["qtd", "quantidade", "qty", "quantity", "quantidade mts", "qtd mts", "saldo"],
@@ -257,6 +259,7 @@ function mapRows(rawRows) {
       id: index + 1,
       material: cellText(row[cols.material]),
       color: cellText(cols.color ? row[cols.color] : ""),
+      fabric: cellText(cols.fabric ? row[cols.fabric] : ""),
       invoice: cellText(row[cols.invoice]),
       supplier: cellText(cols.supplier ? row[cols.supplier] : ""),
       qty: parseNumber(row[cols.qty]),
@@ -371,6 +374,7 @@ function uniqueSorted(values) {
 
 function populateFilters() {
   const selectedMaterial = els.material.value;
+  const selectedFabric = els.fabric?.value || "";
   const selectedInvoice = els.invoice?.value || "";
 
   els.material.innerHTML = `<option value="">Todos os materiais</option>` +
@@ -381,7 +385,12 @@ function populateFilters() {
   }
 
   updateColorOptions();
+  updateFabricOptions();
   updateInvoiceOptions();
+
+  if (els.fabric && selectedFabric && [...els.fabric.options].some(option => option.value === selectedFabric)) {
+    els.fabric.value = selectedFabric;
+  }
 
   if (els.invoice && selectedInvoice) {
     els.invoice.value = selectedInvoice;
@@ -411,9 +420,30 @@ function updateColorOptions() {
   if (colors.includes(selectedColor)) els.color.value = selectedColor;
 }
 
+function updateFabricOptions() {
+  if (!els.fabric) return;
+
+  const selectedFabric = els.fabric.value;
+  const material = els.material.value;
+  const color = els.color.value;
+  const fabrics = uniqueSorted(
+    state.rows
+      .filter(row => (!material || row.material === material) && (!color || row.color === color))
+      .map(row => row.fabric)
+  );
+
+  els.fabric.innerHTML = `<option value="">Todos os tecidos</option>` +
+    fabrics.map(value => `<option>${escapeHtml(value)}</option>`).join("");
+
+  if (fabrics.includes(selectedFabric)) {
+    els.fabric.value = selectedFabric;
+  }
+}
+
 function applyFilters() {
   const material = els.material.value;
   const color = els.color.value;
+  const fabric = els.fabric?.value || "";
   const invoiceSearch = normalizeText(els.invoice?.value || "");
 
   state.filtered = state.rows.filter(row => {
@@ -422,6 +452,7 @@ function applyFilters() {
     return (
       (!material || row.material === material) &&
       (!color || row.color === color) &&
+      (!fabric || row.fabric === fabric) &&
       (!invoiceSearch || rowInvoice.includes(invoiceSearch))
     );
   });
@@ -699,7 +730,7 @@ function restoreLocal() {
 function exportFiltered() {
   if (!state.filtered.length) return showToast("Não há dados para exportar.");
   const data = state.filtered.map(row => ({
-    Material: row.material, Cor: row.color, Invoice: row.invoice, Fornecedor: row.supplier,
+    Material: row.material, Cor: row.color, Tecido: row.fabric, Invoice: row.invoice, Fornecedor: row.supplier,
     Quantidade: row.qty, Unidade: row.unit, "Chegada Porto / Aeroporto": formatDate(row.arrival),
     "Porto / Aeroporto": row.place, "Previsão Entrega na Smart": formatDate(row.delivery),
     Status: statusInfo(row.status, row.delivery)[0], Origem: row.origin, "Nº Pedido": row.order
@@ -2183,10 +2214,16 @@ $("#dashboardUploadButton")?.addEventListener("click", () => els.file.click());
 $("#dashboardEmptyUpload")?.addEventListener("click", () => els.file.click());
 els.material.addEventListener("change", () => {
   updateColorOptions();
+  updateFabricOptions();
   applyFilters();
 });
 
-els.color.addEventListener("change", applyFilters);
+els.color.addEventListener("change", () => {
+  updateFabricOptions();
+  applyFilters();
+});
+
+els.fabric?.addEventListener("change", applyFilters);
 
 els.invoice?.addEventListener("input", applyFilters);
 els.invoice?.addEventListener("change", applyFilters);
@@ -2195,6 +2232,11 @@ $("#clearFilters").addEventListener("click", () => {
   els.material.value = "";
   updateColorOptions();
   els.color.value = "";
+  updateFabricOptions();
+
+  if (els.fabric) {
+    els.fabric.value = "";
+  }
 
   if (els.invoice) {
     els.invoice.value = "";

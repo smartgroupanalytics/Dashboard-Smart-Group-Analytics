@@ -1,4 +1,4 @@
-@media(max-width:1180px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.toolbar{grid-template-columns:1fr 1fr auto}.upload-card{grid-column:1/-1;grid-row:auto}}
+@media(max-width:1180px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:720px){.comex-shell{padding:15px}.module-header{flex-direction:column}.update-status{white-space:normal}.brand-title h1{font-size:22px}.toolbar{grid-template-columns:1fr}.upload-card{grid-column:auto}.kpi-grid{grid-template-columns:1fr}.timeline{justify-content:flex-start}.timeline:before{left:70px;right:70px}.panel-header{align-items:flex-start;gap:12px}.panel-header .btn{flex:0 0 auto}}
 @media(max-width:1180px){
   .dashboard-kpi-grid,.dashboard-alert-grid{grid-template-columns:repeat(2,1fr)}
@@ -99,34 +99,48 @@
 
 
 /* ETAPA 7.1 - filtro Invoice */
-@media(max-width:1350px){
+@media(max-width:1500px){
   .toolbar{
     grid-template-columns:1fr 1fr 1fr auto;
+    grid-template-areas:
+      "material color fabric clear"
+      "invoice invoice invoice invoice"
+      "upload upload upload upload";
   }
 
   .upload-card{
-    grid-column:1/-1;
-    grid-row:auto;
+    grid-column:auto;
   }
 }
 
 @media(max-width:900px){
   .toolbar{
     grid-template-columns:1fr 1fr;
+    grid-template-areas:
+      "material color"
+      "fabric fabric"
+      "invoice invoice"
+      "clear clear"
+      "upload upload";
   }
 
-  .invoice-search-field{
-    grid-column:1/-1;
+  .clear-filters-button{
+    width:100%;
   }
 
-  .upload-card{
-    grid-column:1/-1;
-  }
+  .invoice-search-field,.upload-card{grid-column:auto}
 }
 
 @media(max-width:720px){
   .toolbar{
     grid-template-columns:1fr;
+    grid-template-areas:
+      "material"
+      "color"
+      "fabric"
+      "invoice"
+      "clear"
+      "upload";
   }
 
   .invoice-search-field,

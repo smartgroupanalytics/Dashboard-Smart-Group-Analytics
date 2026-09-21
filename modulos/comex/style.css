@@ -21,12 +21,13 @@ button{cursor:pointer}
 .comex-nav button:hover,.comex-nav button.active{background:linear-gradient(135deg,#1374ee,#0b4fa8);color:#fff;border-color:#2a8cff}
 .comex-nav i{margin-right:7px}
 .view{display:none}.view.active{display:block}
-.toolbar{display:grid;grid-template-columns:minmax(210px,1fr) minmax(170px,.7fr) minmax(240px,.9fr) auto minmax(280px,.9fr);gap:14px;align-items:end;margin-bottom:18px}
+.toolbar{display:grid;grid-template-columns:minmax(190px,1fr) minmax(145px,.65fr) minmax(145px,.65fr) minmax(220px,.9fr) auto minmax(250px,.85fr);grid-template-areas:"material color fabric invoice clear upload";gap:14px;align-items:end;margin-bottom:18px}
+.material-filter-field{grid-area:material}.color-filter-field{grid-area:color}.fabric-filter-field{grid-area:fabric}.invoice-search-field{grid-area:invoice}.clear-filters-button{grid-area:clear}
 .field{display:flex;flex-direction:column;gap:7px}.field span{font-size:12px;font-weight:700}
 .field select{height:46px;background:#0c2858;color:#fff;border:1px solid #28538d;border-radius:9px;padding:0 13px;outline:none}
 .btn{height:44px;border-radius:9px;padding:0 16px;border:0;color:#fff;font-weight:700}
 .btn-outline{border:1px solid #287bdc;background:rgba(12,40,88,.8);color:#5da8ff}.btn-outline:hover{background:#0f57ad;color:#fff}
-.upload-card{grid-row:span 2;min-height:82px;border:1px dashed #3b91ff;border-radius:12px;background:rgba(19,66,132,.55);display:grid;grid-template-columns:58px 1fr;grid-template-areas:"icon strong" "icon small" "icon em";align-content:center;padding:12px 16px;cursor:pointer}
+.upload-card{grid-area:upload;min-height:82px;border:1px dashed #3b91ff;border-radius:12px;background:rgba(19,66,132,.55);display:grid;grid-template-columns:58px 1fr;grid-template-areas:"icon strong" "icon small" "icon em";align-content:center;padding:12px 16px;cursor:pointer}
 .upload-card i{grid-area:icon;align-self:center;font-size:34px;color:#4da0ff}.upload-card strong{grid-area:strong;color:#69afff}.upload-card small{grid-area:small;color:#bccdea;margin-top:3px}.upload-card em{grid-area:em;color:#92aed4;font-size:11px;font-style:normal;margin-top:4px}.upload-card input{display:none}
 .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:16px}
 .kpi-card{min-height:108px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(135deg,rgba(22,65,137,.94),rgba(12,39,85,.96));display:flex;align-items:center;gap:17px;padding:18px;box-shadow:0 15px 36px rgba(0,0,0,.13)}
