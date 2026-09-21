@@ -111,16 +111,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8156",
-    "produto": "9873",
-    "desc_completa": "METALIZADO NANCY PU 1.0 DOURADO",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 2000,
-    "dt_saida": "2026-09-09",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8183",
     "produto": "17498",
     "desc_completa": "CAMURÇA PARIS GLAM FLEX CHOCOLATE 1271/ DOURADO/ PRETO 01",
@@ -135,7 +125,7 @@
     "produto": "9873",
     "desc_completa": "METALIZADO NANCY PU 1.0 DOURADO",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 2000,
+    "qtd_produzir": 508,
     "dt_saida": "2026-09-15",
     "abreviacao": ""
   },
@@ -227,6 +217,16 @@
     "grupo": "BEIRA RIO",
     "qtd_produzir": 400,
     "dt_saida": "2026-09-15",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8229",
+    "produto": "17686",
+    "desc_completa": "NAPA LINHO ALABAMA  BRANCO OFF",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 400,
+    "dt_saida": "2026-09-16",
     "abreviacao": ""
   },
   {
@@ -491,12 +491,42 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8347",
+    "produto": "17851",
+    "desc_completa": "TELA SHINE PARIS DOURADO",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 4025,
+    "dt_saida": "2026-09-23",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8348",
     "produto": "17994",
     "desc_completa": "NAPA DALLAS BRANCO 99",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 200,
     "dt_saida": "2026-09-22",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8349",
+    "produto": "17970",
+    "desc_completa": "NAPA MAXXI POA BRANCO 99/ PRETO 01",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 200,
+    "dt_saida": "2026-09-21",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8350",
+    "produto": "17996",
+    "desc_completa": "CHASSI PRINT BRANCO 99",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 420,
+    "dt_saida": "2026-09-30",
     "abreviacao": ""
   }
 ]
