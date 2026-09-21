@@ -1,6 +1,6 @@
 {
-  "atualizadoEm": "2026-09-21T10:56:30.491Z",
-  "ultimaAtualizacaoValida": "2026-09-21T10:56:30.491Z",
+  "atualizadoEm": "2026-09-21T19:26:31.075Z",
+  "ultimaAtualizacaoValida": "2026-09-21T19:26:31.075Z",
   "status": "OK",
   "mensagem": "9 de 9 relatórios atualizados com sucesso.",
   "modo": "PARCIAL_SEGURO",
@@ -33,7 +33,7 @@
     {
       "arquivo": "OP.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-09-21T10:36:11.000Z",
+      "recebidoEm": "2026-09-21T19:21:51.000Z",
       "linhasValidas": 42,
       "mensagem": "Atualizado com sucesso."
     },

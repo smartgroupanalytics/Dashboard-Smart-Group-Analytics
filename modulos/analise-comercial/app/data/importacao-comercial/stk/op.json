@@ -109,18 +109,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "7489",
-    "produto": "9000183",
-    "desc_completa": "NAPA MADRID CONHAQUE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 44,
-    "dt_saida": "2026-07-20",
-    "centro_custo": 10,
-    "abreviacao": "REV 1"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "7623",
     "produto": "12398",
     "desc_completa": "LILLY PRETO",
@@ -138,10 +126,10 @@
     "desc_completa": "LILLY MANTEIGA",
     "grupo": 39,
     "subgrupo": 41,
-    "qtd_produzir": 200,
+    "qtd_produzir": 118.5,
     "dt_saida": "2026-08-06",
-    "centro_custo": 3,
-    "abreviacao": "GR 1"
+    "centro_custo": 10,
+    "abreviacao": "REV 1"
   },
   {
     "fonte_comercial": "STK",
@@ -150,10 +138,10 @@
     "desc_completa": "LILLY OFF WHITE",
     "grupo": 39,
     "subgrupo": 41,
-    "qtd_produzir": 150,
+    "qtd_produzir": 98.5,
     "dt_saida": "2026-08-26",
-    "centro_custo": 3,
-    "abreviacao": "GR 1"
+    "centro_custo": 10,
+    "abreviacao": "REV 1"
   },
   {
     "fonte_comercial": "STK",
@@ -174,10 +162,10 @@
     "desc_completa": "LILLY ROSE",
     "grupo": 39,
     "subgrupo": 41,
-    "qtd_produzir": 200,
+    "qtd_produzir": 94.5,
     "dt_saida": "2026-08-31",
-    "centro_custo": 3,
-    "abreviacao": "GR 1"
+    "centro_custo": 10,
+    "abreviacao": "REV 1"
   },
   {
     "fonte_comercial": "STK",
@@ -188,8 +176,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-08-31",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -200,8 +188,8 @@
     "subgrupo": 41,
     "qtd_produzir": 600,
     "dt_saida": "2026-09-10",
-    "centro_custo": 3,
-    "abreviacao": "GR 1"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -248,8 +236,8 @@
     "subgrupo": 41,
     "qtd_produzir": 2000,
     "dt_saida": "2026-09-10",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -272,8 +260,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-09-11",
-    "centro_custo": 1,
-    "abreviacao": "RECOB"
+    "centro_custo": 25,
+    "abreviacao": "TRANSFE"
   },
   {
     "fonte_comercial": "STK",
@@ -284,8 +272,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-09-17",
-    "centro_custo": 25,
-    "abreviacao": "TRANSFE"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -296,8 +284,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-09-17",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -325,18 +313,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8230",
-    "produto": "14558",
-    "desc_completa": "NAPA LINHO DAKAR CARAMELO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 400,
-    "dt_saida": "2026-09-16",
-    "centro_custo": 7,
-    "abreviacao": "ESTAM"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8255",
     "produto": "15212",
     "desc_completa": "BORGONHA TITANIO",
@@ -356,8 +332,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-22",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -368,8 +344,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-09-22",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -380,8 +356,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-09-22",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -440,8 +416,8 @@
     "subgrupo": 41,
     "qtd_produzir": 2000,
     "dt_saida": "2026-09-22",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -457,18 +433,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8334",
-    "produto": "12550",
-    "desc_completa": "LILLY NUDE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 200,
-    "dt_saida": "2026-09-24",
-    "centro_custo": 3,
-    "abreviacao": "GR 1"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8337",
     "produto": "13766",
     "desc_completa": "GLOMER NATURAL",
@@ -476,8 +440,8 @@
     "subgrupo": 41,
     "qtd_produzir": 120,
     "dt_saida": "2026-09-24",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -500,6 +464,42 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-24",
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8352",
+    "produto": "18009",
+    "desc_completa": "ARUBA OFF WHITE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-09-24",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8360",
+    "produto": "17952",
+    "desc_completa": "ARUBA GLAM PRATA",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-09-25",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8361",
+    "produto": "17954",
+    "desc_completa": "ARUBA GLAM OURO ROSADO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-09-28",
     "centro_custo": 0,
     "abreviacao": ""
   }
