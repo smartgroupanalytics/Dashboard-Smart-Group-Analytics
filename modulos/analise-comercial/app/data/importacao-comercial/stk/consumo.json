@@ -7172,6 +7172,42 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 4.4,
+    "dt_movto": "2026-09-18"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11915",
+    "produto": "11915",
+    "desc_completa": "NAPA BARI METAL PRATA - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 93,
+    "dt_movto": "2026-09-18"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11915",
+    "produto": "11915",
+    "desc_completa": "NAPA BARI METAL PRATA - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 200,
+    "dt_movto": "2026-09-18"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11915",
+    "produto": "11915",
+    "desc_completa": "NAPA BARI METAL PRATA - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 398,
     "dt_movto": "2026-09-18"
   },
@@ -7378,6 +7414,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 50,
     "dt_movto": "2026-02-24"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11919",
+    "produto": "11919",
+    "desc_completa": "VERNIZ MONACO NUDE - PU 0.8MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 96,
+    "dt_movto": "2026-09-18"
   },
   {
     "fonte_comercial": "STK",
