@@ -109,6 +109,31 @@ function preencherSelectReceber(id, valores) {
     }
 }
 
+/*
+ * Regra exclusiva da aba Contas a Receber:
+ * o status é determinado pela Dt.pgto.
+ * - Dt.pgto vazia/00/00/0000 => título em aberto (ou em atraso pelo vencimento);
+ * - Dt.pgto válida => título pago.
+ *
+ * Vlr.líq.pago não pode mudar o status sozinho, porque o relatório do SIGER
+ * pode trazer valor nessa coluna mesmo sem existir data de pagamento.
+ */
+function receberEstaPago(item) {
+    return Boolean(item?.dataPagamento);
+}
+
+function receberEstaAtrasado(item) {
+    return !receberEstaPago(item) &&
+        Boolean(item?.vencimento) &&
+        inicioDoDia(item.vencimento) < inicioDoDia(new Date());
+}
+
+function situacaoContasReceber(item) {
+    if (receberEstaPago(item)) return "pago";
+    if (receberEstaAtrasado(item)) return "atrasado";
+    return "aberto";
+}
+
 function aplicarFiltrosContasReceber() {
     const busca = normalizarTexto(
         document.getElementById("receberBusca")?.value || ""
@@ -158,7 +183,7 @@ function aplicarFiltrosContasReceber() {
             "Não informado";
 
         if (busca && !texto.includes(busca)) return false;
-        if (status && item.situacao !== status) return false;
+        if (status && situacaoContasReceber(item) !== status) return false;
         if (cliente && item.razaoSocial !== cliente) return false;
         if (banco && local !== banco) return false;
         if (
@@ -187,8 +212,8 @@ function aplicarFiltrosContasReceber() {
         };
 
         const diferenca =
-            (prioridade[a.situacao] ?? 9) -
-            (prioridade[b.situacao] ?? 9);
+            (prioridade[situacaoContasReceber(a)] ?? 9) -
+            (prioridade[situacaoContasReceber(b)] ?? 9);
 
         if (diferenca !== 0) return diferenca;
 
@@ -211,10 +236,10 @@ function atualizarKpisContasReceber() {
         0
     );
 
-    const pagos = itensContabilizaveis.filter((item) => item.pago);
-    const abertos = itensContabilizaveis.filter((item) => !item.pago);
-    const atrasados = itensContabilizaveis.filter((item) => item.atrasado);
-    const aVencer = abertos.filter((item) => !item.atrasado);
+    const pagos = itensContabilizaveis.filter(receberEstaPago);
+    const abertos = itensContabilizaveis.filter((item) => !receberEstaPago(item));
+    const atrasados = itensContabilizaveis.filter(receberEstaAtrasado);
+    const aVencer = abertos.filter((item) => !receberEstaAtrasado(item));
 
     const totalPago = pagos.reduce(
         (total, item) => total + valorRecebidoContasReceber(item),
@@ -290,19 +315,21 @@ function ehAdiantamentoReceber(item) {
 }
 
 function saldoAbertoReceber(item) {
-    if (item.pago) return 0;
+    if (receberEstaPago(item)) return 0;
 
-    return Math.max(
-        0,
-        Number(item.valorDocumento || 0) -
-        Number(item.valorLiquidoPago || 0)
-    );
+    /*
+     * Sem Dt.pgto o título continua integralmente em aberto.
+     * Assim, o card "Em aberto" confere com a soma de Vlr.docto no Excel
+     * filtrado por Cliente + Dt.pgto = 00/00/0000.
+     */
+    return Math.max(0, Number(item.valorDocumento || 0));
 }
 
 function diasSituacaoReceber(item) {
     if (!item.vencimento) return "—";
 
-    const referencia = item.pago && item.dataPagamento
+    const pago = receberEstaPago(item);
+    const referencia = pago && item.dataPagamento
         ? inicioDoDia(item.dataPagamento)
         : inicioDoDia(new Date());
 
@@ -311,7 +338,7 @@ function diasSituacaoReceber(item) {
         (referencia - vencimento) / 86400000
     );
 
-    if (item.pago) {
+    if (pago) {
         if (dias > 0) return `${dias} após venc.`;
         if (dias < 0) return `${Math.abs(dias)} antes`;
         return "No vencimento";
@@ -362,15 +389,16 @@ function renderizarTabelaContasReceber() {
                 item.banco ||
                 "Não informado";
 
-            const classe = item.situacao === "pago"
+            const situacao = situacaoContasReceber(item);
+            const classe = situacao === "pago"
                 ? "pago"
-                : item.situacao === "atrasado"
+                : situacao === "atrasado"
                     ? "atrasado"
                     : "aberto";
 
-            const textoStatus = item.situacao === "pago"
+            const textoStatus = situacao === "pago"
                 ? "Pago"
-                : item.situacao === "atrasado"
+                : situacao === "atrasado"
                     ? "Em atraso"
                     : "Em aberto";
 
@@ -446,7 +474,7 @@ function exportarContasReceber() {
         item.documento || "",
         item.vencimento ? formatarDataBR(item.vencimento) : "",
         item.dataPagamento ? formatarDataBR(item.dataPagamento) : "",
-        item.situacao || "",
+        situacaoContasReceber(item),
         Number(item.valorDocumento || 0).toFixed(2).replace(".", ","),
         valorRecebidoContasReceber(item).toFixed(2).replace(".", ","),
         saldoAbertoReceber(item).toFixed(2).replace(".", ","),
