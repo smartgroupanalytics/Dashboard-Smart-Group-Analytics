@@ -1,13 +1,13 @@
 {
-  "atualizadoEm": "2026-09-22T09:11:41.890Z",
-  "ultimaAtualizacaoValida": "2026-09-22T09:11:41.890Z",
-  "status": "OK",
-  "mensagem": "9 de 9 relatórios atualizados com sucesso.",
+  "atualizadoEm": "2026-09-22T16:56:32.114Z",
+  "ultimaAtualizacaoValida": "2026-09-22T16:56:32.114Z",
+  "status": "ATENCAO",
+  "mensagem": "8 de 9 relatórios atualizados com sucesso. 1 mantido(s) na base anterior: OPBR.xlsx.",
   "modo": "PARCIAL_SEGURO",
   "totalEsperado": 9,
-  "totalRecebido": 9,
-  "totalAtualizado": 9,
-  "totalMantido": 0,
+  "totalRecebido": 8,
+  "totalAtualizado": 8,
+  "totalMantido": 1,
   "relatorios": [
     {
       "arquivo": "ESTOQUE.xlsx",
@@ -60,10 +60,10 @@
     },
     {
       "arquivo": "OPBR.xlsx",
-      "status": "OK",
-      "recebidoEm": "2026-09-22T08:25:09.000Z",
-      "linhasValidas": 45,
-      "mensagem": "Atualizado com sucesso."
+      "status": "MANTIDO — Bandwidth quota exceeded: https://gmail.googleapis.com/gmail/v1/users/me/messages/1a0c8380d2ca3923?format=full. Try reducing the rate of data transfer.",
+      "recebidoEm": null,
+      "mensagem": "Bandwidth quota exceeded: https://gmail.googleapis.com/gmail/v1/users/me/messages/1a0c8380d2ca3923?format=full. Try reducing the rate of data transfer.",
+      "baseAnteriorMantida": true
     },
     {
       "arquivo": "VENDASBR.xlsx",
