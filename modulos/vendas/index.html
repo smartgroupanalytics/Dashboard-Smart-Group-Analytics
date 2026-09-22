@@ -584,7 +584,31 @@ async function carregarAutomatico(opcoes = {}){
   }
 }
 
+function definirPeriodoInicialMesAtual(){
+  const hoje = new Date();
+
+  const ano = hoje.getFullYear();
+  const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+  const dia = String(hoje.getDate()).padStart(2, '0');
+
+  const dataInicial = document.getElementById('dataInicial');
+  const dataFinal = document.getElementById('dataFinal');
+
+  if(dataInicial){
+    dataInicial.value = `${ano}-${mes}-01`;
+  }
+
+  if(dataFinal){
+    dataFinal.value = `${ano}-${mes}-${dia}`;
+  }
+}
+
 async function iniciarDashboard(){
+  // Ao abrir o módulo, mostra primeiro o mês atual (do dia 1 até hoje).
+  // Depois disso, o usuário continua livre para alterar/limpar as datas
+  // e usar o filtro de ano normalmente.
+  definirPeriodoInicialMesAtual();
+
   const cache = carregarCache();
 
   if(cache){
