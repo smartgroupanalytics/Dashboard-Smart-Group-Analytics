@@ -9,9 +9,49 @@ const tipoDoc = (item) => String(
     item.tipoDocumento || item.descricaoTipoDocumento || "Não informado"
 ).trim();
 const localPagar = (item) => item.localCobranca || item.banco || "Não informado";
-const saldoPagar = (item) => item.pago ? 0 : Math.max(
-    0, Number(item.valorDocumento || 0) - Number(item.valorLiquidoPago || 0)
-);
+
+/*
+ * Regra exclusiva da aba Contas a Pagar:
+ * o status é determinado pela Dt.pgto, da mesma forma que em Contas a Receber.
+ * - Dt.pgto vazia/00/00/0000 => título em aberto (mesmo se já venceu);
+ * - Dt.pgto válida => título pago.
+ *
+ * Vlr.líq.pago não pode, sozinho, retirar um título do "Em aberto".
+ */
+function pagarEstaPago(item) {
+    return Boolean(item?.dataPagamento);
+}
+
+function pagarEstaAtrasado(item) {
+    return !pagarEstaPago(item) &&
+        Boolean(item?.vencimento) &&
+        inicioDoDia(item.vencimento) < inicioDoDia(new Date());
+}
+
+function situacaoContasPagar(item) {
+    if (pagarEstaPago(item)) return "pago";
+    if (pagarEstaAtrasado(item)) return "atrasado";
+    return "aberto";
+}
+
+/*
+ * No filtro, "Em aberto" representa TODO título sem Dt.pgto, inclusive os
+ * vencidos. "Em atraso" é apenas um subconjunto dos títulos em aberto.
+ */
+function correspondeStatusContasPagar(item, status) {
+    if (!status) return true;
+    if (status === "aberto") return !pagarEstaPago(item);
+    if (status === "atrasado") return pagarEstaAtrasado(item);
+    if (status === "pago") return pagarEstaPago(item);
+    return situacaoContasPagar(item) === status;
+}
+
+function saldoPagar(item) {
+    if (pagarEstaPago(item)) return 0;
+
+    // Sem Dt.pgto, o valor integral do documento permanece em aberto.
+    return Math.max(0, Number(item.valorDocumento || 0));
+}
 
 function inicializarContasPagar() {
     [
@@ -104,7 +144,7 @@ function aplicarFiltrosContasPagar() {
         ].join(" "));
 
         if (busca && !texto.includes(busca)) return false;
-        if (status && item.situacao !== status) return false;
+        if (!correspondeStatusContasPagar(item, status)) return false;
         if (documento && tipoDoc(item) !== documento) return false;
         if (fornecedor && item.razaoSocial !== fornecedor) return false;
         if (local && localPagar(item) !== local) return false;
@@ -116,7 +156,7 @@ function aplicarFiltrosContasPagar() {
 
     pagarFiltrados.sort((a, b) => {
         const ordem = { atrasado: 0, aberto: 1, pago: 2 };
-        return ((ordem[a.situacao] ?? 9) - (ordem[b.situacao] ?? 9)) ||
+        return ((ordem[situacaoContasPagar(a)] ?? 9) - (ordem[situacaoContasPagar(b)] ?? 9)) ||
             ((a.vencimento?.getTime?.() || 0) - (b.vencimento?.getTime?.() || 0));
     });
 
@@ -125,10 +165,10 @@ function aplicarFiltrosContasPagar() {
 }
 
 function atualizarKpisPagar() {
-    const pagos = pagarFiltrados.filter((x) => x.pago);
-    const abertos = pagarFiltrados.filter((x) => !x.pago);
-    const atrasados = pagarFiltrados.filter((x) => x.atrasado);
-    const vencer = abertos.filter((x) => !x.atrasado);
+    const pagos = pagarFiltrados.filter(pagarEstaPago);
+    const abertos = pagarFiltrados.filter((x) => !pagarEstaPago(x));
+    const atrasados = pagarFiltrados.filter(pagarEstaAtrasado);
+    const vencer = abertos.filter((x) => !pagarEstaAtrasado(x));
 
     const soma = (lista, fn) => lista.reduce((t, x) => t + fn(x), 0);
     const total = soma(pagarFiltrados, (x) => Number(x.valorDocumento || 0));
@@ -157,11 +197,12 @@ function atualizarKpisPagar() {
 
 function diasPagar(item) {
     if (!item.vencimento) return "—";
-    const referencia = item.pago && item.dataPagamento
+    const pago = pagarEstaPago(item);
+    const referencia = pago && item.dataPagamento
         ? inicioDoDia(item.dataPagamento) : inicioDoDia(new Date());
     const dias = Math.round((referencia - inicioDoDia(item.vencimento)) / 86400000);
 
-    if (item.pago) {
+    if (pago) {
         if (dias > 0) return `${dias} após venc.`;
         if (dias < 0) return `${Math.abs(dias)} antes`;
         return "No vencimento";
@@ -188,8 +229,9 @@ function renderizarPagar() {
     const itens = pagarFiltrados.slice(inicio, inicio + porPagina);
 
     corpo.innerHTML = itens.length ? itens.map((item) => {
-        const classe = item.pago ? "pago" : item.atrasado ? "atrasado" : "aberto";
-        const status = item.pago ? "Pago" : item.atrasado ? "Em atraso" : "Em aberto";
+        const situacao = situacaoContasPagar(item);
+        const classe = situacao === "pago" ? "pago" : situacao === "atrasado" ? "atrasado" : "aberto";
+        const status = situacao === "pago" ? "Pago" : situacao === "atrasado" ? "Em atraso" : "Em aberto";
         return `<tr>
             <td><strong>${escaparHtml(item.razaoSocial || "Não informado")}</strong></td>
             <td>${escaparHtml(item.documento || "—")}</td>
@@ -236,7 +278,7 @@ function exportarPagar() {
         item.razaoSocial || "", item.documento || "", tipoDoc(item),
         item.vencimento ? formatarDataBR(item.vencimento) : "",
         item.dataPagamento ? formatarDataBR(item.dataPagamento) : "",
-        item.situacao || "", item.valorDocumento || 0,
+        situacaoContasPagar(item), item.valorDocumento || 0,
         item.valorLiquidoPago || 0, saldoPagar(item),
         localPagar(item), item.planoFinanceiro || ""
     ]);
