@@ -217,7 +217,7 @@ function atualizarKpisContasReceber() {
     const aVencer = abertos.filter((item) => !item.atrasado);
 
     const totalPago = pagos.reduce(
-        (total, item) => total + Number(item.valorLiquidoPago || 0),
+        (total, item) => total + valorRecebidoContasReceber(item),
         0
     );
 
@@ -252,6 +252,31 @@ function atualizarKpisContasReceber() {
         "receberResumoFiltro",
         `${receberFiltrados.length} de ${receberTodos.length} títulos exibidos`
     );
+}
+
+/*
+ * Regra do valor realizado em Contas a Receber:
+ *
+ * - somente um título com Dt.pgto válida é considerado recebido;
+ * - o valor realizado corresponde a Vlr.docto + Juros - Descontos;
+ * - Vlr.líq.pago fica como alternativa apenas para relatórios antigos que
+ *   não tragam um valor de documento utilizável.
+ *
+ * Os adiantamentos continuam fora dos cards, conforme a regra do módulo.
+ */
+function valorRecebidoContasReceber(item) {
+    if (!item?.dataPagamento) return 0;
+
+    const valorDocumento = Number(item.valorDocumento || 0);
+    const juros = Number(item.juros || 0);
+    const descontos = Number(item.descontos || 0);
+    const valorCalculado = valorDocumento + juros - descontos;
+
+    if (valorDocumento > 0 || juros > 0 || descontos > 0) {
+        return Math.max(0, valorCalculado);
+    }
+
+    return Math.max(0, Number(item.valorLiquidoPago || 0));
 }
 
 function ehAdiantamentoReceber(item) {
@@ -367,7 +392,7 @@ function renderizarTabelaContasReceber() {
                     </td>
                     <td>${escaparHtml(diasSituacaoReceber(item))}</td>
                     <td class="receber-valor">${formatarMoeda(item.valorDocumento || 0)}</td>
-                    <td class="receber-valor pago">${formatarMoeda(item.valorLiquidoPago || 0)}</td>
+                    <td class="receber-valor pago">${formatarMoeda(valorRecebidoContasReceber(item))}</td>
                     <td class="receber-valor ${saldoAbertoReceber(item) > 0 ? "aberto" : ""}">
                         ${formatarMoeda(saldoAbertoReceber(item))}
                     </td>
@@ -423,7 +448,7 @@ function exportarContasReceber() {
         item.dataPagamento ? formatarDataBR(item.dataPagamento) : "",
         item.situacao || "",
         Number(item.valorDocumento || 0).toFixed(2).replace(".", ","),
-        Number(item.valorLiquidoPago || 0).toFixed(2).replace(".", ","),
+        valorRecebidoContasReceber(item).toFixed(2).replace(".", ","),
         saldoAbertoReceber(item).toFixed(2).replace(".", ","),
         item.localCobranca || item.banco || "",
         item.representante || ""
