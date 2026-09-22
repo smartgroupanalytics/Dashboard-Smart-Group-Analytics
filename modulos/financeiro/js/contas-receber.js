@@ -134,6 +134,22 @@ function situacaoContasReceber(item) {
     return "aberto";
 }
 
+/*
+ * No filtro da aba, "Em aberto" significa TODO título sem Dt.pgto,
+ * inclusive os vencidos. "Em atraso" continua disponível como um recorte
+ * dos títulos em aberto cujo vencimento já passou.
+ *
+ * Isso faz o filtro "Em aberto" reproduzir exatamente o Excel filtrado por
+ * Cliente + Dt.pgto = 00/00/0000.
+ */
+function correspondeStatusContasReceber(item, status) {
+    if (!status) return true;
+    if (status === "aberto") return !receberEstaPago(item);
+    if (status === "atrasado") return receberEstaAtrasado(item);
+    if (status === "pago") return receberEstaPago(item);
+    return situacaoContasReceber(item) === status;
+}
+
 function aplicarFiltrosContasReceber() {
     const busca = normalizarTexto(
         document.getElementById("receberBusca")?.value || ""
@@ -183,7 +199,7 @@ function aplicarFiltrosContasReceber() {
             "Não informado";
 
         if (busca && !texto.includes(busca)) return false;
-        if (status && situacaoContasReceber(item) !== status) return false;
+        if (!correspondeStatusContasReceber(item, status)) return false;
         if (cliente && item.razaoSocial !== cliente) return false;
         if (banco && local !== banco) return false;
         if (
