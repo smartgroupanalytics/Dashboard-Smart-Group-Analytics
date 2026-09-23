@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="css/contas-receber.css?v=20">
     <link rel="stylesheet" href="css/contas-pagar.css?v=21">
     <link rel="stylesheet" href="css/fluxo-caixa.css?v=23">
-    <link rel="stylesheet" href="css/saldo-frete.css?v=1">
+    <link rel="stylesheet" href="css/saldo-frete.css?v=2">
 </head>
 
 <body>
@@ -936,16 +936,16 @@
                 <section class="frete-painel">
                     <div class="frete-filtros">
                         <label class="frete-busca"><span>Pesquisar</span><div><i class="fa-solid fa-magnifying-glass"></i><input type="search" id="freteBusca" placeholder="NF, destinatário, descrição ou observação"></div></label>
-                        <label><span>Status</span><select id="freteStatus"><option value="">Todos</option><option value="aberto">Em aberto</option><option value="atrasado">Em atraso</option><option value="pago">Pago</option></select></label>
-                        <label><span>Empresa</span><select id="freteEmpresa"><option value="">Todos</option></select></label>
-                        <label><span>Destinatário</span><select id="freteDestinatario"><option value="">Todos</option></select></label>
-                        <label><span>Representante</span><select id="freteRepresentante"><option value="">Todos</option></select></label>
+                        <div class="frete-filtro frete-filtro-multi"><span>Status</span><div class="frete-multi" id="freteStatus"></div></div>
+                        <div class="frete-filtro frete-filtro-multi"><span>Empresa</span><div class="frete-multi" id="freteEmpresa"></div></div>
+                        <div class="frete-filtro frete-filtro-multi"><span>Destinatário</span><div class="frete-multi" id="freteDestinatario"></div></div>
+                        <div class="frete-filtro frete-filtro-multi"><span>Representante</span><div class="frete-multi" id="freteRepresentante"></div></div>
                         <label><span>Vencimento inicial</span><input type="date" id="freteInicio"></label>
                         <label><span>Vencimento final</span><input type="date" id="freteFim"></label>
                         <button type="button" class="btn-frete" id="btnLimparFrete"><i class="fa-solid fa-eraser"></i> Limpar</button>
                     </div>
                     <div class="frete-resumo"><span id="freteResumo">Carregue a planilha de fretes para visualizar.</span><label>Exibir <select id="fretePorPagina"><option value="25">25</option><option value="50">50</option><option value="100">100</option></select></label></div>
-                    <div class="frete-tabela-wrapper"><table class="frete-tabela"><thead><tr><th>Empresa</th><th>Nota Fiscal</th><th>Emissão</th><th>Destinatário</th><th>Representante</th><th>Descrição</th><th>Vencimento</th><th>Pagamento</th><th>Status</th><th>Valor Frete</th><th>Em aberto</th><th>Observação</th></tr></thead><tbody id="freteTabelaCorpo"><tr><td colspan="12" class="frete-vazio">Carregue uma planilha de fretes para visualizar.</td></tr></tbody></table></div>
+                    <div class="frete-tabela-wrapper"><table class="frete-tabela"><thead><tr><th>Empresa</th><th>Nota Fiscal</th><th>Emissão</th><th>Destinatário</th><th>Representante</th><th>Descrição</th><th>Vencimento</th><th>Pagamento</th><th>Status</th><th>Valor Total</th><th>Valor Pago</th><th>Em aberto</th><th>Observação</th></tr></thead><tbody id="freteTabelaCorpo"><tr><td colspan="13" class="frete-vazio">Carregue uma planilha de fretes para visualizar.</td></tr></tbody></table></div>
                     <div class="frete-paginacao"><button type="button" id="freteAnterior"><i class="fa-solid fa-chevron-left"></i></button><span id="fretePaginaInfo">Página 1 de 1</span><button type="button" id="freteProxima"><i class="fa-solid fa-chevron-right"></i></button></div>
                 </section>
             </section>
@@ -1462,7 +1462,7 @@
     <script src="js/contas-receber.js?v=25"></script>
     <script src="js/contas-pagar.js?v=23"></script>
     <script src="js/fluxo-caixa.js?v=34"></script>
-    <script src="js/saldo-frete.js?v=1"></script>
+    <script src="js/saldo-frete.js?v=2"></script>
     <script src="financeiro.js?v=9"></script>
 
 </body>
