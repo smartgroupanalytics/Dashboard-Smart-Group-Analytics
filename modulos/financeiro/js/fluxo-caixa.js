@@ -482,6 +482,15 @@ function aplicarFiltrosFluxoCaixa() {
     renderizarTabelaFluxo();
 }
 
+function ehAdiantamentoFluxo(item) {
+    const classificacao = normalizarTexto([
+        item?.tipoDocumento,
+        item?.planoFinanceiro
+    ].join(" "));
+
+    return classificacao.includes("adiantamento");
+}
+
 function atualizarKpisFluxo() {
     const realizadasEntradas =
         fluxoFiltrado.filter(
@@ -489,7 +498,8 @@ function atualizarKpisFluxo() {
                 item.cenario ===
                     "realizado" &&
                 item.tipo ===
-                    "entrada"
+                    "entrada" &&
+                !ehAdiantamentoFluxo(item)
         );
 
     const realizadasSaidas =
