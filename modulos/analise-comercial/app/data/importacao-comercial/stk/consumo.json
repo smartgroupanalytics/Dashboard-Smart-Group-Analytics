@@ -4868,6 +4868,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 80,
+    "dt_movto": "2026-09-22"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11905",
+    "produto": "11905",
+    "desc_completa": "NAPA MADRID CARAMELO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 100.7,
     "dt_movto": "2026-06-10"
   },
@@ -16004,6 +16016,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 488.4,
+    "dt_movto": "2026-09-22"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20021",
+    "produto": "20021",
+    "desc_completa": "NAPA FLOATER VENEZIA CARAMELO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 492,
     "dt_movto": "2026-08-05"
   },
@@ -16042,6 +16066,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 500,
     "dt_movto": "2026-08-28"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20021",
+    "produto": "20021",
+    "desc_completa": "NAPA FLOATER VENEZIA CARAMELO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 504,
+    "dt_movto": "2026-09-22"
   },
   {
     "fonte_comercial": "STK",
@@ -16376,6 +16412,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 5,
+    "dt_movto": "2026-09-22"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20082",
+    "produto": "20082",
+    "desc_completa": "NAPA BARI CAFE - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 9.8,
     "dt_movto": "2026-05-06"
   },
@@ -16594,6 +16642,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 490,
     "dt_movto": "2026-09-03"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20082",
+    "produto": "20082",
+    "desc_completa": "NAPA BARI CAFE - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 490,
+    "dt_movto": "2026-09-22"
   },
   {
     "fonte_comercial": "STK",
