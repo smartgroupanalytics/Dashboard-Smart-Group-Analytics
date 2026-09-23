@@ -1,8 +1,8 @@
 {
-  "importadoEm": "2026-09-22T16:56:32.114Z",
+  "importadoEm": "2026-09-23T08:11:31.193Z",
   "pastaEntrada": "/home/runner/work/Dashboard-Smart-Group-Analytics/Dashboard-Smart-Group-Analytics/_automacao/entrada-relatorios",
   "modo": "ATUALIZACAO_PARCIAL_PROTEGIDA",
-  "status": "ATENCAO",
+  "status": "OK",
   "relatorios": {
     "ESTOQUE": {
       "arquivo": "ESTOQUE.xlsx",
@@ -35,10 +35,10 @@
       "arquivo": "OP.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 42,
-      "linhasValidas": 42,
-      "produtosDistintos": 39,
-      "quantidade": 21409
+      "linhasOriginais": 49,
+      "linhasValidas": 49,
+      "produtosDistintos": 44,
+      "quantidade": 24425
     },
     "VENDAS": {
       "arquivo": "VENDAS.xlsx",
@@ -65,10 +65,10 @@
       "arquivo": "ESTOQUEBR.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 939,
-      "linhasValidas": 939,
+      "linhasOriginais": 941,
+      "linhasValidas": 941,
       "produtosDistintos": 550,
-      "quantidade": 40913.200000000004
+      "quantidade": 41177.8
     },
     "OPBR": {
       "arquivo": "OPBR.xlsx",
@@ -77,18 +77,16 @@
       "linhasOriginais": 45,
       "linhasValidas": 45,
       "produtosDistintos": 39,
-      "quantidade": 36733.8,
-      "statusAtualizacao": "MANTIDO",
-      "motivo": "Bandwidth quota exceeded: https://gmail.googleapis.com/gmail/v1/users/me/messages/1a0c8380d2ca3923?format=full. Try reducing the rate of data transfer."
+      "quantidade": 36733.8
     },
     "VENDASBR": {
       "arquivo": "VENDASBR.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 1769,
-      "linhasValidas": 1769,
-      "produtosDistintos": 350,
-      "quantidade": 637280.57
+      "linhasOriginais": 1792,
+      "linhasValidas": 1792,
+      "produtosDistintos": 351,
+      "quantidade": 643293.07
     }
   },
   "totais": {
@@ -96,12 +94,5 @@
     "beiraRio": {},
     "comum": {}
   },
-  "erros": [
-    {
-      "relatorio": "OPBR",
-      "arquivo": "OPBR.xlsx",
-      "mensagem": "Bandwidth quota exceeded: https://gmail.googleapis.com/gmail/v1/users/me/messages/1a0c8380d2ca3923?format=full. Try reducing the rate of data transfer.",
-      "baseAnteriorMantida": true
-    }
-  ]
+  "erros": []
 }
