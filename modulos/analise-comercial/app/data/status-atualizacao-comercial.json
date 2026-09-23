@@ -1,75 +1,75 @@
 {
-  "atualizadoEm": "2026-09-22T16:56:32.114Z",
-  "ultimaAtualizacaoValida": "2026-09-22T16:56:32.114Z",
-  "status": "ATENCAO",
-  "mensagem": "8 de 9 relatórios atualizados com sucesso. 1 mantido(s) na base anterior: OPBR.xlsx.",
+  "atualizadoEm": "2026-09-23T09:11:26.584Z",
+  "ultimaAtualizacaoValida": "2026-09-23T09:11:26.584Z",
+  "status": "OK",
+  "mensagem": "9 de 9 relatórios atualizados com sucesso.",
   "modo": "PARCIAL_SEGURO",
   "totalEsperado": 9,
-  "totalRecebido": 8,
-  "totalAtualizado": 8,
-  "totalMantido": 1,
+  "totalRecebido": 9,
+  "totalAtualizado": 9,
+  "totalMantido": 0,
   "relatorios": [
     {
       "arquivo": "ESTOQUE.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-09-22T08:15:22.000Z",
-      "linhasValidas": 2462,
+      "recebidoEm": "2026-09-23T08:15:18.000Z",
+      "linhasValidas": 2463,
       "mensagem": "Atualizado com sucesso."
     },
     {
       "arquivo": "COMPRAS.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-09-22T09:00:10.000Z",
-      "linhasValidas": 26,
+      "recebidoEm": "2026-09-23T09:00:09.000Z",
+      "linhasValidas": 27,
       "mensagem": "Atualizado com sucesso."
     },
     {
       "arquivo": "CONSUMO.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-09-22T08:40:15.000Z",
-      "linhasValidas": 1417,
+      "recebidoEm": "2026-09-23T08:40:13.000Z",
+      "linhasValidas": 1422,
       "mensagem": "Atualizado com sucesso."
     },
     {
       "arquivo": "OP.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-09-22T08:00:10.000Z",
-      "linhasValidas": 42,
+      "recebidoEm": "2026-09-23T08:00:10.000Z",
+      "linhasValidas": 49,
       "mensagem": "Atualizado com sucesso."
     },
     {
       "arquivo": "VENDAS.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-09-22T08:52:00.000Z",
-      "linhasValidas": 6315,
+      "recebidoEm": "2026-09-23T08:51:22.000Z",
+      "linhasValidas": 6354,
       "mensagem": "Atualizado com sucesso."
     },
     {
       "arquivo": "PEDIDOS EM ABERTO.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-09-22T08:56:14.000Z",
-      "linhasValidas": 305,
+      "recebidoEm": "2026-09-23T08:56:01.000Z",
+      "linhasValidas": 271,
       "mensagem": "Atualizado com sucesso."
     },
     {
       "arquivo": "ESTOQUEBR.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-09-22T08:05:13.000Z",
-      "linhasValidas": 939,
+      "recebidoEm": "2026-09-23T08:05:11.000Z",
+      "linhasValidas": 941,
       "mensagem": "Atualizado com sucesso."
     },
     {
       "arquivo": "OPBR.xlsx",
-      "status": "MANTIDO — Bandwidth quota exceeded: https://gmail.googleapis.com/gmail/v1/users/me/messages/1a0c8380d2ca3923?format=full. Try reducing the rate of data transfer.",
-      "recebidoEm": null,
-      "mensagem": "Bandwidth quota exceeded: https://gmail.googleapis.com/gmail/v1/users/me/messages/1a0c8380d2ca3923?format=full. Try reducing the rate of data transfer.",
-      "baseAnteriorMantida": true
+      "status": "OK",
+      "recebidoEm": "2026-09-23T08:25:09.000Z",
+      "linhasValidas": 51,
+      "mensagem": "Atualizado com sucesso."
     },
     {
       "arquivo": "VENDASBR.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-09-22T08:10:18.000Z",
-      "linhasValidas": 1769,
+      "recebidoEm": "2026-09-23T08:10:17.000Z",
+      "linhasValidas": 1792,
       "mensagem": "Atualizado com sucesso."
     }
   ]

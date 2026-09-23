@@ -1,94 +1,92 @@
 {
-  "importadoEm": "2026-09-22T16:56:32.114Z",
+  "importadoEm": "2026-09-23T09:11:26.584Z",
   "pastaEntrada": "/home/runner/work/Dashboard-Smart-Group-Analytics/Dashboard-Smart-Group-Analytics/_automacao/entrada-relatorios",
   "modo": "ATUALIZACAO_PARCIAL_PROTEGIDA",
-  "status": "ATENCAO",
+  "status": "OK",
   "relatorios": {
     "ESTOQUE": {
       "arquivo": "ESTOQUE.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 2463,
-      "linhasValidas": 2462,
+      "linhasOriginais": 2464,
+      "linhasValidas": 2463,
       "produtosDistintos": 867,
-      "quantidade": 450910.34999999986
+      "quantidade": 450375.7499999999
     },
     "COMPRAS": {
       "arquivo": "COMPRAS.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 26,
-      "linhasValidas": 26,
+      "linhasOriginais": 27,
+      "linhasValidas": 27,
       "produtosDistintos": 16,
-      "quantidade": 168000
+      "quantidade": 171000
     },
     "CONSUMO": {
       "arquivo": "CONSUMO.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 1417,
-      "linhasValidas": 1417,
+      "linhasOriginais": 1422,
+      "linhasValidas": 1422,
       "produtosDistintos": 151,
-      "quantidade": 230230.63999999998
+      "quantidade": 231798.03999999998
     },
     "OP": {
       "arquivo": "OP.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 42,
-      "linhasValidas": 42,
-      "produtosDistintos": 39,
-      "quantidade": 21409
+      "linhasOriginais": 49,
+      "linhasValidas": 49,
+      "produtosDistintos": 44,
+      "quantidade": 24425
     },
     "VENDAS": {
       "arquivo": "VENDAS.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 6315,
-      "linhasValidas": 6315,
+      "linhasOriginais": 6354,
+      "linhasValidas": 6354,
       "produtosDistintos": 613,
-      "quantidade": 782513.7999999999
+      "quantidade": 786249.7999999999
     },
     "PEDIDOS_EM_ABERTO": {
       "arquivo": "PEDIDOS EM ABERTO.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 306,
-      "linhasValidas": 305,
-      "produtosDistintos": 218,
-      "quantidade": 60265.670000000006,
-      "valor": 2436719.239999998,
-      "pedidosDistintos": 139,
-      "clientesDistintos": 43
+      "linhasOriginais": 272,
+      "linhasValidas": 271,
+      "produtosDistintos": 195,
+      "quantidade": 52835.770000000004,
+      "valor": 2210231.7299999967,
+      "pedidosDistintos": 117,
+      "clientesDistintos": 41
     },
     "ESTOQUEBR": {
       "arquivo": "ESTOQUEBR.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 939,
-      "linhasValidas": 939,
+      "linhasOriginais": 941,
+      "linhasValidas": 941,
       "produtosDistintos": 550,
-      "quantidade": 40913.200000000004
+      "quantidade": 41177.8
     },
     "OPBR": {
       "arquivo": "OPBR.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 45,
-      "linhasValidas": 45,
-      "produtosDistintos": 39,
-      "quantidade": 36733.8,
-      "statusAtualizacao": "MANTIDO",
-      "motivo": "Bandwidth quota exceeded: https://gmail.googleapis.com/gmail/v1/users/me/messages/1a0c8380d2ca3923?format=full. Try reducing the rate of data transfer."
+      "linhasOriginais": 51,
+      "linhasValidas": 51,
+      "produtosDistintos": 43,
+      "quantidade": 40767.3
     },
     "VENDASBR": {
       "arquivo": "VENDASBR.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 1769,
-      "linhasValidas": 1769,
-      "produtosDistintos": 350,
-      "quantidade": 637280.57
+      "linhasOriginais": 1792,
+      "linhasValidas": 1792,
+      "produtosDistintos": 351,
+      "quantidade": 643293.07
     }
   },
   "totais": {
@@ -96,12 +94,5 @@
     "beiraRio": {},
     "comum": {}
   },
-  "erros": [
-    {
-      "relatorio": "OPBR",
-      "arquivo": "OPBR.xlsx",
-      "mensagem": "Bandwidth quota exceeded: https://gmail.googleapis.com/gmail/v1/users/me/messages/1a0c8380d2ca3923?format=full. Try reducing the rate of data transfer.",
-      "baseAnteriorMantida": true
-    }
-  ]
+  "erros": []
 }

@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-09-22T16:56:32.114Z",
+  "updatedAt": "2026-09-23T09:11:26.584Z",
   "origem": "automacao-comercial",
   "status": "OK",
-  "commercialStatus": "ATENCAO",
-  "reportsUpdated": 8,
-  "reportsMaintained": 1
+  "commercialStatus": "OK",
+  "reportsUpdated": 9,
+  "reportsMaintained": 0
 }

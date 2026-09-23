@@ -169,30 +169,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8002",
-    "produto": "13708",
-    "desc_completa": "MERIDA PRETO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 1000,
-    "dt_saida": "2026-08-31",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8092",
-    "produto": "30096",
-    "desc_completa": "BORGONHA BROWN",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 600,
-    "dt_saida": "2026-09-10",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8093",
     "produto": "15212",
     "desc_completa": "BORGONHA TITANIO",
@@ -200,8 +176,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-09-10",
-    "centro_custo": 1,
-    "abreviacao": "RECOB"
+    "centro_custo": 3,
+    "abreviacao": "GR 1"
   },
   {
     "fonte_comercial": "STK",
@@ -212,8 +188,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-09-10",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -265,18 +241,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8184",
-    "produto": "6395",
-    "desc_completa": "BORGONHA BRONZE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 400,
-    "dt_saida": "2026-09-17",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8186",
     "produto": "17420",
     "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
@@ -301,18 +265,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8189",
-    "produto": "13144",
-    "desc_completa": "NAPA LINHO DAKAR NATURAL",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 1000,
-    "dt_saida": "2026-09-18",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8255",
     "produto": "15212",
     "desc_completa": "BORGONHA TITANIO",
@@ -332,8 +284,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-22",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -344,8 +296,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-09-22",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -356,8 +308,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-09-22",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -404,8 +356,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-09-22",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 1,
+    "abreviacao": "RECOB"
   },
   {
     "fonte_comercial": "STK",
@@ -428,6 +380,18 @@
     "subgrupo": 41,
     "qtd_produzir": 80,
     "dt_saida": "2026-09-21",
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8335",
+    "produto": "11845",
+    "desc_completa": "BORGONHA OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 336,
+    "dt_saida": "2026-09-25",
     "centro_custo": 0,
     "abreviacao": ""
   },
@@ -500,6 +464,126 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-28",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8379",
+    "produto": "11845",
+    "desc_completa": "BORGONHA OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 1440,
+    "dt_saida": "2026-09-30",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8380",
+    "produto": "30095",
+    "desc_completa": "BORGONHA WHISKY",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 400,
+    "dt_saida": "2026-09-30",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8382",
+    "produto": "16503",
+    "desc_completa": "CANYON CANELA",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 400,
+    "dt_saida": "2026-09-30",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8383",
+    "produto": "17425",
+    "desc_completa": "DENVER PRETO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 1000,
+    "dt_saida": "2026-09-30",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8384",
+    "produto": "17416",
+    "desc_completa": "DENVER NUDE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 600,
+    "dt_saida": "2026-09-30",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8385",
+    "produto": "17420",
+    "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 1000,
+    "dt_saida": "2026-09-30",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8386",
+    "produto": "15536",
+    "desc_completa": "MIRAGE PRETO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-09-30",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8388",
+    "produto": "16571",
+    "desc_completa": "SAVOY LUX BRANCO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-09-30",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8389",
+    "produto": "15709",
+    "desc_completa": "TEGUS CANELA",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-09-30",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8395",
+    "produto": "11845",
+    "desc_completa": "BORGONHA OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 240,
+    "dt_saida": "2026-10-02",
     "centro_custo": 0,
     "abreviacao": ""
   }
