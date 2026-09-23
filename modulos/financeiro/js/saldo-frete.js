@@ -61,6 +61,9 @@ function inicializarSaldoFrete() {
             fretePagina = 1;
             aplicarFiltrosFrete();
             statusFrete(`${freteTodos.length} registros de frete importados. Valores lidos pelas colunas TOTAL, VALOR PAGO 1, VALOR EM ABERTO e STATUS.`, "sucesso");
+            if (typeof registrarStatusFonteSessao === "function") {
+                registrarStatusFonteSessao("fretes");
+            }
         } catch (erro) {
             console.error(erro);
             statusFrete(erro.message || "Não foi possível importar a planilha de fretes.", "erro");

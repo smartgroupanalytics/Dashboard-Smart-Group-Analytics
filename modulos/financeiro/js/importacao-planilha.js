@@ -50,6 +50,10 @@ function configurarImportacaoPlanilha() {
                 `${resultado.quantidadeFornecedores} de fornecedores.`,
                 "sucesso"
             );
+
+            if (typeof registrarStatusFonteSessao === "function") {
+                registrarStatusFonteSessao("financeiro");
+            }
         } catch (erro) {
             console.error("Erro ao importar planilha:", erro);
             atualizarStatusImportacao(

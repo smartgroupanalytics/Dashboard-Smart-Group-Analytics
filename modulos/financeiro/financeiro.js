@@ -26,6 +26,10 @@ function iniciarModuloFinanceiro() {
     carregarIndicadoresDemonstrativos();
     renderizarBancos();
     preencherFiltroBancos();
+
+    if (typeof carregarDadosAutomaticosFinanceiro === "function") {
+        carregarDadosAutomaticosFinanceiro();
+    }
 }
 
 function configurarFiltroCenarioVisao() {

@@ -1791,3 +1791,75 @@ button {
     font-size: 13px;
     font-weight: 600;
 }
+
+/* ============================================================
+   STATUS DAS DUAS FONTES AUTOMÁTICAS — FINANCEIRO / FRETES
+   ============================================================ */
+.status-fontes-automaticas {
+    display: grid;
+    gap: 3px;
+    min-width: 290px;
+    padding: 8px 11px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 9px;
+    background: rgba(7, 39, 78, 0.72);
+    font-size: 11px;
+    line-height: 1.35;
+}
+
+.status-fonte-linha {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+}
+
+.status-fonte-nome {
+    flex: 0 0 auto;
+    color: var(--cor-texto);
+    font-weight: 700;
+}
+
+.status-fonte-valor {
+    min-width: 0;
+    overflow: hidden;
+    color: var(--cor-texto-secundario);
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.status-fonte-valor.sucesso {
+    color: #48e78c;
+}
+
+.status-fonte-valor.erro {
+    color: #ffbf5f;
+}
+
+.status-fonte-valor.aguardando {
+    color: #9ec9ff;
+}
+
+.ultima-atualizacao-sessao {
+    min-width: auto;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+@media (max-width: 1180px) {
+    .status-fontes-automaticas {
+        min-width: 245px;
+    }
+}
+
+@media (max-width: 820px) {
+    .status-fontes-automaticas {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .status-fonte-valor {
+        white-space: normal;
+    }
+}

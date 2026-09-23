@@ -17,7 +17,7 @@
 
     <link
         rel="stylesheet"
-        href="financeiro.css?v=30"
+        href="financeiro.css?v=31"
     >
     <link rel="stylesheet" href="css/graficos-financeiros.css?v=13">
     <link rel="stylesheet" href="css/bancos-financeiros.css?v=14">
@@ -49,11 +49,16 @@
 
             <div class="financeiro-acoes">
 
-                <span class="ultima-atualizacao">
-                    <i class="fa-solid fa-rotate"></i>
-                    Atualizado em
-                    <strong id="dataAtualizacao">--</strong>
-                </span>
+                <div class="status-fontes-automaticas" id="statusFontesAutomaticas" aria-label="Status das atualizações automáticas">
+                    <div class="status-fonte-linha" id="statusFonteFinanceiro">
+                        <span class="status-fonte-nome">Financeiro:</span>
+                        <strong class="status-fonte-valor aguardando" id="statusAutoFinanceiro">⏳ Carregando...</strong>
+                    </div>
+                    <div class="status-fonte-linha" id="statusFonteFretes">
+                        <span class="status-fonte-nome">Fretes:</span>
+                        <strong class="status-fonte-valor aguardando" id="statusAutoFretes">⏳ Carregando...</strong>
+                    </div>
+                </div>
 
                 <button
                     type="button"
@@ -1458,12 +1463,13 @@
     <script src="js/graficos-financeiros.js?v=16"></script>
     <script src="js/bancos-financeiros.js?v=19"></script>
     <script src="js/filtros-financeiro.js?v=32"></script>
-    <script src="js/importacao-planilha.js?v=8"></script>
+    <script src="js/importacao-planilha.js?v=9"></script>
     <script src="js/contas-receber.js?v=25"></script>
     <script src="js/contas-pagar.js?v=23"></script>
     <script src="js/fluxo-caixa.js?v=34"></script>
-    <script src="js/saldo-frete.js?v=2"></script>
-    <script src="financeiro.js?v=9"></script>
+    <script src="js/saldo-frete.js?v=3"></script>
+    <script src="js/automacao-financeiro.js?v=1"></script>
+    <script src="financeiro.js?v=10"></script>
 
 </body>
 </html>
