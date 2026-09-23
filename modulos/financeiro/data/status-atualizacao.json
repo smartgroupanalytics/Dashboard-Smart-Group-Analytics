@@ -1,25 +1,17 @@
 {
-  "geradoEm": "2026-09-23T13:47:17.232Z",
+  "updatedAt": "2026-09-23T17:15:41.191Z",
   "fontes": {
     "financeiro": {
       "status": "OK",
-      "arquivo": "financeiro.xlsx",
-      "arquivoOrigem": "financiero teste 22-09-2026(1).XLSX",
-      "atualizadoEm": "2026-09-23T13:47:17.232Z",
-      "ultimoSucessoEm": "2026-09-23T13:47:17.232Z",
-      "mensagem": "Base inicial validada e incluída no projeto.",
-      "quantidadeRegistros": 985,
-      "aba": "Planilha"
+      "ultimoSucessoEm": "2026-09-23T16:25:19.073Z",
+      "atualizadoEm": "2026-09-23T16:25:19.073Z",
+      "mensagem": "Atualização automática concluída."
     },
     "fretes": {
       "status": "OK",
-      "arquivo": "fretes.xlsx",
-      "arquivoOrigem": "Cópia de FRETES atualizado nov (1)(5).xlsx",
-      "atualizadoEm": "2026-09-23T12:07:07.016Z",
-      "ultimoSucessoEm": "2026-09-23T12:07:07.016Z",
-      "mensagem": "Base inicial validada e incluída no projeto.",
-      "quantidadeRegistros": 798,
-      "aba": "BASE"
+      "ultimoSucessoEm": "2026-09-23T16:25:24.082Z",
+      "atualizadoEm": "2026-09-23T16:25:24.082Z",
+      "mensagem": "Atualização automática concluída."
     }
   }
 }
