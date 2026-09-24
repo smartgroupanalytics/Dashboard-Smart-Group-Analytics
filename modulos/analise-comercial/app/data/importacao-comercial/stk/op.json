@@ -169,18 +169,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8093",
-    "produto": "15212",
-    "desc_completa": "BORGONHA TITANIO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 400,
-    "dt_saida": "2026-09-10",
-    "centro_custo": 3,
-    "abreviacao": "GR 1"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8095",
     "produto": "17231",
     "desc_completa": "DENVER ESPRESSO",
@@ -205,18 +193,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8097",
-    "produto": "13708",
-    "desc_completa": "MERIDA PRETO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 2000,
-    "dt_saida": "2026-09-10",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8098",
     "produto": "15534",
     "desc_completa": "MIRAGE OURO LIGHT",
@@ -226,18 +202,6 @@
     "dt_saida": "2026-09-10",
     "centro_custo": 2,
     "abreviacao": "GRAV"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8123",
-    "produto": "11847",
-    "desc_completa": "BORGONHA GRAFITE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 400,
-    "dt_saida": "2026-09-11",
-    "centro_custo": 25,
-    "abreviacao": "TRANSFE"
   },
   {
     "fonte_comercial": "STK",
@@ -260,8 +224,8 @@
     "subgrupo": 41,
     "qtd_produzir": 600,
     "dt_saida": "2026-09-18",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -272,8 +236,8 @@
     "subgrupo": 41,
     "qtd_produzir": 390,
     "dt_saida": "2026-09-18",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 3,
+    "abreviacao": "GR 1"
   },
   {
     "fonte_comercial": "STK",
@@ -284,8 +248,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-22",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -296,8 +260,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-09-22",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 1,
+    "abreviacao": "RECOB"
   },
   {
     "fonte_comercial": "STK",
@@ -320,8 +284,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-09-22",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -344,8 +308,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-09-22",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -380,8 +344,8 @@
     "subgrupo": 41,
     "qtd_produzir": 80,
     "dt_saida": "2026-09-21",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -428,8 +392,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-24",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 7,
+    "abreviacao": "ESTAM"
   },
   {
     "fonte_comercial": "STK",
@@ -440,8 +404,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-24",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -460,6 +424,18 @@
     "nro_op": "8361",
     "produto": "17954",
     "desc_completa": "ARUBA GLAM OURO ROSADO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-09-28",
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8362",
+    "produto": "18000",
+    "desc_completa": "ARUBA GLAM BRONZE",
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 200,
@@ -487,6 +463,18 @@
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 400,
+    "dt_saida": "2026-09-30",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8381",
+    "produto": "11846",
+    "desc_completa": "BORGONHA OURO ROSADO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 600,
     "dt_saida": "2026-09-30",
     "centro_custo": 0,
     "abreviacao": ""
@@ -547,6 +535,18 @@
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 200,
+    "dt_saida": "2026-09-30",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8387",
+    "produto": "16466",
+    "desc_completa": "SAVOY GLAM OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 400,
     "dt_saida": "2026-09-30",
     "centro_custo": 0,
     "abreviacao": ""
