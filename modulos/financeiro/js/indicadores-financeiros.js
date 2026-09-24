@@ -83,11 +83,39 @@ function atualizarIndicadoresComplementares(clientes) {
         ? somaDias / pagosComDatas.length
         : 0;
 
-    const totalCarteira = somar(clientes, "valorDocumento");
-    const valorAtrasado = somar(
-        clientes.filter((item) => item.atrasado),
-        "valorDocumento"
+    /*
+     * Inadimplência = valor vencido / carteira atual de clientes.
+     *
+     * Para este indicador, a regra precisa seguir a mesma leitura da aba
+     * Contas a Receber:
+     * - somente títulos de clientes sem Dt.pgto compõem a carteira em aberto;
+     * - vencido = sem Dt.pgto e Vencimento anterior a hoje;
+     * - adiantamentos permanecem fora do cálculo.
+     *
+     * Não usamos item.pago/item.atrasado aqui porque esses campos também
+     * consideram Vlr.líq.pago e podem classificar como pago um título cuja
+     * Dt.pgto ainda está 00/00/0000.
+     */
+    const hoje = inicioDoDia(new Date());
+    const carteiraAberta = clientes.filter((item) => {
+        const classificacao = normalizarTexto([
+            item.planoFinanceiro,
+            item.tipoDocumento,
+            item.descricaoTipoDocumento
+        ].join(" "));
+
+        const ehAdiantamento = classificacao.includes("adiantamento");
+        const semPagamento = !item.dataPagamento;
+
+        return semPagamento && !ehAdiantamento;
+    });
+
+    const vencidos = carteiraAberta.filter((item) =>
+        item.vencimento && inicioDoDia(item.vencimento) < hoje
     );
+
+    const totalCarteira = somar(carteiraAberta, "valorDocumento");
+    const valorAtrasado = somar(vencidos, "valorDocumento");
     const inadimplencia = totalCarteira
         ? (valorAtrasado / totalCarteira) * 100
         : 0;
