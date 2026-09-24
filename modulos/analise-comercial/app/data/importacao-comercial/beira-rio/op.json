@@ -111,16 +111,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8197",
-    "produto": "9873",
-    "desc_completa": "METALIZADO NANCY PU 1.0 DOURADO",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 508,
-    "dt_saida": "2026-09-15",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8198",
     "produto": "9895",
     "desc_completa": "METALIZADO NANCY PU 1.0 OURO ROSADO",
@@ -134,26 +124,6 @@
     "nro_op": "8199",
     "produto": "30087",
     "desc_completa": "NAPA MARSELHA CHOCOLATE 1271",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 400,
-    "dt_saida": "2026-09-15",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8208",
-    "produto": "11013",
-    "desc_completa": "NOBUCK TUNISIA PU 1.2 BRANCO OFF (VENDA BEIRA RIO)",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 410,
-    "dt_saida": "2026-09-15",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8210",
-    "produto": "17873",
-    "desc_completa": "METALIZADO TRAMADO BERLIM PRATA",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 400,
     "dt_saida": "2026-09-15",
@@ -191,21 +161,11 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8252",
-    "produto": "15832",
-    "desc_completa": "NAPA NEW NANCY PRETO",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 600,
-    "dt_saida": "2026-09-16",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8254",
     "produto": "15823",
     "desc_completa": "NAPA NEW NANCY AVELA 1248",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 800,
+    "qtd_produzir": 454,
     "dt_saida": "2026-09-16",
     "abreviacao": ""
   },
@@ -251,16 +211,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8277",
-    "produto": "30225",
-    "desc_completa": "NAPA TRAMADO BERLIM AVELA 1248",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 373,
-    "dt_saida": "2026-09-21",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8278",
     "produto": "9902",
     "desc_completa": "METALIZADO NANCY PU 1.0 PRATA",
@@ -281,21 +231,11 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8303",
-    "produto": "17961",
-    "desc_completa": "NAPA LISTRAS MADRI BRANCO OFF 526 VERMELHO 1025",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 104,
-    "dt_saida": "2026-09-18",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8329",
     "produto": "17965",
     "desc_completa": "NAPA ZEBRA SAVANA ROSA 1541 PRETO 01",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 200,
+    "qtd_produzir": 102,
     "dt_saida": "2026-09-21",
     "abreviacao": ""
   },
@@ -305,7 +245,7 @@
     "produto": "17966",
     "desc_completa": "NAPA ONCA SAVANA MULTI ROSA 1541",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 200,
+    "qtd_produzir": 104.5,
     "dt_saida": "2026-09-21",
     "abreviacao": ""
   },
@@ -385,7 +325,7 @@
     "produto": "17970",
     "desc_completa": "NAPA MAXXI POA BRANCO 99/ PRETO 01",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 200,
+    "qtd_produzir": 95.5,
     "dt_saida": "2026-09-21",
     "abreviacao": ""
   },
@@ -434,6 +374,16 @@
     "nro_op": "8372",
     "produto": "17874",
     "desc_completa": "NAPA TRAMADO BERLIM PRETO 01",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 800,
+    "dt_saida": "2026-09-25",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8373",
+    "produto": "17561",
+    "desc_completa": "METALIZADO TRAMADO BERLIM BR DOURADO",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 800,
     "dt_saida": "2026-09-25",
@@ -507,6 +457,26 @@
     "grupo": "BEIRA RIO",
     "qtd_produzir": 300,
     "dt_saida": "2026-09-30",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8406",
+    "produto": "14726",
+    "desc_completa": "NAPA MONOGRAMA GLAM MULTI BRANCO 99",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 115,
+    "dt_saida": "2026-09-23",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8409",
+    "produto": "18051",
+    "desc_completa": "NAPA DALLAS COFFEE 1577",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 200,
+    "dt_saida": "2026-09-25",
     "abreviacao": ""
   }
 ]
