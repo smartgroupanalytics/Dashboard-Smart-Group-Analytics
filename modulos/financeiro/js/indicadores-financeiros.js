@@ -105,7 +105,8 @@ function atualizarIndicadoresComplementares(clientes) {
         ].join(" "));
 
         const ehAdiantamento = classificacao.includes("adiantamento");
-        const semPagamento = !item.dataPagamento;
+        const semPagamento = !(item.dataPagamento instanceof Date) ||
+            Number.isNaN(item.dataPagamento.getTime());
 
         return semPagamento && !ehAdiantamento;
     });
@@ -128,11 +129,20 @@ function atualizarIndicadoresComplementares(clientes) {
         })} dias`
     );
 
-    preencherTexto(
-        "taxaInadimplencia",
-        `${inadimplencia.toLocaleString("pt-BR", {
+    // Evita mostrar 0,0% quando existe atraso de pequeno valor.
+    const percentualFormatado = inadimplencia > 0 && inadimplencia < 0.01
+        ? "< 0,01%"
+        : `${inadimplencia.toLocaleString("pt-BR", {
             minimumFractionDigits: 1,
-            maximumFractionDigits: 1
-        })}%`
-    );
+            maximumFractionDigits: 2
+        })}%`;
+
+    preencherTexto("taxaInadimplencia", percentualFormatado);
+
+    const indicador = document.getElementById("taxaInadimplencia");
+    if (indicador) {
+        indicador.title = `Vencido: ${formatarMoeda(valorAtrasado)} | ` +
+            `Carteira em aberto: ${formatarMoeda(totalCarteira)}. ` +
+            "Considera os filtros selecionados, sem pagamentos e adiantamentos.";
+    }
 }
