@@ -7,11 +7,12 @@ function carregarIndicadoresDemonstrativos() {
     renderizarDetalhesIndicadorFinanceiro([]);
 }
 
-function atualizarDashboardCompleto(dados) {
+function atualizarDashboardCompleto(dados, dadosCarteira = dados) {
     const dadosDoModo = filtrarDadosModoVisao(dados);
-    atualizarKPIs(dadosDoModo);
+    const carteiraDoModo = filtrarDadosModoVisao(dadosCarteira);
+    atualizarKPIs(dadosDoModo, carteiraDoModo);
     renderizarGraficos(dadosDoModo);
-    renderizarDetalhesIndicadorFinanceiro(dadosDoModo);
+    renderizarDetalhesIndicadorFinanceiro(dadosDoModo, carteiraDoModo);
 }
 
 function filtrarDadosModoVisao(dados) {
@@ -33,12 +34,27 @@ function filtrarDadosModoVisao(dados) {
     return lista;
 }
 
-function atualizarKPIs(dados) {
+function clienteEmAbertoIndicador(item) {
+    const classificacao = normalizarTexto([
+        item.planoFinanceiro, item.tipoDocumento, item.descricaoTipoDocumento
+    ].join(" "));
+    const temPagamento = item.dataPagamento instanceof Date &&
+        !Number.isNaN(item.dataPagamento.getTime());
+    return item.tipoCadastro === "cliente" && !temPagamento &&
+        !classificacao.includes("adiantamento");
+}
+
+function clienteVencidoIndicador(item) {
+    return clienteEmAbertoIndicador(item) && Boolean(item.vencimento) &&
+        inicioDoDia(item.vencimento) < inicioDoDia(new Date());
+}
+
+function atualizarKPIs(dados, dadosCarteira = dados) {
     const clientes = dados.filter((item) => item.tipoCadastro === "cliente");
     const fornecedores = dados.filter((item) => item.tipoCadastro === "fornecedor");
     const clientesPagos = clientes.filter((item) => item.pago);
-    const clientesAbertos = clientes.filter((item) => !item.pago);
-    const clientesAtrasados = clientes.filter((item) => item.atrasado);
+    const clientesAbertos = dadosCarteira.filter(clienteEmAbertoIndicador);
+    const clientesAtrasados = clientesAbertos.filter(clienteVencidoIndicador);
     const fornecedoresPagos = fornecedores.filter((item) => item.pago);
     const fornecedoresAbertos = fornecedores.filter((item) => !item.pago);
 
@@ -63,10 +79,14 @@ function atualizarKPIs(dados) {
         atualizarSaldoDisponivelGeral();
     }
 
-    atualizarIndicadoresComplementares(clientes);
+    atualizarIndicadoresComplementares(clientes, clientesAbertos);
+    for (const id of ["kpiAReceber", "kpiEmAtraso"]) {
+        const elemento = document.getElementById(id);
+        if (elemento) elemento.title = "Inclui títulos sem banco informado; exclui adiantamentos. Respeita período e demais filtros.";
+    }
 }
 
-function atualizarIndicadoresComplementares(clientes) {
+function atualizarIndicadoresComplementares(clientes, clientesCarteira = clientes) {
     const pagosComDatas = clientes.filter((item) =>
         item.pago && item.dataPagamento && item.dataMovimento
     );
@@ -96,24 +116,8 @@ function atualizarIndicadoresComplementares(clientes) {
      * consideram Vlr.líq.pago e podem classificar como pago um título cuja
      * Dt.pgto ainda está 00/00/0000.
      */
-    const hoje = inicioDoDia(new Date());
-    const carteiraAberta = clientes.filter((item) => {
-        const classificacao = normalizarTexto([
-            item.planoFinanceiro,
-            item.tipoDocumento,
-            item.descricaoTipoDocumento
-        ].join(" "));
-
-        const ehAdiantamento = classificacao.includes("adiantamento");
-        const semPagamento = !(item.dataPagamento instanceof Date) ||
-            Number.isNaN(item.dataPagamento.getTime());
-
-        return semPagamento && !ehAdiantamento;
-    });
-
-    const vencidos = carteiraAberta.filter((item) =>
-        item.vencimento && inicioDoDia(item.vencimento) < hoje
-    );
+    const carteiraAberta = clientesCarteira.filter(clienteEmAbertoIndicador);
+    const vencidos = carteiraAberta.filter(clienteVencidoIndicador);
 
     const totalCarteira = somar(carteiraAberta, "valorDocumento");
     const valorAtrasado = somar(vencidos, "valorDocumento");
@@ -143,6 +147,6 @@ function atualizarIndicadoresComplementares(clientes) {
     if (indicador) {
         indicador.title = `Vencido: ${formatarMoeda(valorAtrasado)} | ` +
             `Carteira em aberto: ${formatarMoeda(totalCarteira)}. ` +
-            "Considera os filtros selecionados, sem pagamentos e adiantamentos.";
+            "Inclui títulos sem banco informado; respeita os demais filtros e exclui pagamentos e adiantamentos.";
     }
 }

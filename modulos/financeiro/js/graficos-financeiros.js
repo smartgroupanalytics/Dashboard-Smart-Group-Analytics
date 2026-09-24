@@ -665,7 +665,7 @@ function renderizarSituacaoReceber(clientes) {
    DETALHES DOS INDICADORES FINANCEIROS
    ====================================================== */
 
-function renderizarDetalhesIndicadorFinanceiro(dados) {
+function renderizarDetalhesIndicadorFinanceiro(dados, dadosCarteira = dados) {
     const corpo = document.getElementById("corpoTabelaDetalhesKpi");
     const contador = document.getElementById("contadorDetalhesKpi");
 
@@ -685,18 +685,18 @@ function renderizarDetalhesIndicadorFinanceiro(dados) {
         },
         receber: {
             titulo: "Detalhes de A Receber",
-            descricao: "Títulos de clientes ainda não pagos, vencidos ou a vencer",
+            descricao: "Títulos sem pagamento, vencidos ou a vencer; inclui sem banco informado e exclui adiantamentos",
             vazio: "Nenhum título a receber encontrado no período selecionado.",
-            filtrar: (item) => item.tipoCadastro === "cliente" && !item.pago,
+            filtrar: clienteEmAbertoIndicador,
             campoValor: "valorDocumento",
             dataOrdenacao: (item) => item.vencimento,
             ordem: "asc"
         },
         inadimplencia: {
             titulo: "Detalhes da Inadimplência",
-            descricao: "Clientes com títulos vencidos e sem pagamento",
+            descricao: "Títulos vencidos sem pagamento; inclui sem banco informado e exclui adiantamentos",
             vazio: "Nenhum título inadimplente no período selecionado.",
-            filtrar: (item) => item.tipoCadastro === "cliente" && item.atrasado,
+            filtrar: clienteVencidoIndicador,
             campoValor: "valorDocumento",
             dataOrdenacao: (item) => item.vencimento,
             ordem: "asc"
@@ -725,7 +725,8 @@ function renderizarDetalhesIndicadorFinanceiro(dados) {
         ? detalheKpiAtivo
         : "inadimplencia";
     const configuracao = configuracoes[tipoAtivo] || configuracoes.inadimplencia;
-    const registros = dados
+    const ehCarteira = tipoAtivo === "receber" || tipoAtivo === "inadimplencia";
+    const registros = (ehCarteira ? dadosCarteira : dados)
         .filter(configuracao.filtrar)
         .sort((a, b) => {
             const semData = configuracao.ordem === "desc"
@@ -760,17 +761,19 @@ function renderizarDetalhesIndicadorFinanceiro(dados) {
 
     corpo.innerHTML = registros.map((item) => {
         const nomePessoa = item.razaoSocial || item.nomeFantasia || "Não informado";
-        const situacao = item.pago
+        const pago = ehCarteira ? !clienteEmAbertoIndicador(item) : item.pago;
+        const atrasado = ehCarteira ? clienteVencidoIndicador(item) : item.atrasado;
+        const situacao = pago
             ? "Pago"
-            : item.atrasado
+            : atrasado
                 ? "Vencido"
                 : "Em aberto";
-        const classeSituacao = item.pago
+        const classeSituacao = pago
             ? "pago"
-            : item.atrasado
+            : atrasado
                 ? "atrasado"
                 : "aberto";
-        const diasAtraso = item.atrasado && item.vencimento
+        const diasAtraso = atrasado && item.vencimento
             ? Math.max(
                 0,
                 Math.floor((hoje - inicioDoDia(item.vencimento)) / 86400000)

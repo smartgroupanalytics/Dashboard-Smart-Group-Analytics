@@ -7,6 +7,7 @@
 let bancosFinanceiros = [];
 let lancamentosFinanceiros = [];
 let lancamentosFiltrados = [];
+let lancamentosCarteiraIndicadores = [];
 let detalheKpiAtivo = "inadimplencia";
 let modoVisaoGeral = "todos";
 const graficosFinanceiros = {};
@@ -42,7 +43,7 @@ function configurarFiltroCenarioVisao() {
                 item.classList.toggle("ativo", ativo);
                 item.setAttribute("aria-pressed", String(ativo));
             });
-            atualizarDashboardCompleto(lancamentosFiltrados);
+            atualizarDashboardCompleto(lancamentosFiltrados, lancamentosCarteiraIndicadores);
         });
     });
 }
@@ -59,7 +60,10 @@ function configurarDetalhesKPIs() {
             item.setAttribute("aria-pressed", String(ativo));
         });
 
-        renderizarDetalhesIndicadorFinanceiro(filtrarDadosModoVisao(lancamentosFiltrados));
+        renderizarDetalhesIndicadorFinanceiro(
+            filtrarDadosModoVisao(lancamentosFiltrados),
+            filtrarDadosModoVisao(lancamentosCarteiraIndicadores)
+        );
 
         document.getElementById("detalhesIndicadorFinanceiro")
             ?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -95,7 +99,7 @@ function configurarLimiteTopClientes() {
     }
 
     seletor.addEventListener("change", () => {
-        atualizarDashboardCompleto(lancamentosFiltrados);
+        atualizarDashboardCompleto(lancamentosFiltrados, lancamentosCarteiraIndicadores);
     });
 }
 

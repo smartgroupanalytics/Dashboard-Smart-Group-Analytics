@@ -425,6 +425,7 @@ function aplicarFiltrosDashboard() {
     const situacao = document.getElementById("situacao")?.value || "";
     const tipoDocumento = document.getElementById("tipoDocumento")?.value || "";
 
+    lancamentosCarteiraIndicadores = [];
     lancamentosFiltrados = lancamentosFinanceiros.filter((item) => {
         const dataReferencia =
             item.dataPagamento || item.vencimento || item.dataMovimento;
@@ -449,13 +450,23 @@ function aplicarFiltrosDashboard() {
             // Use a mesma identificação aplicada na criação dos cards/opções.
             // Assim, os dois Sicoob mantêm seus IDs individuais no filtro.
             const identidade = identificarLocalCobranca(item.banco);
-            if (!bancosSelecionados.has(identidade.id)) return false;
+            if (!bancosSelecionados.has(identidade.id)) {
+                // Sem local de cobrança não significa ausência de dívida.
+                // Recupera apenas a carteira de clientes, preservando os demais painéis.
+                const banco = normalizarTexto(item.banco);
+                const semBanco = !banco || banco === "nao informado";
+                if (bancosSelecionados.size > 0 && semBanco && clienteEmAbertoIndicador(item)) {
+                    lancamentosCarteiraIndicadores.push(item);
+                }
+                return false;
+            }
         }
 
+        lancamentosCarteiraIndicadores.push(item);
         return true;
     });
 
-    atualizarDashboardCompleto(lancamentosFiltrados);
+    atualizarDashboardCompleto(lancamentosFiltrados, lancamentosCarteiraIndicadores);
 
     /*
      * Contas a Receber e Contas a Pagar possuem filtros próprios e devem partir
