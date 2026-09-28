@@ -419,8 +419,20 @@ function aplicarFiltrosDashboard() {
      * Nesse caso não existem opções no filtro e a ausência de bancos deve
      * significar "sem restrição", não "excluir todos os lançamentos".
      */
-    const todosBancosSelecionados = filtroBancos.opcoes.length === 0 ||
-        bancosSelecionados.size === filtroBancos.opcoes.length;
+    /*
+     * "Todos" precisa comparar IDs únicos, não a quantidade de opções.
+     * Alguns nomes diferentes de Local de Cobrança podem apontar para o mesmo
+     * ID de banco (ex.: variações de Sicoob). Nessa situação, comparar
+     * opcoes.length com Set.size fazia o sistema pensar que havia um filtro
+     * bancário ativo mesmo com todos os bancos marcados. Como títulos de
+     * fornecedores em aberto normalmente vêm sem Local de Cobrança, eles eram
+     * eliminados e o card A Pagar ficava zerado após aplicar o período.
+     */
+    const idsBancosDisponiveis = new Set(
+        filtroBancos.opcoes.map((banco) => banco.id)
+    );
+    const todosBancosSelecionados = idsBancosDisponiveis.size === 0 ||
+        [...idsBancosDisponiveis].every((id) => bancosSelecionados.has(id));
     const plano = document.getElementById("planoFinanceiro")?.value || "";
     const situacao = document.getElementById("situacao")?.value || "";
     const tipoDocumento = document.getElementById("tipoDocumento")?.value || "";
