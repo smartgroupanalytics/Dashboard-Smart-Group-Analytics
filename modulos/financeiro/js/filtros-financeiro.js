@@ -427,8 +427,23 @@ function aplicarFiltrosDashboard() {
 
     lancamentosCarteiraIndicadores = [];
     lancamentosFiltrados = lancamentosFinanceiros.filter((item) => {
+        /*
+         * REGRA DO PERÍODO DA VISÃO GERAL:
+         * o filtro de Data inicial/final consulta exclusivamente o
+         * VENCIMENTO (coluna N), tanto para títulos realizados quanto
+         * previstos. A Dt.pgto continua sendo usada apenas para definir
+         * o cenário/valor realizado, e não para decidir se o título
+         * pertence ao período selecionado.
+         *
+         * Antes, títulos com Dt.pgto preenchida eram filtrados pela data
+         * de pagamento. Isso fazia desaparecer lançamentos cujo vencimento
+         * estava dentro do intervalo escolhido, deixando KPIs e gráficos
+         * vazios ou incompletos.
+         */
         const dataReferencia =
-            item.dataPagamento || item.vencimento || item.dataMovimento;
+            item.vencimento instanceof Date && !Number.isNaN(item.vencimento.getTime())
+                ? inicioDoDia(item.vencimento)
+                : null;
 
         if (inicio && (!dataReferencia || dataReferencia < inicio)) return false;
         if (fim && (!dataReferencia || dataReferencia > fim)) return false;
