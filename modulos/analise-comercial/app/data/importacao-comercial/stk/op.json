@@ -198,34 +198,10 @@
     "desc_completa": "MIRAGE OURO LIGHT",
     "grupo": 39,
     "subgrupo": 41,
-    "qtd_produzir": 400,
+    "qtd_produzir": 201.6,
     "dt_saida": "2026-09-10",
     "centro_custo": 26,
     "abreviacao": "IMP DIG"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8186",
-    "produto": "17420",
-    "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 1000,
-    "dt_saida": "2026-09-17",
-    "centro_custo": 3,
-    "abreviacao": "GR 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8187",
-    "produto": "11779",
-    "desc_completa": "SORRENTO OFF WHITE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 600,
-    "dt_saida": "2026-09-18",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -234,22 +210,10 @@
     "desc_completa": "BORGONHA OURO LIGHT",
     "grupo": 39,
     "subgrupo": 41,
-    "qtd_produzir": 1000,
+    "qtd_produzir": 12.5,
     "dt_saida": "2026-09-22",
-    "centro_custo": 25,
-    "abreviacao": "TRANSFE"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8293",
-    "produto": "11844",
-    "desc_completa": "BORGONHA PRATA",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 1000,
-    "dt_saida": "2026-09-22",
-    "centro_custo": 1,
-    "abreviacao": "RECOB"
+    "centro_custo": 10,
+    "abreviacao": "REV 1"
   },
   {
     "fonte_comercial": "STK",
@@ -272,8 +236,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-09-22",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 23,
+    "abreviacao": "RAMA"
   },
   {
     "fonte_comercial": "STK",
@@ -284,32 +248,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-09-22",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8297",
-    "produto": "16605",
-    "desc_completa": "NAPA FLOATER VENEZIA DOURADO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 1000,
-    "dt_saida": "2026-09-22",
     "centro_custo": 6,
     "abreviacao": "EST1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8298",
-    "produto": "13144",
-    "desc_completa": "NAPA LINHO DAKAR NATURAL",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 1019.5,
-    "dt_saida": "2026-09-22",
-    "centro_custo": 10,
-    "abreviacao": "REV 1"
   },
   {
     "fonte_comercial": "STK",
@@ -320,20 +260,8 @@
     "subgrupo": 41,
     "qtd_produzir": 336,
     "dt_saida": "2026-09-25",
-    "centro_custo": 0,
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8337",
-    "produto": "13766",
-    "desc_completa": "GLOMER NATURAL",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 120,
-    "dt_saida": "2026-09-24",
-    "centro_custo": 26,
-    "abreviacao": "IMP DIG"
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -349,18 +277,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8352",
-    "produto": "18009",
-    "desc_completa": "ARUBA OFF WHITE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 200,
-    "dt_saida": "2026-09-24",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8360",
     "produto": "17952",
     "desc_completa": "ARUBA GLAM PRATA",
@@ -368,8 +284,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-25",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 1,
+    "abreviacao": "RECOB"
   },
   {
     "fonte_comercial": "STK",
@@ -428,8 +344,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-09-30",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 1,
+    "abreviacao": "RECOB"
   },
   {
     "fonte_comercial": "STK",
@@ -450,7 +366,7 @@
     "desc_completa": "CANYON CANELA",
     "grupo": 39,
     "subgrupo": 41,
-    "qtd_produzir": 400,
+    "qtd_produzir": 800,
     "dt_saida": "2026-09-30",
     "centro_custo": 0,
     "abreviacao": ""
@@ -536,8 +452,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-30",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -548,8 +464,8 @@
     "subgrupo": 41,
     "qtd_produzir": 240,
     "dt_saida": "2026-10-02",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -560,6 +476,18 @@
     "subgrupo": 41,
     "qtd_produzir": 300,
     "dt_saida": "2026-10-02",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8438",
+    "produto": "17615",
+    "desc_completa": "DOHA OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 120,
+    "dt_saida": "2026-09-30",
     "centro_custo": 0,
     "abreviacao": ""
   }
