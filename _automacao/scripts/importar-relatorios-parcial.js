@@ -667,6 +667,11 @@ function normalizeEstoque(
     grupo:
       row['Grupo'],
 
+    marca:
+      text(
+        row['Marcas']
+      ),
+
     subgrupo:
       row['Subgrupo'],
 
