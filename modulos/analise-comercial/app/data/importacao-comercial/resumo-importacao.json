@@ -1,5 +1,5 @@
 {
-  "importadoEm": "2026-09-29T09:11:32.960Z",
+  "importadoEm": "2026-09-29T10:56:40.289Z",
   "pastaEntrada": "/home/runner/work/Dashboard-Smart-Group-Analytics/Dashboard-Smart-Group-Analytics/_automacao/entrada-relatorios",
   "modo": "ATUALIZACAO_PARCIAL_PROTEGIDA",
   "status": "OK",
@@ -68,7 +68,7 @@
       "linhasOriginais": 961,
       "linhasValidas": 961,
       "produtosDistintos": 563,
-      "quantidade": 43368.8
+      "quantidade": 43970.8
     },
     "OPBR": {
       "arquivo": "OPBR.xlsx",
