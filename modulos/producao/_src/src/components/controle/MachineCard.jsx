@@ -1,7 +1,7 @@
 import React from "react";
-import { FileSpreadsheet, Gauge as GaugeIcon, Download } from "lucide-react";
+import { FileSpreadsheet, Gauge as GaugeIcon, Download, Trash2, Loader2 } from "lucide-react";
 
-export default function MachineCard({ maquina, records, active, onSelect, onImport, onRelatorio, relatorioAtivo }) {
+export default function MachineCard({ maquina, records, active, onSelect, onImport, onClear, clearing, onRelatorio, relatorioAtivo }) {
   const retrabalhos = records.filter((r) => r.is_retrabalho);
   const retrMetros = retrabalhos.reduce((s, r) => s + (r.metragem || 0), 0);
 
@@ -16,6 +16,20 @@ export default function MachineCard({ maquina, records, active, onSelect, onImpo
           <GaugeIcon className="w-[18px] h-[18px]" />
         </div>
         <h3>{maquina}</h3>
+        <button
+          type="button"
+          title={`Limpar dados de ${maquina}`}
+          aria-label={`Limpar dados de ${maquina}`}
+          disabled={clearing}
+          className="ml-auto inline-flex h-6 items-center justify-center gap-1 rounded-md border border-rose-200 bg-rose-50 px-2 text-[9px] font-extrabold text-rose-600 transition-colors hover:bg-rose-100 disabled:cursor-not-allowed disabled:opacity-35"
+          onClick={(e) => {
+            e.stopPropagation();
+            onClear();
+          }}
+        >
+          {clearing ? <Loader2 className="w-3 h-3 animate-spin" /> : <Trash2 className="w-3 h-3" />}
+          {clearing ? "Limpando" : "Limpar"}
+        </button>
       </div>
       {retrabalhos.length > 0 && (
         <div className="ce-machine-alert">

@@ -59,6 +59,7 @@ export default function ControleEficiencia() {
   const [importMachine, setImportMachine] = useState(null);
   const [relatorioMaquina, setRelatorioMaquina] = useState(null);
   const [viewMode, setViewMode] = useState("maquinas"); // "maquinas" | "analise"
+  const [clearingMachine, setClearingMachine] = useState(null);
 
   const toggleRelatorio = (m) => {
     setRelatorioMaquina((prev) => (prev === m ? null : m));
@@ -78,6 +79,48 @@ export default function ControleEficiencia() {
   const reload = async () => {
     const data = await db.entities.ControleEficiencia.list("-created_date", 5000);
     setRecords(data);
+  };
+
+  const handleClearMachine = async (maquina) => {
+    if (!maquina || clearingMachine) return;
+
+    try {
+      setClearingMachine(maquina);
+
+      // Consulta diretamente o Firestore para não depender do limite de 5.000
+      // registros carregados na tela. Assim o botão funciona para qualquer máquina.
+      const machineRecords = await db.entities.ControleEficiencia.filter({ maquina });
+      if (!machineRecords.length) {
+        window.alert(`Não há dados carregados para ${maquina}.`);
+        return;
+      }
+
+      const confirmed = window.confirm(
+        `Limpar os ${machineRecords.length} registro(s) do Controle de Eficiência da máquina ${maquina}?\n\n` +
+        `Esta ação remove somente os registros desta máquina e não altera as demais. ` +
+        `Use esta opção quando uma planilha incorreta tiver sido importada.\n\n` +
+        `A exclusão não poderá ser desfeita.`
+      );
+      if (!confirmed) return;
+
+      const result = await db.entities.ControleEficiencia.deleteMany({ maquina });
+      await reload();
+
+      if (relatorioMaquina === maquina) setRelatorioMaquina(null);
+      if (importMachine === maquina) setImportMachine(null);
+
+      const deleted = Number(result?.deleted || 0);
+      window.alert(
+        deleted > 0
+          ? `${deleted} registro(s) de ${maquina} foram removidos com sucesso.`
+          : `Os dados de ${maquina} foram limpos.`
+      );
+    } catch (error) {
+      console.error("Erro ao limpar dados da máquina", maquina, error);
+      window.alert(`Não foi possível limpar os dados de ${maquina}. Nenhum dado das outras máquinas foi alterado.`);
+    } finally {
+      setClearingMachine(null);
+    }
   };
 
   useEffect(() => { load(); }, []);
@@ -310,6 +353,8 @@ export default function ControleEficiencia() {
                 active={active === m}
                 onSelect={() => { setActive(m); setRelatorioMaquina(m); }}
                 onImport={() => { setImportMachine(m); setImportOpen(true); }}
+                onClear={() => handleClearMachine(m)}
+                clearing={clearingMachine === m}
                 onRelatorio={toggleRelatorio}
                 relatorioAtivo={relatorioMaquina === m}
               />
