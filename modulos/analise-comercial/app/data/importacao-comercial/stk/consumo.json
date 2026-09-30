@@ -4760,6 +4760,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 600,
+    "dt_movto": "2026-09-29"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11904",
+    "produto": "11904",
+    "desc_completa": "NAPA MADRID NUDE - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 875.6,
     "dt_movto": "2026-09-15"
   },
