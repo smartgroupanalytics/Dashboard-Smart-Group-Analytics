@@ -15,7 +15,6 @@ import ImportSetupDialog from "@/components/controle/ImportSetupDialog";
 import FamiliasCilindrosDialog from "@/components/controle/FamiliasCilindrosDialog";
 import FamiliaEstampaDialog from "@/components/controle/FamiliaEstampaDialog";
 import { tempoEsperadoHoras, tempoRealHoras } from "@/lib/controleSpeed";
-import "@/components/controle/controle-vibrante.css";
 const MACHINES = ["JR", "Gravadora", "Estampa 1", "Estampa 2", "GR2", "Digital UV", "Digital Solvente", "Tumbler"];
 function fmtHoras(v) {
     if (!v && v !== 0)
