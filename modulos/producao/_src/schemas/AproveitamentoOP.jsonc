@@ -1,0 +1,59 @@
+{
+  "name": "AproveitamentoOP",
+  "type": "object",
+  "properties": {
+    "num_op": {
+      "type": "string",
+      "description": "N\u00ba da OP"
+    },
+    "data": {
+      "type": "string",
+      "format": "date",
+      "description": "Data (YYYY-MM-DD)"
+    },
+    "descricao_produto": {
+      "type": "string",
+      "description": "Descri\u00e7\u00e3o do produto"
+    },
+    "tempo_previsto": {
+      "type": "number",
+      "description": "Tempo Previsto de Produ\u00e7\u00e3o (horas)"
+    },
+    "tempo_realizado": {
+      "type": "number",
+      "description": "Tempo Realizado de Produ\u00e7\u00e3o (horas)"
+    },
+    "setup_previsto": {
+      "type": "number",
+      "description": "Tempo Previsto de Setup (minutos)"
+    },
+    "setup_realizado": {
+      "type": "number",
+      "description": "Tempo Realizado de Setup (minutos)"
+    },
+    "consumo_previsto": {
+      "type": "number",
+      "description": "Consumo Previsto em Valor (R$)"
+    },
+    "consumo_realizado": {
+      "type": "number",
+      "description": "Consumo Realizado em Valor (R$)"
+    },
+    "quebra_pct": {
+      "type": "number",
+      "description": "Porcentagem de Quebra (%)"
+    },
+    "tem_retrabalho": {
+      "type": "boolean",
+      "default": false,
+      "description": "Indica se a OP teve retrabalho"
+    },
+    "retrabalho_metros": {
+      "type": "number",
+      "description": "Metros de retrabalho"
+    }
+  },
+  "required": [
+    "num_op"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "name": "DetalheRevisaoOP",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "string",
+      "format": "date",
+      "description": "Data do apontamento (YYYY-MM-DD)"
+    },
+    "op": {
+      "type": "string",
+      "description": "N\u00famero da OP"
+    },
+    "produto": {
+      "type": "string",
+      "description": "Produto"
+    },
+    "descricao": {
+      "type": "string",
+      "description": "Descri\u00e7\u00e3o do produto"
+    },
+    "qtd_revisada": {
+      "type": "number",
+      "description": "Quantidade revisada da OP"
+    },
+    "qtd_refugo": {
+      "type": "number",
+      "description": "Quantidade de refugo da OP"
+    }
+  },
+  "required": [
+    "data",
+    "op"
+  ]
+}

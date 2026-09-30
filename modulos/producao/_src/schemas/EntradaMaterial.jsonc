@@ -1,0 +1,26 @@
+{
+  "name": "EntradaMaterial",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "string",
+      "format": "date",
+      "description": "Data da entrada de material (YYYY-MM-DD)"
+    },
+    "mes": {
+      "type": "number",
+      "description": "M\u00eas derivado da data (1-12)"
+    },
+    "ano": {
+      "type": "number",
+      "description": "Ano derivado da data"
+    },
+    "metros_jumpados": {
+      "type": "number",
+      "description": "Metros Jumpados (entrada de material)"
+    }
+  },
+  "required": [
+    "data"
+  ]
+}

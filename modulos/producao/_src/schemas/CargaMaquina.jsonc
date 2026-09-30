@@ -1,0 +1,33 @@
+{
+  "name": "CargaMaquina",
+  "type": "object",
+  "properties": {
+    "maquina": {
+      "type": "string",
+      "description": "Nome da m\u00e1quina (ResourceName)"
+    },
+    "rotatividade": {
+      "type": "number",
+      "description": "Metragem total (soma de Quantity)"
+    },
+    "tempo_setup": {
+      "type": "number",
+      "description": "Tempo de Setup total (minutos)"
+    },
+    "tempo_producao": {
+      "type": "number",
+      "description": "Tempo de Produ\u00e7\u00e3o total (minutos)"
+    },
+    "dias_necessarios": {
+      "type": "number",
+      "description": "Dias necess\u00e1rios (datas de entrega distintas)"
+    },
+    "num_op": {
+      "type": "number",
+      "description": "N\u00famero de OPs da m\u00e1quina"
+    }
+  },
+  "required": [
+    "maquina"
+  ]
+}

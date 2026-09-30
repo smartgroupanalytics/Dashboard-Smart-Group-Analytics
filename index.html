@@ -127,6 +127,17 @@
             </a>
 
             <a
+                data-modulo="producao"
+                onclick="abrirModulo('producao', this)"
+            >
+
+                <i class="fa-solid fa-industry"></i>
+
+                Produção
+
+            </a>
+
+            <a
                 data-modulo="analise-comercial"
                 onclick="abrirModulo('analise-comercial', this)"
             >
@@ -636,6 +647,31 @@
 
                         <p>
                             Acompanhe compras, estoque, consumo e produção.
+                        </p>
+
+                    </div>
+
+                    <div
+                        class="card-home"
+                        data-modulo="producao"
+                        role="button"
+                        tabindex="0"
+                        onclick="abrirModulo(
+                            'producao',
+                            document.querySelector(
+                                '.menu a[data-modulo=&quot;producao&quot;]'
+                            )
+                        )"
+                    >
+
+                        <i class="fa-solid fa-industry"></i>
+
+                        <h3>
+                            Produção
+                        </h3>
+
+                        <p>
+                            Acompanhe revisão, eficiência, produtividade, máquinas e indicadores industriais.
                         </p>
 
                     </div>

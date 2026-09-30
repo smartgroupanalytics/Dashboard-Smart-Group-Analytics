@@ -1,0 +1,45 @@
+MIGRAÇÃO DO MÓDULO PRODUÇÃO - 30/09/2026
+=========================================
+
+STATUS DO CÓDIGO
+----------------
+OK - Criado modulos/producao como módulo independente.
+OK - Integrado ao menu lateral do Smart Group Analytics.
+OK - Integrado aos cards da página inicial.
+OK - Integrado à busca de módulos.
+OK - Criada permissão usuarios.modulos.producao.
+OK - Autenticação migrada para Firebase Authentication do Analytics.
+OK - Persistência migrada para Firestore do Analytics.
+OK - Rotas internas adaptadas para hospedagem estática/GitHub Pages.
+OK - Importações Excel exportadas foram adaptadas para rodar sem Base44.
+OK - Imagens hospedadas no projeto anterior foram substituídas por ativo local.
+OK - SDK/plugin/funções remotas do Base44 não são necessários para execução.
+
+DADOS
+-----
+O arquivo exportado do projeto continha código e esquemas, mas NÃO continha
+os registros armazenados no banco do Base44. Por isso, a migração de código
+está pronta, mas o histórico salvo no Base44 não foi copiado automaticamente.
+
+Há dois caminhos para os dados:
+1. Reimportar os relatórios/planilhas pelas telas do novo módulo; ou
+2. Exportar as entidades/registros do Base44 e fazer uma importação única para
+   o Firestore.
+
+ANTES DE PUBLICAR
+-----------------
+1. Adicionar ao Firestore o bloco de regras do arquivo:
+   ADICIONAR-NAS-REGRAS-FIRESTORE-PRODUCAO.txt
+2. Publicar as regras.
+3. No módulo Usuários, marcar "Produção" para os usuários autorizados.
+4. Publicar este projeto no GitHub como de costume.
+5. Abrir Produção e validar uma planilha real em cada importação usada.
+
+ATENÇÃO
+-------
+O export original não continha:
+- a função importDefeitosExcel;
+- o componente desempenho/ImportSetupDialog.
+
+Esses dois pontos foram reconstruídos para impedir telas quebradas. Validar
+com os relatórios reais antes de considerar essas duas importações definitivas.

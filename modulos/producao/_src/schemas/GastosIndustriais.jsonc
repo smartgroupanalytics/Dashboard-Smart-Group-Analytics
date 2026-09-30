@@ -1,0 +1,39 @@
+{
+  "name": "GastosIndustriais",
+  "type": "object",
+  "properties": {
+    "categoria": {
+      "type": "string",
+      "enum": [
+        "folha_industrial",
+        "manutencao",
+        "residuos_rejeitos"
+      ],
+      "description": "Categoria do gasto industrial"
+    },
+    "mes": {
+      "type": "number",
+      "description": "M\u00eas (1-12)"
+    },
+    "mes_label": {
+      "type": "string",
+      "description": "R\u00f3tulo do m\u00eas (JAN, FEV, etc.)"
+    },
+    "orcado": {
+      "type": "number",
+      "description": "Valor Or\u00e7ado (R$)"
+    },
+    "valor_2025": {
+      "type": "number",
+      "description": "Valor Realizado 2025 (R$)"
+    },
+    "valor_2026": {
+      "type": "number",
+      "description": "Valor Realizado 2026 (R$)"
+    }
+  },
+  "required": [
+    "categoria",
+    "mes"
+  ]
+}

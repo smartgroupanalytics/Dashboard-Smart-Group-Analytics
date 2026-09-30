@@ -1,0 +1,14 @@
+{
+  "name": "InsumosDataSalva",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "string",
+      "format": "date",
+      "description": "Data salva (YYYY-MM-DD)"
+    }
+  },
+  "required": [
+    "data"
+  ]
+}

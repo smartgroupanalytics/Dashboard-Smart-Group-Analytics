@@ -1,0 +1,51 @@
+{
+  "name": "DesempenhoMaquina",
+  "type": "object",
+  "properties": {
+    "maquina": {
+      "type": "string",
+      "description": "Nome da m\u00e1quina"
+    },
+    "data": {
+      "type": "string",
+      "format": "date",
+      "description": "Data (YYYY-MM-DD)"
+    },
+    "tempo_produzido": {
+      "type": "number",
+      "description": "Tempo Produzido (horas)"
+    },
+    "tempo_parado": {
+      "type": "number",
+      "description": "Parada de M\u00e1quina (horas)"
+    },
+    "setup": {
+      "type": "number",
+      "description": "Tempo de Setup (horas)"
+    },
+    "retrabalho": {
+      "type": "number",
+      "description": "Tempo de Retrabalho (horas)"
+    },
+    "amostras": {
+      "type": "number",
+      "description": "Tempo de Amostras Laborat\u00f3rio (horas)"
+    },
+    "tempo_ocioso": {
+      "type": "number",
+      "description": "Tempo Ocioso (horas)"
+    },
+    "num_ops": {
+      "type": "number",
+      "description": "N\u00b0 de OPs"
+    },
+    "metros_realizados": {
+      "type": "number",
+      "description": "Metros Realizados"
+    }
+  },
+  "required": [
+    "maquina",
+    "data"
+  ]
+}

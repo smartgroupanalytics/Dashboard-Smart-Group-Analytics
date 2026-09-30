@@ -11,6 +11,7 @@ const mapaPermissoes = {
     vendas: "vendas",
     financeiro: "financeiro",
     compras: "compras",
+    producao: "producao",
     "analise-comercial": "analise-comercial",
     colecoes: "colecoes",
     comex: "comex",
@@ -126,6 +127,24 @@ break;
             src="modulos/compras/index.html?v=1"
             class="iframe-modulo"
             title="Módulo Compras e Suprimentos"
+            frameborder="0">
+        </iframe>
+    `;
+
+break;
+
+case "producao":
+
+    titulo.innerText = "Produção";
+
+    subtitulo.innerText =
+    "Indicadores, eficiência, revisão, produtividade e controles de produção.";
+
+    conteudo.innerHTML = `
+        <iframe
+            src="modulos/producao/index.html?v=1"
+            class="iframe-modulo"
+            title="Módulo Produção"
             frameborder="0">
         </iframe>
     `;
@@ -436,6 +455,13 @@ function gerarCardsDashboardPermitidos() {
                 "Acompanhe compras, estoque, consumo e produção."
         },
         {
+            modulo: "producao",
+            icone: "fa-solid fa-industry",
+            titulo: "Produção",
+            descricao:
+                "Acompanhe revisão, eficiência, produtividade, máquinas e indicadores industriais."
+        },
+        {
             modulo: "analise-comercial",
             icone: "fa-solid fa-chart-column",
             titulo: "Análise Integrada Comercial",
@@ -566,6 +592,11 @@ const modulosBusca = [
         nome: "Compras e Suprimentos",
         descricao: "Compras, estoque, consumo e produção",
         modulo: "compras"
+    },
+    {
+        nome: "Produção",
+        descricao: "Revisão, eficiência, produtividade, máquinas e indicadores industriais",
+        modulo: "producao"
     },
     {
         nome: "Análise Integrada Comercial",

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 700" role="img" aria-label="Produção Smart Group">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#071a33"/>
+      <stop offset="0.55" stop-color="#0e3d6f"/>
+      <stop offset="1" stop-color="#1674b8"/>
+    </linearGradient>
+    <pattern id="p" width="64" height="64" patternUnits="userSpaceOnUse">
+      <path d="M0 64L64 0M-16 16L16-16M48 80L80 48" stroke="#fff" stroke-opacity=".055" stroke-width="2"/>
+    </pattern>
+  </defs>
+  <rect width="1600" height="700" fill="url(#g)"/>
+  <rect width="1600" height="700" fill="url(#p)"/>
+  <g fill="none" stroke="#8fd3ff" stroke-opacity=".32" stroke-width="5">
+    <path d="M120 520h250v-155h150v155h210V300h175v220h190V405h180v115h205"/>
+    <circle cx="370" cy="365" r="44"/><circle cx="730" cy="300" r="44"/><circle cx="1095" cy="405" r="44"/>
+  </g>
+  <g fill="#fff" opacity=".92">
+    <rect x="118" y="518" width="1340" height="10" rx="5"/>
+    <path d="M230 518v-96h72v96zm420 0v-145h76v145zm378 0v-116h72v116zm260 0v-165h78v165z" opacity=".2"/>
+  </g>
+</svg>

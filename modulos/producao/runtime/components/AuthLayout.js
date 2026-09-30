@@ -1,0 +1,5 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import React from "react";
+export default function AuthLayout({ icon: Icon, title, subtitle, footer, children }) {
+    return (_jsx("div", { className: "min-h-screen flex items-center justify-center bg-background px-4", children: _jsxs("div", { className: "w-full max-w-md", children: [_jsxs("div", { className: "text-center mb-10", children: [_jsx("div", { className: "inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary mb-4", children: _jsx(Icon, { className: "w-7 h-7 text-primary-foreground", "aria-hidden": "true" }) }), _jsx("h1", { className: "text-3xl font-bold tracking-tight text-foreground", children: title }), subtitle && _jsx("p", { className: "text-muted-foreground mt-2", children: subtitle })] }), _jsx("div", { className: "bg-card rounded-2xl shadow-sm border border-border p-8", children: children }), footer && (_jsx("p", { className: "text-center text-sm text-muted-foreground mt-6", children: footer }))] }) }));
+}

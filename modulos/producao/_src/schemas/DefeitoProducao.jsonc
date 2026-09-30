@@ -1,0 +1,47 @@
+{
+  "name": "DefeitoProducao",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "string",
+      "format": "date",
+      "description": "Data do apontamento (YYYY-MM-DD)"
+    },
+    "op": {
+      "type": "string",
+      "description": "N\u00ba da ordem de produ\u00e7\u00e3o"
+    },
+    "produto": {
+      "type": "string",
+      "description": "C\u00f3digo do produto"
+    },
+    "descricao": {
+      "type": "string",
+      "description": "Descri\u00e7\u00e3o completa do produto"
+    },
+    "defeito": {
+      "type": "string",
+      "description": "Descri\u00e7\u00e3o do defeito (texto da coluna N sem o n\u00famero)"
+    },
+    "metros_defeito": {
+      "type": "number",
+      "description": "Metragem do defeito extra\u00edda da coluna N (ex.: 8,5)"
+    },
+    "metragem": {
+      "type": "number",
+      "description": "Metragem aprovada (Qtd.aprovada, coluna K)"
+    },
+    "qtd_op": {
+      "type": "number",
+      "description": "Quantidade da OP (metros)"
+    },
+    "qtd_refug": {
+      "type": "number",
+      "description": "Quantidade de refugo / defeitos (metros)"
+    }
+  },
+  "required": [
+    "data",
+    "op"
+  ]
+}

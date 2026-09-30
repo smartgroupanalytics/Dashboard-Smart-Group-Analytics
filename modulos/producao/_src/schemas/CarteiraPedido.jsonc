@@ -1,0 +1,49 @@
+{
+  "name": "CarteiraPedido",
+  "type": "object",
+  "properties": {
+    "semana_label": {
+      "type": "string",
+      "description": "Identificador da semana (ex: Semana Anterior, Semana Atual)"
+    },
+    "ordem": {
+      "type": "number",
+      "description": "Ordem de exibi\u00e7\u00e3o (0 = primeira, 1 = segunda)"
+    },
+    "total_carteira": {
+      "type": "number",
+      "description": "Total da Carteira (metros)"
+    },
+    "pedido_beira_rio": {
+      "type": "number",
+      "description": "Pedido Beira Rio (metros)"
+    },
+    "pedidos_outros": {
+      "type": "number",
+      "description": "Pedidos Outros (metros)"
+    },
+    "estoque_beira_rio": {
+      "type": "number",
+      "description": "Estoque Beira Rio (metros)"
+    },
+    "estoque_stk": {
+      "type": "number",
+      "description": "Estoque STK (metros)"
+    },
+    "estoque_outros": {
+      "type": "number",
+      "description": "Estoque Outros (metros)"
+    },
+    "falta_programar_total": {
+      "type": "number",
+      "description": "Total Falta Programar (metros)"
+    },
+    "nota": {
+      "type": "string",
+      "description": "Nota explicativa da semana"
+    }
+  },
+  "required": [
+    "semana_label"
+  ]
+}

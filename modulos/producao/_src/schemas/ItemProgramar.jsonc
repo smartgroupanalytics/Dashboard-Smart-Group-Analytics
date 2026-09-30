@@ -1,0 +1,29 @@
+{
+  "name": "ItemProgramar",
+  "type": "object",
+  "properties": {
+    "semana_label": {
+      "type": "string",
+      "description": "Identificador da semana (vincula \u00e0 CarteiraPedido)"
+    },
+    "produto": {
+      "type": "string",
+      "description": "C\u00f3digo do produto (coluna G)"
+    },
+    "descricao": {
+      "type": "string",
+      "description": "Descri\u00e7\u00e3o do produto (coluna H)"
+    },
+    "metragem": {
+      "type": "number",
+      "description": "Metragem / QTD (coluna J)"
+    },
+    "motivo": {
+      "type": "string",
+      "description": "Motivo de estar esperando (coluna L)"
+    }
+  },
+  "required": [
+    "semana_label"
+  ]
+}

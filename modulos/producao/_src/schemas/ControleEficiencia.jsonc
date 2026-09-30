@@ -1,0 +1,59 @@
+{
+  "name": "ControleEficiencia",
+  "type": "object",
+  "properties": {
+    "maquina": {
+      "type": "string",
+      "description": "Nome da m\u00e1quina"
+    },
+    "processo": {
+      "type": "string",
+      "description": "Processo da m\u00e1quina (define a velocidade prevista)"
+    },
+    "num_op": {
+      "type": "string",
+      "description": "N\u00ba da OP"
+    },
+    "descricao_produto": {
+      "type": "string",
+      "description": "Descri\u00e7\u00e3o do produto"
+    },
+    "metragem": {
+      "type": "number",
+      "description": "Metragem"
+    },
+    "hora_inicial": {
+      "type": "string",
+      "description": "Hora inicial (HH:MM)"
+    },
+    "hora_final": {
+      "type": "string",
+      "description": "Hora final (HH:MM)"
+    },
+    "tempo": {
+      "type": "number",
+      "description": "Tempo (horas)"
+    },
+    "setup": {
+      "type": "number",
+      "description": "Tempo de Setup (minutos)"
+    },
+    "parada": {
+      "type": "number",
+      "description": "Tempo de Parada (minutos)"
+    },
+    "data": {
+      "type": "string",
+      "format": "date",
+      "description": "Data (YYYY-MM-DD)"
+    },
+    "is_retrabalho": {
+      "type": "boolean",
+      "default": false,
+      "description": "Indica se o registro \u00e9 um retrabalho (n\u00e3o conta como tempo produzido)"
+    }
+  },
+  "required": [
+    "maquina"
+  ]
+}

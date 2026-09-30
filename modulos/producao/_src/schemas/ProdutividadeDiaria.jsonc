@@ -1,0 +1,59 @@
+{
+  "name": "ProdutividadeDiaria",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "string",
+      "format": "date",
+      "description": "Data (YYYY-MM-DD)"
+    },
+    "maquina": {
+      "type": "string",
+      "description": "Nome da m\u00e1quina"
+    },
+    "col_c": {
+      "type": "number",
+      "description": "Valor da coluna C (tempo dispon\u00edvel)"
+    },
+    "col_d": {
+      "type": "number",
+      "description": "Valor da coluna D (tempo produzido)"
+    },
+    "col_e": {
+      "type": "number",
+      "description": "Valor da coluna E (tempo setup)"
+    },
+    "col_j": {
+      "type": "number",
+      "description": "Valor da coluna J"
+    },
+    "col_k": {
+      "type": "number",
+      "description": "Valor da coluna K"
+    },
+    "utilizacao": {
+      "type": "number",
+      "description": "% Utiliza\u00e7\u00e3o (0-1)"
+    },
+    "produtividade": {
+      "type": "number",
+      "description": "Produtividade (0-1)"
+    },
+    "eficiencia_producao": {
+      "type": "number",
+      "description": "% Efici\u00eancia de Produ\u00e7\u00e3o (0-1)"
+    },
+    "eficiencia_setup": {
+      "type": "number",
+      "description": "% Efici\u00eancia de Setup (0-1)"
+    },
+    "maquina_inoperante": {
+      "type": "number",
+      "description": "% M\u00e1quina Inoperante (0-1)"
+    }
+  },
+  "required": [
+    "data",
+    "maquina"
+  ]
+}

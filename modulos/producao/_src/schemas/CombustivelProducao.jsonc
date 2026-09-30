@@ -1,0 +1,59 @@
+{
+  "name": "CombustivelProducao",
+  "type": "object",
+  "properties": {
+    "mes": {
+      "type": "number",
+      "description": "M\u00eas (1-12)"
+    },
+    "ano": {
+      "type": "number",
+      "description": "Ano",
+      "default": 2026
+    },
+    "valor_2025": {
+      "type": "number",
+      "description": "Valor Combust\u00edvel 2025 (R$)"
+    },
+    "valor_2026": {
+      "type": "number",
+      "description": "Valor Combust\u00edvel 2026 (R$)"
+    },
+    "kg_2025": {
+      "type": "number",
+      "description": "KG Combust\u00edvel 2025"
+    },
+    "kg_2026": {
+      "type": "number",
+      "description": "KG Combust\u00edvel 2026"
+    },
+    "valor_orcado": {
+      "type": "number",
+      "description": "Valor Or\u00e7ado (R$)"
+    },
+    "kg_orcado": {
+      "type": "number",
+      "description": "KG Or\u00e7ado"
+    },
+    "preco_medio_2025": {
+      "type": "number",
+      "description": "Pre\u00e7o M\u00e9dio 2025 (R$/kg)"
+    },
+    "preco_medio_2026": {
+      "type": "number",
+      "description": "Pre\u00e7o M\u00e9dio 2026 (R$/kg)"
+    },
+    "metros_produzidos": {
+      "type": "number",
+      "description": "Metros Produzidos"
+    },
+    "col_e": {
+      "type": "number",
+      "description": "Valor da coluna E"
+    }
+  },
+  "required": [
+    "mes",
+    "ano"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "name": "RotatividadeMensal",
+  "type": "object",
+  "properties": {
+    "mes": {
+      "type": "number",
+      "description": "M\u00eas (1-12)"
+    },
+    "rotatividade_2025": {
+      "type": "number",
+      "description": "Rotatividade 2025 (0-1)"
+    },
+    "rotatividade_2026": {
+      "type": "number",
+      "description": "Rotatividade 2026 (0-1)"
+    },
+    "produzido_2025": {
+      "type": "number",
+      "description": "Metros Produzidos 2025"
+    },
+    "produzido_2026": {
+      "type": "number",
+      "description": "Metros Produzidos 2026"
+    },
+    "revisado_2025": {
+      "type": "number",
+      "description": "Metros Revisados 2025"
+    },
+    "revisado_2026": {
+      "type": "number",
+      "description": "Metros Revisados 2026"
+    }
+  },
+  "required": [
+    "mes"
+  ]
+}

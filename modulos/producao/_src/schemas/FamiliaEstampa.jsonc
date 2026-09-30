@@ -1,0 +1,21 @@
+{
+  "name": "FamiliaEstampa",
+  "type": "object",
+  "properties": {
+    "familia": {
+      "type": "string",
+      "description": "Nome da fam\u00edlia de produto (prefixo da descri\u00e7\u00e3o; o restante \u00e9 a cor)"
+    },
+    "processo": {
+      "type": "string",
+      "description": "Processo da estampa (Estampa 1, Estampa 2, Estampa 3)"
+    },
+    "tempo_setup": {
+      "type": "number",
+      "description": "Tempo de Setup previsto (minutos)"
+    }
+  },
+  "required": [
+    "familia"
+  ]
+}

@@ -1,0 +1,33 @@
+SMART GROUP ANALYTICS - MÓDULO PRODUÇÃO
+======================================
+
+O módulo Produção foi migrado para o Firebase/Firestore do próprio Analytics.
+Os dados ficam isolados em:
+
+/producao/{entidade}/items/{documento}
+
+Adicione o bloco abaixo dentro de "match /databases/{database}/documents { ... }"
+nas regras atuais do Firestore. Não substitua suas regras existentes.
+
+------------------------------------------------------------
+
+match /producao/{entidade}/items/{documento} {
+  allow read, write: if request.auth != null
+    && exists(/databases/$(database)/documents/usuarios/$(request.auth.uid))
+    && get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.ativo == true
+    && (
+      get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.perfil == "administrador"
+      || get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.modulos.producao == true
+    );
+}
+
+------------------------------------------------------------
+
+Depois de publicar as regras:
+1. No Analytics, abra Usuários.
+2. Edite o usuário que poderá acessar o módulo.
+3. Marque a permissão "Produção".
+4. Salve.
+
+Administradores já possuem acesso pelo controle do portal, mas as regras acima
+também aceitam explicitamente perfil "administrador".

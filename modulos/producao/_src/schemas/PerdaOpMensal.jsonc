@@ -1,0 +1,37 @@
+{
+  "name": "PerdaOpMensal",
+  "type": "object",
+  "properties": {
+    "mes": {
+      "type": "number",
+      "description": "M\u00eas (1-12)"
+    },
+    "perda_2025": {
+      "type": "number",
+      "description": "Perda por OP 2025 (G/J)"
+    },
+    "perda_2026": {
+      "type": "number",
+      "description": "Perda por OP 2026 (G/J)"
+    },
+    "g_2025": {
+      "type": "number",
+      "description": "Numerador 2025 (coluna G)"
+    },
+    "j_2025": {
+      "type": "number",
+      "description": "Denominador 2025 (coluna J)"
+    },
+    "g_2026": {
+      "type": "number",
+      "description": "Numerador 2026 (coluna G)"
+    },
+    "j_2026": {
+      "type": "number",
+      "description": "Denominador 2026 (coluna J)"
+    }
+  },
+  "required": [
+    "mes"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "FamiliaCilindro",
+  "type": "object",
+  "properties": {
+    "familia": {
+      "type": "string",
+      "description": "Nome da fam\u00edlia de produto"
+    },
+    "cilindro": {
+      "type": "string",
+      "description": "Nome do cilindro vinculado \u00e0 fam\u00edlia (ex: ZURICH)"
+    },
+    "maquina": {
+      "type": "string",
+      "description": "M\u00e1quina onde o cilindro \u00e9 utilizado (ex: Gravadora)"
+    }
+  },
+  "required": [
+    "familia",
+    "cilindro"
+  ]
+}

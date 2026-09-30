@@ -1,0 +1,55 @@
+{
+  "name": "Faturamento",
+  "type": "object",
+  "properties": {
+    "mes": {
+      "type": "number",
+      "description": "M\u00eas (1-12)"
+    },
+    "ano": {
+      "type": "number",
+      "description": "Ano",
+      "default": 2026
+    },
+    "faturamento_smart_group": {
+      "type": "number",
+      "description": "Faturamento Smart Group (R$)"
+    },
+    "metros_smart_group": {
+      "type": "number",
+      "description": "Metros Smart Group (m\u00b2)"
+    },
+    "faturamento_stk": {
+      "type": "number",
+      "description": "Faturamento STK (R$)"
+    },
+    "metros_stk": {
+      "type": "number",
+      "description": "Metros STK (m\u00b2)"
+    },
+    "faturamento_previsto_2026": {
+      "type": "number",
+      "description": "Faturamento Previsto 2026 (R$)"
+    },
+    "faturamento_2025": {
+      "type": "number",
+      "description": "Faturamento 2025 (R$)"
+    },
+    "metros_2025": {
+      "type": "number",
+      "description": "Metros 2025 (m\u00b2)"
+    },
+    "preco_medio_orcado": {
+      "type": "number",
+      "description": "Pre\u00e7o M\u00e9dio Or\u00e7ado (R$/m\u00b2)"
+    },
+    "preco_medio_realizado": {
+      "type": "number",
+      "description": "Pre\u00e7o M\u00e9dio Realizado (R$/m\u00b2)"
+    }
+  },
+  "required": [
+    "mes",
+    "ano"
+  ]
+}

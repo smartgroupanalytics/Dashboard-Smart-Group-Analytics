@@ -1,0 +1,52 @@
+{
+  "name": "Revisao",
+  "type": "object",
+  "properties": {
+    "mes": {
+      "type": "number",
+      "description": "M\u00eas (1-12)"
+    },
+    "ano": {
+      "type": "number",
+      "description": "Ano",
+      "default": 2026
+    },
+    "data": {
+      "type": "string",
+      "format": "date",
+      "description": "Data do apontamento (YYYY-MM-DD)"
+    },
+    "metros_jumpados": {
+      "type": "number",
+      "description": "Metros Jumpados (m\u00b2)"
+    },
+    "metros_revisados": {
+      "type": "number",
+      "description": "Metros Revisados (m\u00b2)"
+    },
+    "metros_1": {
+      "type": "number",
+      "description": "Metros de 1\u00b0 (m\u00b2)"
+    },
+    "metros_quebra": {
+      "type": "number",
+      "description": "Metros de Quebra (m\u00b2)"
+    },
+    "ops_revisadas": {
+      "type": "number",
+      "description": "N\u00b0 de OPs Revisadas"
+    },
+    "media_metros_revisados": {
+      "type": "number",
+      "description": "M\u00e9dia de Metros Revisados (manual)"
+    },
+    "media_metros_1": {
+      "type": "number",
+      "description": "M\u00e9dia de Metros de 1\u00b0 (manual)"
+    }
+  },
+  "required": [
+    "mes",
+    "ano"
+  ]
+}

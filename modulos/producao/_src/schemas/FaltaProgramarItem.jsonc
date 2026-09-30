@@ -1,0 +1,26 @@
+{
+  "name": "FaltaProgramarItem",
+  "type": "object",
+  "properties": {
+    "semana_label": {
+      "type": "string",
+      "description": "Identificador da semana (vincula \u00e0 CarteiraPedido)"
+    },
+    "ordem": {
+      "type": "number",
+      "description": "Ordem de exibi\u00e7\u00e3o do item"
+    },
+    "categoria": {
+      "type": "string",
+      "description": "Categoria do item (ex: Pedido Beira Rio, LE Beira Rio, Pedido Outros, LE STK)"
+    },
+    "metros": {
+      "type": "number",
+      "description": "Metros do item"
+    }
+  },
+  "required": [
+    "semana_label",
+    "categoria"
+  ]
+}

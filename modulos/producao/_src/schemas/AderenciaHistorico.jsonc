@@ -1,0 +1,43 @@
+{
+  "name": "AderenciaHistorico",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "string",
+      "format": "date",
+      "description": "Data do relat\u00f3rio (YYYY-MM-DD)"
+    },
+    "maquina": {
+      "type": "string",
+      "description": "Nome da m\u00e1quina"
+    },
+    "total_ops": {
+      "type": "number",
+      "description": "Total de OPs programadas"
+    },
+    "prontas": {
+      "type": "number",
+      "description": "OPs prontas"
+    },
+    "a_fazer": {
+      "type": "number",
+      "description": "OPs a fazer"
+    },
+    "fora": {
+      "type": "number",
+      "description": "OPs fora da programa\u00e7\u00e3o"
+    },
+    "aderencia": {
+      "type": "number",
+      "description": "% Ader\u00eancia (0-100)"
+    },
+    "detalhes": {
+      "type": "string",
+      "description": "JSON com todas as OPs e status do relat\u00f3rio"
+    }
+  },
+  "required": [
+    "data",
+    "maquina"
+  ]
+}

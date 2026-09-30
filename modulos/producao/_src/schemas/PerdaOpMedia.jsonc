@@ -1,0 +1,15 @@
+{
+  "name": "PerdaOpMedia",
+  "type": "object",
+  "properties": {
+    "perda_2025": {
+      "type": "number",
+      "description": "M\u00e9dia de Perda por OP 2025"
+    },
+    "perda_2026": {
+      "type": "number",
+      "description": "M\u00e9dia de Perda por OP 2026"
+    }
+  },
+  "required": []
+}

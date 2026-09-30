@@ -1,0 +1,66 @@
+{
+  "name": "InsumosQuimicos",
+  "type": "object",
+  "properties": {
+    "num_op": {
+      "type": "string",
+      "description": "N\u00ba da OP"
+    },
+    "data": {
+      "type": "string",
+      "format": "date",
+      "description": "Data (YYYY-MM-DD)"
+    },
+    "mes": {
+      "type": "number",
+      "description": "M\u00eas derivado da data (1-12)"
+    },
+    "ano": {
+      "type": "number",
+      "description": "Ano derivado da data"
+    },
+    "descricao_produto": {
+      "type": "string",
+      "description": "Descri\u00e7\u00e3o do Produto"
+    },
+    "descricao_insumo": {
+      "type": "string",
+      "description": "Descri\u00e7\u00e3o do Insumo"
+    },
+    "qtde_prevista": {
+      "type": "number",
+      "description": "Qtde Prevista"
+    },
+    "qtde_realizada": {
+      "type": "number",
+      "description": "Qtde Realizada"
+    },
+    "valor_previsto": {
+      "type": "number",
+      "description": "Valor Previsto (R$)"
+    },
+    "valor_realizado": {
+      "type": "number",
+      "description": "Valor Realizado (R$)"
+    },
+    "previsto": {
+      "type": "string",
+      "description": "Indica se era previsto ou n\u00e3o (coluna X)"
+    },
+    "descricao_nao_previsto": {
+      "type": "string",
+      "description": "Descri\u00e7\u00e3o do n\u00e3o previsto (coluna Y)"
+    },
+    "qtde_nao_previsto": {
+      "type": "number",
+      "description": "Quantidade do n\u00e3o previsto (coluna K)"
+    },
+    "valor_realizado_nao_previsto": {
+      "type": "number",
+      "description": "Valor Realizado do n\u00e3o previsto (coluna U)"
+    }
+  },
+  "required": [
+    "num_op"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "name": "Disponibilidade",
+  "type": "object",
+  "properties": {
+    "mes": {
+      "type": "number",
+      "description": "M\u00eas (1-12)"
+    },
+    "ano": {
+      "type": "number",
+      "description": "Ano",
+      "default": 2026
+    },
+    "produzindo": {
+      "type": "number",
+      "description": "% Produzindo (0-100)"
+    },
+    "setup": {
+      "type": "number",
+      "description": "% Setup (0-100)"
+    },
+    "parada_maq": {
+      "type": "number",
+      "description": "% Parada de M\u00e1quina (0-100)"
+    },
+    "amostras": {
+      "type": "number",
+      "description": "% Amostras (0-100)"
+    },
+    "retrabalho": {
+      "type": "number",
+      "description": "% Retrabalho (0-100)"
+    },
+    "ociosa": {
+      "type": "number",
+      "description": "% Ociosa (0-100)"
+    }
+  },
+  "required": [
+    "mes",
+    "ano"
+  ]
+}

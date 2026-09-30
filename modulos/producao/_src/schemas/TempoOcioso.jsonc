@@ -1,0 +1,27 @@
+{
+  "name": "TempoOcioso",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "string",
+      "format": "date",
+      "description": "Data (YYYY-MM-DD)"
+    },
+    "maquina": {
+      "type": "string",
+      "description": "Nome da m\u00e1quina"
+    },
+    "tempo_ocioso": {
+      "type": "number",
+      "description": "Tempo Ocioso (minutos)"
+    },
+    "tempo_disponivel": {
+      "type": "number",
+      "description": "Tempo Dispon\u00edvel (minutos)"
+    }
+  },
+  "required": [
+    "data",
+    "maquina"
+  ]
+}
