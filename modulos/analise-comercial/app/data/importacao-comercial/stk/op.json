@@ -176,8 +176,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-24",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -188,8 +188,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-25",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -200,8 +200,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-28",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -212,8 +212,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-28",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -296,8 +296,8 @@
     "subgrupo": 41,
     "qtd_produzir": 600,
     "dt_saida": "2026-09-30",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -344,8 +344,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-30",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 1,
+    "abreviacao": "RECOB"
   },
   {
     "fonte_comercial": "STK",
@@ -380,8 +380,8 @@
     "subgrupo": 41,
     "qtd_produzir": 300,
     "dt_saida": "2026-10-02",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 1,
+    "abreviacao": "RECOB"
   },
   {
     "fonte_comercial": "STK",
@@ -404,6 +404,126 @@
     "subgrupo": 40,
     "qtd_produzir": 50,
     "dt_saida": "2026-10-02",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8523",
+    "produto": "6395",
+    "desc_completa": "BORGONHA BRONZE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 600,
+    "dt_saida": "2026-10-07",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8524",
+    "produto": "17333",
+    "desc_completa": "DALLAS BEGE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-10-07",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8525",
+    "produto": "15361",
+    "desc_completa": "LENNY BEGE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-10-08",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8527",
+    "produto": "15534",
+    "desc_completa": "MIRAGE OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 400,
+    "dt_saida": "2026-10-08",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8528",
+    "produto": "16642",
+    "desc_completa": "NAPA BARI FOSCO PRETO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 1000,
+    "dt_saida": "2026-10-08",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8529",
+    "produto": "16650",
+    "desc_completa": "NAPA BARI FOSCO CAFE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 1000,
+    "dt_saida": "2026-10-09",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8530",
+    "produto": "13144",
+    "desc_completa": "NAPA LINHO DAKAR NATURAL",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 2000,
+    "dt_saida": "2026-10-09",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8532",
+    "produto": "15247",
+    "desc_completa": "OPHIDIA PRETO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-10-09",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8533",
+    "produto": "14788",
+    "desc_completa": "OPHIDIA METAL PRATA",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-10-09",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8534",
+    "produto": "15622",
+    "desc_completa": "TABLAS NATURAL",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-10-09",
     "centro_custo": 0,
     "abreviacao": ""
   }
