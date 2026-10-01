@@ -1,6 +1,6 @@
 {
-  "atualizadoEm": "2026-10-01T08:11:47.983Z",
-  "ultimaAtualizacaoValida": "2026-10-01T08:11:47.983Z",
+  "atualizadoEm": "2026-10-01T08:26:33.471Z",
+  "ultimaAtualizacaoValida": "2026-10-01T08:26:33.471Z",
   "status": "OK",
   "mensagem": "9 de 9 relatórios atualizados com sucesso.",
   "modo": "PARCIAL_SEGURO",
@@ -61,8 +61,8 @@
     {
       "arquivo": "OPBR.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-09-30T08:25:09.000Z",
-      "linhasValidas": 61,
+      "recebidoEm": "2026-10-01T08:25:08.000Z",
+      "linhasValidas": 62,
       "mensagem": "Atualizado com sucesso."
     },
     {
