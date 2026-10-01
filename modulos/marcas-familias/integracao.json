@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "patches": [
+    {
+      "file": "index.html",
+      "marker": "SG-MARCAS-FAMILIAS:MENU",
+      "pattern": "(<a\\s+data-modulo=\"vendas\"[\\s\\S]*?</a>)",
+      "replacement": "$1\n\n            <!-- SG-MARCAS-FAMILIAS:MENU -->\n            <a data-modulo=\"marcas-familias\" onclick=\"abrirModulo('marcas-familias', this)\">\n                <i class=\"fa-solid fa-tags\"></i>\n                Marcas e Famílias\n            </a>"
+    },
+    {
+      "file": "index.html",
+      "marker": "SG-MARCAS-FAMILIAS:CARD",
+      "pattern": "(<div\\s+class=\"card-home\"\\s+data-modulo=\"vendas\")",
+      "replacement": "<!-- SG-MARCAS-FAMILIAS:CARD -->\n                    <div class=\"card-home\" data-modulo=\"marcas-familias\" role=\"button\" tabindex=\"0\" onclick=\"abrirModulo('marcas-familias', document.querySelector('.menu a[data-modulo=&quot;marcas-familias&quot;]'))\">\n                        <i class=\"fa-solid fa-tags\"></i>\n                        <h3>Marcas e Famílias</h3>\n                        <p>Faturamento por marca, família e cor de produto.</p>\n                    </div>\n\n                    $1"
+    },
+    {
+      "file": "index.html",
+      "marker": "app.js?v=marcas-familias-20261001",
+      "pattern": "src=\"app\\.js(?:\\?[^\"\\s]*)?\"",
+      "replacement": "src=\"app.js?v=marcas-familias-20261001\""
+    },
+    {
+      "file": "app.js",
+      "marker": "SG-MARCAS-FAMILIAS:PERMISSAO",
+      "pattern": "(vendas:\\s*\"vendas\",)",
+      "replacement": "$1\n    // SG-MARCAS-FAMILIAS:PERMISSAO\n    \"marcas-familias\": \"marcas-familias\","
+    },
+    {
+      "file": "app.js",
+      "marker": "SG-MARCAS-FAMILIAS:ROTA",
+      "pattern": "(case \"financeiro\":)",
+      "replacement": "// SG-MARCAS-FAMILIAS:ROTA\ncase \"marcas-familias\":\n    titulo.innerText = \"Marcas e Famílias\";\n    subtitulo.innerText = \"Faturamento por marca, família e cor de produto.\";\n    conteudo.innerHTML = `<iframe src=\"modulos/marcas-familias/index.html?v=1\" class=\"iframe-modulo\" title=\"Marcas e Famílias\" frameborder=\"0\"></iframe>`;\n    break;\n\n$1"
+    },
+    {
+      "file": "app.js",
+      "marker": "SG-MARCAS-FAMILIAS:CARD",
+      "pattern": "(const cards = \\[)",
+      "replacement": "$1\n        // SG-MARCAS-FAMILIAS:CARD\n        { modulo: \"marcas-familias\", icone: \"fa-solid fa-tags\", titulo: \"Marcas e Famílias\", descricao: \"Faturamento por marca, família e cor de produto.\" },"
+    },
+    {
+      "file": "app.js",
+      "marker": "SG-MARCAS-FAMILIAS:BUSCA",
+      "pattern": "(const modulosBusca = \\[)",
+      "replacement": "$1\n    // SG-MARCAS-FAMILIAS:BUSCA\n    { nome: \"Marcas e Famílias\", descricao: \"Marcas, famílias, cores e faturamento Beira Rio\", modulo: \"marcas-familias\" },"
+    },
+    {
+      "file": "usuarios/index.html",
+      "marker": "SG-MARCAS-FAMILIAS:USUARIOS",
+      "pattern": "(<label><input type=\"checkbox\" data-modulo=\"vendas\"> Vendas</label>)",
+      "replacement": "$1\n            <!-- SG-MARCAS-FAMILIAS:USUARIOS -->\n            <label><input type=\"checkbox\" data-modulo=\"marcas-familias\"> Marcas e Famílias</label>"
+    }
+  ]
+}

@@ -9,6 +9,8 @@ const mapaPermissoes = {
     dashboard: "dashboard",
     estoque: "estoque",
     vendas: "vendas",
+    // SG-MARCAS-FAMILIAS:PERMISSAO
+    "marcas-familias": "marcas-familias",
     financeiro: "financeiro",
     compras: "compras",
     producao: "producao",
@@ -97,7 +99,14 @@ break;
 
 break;
 
-            case "financeiro":
+            // SG-MARCAS-FAMILIAS:ROTA
+case "marcas-familias":
+    titulo.innerText = "Marcas e Famílias";
+    subtitulo.innerText = "Faturamento por marca, família e cor de produto.";
+    conteudo.innerHTML = `<iframe src="modulos/marcas-familias/index.html?v=1" class="iframe-modulo" title="Marcas e Famílias" frameborder="0"></iframe>`;
+    break;
+
+case "financeiro":
 
     titulo.innerText = "Financeiro";
 
@@ -426,6 +435,8 @@ function criarCardDashboard({
 function gerarCardsDashboardPermitidos() {
 
     const cards = [
+        // SG-MARCAS-FAMILIAS:CARD
+        { modulo: "marcas-familias", icone: "fa-solid fa-tags", titulo: "Marcas e Famílias", descricao: "Faturamento por marca, família e cor de produto." },
         {
             modulo: "estoque",
             icone: "fa-solid fa-cube",
@@ -568,6 +579,8 @@ document.querySelector(".menu-btn")?.addEventListener("click", () => {
 // =====================================
 
 const modulosBusca = [
+    // SG-MARCAS-FAMILIAS:BUSCA
+    { nome: "Marcas e Famílias", descricao: "Marcas, famílias, cores e faturamento Beira Rio", modulo: "marcas-familias" },
     {
         nome: "Dashboard",
         descricao: "Visão geral do Smart Group Analytics",

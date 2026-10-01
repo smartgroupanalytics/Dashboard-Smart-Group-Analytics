@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Marcas e Famílias · Smart Group Analytics</title>
+  <link rel="stylesheet" href="style.css?v=1">
+</head>
+<body>
+<div id="access-status" role="status">Verificando acesso ao módulo…</div>
+<main id="dashboard" hidden>
+  <header class="topbar">
+    <div class="heading"><span class="heading-icon" aria-hidden="true">▥</span><div><h1>Marcas e Famílias</h1><p>Beira Rio · Faturamento por marca, família e cor de produto.</p></div></div>
+    <div class="filters">
+      <label>Período<select id="year" aria-label="Ano"></select></label>
+      <label>Mês<select id="month" aria-label="Mês"><option value="">Todos</option></select></label>
+      <button id="clear" class="primary">↻ Limpar filtros</button>
+    </div>
+  </header>
+  <div class="data-bar"><span id="source" role="status">Carregando relatório…</span><div class="data-actions"><button id="restore" title="Voltar ao relatório distribuído com o painel">Usar base publicada</button><label class="import-button" for="import-file">↑ Importar Excel<input id="import-file" type="file" accept=".xlsx,.xls" class="visually-hidden"></label></div></div>
+  <p id="message" class="message" role="status" hidden></p>
+  <section class="kpis" aria-label="Indicadores do período">
+    <article class="kpi"><span class="kpi-icon blue" aria-hidden="true">▥</span><div><h2>Faturamento dos Produtos</h2><strong id="revenue">—</strong><p id="row-count">—</p></div></article>
+    <article class="kpi"><span class="kpi-icon green" aria-hidden="true">▣</span><div><h2>Marcas</h2><strong id="brands-count">—</strong><p id="brands-caption">marcas com faturamento</p></div></article>
+    <article class="kpi"><span class="kpi-icon purple" aria-hidden="true">⬡</span><div><h2>Famílias</h2><strong id="families-count">—</strong><p>famílias de produtos</p></div></article>
+    <article class="kpi"><span class="kpi-icon orange" aria-hidden="true">◉</span><div><h2>Cores Vendidas</h2><strong id="colors-count">—</strong><p id="colors-caption">cores informadas no relatório</p></div></article>
+  </section>
+  <details class="input-audit panel"><summary id="inputs-summary">Conferência dos insumos</summary><p id="inputs-note" class="hint"></p><p class="hint">Insumos são distribuídos proporcionalmente ao valor original dos produtos da mesma nota, empresa, cliente e data de faturamento. Valores sem vínculo ficam pendentes e não entram no faturamento dos produtos.</p><div id="pending-table" class="detail-scroll" hidden><table><thead><tr><th>Data / Nota</th><th>Insumo com pedido 0</th><th>Valor pendente</th><th>Motivo</th></tr></thead><tbody id="pending-rows"></tbody></table></div></details>
+  <section class="charts" aria-label="Gráficos de faturamento">
+    <article class="panel"><h2>Faturamento por Marca <span>(Top 10)</span></h2><div id="brand-chart" class="chart-box"></div></article>
+    <article class="panel"><h2>Participação das Marcas</h2><div id="share-chart" class="chart-box share"></div></article>
+    <article class="panel"><div class="panel-header"><h2>Evolução por Marca</h2><select id="trend-brand" aria-label="Marca do gráfico de evolução"></select></div><p class="hint">Histórico mensal da marca no ano selecionado.</p><div id="trend-chart" class="chart-box trend"></div></article>
+  </section>
+  <section class="drilldown" aria-label="Detalhamento por marca, família e cor">
+    <article class="panel brand-panel"><h2>1. Selecione a Marca</h2><input id="brand-search" type="search" placeholder="Pesquisar marca…" aria-label="Pesquisar marca"><label class="select-all"><input id="all-brands" type="checkbox"> Selecionar todas <span id="selection-count"></span></label><div id="brand-list" class="scroll-list"></div></article>
+    <article class="panel family-panel"><h2 id="family-title">2. Famílias das marcas selecionadas</h2><input id="family-search" type="search" placeholder="Pesquisar família…" aria-label="Pesquisar família"><div class="table-scroll"><table><thead><tr><th scope="col">Família</th><th scope="col">Qtd. vendida</th><th scope="col">Faturamento</th><th scope="col">%</th></tr></thead><tbody id="family-rows"></tbody></table></div></article>
+    <article class="panel color-panel"><h2 id="color-title">3. Cores da Família</h2><p class="hint">Clique na cor para consultar produtos e clientes.</p><div class="table-scroll"><table><thead><tr><th scope="col">Cor</th><th scope="col">Qtd. vendida</th><th scope="col">Faturamento</th><th scope="col">%</th></tr></thead><tbody id="color-rows"></tbody></table></div></article>
+  </section>
+  <article class="panel evolution"><div class="panel-header"><div><h2 id="family-trend-title">Evolução da Família</h2><p class="hint">Histórico mensal no ano e nas marcas selecionadas.</p></div><div class="chart-controls"><span class="legend-bar"></span><span>Faturamento</span><span class="legend-line"></span><label>Quantidade <select id="quantity-unit" aria-label="Unidade da quantidade no gráfico"></select></label></div></div><div id="family-trend" class="wide-chart"></div></article>
+  <footer><details><summary>Como os dados são calculados</summary><p>Período pela coluna <b>Dt.faturam</b>. Faturamento pela coluna <b>Valor Fat+Valor IPI+Valor Frete</b>, incluindo IPI e frete. Somente itens faturados ou parcialmente faturados com número de nota. Registros não são deduplicados: um produto pode aparecer em mais de um item da nota.</p><p><b>Pedido 0 identifica insumo.</b> Seu valor é agregado aos produtos da mesma nota, empresa, cliente e data, proporcionalmente ao valor original de cada produto, com fechamento exato dos centavos. Sua quantidade, marca, família e cor não entram nos indicadores. O detalhe de cada produto permite conferir o valor original e os insumos agregados. Insumos sem vínculo ficam na conferência e fora dos totais dos produtos.</p><p>Sem coluna FAMÍLIA, o nome é derivado da descrição e da COR: retiram-se cor, espessura e indicações de venda. Construções PU, PVC e NEO continuam separadas. Cores e seus códigos seguem o relatório; as amostras de cor são ilustrativas. Quantidades de unidades diferentes aparecem separadas.</p><p>Os indicadores e o detalhamento respeitam ano, mês e marcas. Os gráficos de evolução mostram o ano completo das seleções. “Vazio” reúne marcas não preenchidas nos produtos. A importação substitui a base somente deste painel e fica neste navegador e usuário; não é uma atualização automática para os demais usuários.</p></details><span id="scope-note"></span></footer>
+</main>
+<dialog id="detail-dialog"><div class="dialog-head"><div><h2 id="detail-title"></h2><p id="detail-subtitle"></p></div><button id="close-detail" aria-label="Fechar detalhes">✕</button></div><div class="detail-scroll"><table><thead><tr><th>Data / Nota</th><th>Produto</th><th>Cliente</th><th>Quantidade</th><th>Faturamento</th></tr></thead><tbody id="detail-rows"></tbody></table></div><button id="more-detail" hidden>Carregar mais 100 itens</button></dialog>
+<script src="core.js?v=1"></script>
+<script src="vendor/xlsx.full.min.js"></script>
+<script type="module" src="app.js?v=1"></script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+MARCAS E FAMÍLIAS — SMART GROUP ANALYTICS
+Pacote de inclusão do novo módulo • 01/10/2026
+
+1. O QUE ESTE PACOTE FAZ
+
+Acrescenta um módulo independente, com entrada própria no menu, cartão inicial,
+busca e permissão de acesso. Inclui o Excel corrigido já convertido em base de
+dados e permite importar novos relatórios dentro deste painel.
+
+Este é um pacote de inclusão: ele NÃO substitui seu projeto inteiro.
+Não contém cópias de Vendas, Produção, arquivos .git ou automações.
+Não executa comandos Git, commit, push ou publicação.
+
+2. ANTES DE INSTALAR
+
+Seu repositório informou que havia atualizações em origin/main. Use a versão
+atualizada do projeto para a instalação; não publique uma cópia antiga por cima
+da produção. Faça uma cópia de segurança do projeto antes da instalação.
+
+No GitHub Desktop, selecione o repositório correto. Com o trabalho local salvo
+e sem alterações pendentes, use Fetch origin e, se aparecer, Pull origin.
+Se houver conflito ou alterações locais que você não reconhece, não descarte
+nada e não force a atualização. Resolva essa situação antes de instalar.
+
+3. INSTALAÇÃO
+
+1) Extraia este ZIP em uma pasta temporária.
+2) Copie a pasta modulos e os arquivos INSTALAR-MARCAS-FAMILIAS.cmd,
+   INSTALAR-MARCAS-FAMILIAS.ps1 e este LEIA-ME para a raiz do projeto:
+   C:\Dashboard - Smart Group\Dashboard-Smart-Group-Analytics
+   Ao mesclar modulos, será adicionada somente a subpasta marcas-familias.
+   Se essa subpasta já existir, guarde uma cópia dela antes de atualizar.
+3) Execute INSTALAR-MARCAS-FAMILIAS.cmd na raiz do projeto.
+4) Leia o resultado na janela. O instalador valida todos os pontos de inclusão
+   antes de alterar qualquer arquivo existente. Se a estrutura tiver mudado,
+   ele interrompe sem aplicar as alterações: nesse caso envie o projeto
+   atualizado para adaptar a integração.
+5) Em caso de sucesso, o backup dos três arquivos do portal fica em uma pasta
+   Backup-Marcas-Familias-DATA-HORA ao lado da pasta do projeto.
+6) Confira as alterações no GitHub Desktop antes de fazer commit/publicar.
+   Além dos arquivos novos, somente estes três arquivos devem ter inclusões:
+   - index.html: menu, cartão inicial e versão do script do portal;
+   - app.js: rota, mapa de permissão, cartão dinâmico e busca;
+   - usuarios/index.html: opção de permissão do novo módulo.
+7) Após sua publicação pelo processo habitual, abra Marcas e Famílias.
+   Administradores têm acesso pelo controle existente. Para outros usuários,
+   habilite Marcas e Famílias na administração de usuários e salve.
+
+O módulo usa o login e o módulo de proteção existentes. Não é uma página para
+abrir diretamente por duplo clique; use o portal servido por HTTP/HTTPS.
+Se o Windows ou a política da empresa bloquear a execução do instalador, não
+altere a política da máquina: peça a aplicação das inclusões de integracao.json
+ao responsável pelo projeto.
+
+Para reverter a integração: restaure index.html, app.js e usuarios/index.html
+do backup correspondente. A pasta nova pode permanecer sem entrada no menu.
+O instalador pode ser repetido: as inclusões marcadas não são duplicadas.
+
+4. REGRA CONFIRMADA DOS INSUMOS
+
+- Pedido igual a zero identifica insumo.
+- Insumos não aparecem como produtos, famílias ou cores, e sua quantidade
+  não é somada à quantidade vendida dos produtos.
+- Seu valor é distribuído entre os produtos com pedido maior que zero na
+  mesma nota, empresa, cliente e data de faturamento.
+- Havendo vários produtos, o rateio é proporcional ao valor original de
+  cada linha de produto, com fechamento exato dos centavos.
+- A marca, família e cor usadas são as do produto que recebe o valor.
+- Ao clicar numa cor, o detalhe permite conferir o produto, seu pedido,
+  valor original e insumos agregados, com referência às linhas do Excel.
+- Insumos sem produto correspondente não são atribuídos artificialmente.
+  Eles ficam na conferência "Pedido 0", fora dos totais dos produtos.
+
+EXEMPLO VALIDADO — PEDIDO 3339, NF 21310
+Branco Off: 303,5 M • R$ 4.655,69 + R$ 2.294,46 = R$ 6.950,15
+Rosa:        75,5 M • R$ 1.158,17 + R$   570,78 = R$ 1.728,95
+Total:      379,0 M • R$ 5.813,86 + R$ 2.865,24 = R$ 8.679,10
+
+CONFERÊNCIA DA BASE COMPLETA, SEM FILTROS
+4.739 linhas faturadas = 4.377 linhas de produto + 362 linhas de insumo.
+Faturamento original do Excel:                 R$ 44.690.194,50
+Faturamento dos produtos com insumos vinculados:R$ 44.688.094,80
+Insumos ainda sem vínculo:                     R$      2.099,70
+Valor total dos insumos:                       R$    603.839,56
+Valor dos insumos agregado aos produtos:       R$    601.739,86
+
+Pendências de vínculo:
+NF 16510, 15/01/2025, produto 9754:  R$   378,00
+NF 18351, 10/06/2025, produto 12683: R$ 1.560,00
+NF 21008, 09/12/2025, produto 14862: R$   161,70
+Todos têm Pedido 0 no arquivo, portanto seguem a regra de insumos, mesmo que
+a descrição pareça ser a de um produto. Corrija o relatório de origem se for
+o caso e importe-o novamente. Não há alteração automática desses registros.
+
+5. USO E IMPORTAÇÃO
+
+Filtros de ano, mês e marcas afetam os indicadores e o detalhamento.
+Os gráficos de evolução mostram o histórico do ano selecionado; em "Todos",
+mostram o histórico disponível. Clique numa marca para isolar sua seleção;
+use as caixas para selecionar várias. Clique numa família e depois numa cor
+para ver produtos, pedidos e clientes.
+
+Importar Excel substitui somente a base de Marcas e Famílias neste navegador
+e usuário. Não atualiza os outros módulos nem distribui a planilha aos demais
+usuários. "Usar base publicada" restaura o relatório entregue com o módulo.
+Uma importação inválida mantém a base anterior. O arquivo deve conter uma
+única aba de faturamento compatível com o relatório corrigido enviado.
+
+São usadas as colunas Dt.faturam e Valor Fat+Valor IPI+Valor Frete. Somente
+itens faturados/parcialmente faturados com nota são aceitos. Pedido, Cliente
+e Sig.emp são necessários para a identificação e vinculação dos insumos.
+Linhas repetidas não são deduplicadas: podem representar itens legítimos.
+
+Sem coluna FAMÍLIA, os nomes são derivados da descrição e da COR, preservando
+construções PU/PVC/NEO. Revise esses agrupamentos; uma coluna FAMÍLIA explícita
+tem prioridade. Marcas em branco aparecem em "Vazio". Quantidades de unidades
+diferentes permanecem separadas. As amostras de cores são ilustrativas.
+
+6. VALIDAÇÃO E LIMITES
+
+Os cálculos foram conferidos contra apuração independente do Excel completo,
+incluindo todas as marcas e meses, rateio de centavos e o pedido 3339.
+Foram testados em navegador: filtros, detalhamento, seleção vazia, importação
+do Excel real, persistência local, rejeição sem perder a base, restauração,
+layout em celular, entrada independente pelo menu e bloqueio por permissão.
+
+O login/Firestore foi simulado nos testes de navegador. Não houve acesso nem
+publicação na produção. A execução do .cmd/PowerShell no Windows não foi
+testada neste ambiente Linux; suas transformações foram conferidas contra o
+ZIP original, incluindo preservação de conteúdo e reaplicação sem duplicação.
+Nenhum arquivo de módulo existente foi alterado na cópia usada nos testes.

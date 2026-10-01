@@ -105,6 +105,12 @@
 
             </a>
 
+            <!-- SG-MARCAS-FAMILIAS:MENU -->
+            <a data-modulo="marcas-familias" onclick="abrirModulo('marcas-familias', this)">
+                <i class="fa-solid fa-tags"></i>
+                Marcas e Famílias
+            </a>
+
             <a
                data-modulo="financeiro"
                onclick="abrirModulo('financeiro', this)"
@@ -575,6 +581,13 @@
 
 
 
+                    <!-- SG-MARCAS-FAMILIAS:CARD -->
+                    <div class="card-home" data-modulo="marcas-familias" role="button" tabindex="0" onclick="abrirModulo('marcas-familias', document.querySelector('.menu a[data-modulo=&quot;marcas-familias&quot;]'))">
+                        <i class="fa-solid fa-tags"></i>
+                        <h3>Marcas e Famílias</h3>
+                        <p>Faturamento por marca, família e cor de produto.</p>
+                    </div>
+
                     <div
                         class="card-home"
                         data-modulo="vendas"
@@ -827,7 +840,7 @@
          SCRIPTS
     ================================================== -->
 
-    <script src="app.js?v=15"></script>
+    <script src="app.js?v=marcas-familias-20261001"></script>
 
     <script
         type="module"
