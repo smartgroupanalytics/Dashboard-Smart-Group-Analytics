@@ -1,0 +1,16 @@
+SMART GROUP ANALYTICS - MARCAS E FAMILIAS - SINALEIRA
+
+1. Copie somente o arquivo:
+   modulos/marcas-familias/app.js
+
+2. Cole por cima do app.js atual do modulo Marcas e Familias.
+
+3. Nao altere index.html, core.js, style.css ou data/base.json para instalar a sinaleira.
+
+4. O indicador consulta a base publicada data/base.json a cada 60 segundos.
+   - Verde: base publicada ha no maximo 40 minutos.
+   - Vermelho: base com mais de 40 minutos, ou erro ao consultar a base.
+
+5. Enquanto a automacao ainda nao estiver criada, e normal o indicador ficar vermelho se a base publicada estiver antiga.
+
+IMPORTANTE: a sinaleira mede a base PUBLICADA no GitHub/Pages, nao uma importacao manual salva apenas no navegador.

@@ -14,6 +14,81 @@ const empty = text => `<div class="empty">${esc(text)}</div>`;
 let records=[], inputs=[], unallocated=[], selection=new Set(), selectedFamily='', trendBrand='', base=null, published=null, cacheKey='', detailRows=[], detailLimit=100;
 let familyView=[], colorView=[], brandView=[];
 
+
+// Sinaleira da atualização automática da base publicada.
+// Como os relatórios chegam aproximadamente a cada 20 minutos, acima de 40 minutos
+// sem uma nova base publicada o indicador fica vermelho.
+const STATUS_LIMITE_MINUTOS = 40;
+let statusTimer = null;
+
+function statusTempo(minutos){
+  if(minutos < 1)return 'agora';
+  if(minutos < 60)return `há ${minutos} min`;
+  const horas=Math.floor(minutos/60),resto=minutos%60;
+  if(horas < 24)return `há ${horas}h${resto ? ' '+resto+'min' : ''}`;
+  const dias=Math.floor(horas/24);
+  return `há ${dias} ${dias===1?'dia':'dias'}`;
+}
+
+function garantirIndicadorAtualizacao(){
+  let el=$('auto-update-status');
+  if(el)return el;
+  el=document.createElement('span');
+  el.id='auto-update-status';
+  el.setAttribute('role','status');
+  el.setAttribute('aria-live','polite');
+  el.innerHTML='<span class="status-dot status-checking"></span><span>Conferindo atualização…</span>';
+  const source=$('source');
+  source.insertAdjacentElement('afterend',el);
+
+  if(!$('auto-update-status-style')){
+    const style=document.createElement('style');
+    style.id='auto-update-status-style';
+    style.textContent=`
+      #auto-update-status{display:inline-flex;align-items:center;gap:7px;white-space:nowrap;padding:6px 10px;border:1px solid #285070;border-radius:999px;background:#082742;color:#d6eaff;font-size:11px;font-weight:600;margin-left:auto}
+      #auto-update-status .status-dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex:0 0 9px;box-shadow:0 0 0 3px rgba(255,255,255,.04)}
+      #auto-update-status .status-ok{background:#2bd576;box-shadow:0 0 10px rgba(43,213,118,.65)}
+      #auto-update-status .status-error{background:#ff4d5f;box-shadow:0 0 10px rgba(255,77,95,.6)}
+      #auto-update-status .status-checking{background:#ffb84d;box-shadow:0 0 10px rgba(255,184,77,.5)}
+      @media(max-width:650px){#auto-update-status{margin-left:0;white-space:normal}}
+    `;
+    document.head.appendChild(style);
+  }
+  return el;
+}
+
+async function atualizarIndicadorAutomatico(){
+  const el=garantirIndicadorAtualizacao();
+  try{
+    const res=await fetch(`data/base.json?status=${Date.now()}`,{cache:'no-store'});
+    if(!res.ok)throw new Error(`HTTP ${res.status}`);
+    const data=await res.json();
+    const dataAtualizacao=new Date(data.updatedAt);
+    if(!data.updatedAt || Number.isNaN(dataAtualizacao.getTime()))throw new Error('data de atualização inválida');
+
+    const minutos=Math.max(0,Math.floor((Date.now()-dataAtualizacao.getTime())/60000));
+    const atualizado=minutos<=STATUS_LIMITE_MINUTOS;
+    const dataBR=dataAtualizacao.toLocaleDateString('pt-BR');
+    const horaBR=dataAtualizacao.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+    const dotClass=atualizado?'status-ok':'status-error';
+    const texto=atualizado
+      ? `📅 ${dataBR} — Dados atualizados ${statusTempo(minutos)}`
+      : `📅 ${dataBR} — Sem atualização ${statusTempo(minutos)}`;
+
+    el.innerHTML=`<span class="status-dot ${dotClass}"></span><span>${texto}</span>`;
+    el.title=`Última base publicada: ${dataBR} ${horaBR}${data.source?' · '+data.source:''}`;
+  }catch(e){
+    el.innerHTML='<span class="status-dot status-error"></span><span>Não foi possível conferir a atualização</span>';
+    el.title='Falha ao consultar data/base.json: '+e.message;
+  }
+}
+
+function iniciarStatusAutomatico(){
+  atualizarIndicadorAutomatico();
+  if(statusTimer)clearInterval(statusTimer);
+  statusTimer=setInterval(atualizarIndicadorAutomatico,60000);
+}
+
 function message(text,error=false){$('message').hidden=!text;$('message').textContent=text;$('message').classList.toggle('error',error);}
 function period(){return {year:$('year').value,month:$('month').value};}
 function periodRows(){const p=period();return C.filter(records,p.year,p.month);}
@@ -188,6 +263,7 @@ function bind(){
 try{
   const user=await protegerModulo('marcas-familias');cacheKey=(user?.uid||'usuario')+':relatorio';
   $('access-status').hidden=true;$('dashboard').hidden=false;bind();
+  iniciarStatusAutomatico();
   let stored;try{stored=await cache('get');if(stored)C.parse(stored.rows);}catch{stored=null;}
   if(stored)initData(stored);else{published=await loadPublished();initData(published);}
 }catch(e){
