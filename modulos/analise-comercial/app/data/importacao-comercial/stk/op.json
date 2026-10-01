@@ -133,18 +133,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8098",
-    "produto": "15534",
-    "desc_completa": "MIRAGE OURO LIGHT",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 201.6,
-    "dt_saida": "2026-09-10",
-    "centro_custo": 26,
-    "abreviacao": "IMP DIG"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8292",
     "produto": "11845",
     "desc_completa": "BORGONHA OURO LIGHT",
@@ -260,8 +248,8 @@
     "subgrupo": 41,
     "qtd_produzir": 600,
     "dt_saida": "2026-09-30",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -332,8 +320,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-09-30",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -409,6 +397,30 @@
   },
   {
     "fonte_comercial": "STK",
+    "nro_op": "8521",
+    "produto": "15212",
+    "desc_completa": "BORGONHA TITANIO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 800,
+    "dt_saida": "2026-10-07",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8522",
+    "produto": "11845",
+    "desc_completa": "BORGONHA OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 1000,
+    "dt_saida": "2026-10-07",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
     "nro_op": "8523",
     "produto": "6395",
     "desc_completa": "BORGONHA BRONZE",
@@ -439,6 +451,18 @@
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 200,
+    "dt_saida": "2026-10-08",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8526",
+    "produto": "17420",
+    "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 1000,
     "dt_saida": "2026-10-08",
     "centro_custo": 0,
     "abreviacao": ""
@@ -488,6 +512,18 @@
     "subgrupo": 41,
     "qtd_produzir": 2000,
     "dt_saida": "2026-10-09",
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8531",
+    "produto": "13334",
+    "desc_completa": "NAPA OLIMPIC CAFE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 600,
+    "dt_saida": "2026-10-09",
     "centro_custo": 0,
     "abreviacao": ""
   },
@@ -524,6 +560,18 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-10-09",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8554",
+    "produto": "15310",
+    "desc_completa": "NAMIBIA CANELA",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 400,
+    "dt_saida": "2026-10-06",
     "centro_custo": 0,
     "abreviacao": ""
   }
