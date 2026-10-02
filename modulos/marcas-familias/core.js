@@ -22,16 +22,125 @@
     if (d.getUTCFullYear() !== +m[1] || d.getUTCMonth()+1 !== +m[2] || d.getUTCDate() !== +m[3]) return '';
     return d.toISOString().slice(0,10);
   }
+  // Regras de unificação trazidas da lógica de famílias da Análise Comercial.
+  // A regra principal é genérica: cor, código da cor, PU e espessura não criam outra família.
+  // Assim, a correção vale para TODAS as famílias do relatório e não somente para exemplos como NANCY/VENEZIA.
+  const FAMILY_ALIASES = [
+    ['METALIZADO LAS VEGAS','METALIZADO LAS VEGAS'],
+    ['METALIZADO LASVEGAS','METALIZADO LAS VEGAS'],
+    ['NAPA METAL CHARM','NAPA METAL CHARM'],
+    ['NAPA METAL LYON','NAPA METAL LYON'],
+    ['NAPA MADRID','NAPA MADRID'],
+    ['NAPA MADRI','NAPA MADRID'],
+    ['NAPA ATENAS PVC','NAPA ATENAS PVC'],
+    ['NAPA BARI METAL','NAPA BARI METAL'],
+    ['NAPA CADIS','NAPA CADIS'],
+    ['NAPA CORDOBA PVC','NAPA CORDOBA PVC'],
+    ['NAPA CORDOBA','NAPA CORDOBA PVC'],
+    ['NAPA CORDA PVC','NAPA CORDA PVC'],
+    ['NAPA CORDA','NAPA CORDA PVC'],
+    ['NAPA LINHO DAKAR','NAPA LINHO DAKAR'],
+    ['NAPA LUNNA PVC','NAPA LUNNA PVC'],
+    ['NAPA LUNNA','NAPA LUNNA PVC'],
+    ['NAPA LUNA PVC','NAPA LUNNA PVC'],
+    ['NAPA LUNA','NAPA LUNNA PVC']
+  ].sort((a,b)=>b[0].length-a[0].length);
+
+  const KNOWN_COLOR_NAMES = [
+    'OFF WHITE','OURO ROSADO','ROSA GOLD','BRANCO OFF','VERMELHO RUBY','VERDE LUNA','AZUL SKY',
+    'VERDE ESCURO','JEANS CLARO','JEANS ESCURO','ROSA VELHO','PRATA VELHO','OURO VELHO','DARK GREY',
+    'AMARELO','AMARELA','ANTIQUE','AREIA','AZUL','BEGE','BLUSH','BRANCO','BRANCA','BRONZE','BROWN',
+    'CACAU','CAFE','CAMEL','CANELA','CAPRI','CAPUCCINO','CARAMELO','CASTANHO','CELESTE','CEREJA','CHERRY',
+    'CHOCOLATE','CINZA','COBRE','COFFEE','CONHAQUE','CORAL','CREME','CRISTAL','DOURADO','DOURADA','FENDI',
+    'GELO','GRAFITE','GREY','JEANS','LARANJA','LILAS','LIMA','LIMONCELLO','MANTEIGA','MARFIM','MARINHO',
+    'MARROM','MOCCA','MOSTARDA','NATURAL','NUDE','OFF','OLIVA','OLIVE','OSTRA','OURO','PEROLA','PETROLEO',
+    'PINK','PISTACHE','PRATA','PRETO','PRETA','ROSA','ROSE','ROUGE','ROXO','RUBI','SAFIRA','SILVER','TAUPE',
+    'TELHA','TERRACOTA','TURMALINA','VERDE','VERMELHO','VERMELHA','VINHO','VIOLETA','WHISKY','AVELA'
+  ].sort((a,b)=>b.length-a.length);
+
+  function colorBase(color) {
+    return norm(color)
+      .replace(/\s+\d+(?:[.,]\d+)?\s*$/, '')
+      .trim();
+  }
+
+  function findDeclaredColorStart(source, color) {
+    const c = colorBase(color);
+    if (!c || /^[\d.,]+$/.test(c)) return -1;
+    const parts = c.split(' ').filter(Boolean);
+    // O relatório às vezes traz a cor truncada (ex.: VERMELHO RUB / BRANCO OFF 5).
+    // Tenta primeiro o texto mais completo e, se necessário, reduz até achar o início da cor.
+    for (let n = parts.length; n >= 1; n--) {
+      const candidate = parts.slice(0,n).join(' ');
+      const pos = source.lastIndexOf(' ' + candidate);
+      if (pos >= 0) return pos + 1;
+      if (source.startsWith(candidate + ' ')) return 0;
+    }
+    return -1;
+  }
+
+  function findKnownColorStart(source) {
+    let best = -1;
+    for (const candidate of KNOWN_COLOR_NAMES) {
+      const token = ' ' + candidate;
+      const pos = source.lastIndexOf(token);
+      if (pos < 0) continue;
+      const start = pos + 1;
+      // Só considera nomes de cor próximos do final da descrição. Isso permite reconhecer
+      // combinações como VERDE CAPRI, DARK GREY e DOURADO/BEGE sem cortar o nome da família.
+      const tailWords = source.slice(start + candidate.length).trim().split(/\s+/).filter(Boolean).length;
+      if (tailWords <= 5 && (best < 0 || start < best)) best = start;
+    }
+    return best;
+  }
+
+  function normalizeFamilyAlias(value) {
+    for (const [prefix, canonical] of FAMILY_ALIASES) {
+      if (value === prefix || value.startsWith(prefix + ' ')) return canonical;
+    }
+    // Na Análise Comercial, a descrição simples NAPA METAL pertence à família METAL CHARM.
+    // Aqui a regra é restrita ao nome exato para não engolir famílias como NAPA METAL MALIBU.
+    if (value === 'NAPA METAL') return 'NAPA METAL CHARM';
+    if (value === 'METALIZADO LAS') return 'METALIZADO LAS VEGAS';
+    return value;
+  }
+
   function family(description, color, explicit) {
-    if (text(explicit)) return norm(explicit);
-    let s = norm(description).replace(/\s*\(VENDA[^)]*\)?/g, '').replace(/\s+VENDA(?:\s+BR|\s+BEIRA\s+RIO)?\s*$/, '').replace(/\s*\(SG-\d+\)\s*$/, '');
-    const c = norm(color);
-    // Remove a cor declarada, inclusive códigos numéricos truncados pelo relatório.
-    const pos = c ? s.lastIndexOf(' ' + c) : -1;
-    if (pos > 0 && /^[\d\s]*$/.test(s.slice(pos + c.length + 1))) s = s.slice(0, pos);
-    // Espessuras não definem família; a construção PU/PVC/NEO é preservada.
-    s = s.replace(/\b(PU|PVC|NEO)\s+\d+(?:[.,]\d+)?(?:\s*MM)?\b/g, '$1').replace(/\s+\d+[.,]\d+\s*MM\b/g, '').replace(/^P\s+(?=NAPA\b)/, '');
-    return text(s) || norm(description) || 'SEM FAMÍLIA';
+    if (text(explicit)) return normalizeFamilyAlias(norm(explicit));
+
+    let s = norm(description)
+      .replace(/\s*\(VENDA[^)]*\)?/g, ' ')
+      .replace(/\s+VENDA(?:\s+BR|\s+BEIRA\s+RIO)?\s*$/, ' ')
+      .replace(/\s*\(SG-\d+\)\s*$/, ' ')
+      .replace(/\([^)]*\)/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+
+    // Primeiro usa a coluna COR, pois ela é a fonte mais segura para separar família e cor.
+    // Se a coluna estiver vazia/truncada, usa a lista de cores da mesma lógica da Análise Comercial.
+    const declaredColorStart = findDeclaredColorStart(s, color);
+    const knownColorStart = findKnownColorStart(s);
+    // A coluna COR pode trazer apenas parte do nome (ex.: LUNA em VERDE LUNA, GREY em DARK GREY).
+    // Quando a descrição revela uma cor composta mais longa, corta desde o início dela.
+    let colorStart = declaredColorStart;
+    if (knownColorStart > 0 && (colorStart < 0 || knownColorStart < colorStart)) colorStart = knownColorStart;
+    if (colorStart > 0) s = s.slice(0, colorStart).trim();
+
+    // PU e espessura são características técnicas, não famílias diferentes.
+    // PVC e NEO são preservados porque podem fazer parte do nome comercial da família.
+    s = s
+      .replace(/\bPU\s*\d+(?:[.,]\d+)?\s*(?:MM)?\b/g, ' ')
+      .replace(/\b\d+(?:[.,]\d+)?\s*(?:MM)?\s*PU\b/g, ' ')
+      .replace(/\bPU\b/g, ' ')
+      .replace(/\b\d+[.,]\d+\s*MM\b/g, ' ')
+      .replace(/(^|\s)\d+[.,]\d+(?=\s|$)/g, ' ')
+      .replace(/\s*-\s*/g, ' ')
+      .replace(/^\*?\d+\s+(?=NAPA\b)/, '')
+      .replace(/^P\s+(?=NAPA\b)/, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+
+    return normalizeFamilyAlias(s) || norm(description) || 'SEM FAMÍLIA';
   }
   function parse(rows) {
     if (!Array.isArray(rows)) throw new Error('Planilha inválida.');

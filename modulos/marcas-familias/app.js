@@ -199,7 +199,25 @@ function renderFamilies(){
   $('family-rows').innerHTML=familyView.filter(g=>C.norm(g.name).includes(search)).map(g=>`<tr class="${g.name===selectedFamily?'selected':''}"><td><button data-family="${esc(g.name)}" aria-pressed="${g.name===selectedFamily}">${esc(g.name)} ›</button></td><td class="qty">${qty(g.units)}</td><td>${brl(g.cents)}</td><td>${pct(g.cents,total)}</td></tr>`).join('')||'<tr><td colspan="4">Nenhuma família para esta seleção.</td></tr>';
 }
 function swatch(name){
-  const c=C.norm(name);const pairs=[['PRETO','#10161a'],['OFF','#e7e3d4'],['BRANCO','#f6f6ef'],['BEGE','#d7c3a5'],['CAFE','#65483c'],['MARROM','#855438'],['OURO','#d7b475'],['PRATA','#c5cbd2'],['VERMELHO','#ef5451'],['ROSA','#eeb0ce'],['ROSE','#e4a7a0'],['AZUL','#3e8fee'],['VERDE','#70b970'],['CINZA','#9da5af'],['PINK','#eb55ad'],['CREME','#e6d9b6'],['CARAMELO','#bc7a3d'],['NUDE','#d7baa6']];return pairs.find(([key])=>c.includes(key))?.[1]||'#55738c';
+  const c=C.norm(name);
+  // Paleta aproximada ao nome comercial da cor. A ordem prioriza nomes compostos.
+  const pairs=[
+    ['OFF WHITE','#eee9db'],['BRANCO OFF','#eee9db'],['OURO ROSADO','#c9977d'],['ROSA GOLD','#c9977d'],
+    ['VERDE ESCURO','#315f43'],['VERDE LUNA','#78a66a'],['AZUL SKY','#65a9e8'],['ROSA VELHO','#c98f98'],
+    ['PRATA VELHO','#9ca3aa'],['OURO VELHO','#a98645'],['DARK GREY','#555d66'],['JEANS CLARO','#7ca1c4'],
+    ['JEANS ESCURO','#365a7a'],['LIMONCELLO','#e7df66'],['TERRACOTA','#b76345'],['TURMALINA','#3f9c91'],
+    ['LARANJA','#f28c28'],['MOSTARDA','#c49a2c'],['MANTEIGA','#e7d79a'],['CARAMELO','#bc7a3d'],
+    ['CHOCOLATE','#5b3a29'],['MOCCA','#80624e'],['CACAU','#77513d'],['AVELA','#aa8268'],['CAMEL','#b78b5e'],
+    ['CANELA','#99613e'],['CAPUCCINO','#a47c64'],['CAFE','#65483c'],['MARROM','#855438'],['BROWN','#7a5138'],
+    ['PRETO','#10161a'],['BRANCO','#f6f6ef'],['BEGE','#d7c3a5'],['CREME','#e6d9b6'],['NUDE','#d7baa6'],
+    ['OSTRA','#d5cec1'],['NATURAL','#d7c7aa'],['AREIA','#cdb58d'],['TAUPE','#8f7c70'],['CINZA','#9da5af'],
+    ['GREY','#858d96'],['PRATA','#c5cbd2'],['DOURADO','#d1aa4f'],['OURO','#d7b475'],['BRONZE','#a76e42'],
+    ['COBRE','#b66a45'],['VERMELHO','#ef5451'],['VINHO','#7b2d3b'],['CHERRY','#a52f43'],['CEREJA','#a52f43'],
+    ['ROSA','#eeb0ce'],['ROSE','#e4a7a0'],['PINK','#eb55ad'],['LILAS','#aa8ad0'],['ROXO','#7c5ca8'],
+    ['AZUL','#3e8fee'],['MARINHO','#274f77'],['VERDE','#70b970'],['OLIVE','#77824d'],['OLIVA','#77824d'],
+    ['GRAFITE','#68717a'],['CORAL','#e77d6f'],['BLUSH','#ddaab4'],['AMARELO','#e7ca4e'],['OFF','#e7e3d4']
+  ];
+  return pairs.find(([key])=>c.includes(key))?.[1]||'#55738c';
 }
 function renderColors(){
   $('color-title').textContent='3. Cores da Família'+(selectedFamily?': '+selectedFamily:'');
