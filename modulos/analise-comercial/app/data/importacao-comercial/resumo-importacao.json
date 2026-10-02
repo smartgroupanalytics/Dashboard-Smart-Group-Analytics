@@ -1,5 +1,5 @@
 {
-  "importadoEm": "2026-10-01T09:11:34.161Z",
+  "importadoEm": "2026-10-02T08:41:28.423Z",
   "pastaEntrada": "/home/runner/work/Dashboard-Smart-Group-Analytics/Dashboard-Smart-Group-Analytics/_automacao/entrada-relatorios",
   "modo": "ATUALIZACAO_PARCIAL_PROTEGIDA",
   "status": "OK",
@@ -8,10 +8,10 @@
       "arquivo": "ESTOQUE.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 2477,
-      "linhasValidas": 2476,
-      "produtosDistintos": 870,
-      "quantidade": 484339.44999999984
+      "linhasOriginais": 2481,
+      "linhasValidas": 2480,
+      "produtosDistintos": 872,
+      "quantidade": 517591.44999999984
     },
     "COMPRAS": {
       "arquivo": "COMPRAS.xlsx",
@@ -35,10 +35,10 @@
       "arquivo": "OP.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 48,
-      "linhasValidas": 48,
-      "produtosDistintos": 43,
-      "quantidade": 22491
+      "linhasOriginais": 49,
+      "linhasValidas": 49,
+      "produtosDistintos": 44,
+      "quantidade": 22754.5
     },
     "VENDAS": {
       "arquivo": "VENDAS.xlsx",
@@ -65,28 +65,28 @@
       "arquivo": "ESTOQUEBR.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 966,
-      "linhasValidas": 966,
+      "linhasOriginais": 974,
+      "linhasValidas": 974,
       "produtosDistintos": 568,
-      "quantidade": 43740.8
+      "quantidade": 46568.200000000004
     },
     "OPBR": {
       "arquivo": "OPBR.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 62,
-      "linhasValidas": 62,
-      "produtosDistintos": 51,
-      "quantidade": 29708.6
+      "linhasOriginais": 54,
+      "linhasValidas": 54,
+      "produtosDistintos": 45,
+      "quantidade": 25335.6
     },
     "VENDASBR": {
       "arquivo": "VENDASBR.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 1656,
-      "linhasValidas": 1656,
+      "linhasOriginais": 1663,
+      "linhasValidas": 1663,
       "produtosDistintos": 340,
-      "quantidade": 574133.0699999998
+      "quantidade": 577370.9699999999
     }
   },
   "totais": {
