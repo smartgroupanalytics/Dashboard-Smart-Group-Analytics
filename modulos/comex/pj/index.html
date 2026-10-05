@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>COMEX — Desenvolvimentos PJ</title>
+  <link rel="stylesheet" href="style.css?v=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+  <main class="pj-shell">
+    <section class="topbar">
+      <div>
+        <span class="eyebrow">COMEX · DESENVOLVIMENTOS DE IMPORTAÇÃO</span>
+        <h1>Controle de PJ</h1>
+        <p>Fluxo baseado integralmente na planilha oficial: Comercial → Engenharia → COMEX → China → COMEX → Engenharia → Comercial.</p>
+      </div>
+      <div class="topbar-actions">
+        <span id="syncBadge" class="sync-badge neutral"><i class="fa-solid fa-circle"></i> Conectando…</span>
+        <button id="importButton" class="btn secondary"><i class="fa-solid fa-file-import"></i> Importar Excel</button>
+        <button id="exportButton" class="btn secondary"><i class="fa-solid fa-file-excel"></i> Exportar Excel</button>
+        <button id="newButton" class="btn primary"><i class="fa-solid fa-plus"></i> Novo Desenvolvimento</button>
+        <input id="fileInput" type="file" accept=".xlsx,.xls" hidden>
+      </div>
+    </section>
+
+    <section class="kpi-grid">
+      <article class="kpi"><div class="kpi-icon blue"><i class="fa-solid fa-diagram-project"></i></div><div><span>Desenvolvimentos</span><strong id="kpiTotal">0</strong><small>Total cadastrado</small></div></article>
+      <article class="kpi danger"><div class="kpi-icon red"><i class="fa-solid fa-triangle-exclamation"></i></div><div><span>Atrasados</span><strong id="kpiLate">0</strong><small id="kpiLatePct">0% do total</small></div></article>
+      <article class="kpi warning"><div class="kpi-icon amber"><i class="fa-regular fa-clock"></i></div><div><span>Em risco</span><strong id="kpiRisk">0</strong><small>Prazo em até 2 dias</small></div></article>
+      <article class="kpi success"><div class="kpi-icon green"><i class="fa-solid fa-circle-check"></i></div><div><span>No prazo</span><strong id="kpiOnTime">0</strong><small id="kpiOnTimePct">0% do total</small></div></article>
+      <article class="kpi"><div class="kpi-icon cyan"><i class="fa-solid fa-flag-checkered"></i></div><div><span>Concluídos</span><strong id="kpiDone">0</strong><small>Com status final</small></div></article>
+      <article class="kpi"><div class="kpi-icon purple"><i class="fa-regular fa-calendar"></i></div><div><span>Tempo médio</span><strong id="kpiAvg">0 dias</strong><small>Tempo de desenvolvimento</small></div></article>
+    </section>
+
+    <section class="chart-grid">
+      <article class="panel chart-panel">
+        <div class="panel-title"><div><h2>Situação do Prazo</h2><p>Classificação automática do estágio atual</p></div></div>
+        <div class="donut-wrap"><div id="statusDonut" class="donut"><div><strong id="donutTotal">0</strong><span>Total</span></div></div><div id="statusLegend" class="legend"></div></div>
+      </article>
+      <article class="panel chart-panel">
+        <div class="panel-title"><div><h2>Desenvolvimentos por Etapa</h2><p>Onde cada PJ está no fluxo</p></div></div>
+        <div id="stageBars" class="bar-list"></div>
+      </article>
+      <article class="panel chart-panel">
+        <div class="panel-title"><div><h2>Desenvolvimentos por País</h2><p>País de destino informado na planilha</p></div></div>
+        <div id="countryBars" class="bar-list"></div>
+      </article>
+    </section>
+
+    <section class="panel list-panel">
+      <div class="panel-title list-title">
+        <div><h2>Lista de Desenvolvimentos</h2><p id="resultCount">0 registro(s)</p></div>
+        <div class="filters">
+          <label class="search"><i class="fa-solid fa-magnifying-glass"></i><input id="searchInput" type="search" placeholder="Buscar PJ, material, cliente, fornecedor…"></label>
+          <select id="stageFilter"><option value="">Todas as etapas</option></select>
+          <select id="deadlineFilter"><option value="">Todos os prazos</option><option value="Atrasado">Atrasados</option><option value="Em risco">Em risco</option><option value="No prazo">No prazo</option><option value="Concluído">Concluídos</option></select>
+          <select id="countryFilter"><option value="">Todos os países</option></select>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Alerta</th><th>PJ #</th><th>Material</th><th>País</th><th>Cliente</th><th>Setor / Etapa atual</th><th>Dias na etapa</th><th>Dias em processo</th><th>Prazo</th><th>Última atualização</th><th>Ações</th></tr></thead>
+          <tbody id="rows"></tbody>
+        </table>
+        <div id="emptyState" class="empty-state"><i class="fa-solid fa-diagram-project"></i><h3>Nenhum desenvolvimento cadastrado</h3><p>Use “Novo Desenvolvimento” ou importe a planilha PJ.</p></div>
+      </div>
+    </section>
+
+    <section id="detailPanel" class="detail-panel hidden">
+      <div class="detail-head">
+        <div><div class="detail-id"><span id="detailAlert" class="alert-dot"></span><strong id="detailPj">—</strong><span id="detailMaterial">—</span></div><div class="detail-badges"><span id="detailStatus" class="status-pill">—</span><span id="detailDays" class="soft-pill">—</span><span id="detailDeadline" class="soft-pill">—</span></div></div>
+        <div class="detail-actions"><button id="editButton" class="btn secondary"><i class="fa-solid fa-pen"></i> Editar</button><button id="deleteButton" class="btn danger-button"><i class="fa-solid fa-trash"></i> Excluir</button><button id="closeDetail" class="icon-button" title="Fechar"><i class="fa-solid fa-xmark"></i></button></div>
+      </div>
+      <div class="detail-grid">
+        <article class="detail-card"><h3>Informações Gerais</h3><div id="generalInfo" class="info-grid"></div></article>
+        <article class="detail-card timeline-card"><h3>Linha do Tempo do Desenvolvimento</h3><div id="timeline" class="timeline"></div><div id="deadlineNotice" class="deadline-notice"></div></article>
+      </div>
+      <div class="detail-grid bottom-grid">
+        <article class="detail-card"><h3>Campos do processo</h3><div id="processInfo" class="process-groups"></div></article>
+        <article class="detail-card"><h3>Histórico de alterações</h3><div id="historyList" class="history-list"></div></article>
+      </div>
+    </section>
+  </main>
+
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="modal-head"><div><span class="eyebrow">COMEX · PJ</span><h2 id="modalTitle">Novo Desenvolvimento</h2><p>Todos os campos abaixo correspondem à planilha oficial.</p></div><button id="closeModal" class="icon-button"><i class="fa-solid fa-xmark"></i></button></div>
+      <form id="pjForm">
+        <input id="recordId" type="hidden">
+        <div id="formSections" class="form-sections"></div>
+        <div class="modal-footer"><button type="button" id="cancelButton" class="btn secondary">Cancelar</button><button type="submit" class="btn primary"><i class="fa-solid fa-floppy-disk"></i> Salvar Desenvolvimento</button></div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+  <script type="module" src="app.js?v=1"></script>
+</body>
+</html>

@@ -51,6 +51,7 @@ const els = {
 
 const VIEW_META = {
   dashboard: ["Dashboard COMEX", "Visão consolidada das operações de comércio exterior.", "fa-chart-pie"],
+  pj: ["Desenvolvimentos de Importação (PJ)", "Acompanhe cada PJ desde o recebimento do material até o retorno final do Comercial.", "fa-diagram-project"],
   entregas: ["Entregas por Material", "Acompanhe o detalhamento das importações por material em tempo real.", "fa-boxes-stacked"],
   containers: ["Containers", "Controle de containers, armadores, free time e devoluções.", "fa-box"],
   invoices: ["Invoices", "Gestão e conferência das invoices de importação.", "fa-file-invoice"],

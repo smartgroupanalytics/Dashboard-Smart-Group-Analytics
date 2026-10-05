@@ -1,0 +1,31 @@
+SMART GROUP ANALYTICS — COMEX / DESENVOLVIMENTOS PJ
+===================================================
+
+IMPORTANTE
+Adicione SOMENTE o bloco abaixo dentro de:
+
+match /databases/{database}/documents {
+  ...
+}
+
+NÃO substitua as regras existentes do Analytics.
+
+------------------------------------------------------------
+
+match /comex_pj_desenvolvimentos/{documento} {
+  allow read, write: if request.auth != null
+    && exists(/databases/$(database)/documents/usuarios/$(request.auth.uid))
+    && get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.ativo == true
+    && (
+      get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.perfil == "administrador"
+      || get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.modulos.comex == true
+    );
+}
+
+------------------------------------------------------------
+
+Esta regra reutiliza a permissão COMEX que já existe no cadastro de usuários.
+Ela não modifica as regras de RH, Produção, Financeiro ou outros módulos.
+
+Enquanto esta regra não for publicada, a nova tela abre em MODO LOCAL para
+permitir validação visual sem gerar erro nas demais áreas do Analytics.

@@ -30,6 +30,7 @@
 
     <nav class="comex-nav" aria-label="Navegação do COMEX">
       <button data-view="dashboard"><i class="fa-solid fa-chart-pie"></i> Dashboard</button>
+      <button data-view="pj"><i class="fa-solid fa-diagram-project"></i> Desenvolvimentos PJ</button>
       <button data-view="entregas" class="active"><i class="fa-solid fa-boxes-stacked"></i> Entregas por Material</button>
       <button data-view="containers"><i class="fa-solid fa-box"></i> Containers</button>
       <button data-view="invoices"><i class="fa-solid fa-file-invoice"></i> Invoices</button>
@@ -795,6 +796,15 @@
 
       </section>
 
+      <section id="pjView" class="view" style="padding:0;min-height:780px;background:#f5f8fc;">
+        <iframe
+          src="pj/index.html?v=1"
+          title="COMEX — Desenvolvimentos PJ"
+          style="display:block;width:100%;height:calc(100vh - 178px);min-height:780px;border:0;background:#f5f8fc;"
+          loading="lazy"
+        ></iframe>
+      </section>
+
       <section id="placeholderView" class="view placeholder-view">
         <div class="placeholder-card">
           <div class="placeholder-icon"><i id="placeholderIcon" class="fa-solid fa-cube"></i></div>
@@ -808,6 +818,6 @@
     <div id="toast" class="toast" role="status"></div>
   </div>
 
-  <script type="module" src="js/app.js?v=11"></script>
+  <script type="module" src="js/app.js?v=12"></script>
 </body>
 </html>

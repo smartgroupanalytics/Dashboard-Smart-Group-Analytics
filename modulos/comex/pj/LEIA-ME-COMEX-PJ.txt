@@ -1,0 +1,33 @@
+COMEX — DESENVOLVIMENTOS PJ
+===========================
+
+Esta implementação foi criada de forma isolada dentro de:
+modulos/comex/pj/
+
+Arquivos existentes alterados de forma mínima:
+1) modulos/comex/index.html
+   - adiciona somente a guia "Desenvolvimentos PJ"
+   - adiciona uma view com iframe apontando para pj/index.html
+
+2) modulos/comex/js/app.js
+   - adiciona somente o metadado da nova guia "pj"
+
+Nenhuma lógica das telas existentes (Entregas, Containers, Invoices, Embarques,
+Fornecedores ou Documentos) foi substituída.
+
+A planilha oficial foi mapeada com TODOS os 30 campos (A:AD), mantendo a ordem.
+A linha 3 foi usada como fluxo/setor:
+Comercial -> Engenharia -> COMEX -> China -> COMEX -> Engenharia -> Comercial.
+
+Persistência:
+- tenta usar Firestore: comex_pj_desenvolvimentos
+- se a regra ainda não estiver publicada, funciona em modo local no navegador
+  e exibe o aviso "Modo local".
+- para uso compartilhado entre setores, publique a regra descrita no arquivo
+  ADICIONAR-NAS-REGRAS-FIRESTORE-COMEX-PJ.txt.
+
+IMPORTANTE:
+- o pacote não contém .git
+- não contém node_modules
+- não altera firebase-config.js
+- não altera permissões já existentes do portal

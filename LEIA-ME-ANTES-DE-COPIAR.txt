@@ -1,0 +1,64 @@
+COMEX PJ — ATUALIZAÇÃO SEGURA
+=============================
+
+Este pacote contém SOMENTE os arquivos necessários para acrescentar
+"Desenvolvimentos PJ" dentro do COMEX já existente.
+
+NÃO contém:
+- .git
+- node_modules
+- backups antigos
+- alteração em firebase-config.js
+- alteração em index.html principal do Analytics
+- alteração em app.js principal do Analytics
+- alteração nos demais módulos
+
+COMO COPIAR
+1. Faça um backup do projeto oficial antes de qualquer troca.
+2. Abra este ZIP e copie o conteúdo para a RAIZ do projeto oficial.
+3. Quando o Windows perguntar, confirme a mesclagem da pasta "modulos".
+4. Confirme a substituição APENAS destes dois arquivos já existentes:
+   - modulos/comex/index.html
+   - modulos/comex/js/app.js
+5. A pasta abaixo é nova e deve ser adicionada:
+   - modulos/comex/pj/
+6. O arquivo de regra do Firestore é apenas uma instrução:
+   - ADICIONAR-NAS-REGRAS-FIRESTORE-COMEX-PJ.txt
+   Ele NÃO altera o Firebase sozinho.
+
+O QUE DEVE APARECER NO GIT
+Modificados:
+- modulos/comex/index.html
+- modulos/comex/js/app.js
+
+Novos:
+- modulos/comex/pj/index.html
+- modulos/comex/pj/style.css
+- modulos/comex/pj/app.js
+- modulos/comex/pj/LEIA-ME-COMEX-PJ.txt
+- ADICIONAR-NAS-REGRAS-FIRESTORE-COMEX-PJ.txt
+- LEIA-ME-ANTES-DE-COPIAR.txt
+
+Se o Git mostrar centenas de arquivos modificados, NÃO faça o commit.
+Pare e confira antes, pois este pacote não deveria provocar isso.
+
+DADOS / PLANILHA
+- Todos os 30 campos A:AD foram mapeados na mesma ordem do Excel enviado.
+- O fluxo da linha 3 foi respeitado:
+  Comercial -> Engenharia -> COMEX -> China -> COMEX -> Engenharia -> Comercial.
+- O campo "AGUARDAR ENVIO" foi mantido como controle entre Engenharia e COMEX.
+- Prazos utilizados no painel:
+  Comercial: D+1
+  Engenharia: 2 dias
+  COMEX (envio): até 7 dias
+  Envio ao destino: estimado 10 dias
+  China/desenvolvimento: estimado 15 dias
+  Retorno ao Brasil: estimado 10 dias
+
+BANCO DE DADOS
+A tela tenta usar a coleção Firestore:
+comex_pj_desenvolvimentos
+
+Antes da regra ser publicada, a tela entra em "Modo local" para validação.
+Para uso compartilhado entre setores, adicione somente o bloco do arquivo
+ADICIONAR-NAS-REGRAS-FIRESTORE-COMEX-PJ.txt às regras já existentes.
