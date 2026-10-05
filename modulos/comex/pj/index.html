@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>COMEX — Desenvolvimentos PJ</title>
-  <link rel="stylesheet" href="style.css?v=5">
+  <link rel="stylesheet" href="style.css?v=6">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
@@ -34,18 +34,22 @@
       <article class="kpi"><div class="kpi-icon purple"><i class="fa-regular fa-calendar"></i></div><div><span>Tempo médio</span><strong id="kpiAvg">0 dias</strong><small>Tempo de desenvolvimento</small></div></article>
     </section>
 
-    <section class="chart-grid">
-      <article class="panel chart-panel">
-        <div class="panel-title"><div><h2>Situação do Prazo</h2><p>Classificação automática do estágio atual</p></div></div>
-        <div class="donut-wrap"><div id="statusDonut" class="donut"><div><strong id="donutTotal">0</strong><span>Total</span></div></div><div id="statusLegend" class="legend"></div></div>
+    <section class="chart-grid approved-layout">
+      <article class="panel chart-panel compact-chart">
+        <div class="panel-title"><div><h2>Desenvolvimentos por Status</h2><p>Etapa atual de cada PJ</p></div></div>
+        <div class="donut-wrap"><div id="stageDonut" class="donut"><div><strong id="stageDonutTotal">0</strong><span>Total</span></div></div><div id="stageLegend" class="legend"></div></div>
       </article>
-      <article class="panel chart-panel">
-        <div class="panel-title"><div><h2>Desenvolvimentos por Etapa</h2><p>Onde cada PJ está no fluxo</p></div></div>
-        <div id="stageBars" class="bar-list"></div>
-      </article>
-      <article class="panel chart-panel">
-        <div class="panel-title"><div><h2>Desenvolvimentos por País</h2><p>País de destino informado na planilha</p></div></div>
+      <article class="panel chart-panel compact-chart">
+        <div class="panel-title"><div><h2>Desenvolvimentos por País</h2><p>País de destino</p></div></div>
         <div id="countryBars" class="bar-list"></div>
+      </article>
+      <article class="panel chart-panel compact-chart">
+        <div class="panel-title"><div><h2>Desenvolvimentos por Material</h2><p>Materiais/famílias em desenvolvimento</p></div></div>
+        <div id="materialBars" class="bar-list"></div>
+      </article>
+      <article class="panel chart-panel compact-chart">
+        <div class="panel-title"><div><h2>Situação do Prazo</h2><p>Classificação automática</p></div></div>
+        <div class="donut-wrap"><div id="deadlineDonut" class="donut"><div><strong id="deadlineDonutTotal">0</strong><span>Total</span></div></div><div id="deadlineLegend" class="legend"></div></div>
       </article>
     </section>
 
@@ -61,7 +65,7 @@
       </div>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Alerta</th><th>PJ #</th><th>Material</th><th>País</th><th>Cliente</th><th>Setor / Etapa atual</th><th>Dias na etapa</th><th>Dias em processo</th><th>Prazo</th><th>Última atualização</th><th>Ações</th></tr></thead>
+          <thead><tr><th>Alerta</th><th>PJ #</th><th>Fornecedor</th><th>País</th><th>Material / Família</th><th>Cliente</th><th>Status</th><th>Etapa atual</th><th>Dias na etapa</th><th>Dias em processo</th><th>Previsão / Prazo</th><th>Últ. atualização</th><th>Ações</th></tr></thead>
           <tbody id="rows"></tbody>
         </table>
         <div id="emptyState" class="empty-state"><i class="fa-solid fa-diagram-project"></i><h3>Nenhum desenvolvimento cadastrado</h3><p>Use “Novo Desenvolvimento” ou importe a planilha PJ.</p></div>
@@ -96,6 +100,6 @@
   </div>
 
   <div id="toast" class="toast"></div>
-  <script type="module" src="app.js?v=5"></script>
+  <script type="module" src="app.js?v=6"></script>
 </body>
 </html>

@@ -97,3 +97,92 @@ td{color:#edf5ff;border-bottom-color:#244f89}tbody tr:hover{background:#15437e}
 .list-panel tbody tr:hover td{
   color:#ffffff !important;
 }
+
+/* =========================================================
+   V6 — APROXIMAÇÃO DO LAYOUT APROVADO + BANDEIRAS CONFIÁVEIS
+========================================================= */
+.pj-shell{padding:12px 14px 18px}
+.topbar{margin-bottom:10px;align-items:center}
+.topbar h1{font-size:22px;margin-top:2px}
+.topbar p{font-size:11px;max-width:760px}
+.topbar-actions{gap:6px}
+.btn{padding:8px 11px}
+.kpi-grid{gap:8px;margin-bottom:8px}
+.kpi{padding:10px 11px;border-radius:8px}
+.kpi-icon{width:34px;height:34px;border-radius:8px}
+.kpi strong{font-size:19px}
+
+.chart-grid.approved-layout{grid-template-columns:1.06fr 1.08fr 1.05fr .98fr;gap:8px;margin-bottom:8px}
+.chart-panel.compact-chart{min-height:165px;padding:11px 12px}
+.compact-chart .panel-title{margin-bottom:8px}
+.compact-chart .panel-title h2{font-size:11.5px}
+.compact-chart .panel-title p{font-size:8.5px}
+.compact-chart .donut-wrap{height:115px;gap:14px}
+.compact-chart .donut{width:88px;height:88px;flex:0 0 88px}
+.compact-chart .donut:before{inset:16px}
+.compact-chart .donut strong{font-size:18px}
+.compact-chart .legend{min-width:112px}
+.compact-chart .legend-row{font-size:8.5px;padding:2px 0;grid-template-columns:7px 1fr auto;gap:5px}
+.compact-chart .legend-dot{width:6px;height:6px}
+.compact-chart .bar-list{gap:7px;padding-top:5px}
+.compact-chart .bar-row{grid-template-columns:minmax(92px,1.05fr) 1.8fr 18px;gap:6px;font-size:8.8px}
+.compact-chart .bar-track{height:7px}
+
+.list-panel{border-radius:8px}
+.list-title{padding:9px 10px}
+.list-title h2{font-size:11.5px}
+.list-title p{font-size:8.5px}
+.filters{gap:5px}
+.filters select,.search{height:29px}
+.search{min-width:210px}
+.filters select{font-size:9px}
+.search input{font-size:9px}
+.table-wrap{max-height:355px}
+table{min-width:1420px}
+th{font-size:8.5px;padding:7px 7px}
+td{font-size:9.5px;padding:7px}
+.list-panel tbody td{font-weight:700}
+.list-panel tbody td:nth-child(2),
+.list-panel tbody td:nth-child(4),
+.list-panel tbody td:nth-child(5),
+.list-panel tbody td:nth-child(7),
+.list-panel tbody td:nth-child(8){font-weight:800}
+
+.country-visual{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;font-weight:800}
+.country-flag-img{width:20px;height:14px;object-fit:cover;border-radius:2px;box-shadow:0 0 0 1px rgba(255,255,255,.32);vertical-align:middle;background:#fff}
+.country-code-flag{display:inline-grid;place-items:center;min-width:22px;height:15px;padding:0 3px;border-radius:2px;background:#eef3f9;color:#0a2a5c;font-size:7px;font-weight:900;letter-spacing:.04em}
+.country-flag-fallback{width:20px;height:14px;display:inline-grid;place-items:center;color:#c7d9ef}
+.country-preview .country-visual{justify-content:flex-start}
+.country-preview-placeholder{color:#b8cae5}
+.bar-label .country-visual{max-width:100%;overflow:hidden;text-overflow:ellipsis}
+
+/* detalhe mais compacto, semelhante ao mockup aprovado */
+.detail-panel{margin-top:8px;border-radius:8px}
+.detail-head{padding:8px 10px}
+.detail-id strong{font-size:14px}
+.detail-badges{margin-top:4px}
+.detail-grid{padding:8px;gap:8px;grid-template-columns:.82fr 1.75fr}
+.detail-card{padding:9px;border-radius:7px}
+.detail-card h3{font-size:10px;margin-bottom:7px}
+.info-grid{font-size:9px;gap:4px 8px}
+.info-grid dt{font-size:8.5px}
+.info-grid dd{font-size:9.5px}
+.timeline{padding:9px 2px 12px}
+.timeline-step{min-width:84px}
+.timeline-step strong{font-size:8.2px}
+.timeline-step span{font-size:7.5px}
+.deadline-notice{padding:6px 8px;font-size:9px}
+.bottom-grid{grid-template-columns:1.8fr .9fr;padding-top:0}
+.process-groups{gap:6px}
+.process-group-head{padding:6px 7px;font-size:8.2px}
+.process-group-body{padding:7px;gap:5px}
+.process-field span{font-size:7.5px}
+.process-field strong{font-size:8.8px}
+.history-item{font-size:8.6px;padding:6px 0}
+
+@media(max-width:1400px){
+  .chart-grid.approved-layout{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:900px){
+  .chart-grid.approved-layout{grid-template-columns:1fr}
+}
