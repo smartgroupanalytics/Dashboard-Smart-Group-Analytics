@@ -75,3 +75,25 @@ td{color:#edf5ff;border-bottom-color:#244f89}tbody tr:hover{background:#15437e}
 .country-chip{color:#fff}.country-preview{background:#092a5b;border-color:#3a65a0;color:#b8cae5}.country-preview.active{background:#113e7f;border-color:#5794dd;color:#fff}
 .soft-pill{background:#163f78;color:#d9e8fb}
 .action-btn{color:#bcd1ec}.action-btn:hover{color:#fff}
+
+/* COMEX PJ v5 — dados da grade em branco forte para leitura no tema azul */
+.list-panel tbody td{
+  color:#ffffff !important;
+  font-weight:700;
+}
+.list-panel tbody td strong{
+  color:#ffffff !important;
+  font-weight:800;
+}
+.list-panel tbody .country-chip,
+.list-panel tbody .stage-label{
+  color:#ffffff !important;
+  font-weight:800;
+}
+.list-panel thead th{
+  color:#ffffff !important;
+  font-weight:800;
+}
+.list-panel tbody tr:hover td{
+  color:#ffffff !important;
+}
