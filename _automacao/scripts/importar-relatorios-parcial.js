@@ -864,19 +864,67 @@ function normalizeVenda(
   row,
   source
 ) {
-  return {
+  const dtEntrada =
+    isoDate(
+      row['Dt.entrada']
+    );
+
+  const dtFaturamOriginal =
+    isoDate(
+      row['Dt.faturam']
+    );
+
+  const posicaoItem =
+    text(
+      row['Posição do item']
+    );
+
+  /*
+   * Em itens PARCIALMENTE FATURADOS o SIGER pode manter
+   * em Dt.faturam uma data futura referente ao saldo do item,
+   * mesmo já existindo quantidade faturada e NF.
+   *
+   * O dashboard usa Dt.faturam para as janelas de 30 dias /
+   * 3 / 6 / 12 meses. Se mantivermos a data futura, a parte já
+   * faturada desaparece das Vendas até chegar aquela data.
+   *
+   * Para não perder a venda já realizada, somente neste caso
+   * usamos Dt.entrada como data de referência da venda e
+   * preservamos a data original abaixo para auditoria.
+   */
+  const hoje =
+    (() => {
+      const now = new Date();
+      const yyyy = now.getFullYear();
+      const mm = String(
+        now.getMonth() + 1
+      ).padStart(2, '0');
+      const dd = String(
+        now.getDate()
+      ).padStart(2, '0');
+      return `${yyyy}-${mm}-${dd}`;
+    })();
+
+  const ajustarDataParcial =
+    normalizeText(
+      posicaoItem
+    ) ===
+      'PARCIALMENTE FATURADO' &&
+    dtFaturamOriginal &&
+    dtFaturamOriginal > hoje &&
+    dtEntrada;
+
+  const normalized = {
     fonte_comercial:
       source,
 
     dt_entrada:
-      isoDate(
-        row['Dt.entrada']
-      ),
+      dtEntrada,
 
     dt_faturam:
-      isoDate(
-        row['Dt.faturam']
-      ),
+      ajustarDataParcial
+        ? dtEntrada
+        : dtFaturamOriginal,
 
     produto:
       code(row['Produto']),
@@ -935,9 +983,7 @@ function normalizeVenda(
       ),
 
     posicao_item:
-      text(
-        row['Posição do item']
-      ),
+      posicaoItem,
 
     representante:
       code(
@@ -961,6 +1007,16 @@ function normalizeVenda(
         row['Cód.altern.1']
       ),
   };
+
+  if (ajustarDataParcial) {
+    normalized.dt_faturam_original =
+      dtFaturamOriginal;
+
+    normalized.data_venda_ajustada =
+      true;
+  }
+
+  return normalized;
 }
 
 function normalizePedido(
@@ -1157,6 +1213,25 @@ function normalizeRows(
 
     case 'VENDAS':
       return rows
+        /*
+         * Regra Comercial: vendas devem considerar tanto
+         * FATURADO quanto PARCIALMENTE FATURADO.
+         * Se a coluna vier vazia em algum relatório antigo,
+         * mantemos a compatibilidade e não descartamos a linha.
+         */
+        .filter((row) => {
+          const status =
+            normalizeText(
+              row['Posição do item']
+            );
+
+          return (
+            !status ||
+            status === 'FATURADO' ||
+            status ===
+              'PARCIALMENTE FATURADO'
+          );
+        })
         .map((row) =>
           normalizeVenda(
             row,
@@ -1165,7 +1240,8 @@ function normalizeRows(
         )
         .filter(
           (row) =>
-            row.produto
+            row.produto &&
+            row.qtd_faturada > 0
         );
 
     case 'PEDIDOS_EM_ABERTO':
