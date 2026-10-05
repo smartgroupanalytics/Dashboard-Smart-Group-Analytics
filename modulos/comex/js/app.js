@@ -1,4 +1,8 @@
 import { protegerModulo } from "../../../module-guard.js";
+import { auth, db } from "../../../firebase-config.js";
+import {
+  collection, doc, getDoc, getDocs, setDoc, writeBatch, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 await protegerModulo("comex");
 
@@ -6,8 +10,15 @@ const state = {
   rows: [],
   filtered: [],
   sourceName: "",
-  view: "entregas"
+  view: "entregas",
+  activeBaseId: ""
 };
+
+// Base persistente do COMEX. A planilha carregada continua disponível
+// depois de fechar o navegador e só muda quando uma nova planilha é importada.
+const COMEX_META_COLLECTION = "comex_entregas_config";
+const COMEX_META_DOC = "atual";
+const COMEX_BASES_COLLECTION = "comex_entregas_bases";
 
 const $ = (selector) => document.querySelector(selector);
 const els = {
@@ -740,6 +751,108 @@ function restoreLocal() {
     applyFilters();
   } catch (error) {
     console.warn("Importação local inválida.", error);
+  }
+}
+
+function serializeComexRow(row) {
+  return {
+    ...row,
+    arrival: row.arrival instanceof Date && !isNaN(row.arrival) ? row.arrival.toISOString() : null,
+    delivery: row.delivery instanceof Date && !isNaN(row.delivery) ? row.delivery.toISOString() : null
+  };
+}
+
+function hydrateComexRow(row) {
+  return {
+    ...row,
+    arrival: row?.arrival ? new Date(row.arrival) : null,
+    delivery: row?.delivery ? new Date(row.delivery) : null
+  };
+}
+
+function firestoreDateLabel(value) {
+  try {
+    const date = value?.toDate ? value.toDate() : value ? new Date(value) : null;
+    return date && !isNaN(date) ? date.toLocaleString("pt-BR") : "agora";
+  } catch {
+    return "agora";
+  }
+}
+
+async function saveFirestoreBase(rows, sourceName) {
+  const baseId = `base_${Date.now()}`;
+  const user = auth.currentUser?.email || "usuário autenticado";
+
+  // Cria primeiro uma nova versão. A versão anterior continua intacta
+  // enquanto a nova base está sendo gravada.
+  await setDoc(doc(db, COMEX_BASES_COLLECTION, baseId), {
+    sourceName,
+    rowCount: rows.length,
+    createdAt: serverTimestamp(),
+    createdBy: user
+  });
+
+  const chunkSize = 400;
+  for (let start = 0; start < rows.length; start += chunkSize) {
+    const batch = writeBatch(db);
+    rows.slice(start, start + chunkSize).forEach((row, offset) => {
+      const index = start + offset;
+      const rowId = `linha_${String(index + 1).padStart(6, "0")}`;
+      batch.set(
+        doc(db, COMEX_BASES_COLLECTION, baseId, "linhas", rowId),
+        serializeComexRow(row)
+      );
+    });
+    await batch.commit();
+  }
+
+  // Só aponta para a nova base depois que todas as linhas foram salvas.
+  await setDoc(doc(db, COMEX_META_COLLECTION, COMEX_META_DOC), {
+    activeBaseId: baseId,
+    sourceName,
+    rowCount: rows.length,
+    updatedAt: serverTimestamp(),
+    updatedBy: user
+  }, { merge: true });
+
+  state.activeBaseId = baseId;
+  return baseId;
+}
+
+async function restoreFirestoreBase() {
+  try {
+    const metaSnap = await getDoc(doc(db, COMEX_META_COLLECTION, COMEX_META_DOC));
+    if (!metaSnap.exists()) return false;
+
+    const meta = metaSnap.data() || {};
+    if (!meta.activeBaseId) return false;
+
+    const rowsSnap = await getDocs(
+      collection(db, COMEX_BASES_COLLECTION, meta.activeBaseId, "linhas")
+    );
+
+    const rows = rowsSnap.docs
+      .map(item => hydrateComexRow(item.data()))
+      .sort((a, b) => Number(a.id || 0) - Number(b.id || 0));
+
+    if (!rows.length && Number(meta.rowCount || 0) > 0) {
+      throw new Error("A base ativa existe, mas as linhas não puderam ser carregadas.");
+    }
+
+    state.rows = rows;
+    state.sourceName = meta.sourceName || "";
+    state.activeBaseId = meta.activeBaseId;
+
+    populateFilters();
+    applyFilters();
+    saveLocal();
+
+    els.lastUpdate.textContent =
+      `Base salva no banco · ${rows.length} registros · ${firestoreDateLabel(meta.updatedAt)}`;
+    return true;
+  } catch (error) {
+    console.warn("Não foi possível carregar a base COMEX do Firestore.", error);
+    return false;
   }
 }
 
@@ -2275,17 +2388,30 @@ els.file.addEventListener("change", async event => {
   try {
     els.lastUpdate.textContent = "Processando documento...";
     const rows = await readFile(file);
+
+    // Atualiza a tela imediatamente, mas mantém também uma cópia local
+    // até a confirmação da gravação no banco.
     state.rows = rows;
     state.sourceName = file.name;
     populateFilters();
     applyFilters();
     saveLocal();
-    els.lastUpdate.textContent = `Dados atualizados agora · ${rows.length} registros`;
-    showToast(`Documento importado com sucesso: ${rows.length} registros.`);
+
+    els.lastUpdate.textContent = "Salvando base no banco de dados...";
+    await saveFirestoreBase(rows, file.name);
+
+    els.lastUpdate.textContent = `Dados salvos no banco agora · ${rows.length} registros`;
+    showToast(`Nova planilha publicada no banco: ${rows.length} registros.`);
   } catch (error) {
     console.error(error);
-    els.lastUpdate.textContent = "Falha ao processar documento";
-    showToast(error.message || "Não foi possível ler o documento.");
+    // Se a leitura funcionou mas o banco falhou, a base local não é perdida.
+    if (state.rows.length) {
+      els.lastUpdate.textContent = "Base mantida localmente · falha ao salvar no banco";
+      showToast("A planilha foi lida, mas não foi salva no banco. Confira a regra do Firestore.");
+    } else {
+      els.lastUpdate.textContent = "Falha ao processar documento";
+      showToast(error.message || "Não foi possível ler o documento.");
+    }
   } finally {
     event.target.value = "";
   }
@@ -2337,4 +2463,11 @@ document
 
 els.currentDate.textContent = formatDate(new Date());
 render();
-restoreLocal();
+
+// Prioridade: banco de dados. O localStorage fica apenas como contingência.
+(async () => {
+  const loadedFromDatabase = await restoreFirestoreBase();
+  if (!loadedFromDatabase) {
+    restoreLocal();
+  }
+})();

@@ -31,3 +31,47 @@ td strong{color:#10253d}
 .country-field{display:flex;align-items:center;gap:8px}
 .country-preview{min-width:154px;border:1px solid #d5e0eb;background:#f7fafc;color:#587089;border-radius:6px;padding:8px 10px;font-size:10px;font-weight:700;white-space:nowrap}
 .country-preview.active{color:#10253d;background:#eef6ff;border-color:#bfd8f6}
+
+/* =========================================================
+   TEMA COMEX — PADRÃO SMART GROUP ANALYTICS
+   Mantém o submódulo PJ visualmente integrado ao COMEX.
+========================================================= */
+:root{
+  --pj-bg:#082657;
+  --pj-bg-deep:#061b3c;
+  --pj-panel:#0d3470;
+  --pj-panel-2:#103b7c;
+  --pj-line:#2d5c9d;
+  --pj-text:#f4f8ff;
+  --pj-muted:#b4c8e6;
+}
+body{background:var(--pj-bg);color:var(--pj-text)}
+.pj-shell{background:linear-gradient(180deg,#0a2b60 0%,#082657 100%);min-height:100vh}
+.topbar h1,.panel-title h2,.list-title h2,.detail-card h3,.modal-head h2,.form-section-head h3{color:#fff}
+.topbar p,.panel-title p,.modal-head p,.eyebrow{color:#b8cae5}
+.btn.secondary,.icon-button{background:#0c326d;border-color:#3b69a6;color:#eef5ff}
+.btn.secondary:hover,.icon-button:hover{background:#134481}
+.sync-badge{background:#0b2e65;border-color:#3b69a6;color:#dceaff}
+.sync-badge.online{background:#0b4b3a;border-color:#249a70;color:#dff9ed}
+.sync-badge.local{background:#60450b;border-color:#a87919;color:#fff0c3}
+.kpi,.panel,.detail-panel,.detail-card,.form-section,.modal-card{background:linear-gradient(145deg,var(--pj-panel-2),var(--pj-panel));border-color:var(--pj-line);box-shadow:0 10px 30px rgba(0,0,0,.16)}
+.kpi span,.kpi small{color:#c4d5ed}.kpi strong{color:#fff}
+.chart-panel,.list-panel{background:linear-gradient(145deg,#103a79,#0b3068)}
+.donut:before{background:#0d3470}.donut span{color:#b7cae6}.donut strong{color:#fff}
+.legend-row,.bar-row{color:#eaf2ff}.bar-track{background:#061d43}.bar-fill{background:#4b98f5}
+.filters select,.search{background:#0b2e64;border-color:#3a65a0;color:#eef5ff}.search input{background:transparent;color:#eef5ff}.search input::placeholder{color:#8fa9cd}.search i{color:#86a9d5}
+th{background:#0a2a5c;color:#d8e7fb;border-bottom-color:#3a65a0}
+td{color:#edf5ff;border-bottom-color:#244f89}tbody tr:hover{background:#15437e}
+.empty-state{color:#a9c0df}.empty-state h3{color:#eef5ff}.empty-state i{color:#6baaf4}
+.detail-head{background:#0a2b60;border-bottom-color:#315e9c}.detail-id strong{color:#fff}.detail-id>span:last-child{color:#c5d6eb}
+.info-grid dt{color:#9fb8da}.info-grid dd{color:#fff}
+.timeline-step:not(:last-child):after{background:#4b6e9f}.timeline-dot{border-color:#0d3470}.timeline-step strong{color:#f6f9ff}.timeline-step span{color:#9fb7d8}
+.deadline-notice{background:#0a2a5c;color:#d5e4f7}.deadline-notice.late{background:#5d252b;color:#ffd9dc}.deadline-notice.risk{background:#58420f;color:#ffedbc}
+.process-group{border-color:#315e9c}.process-group-head{background:#0a2b60;color:#f5f9ff}.process-field span{color:#9eb7d8}.process-field strong{color:#fff}
+.history-item{border-bottom-color:#28548f}.history-item strong{color:#fff}.history-item span{color:#a8bedc}
+.form-section-head{background:#0a2b60}.form-section-head span{color:#a9c0df}
+.field label{color:#adc2df}.field input,.field select,.field textarea{background:#082657;border-color:#3a65a0;color:#fff}.field input:focus,.field select:focus,.field textarea:focus{outline:2px solid #1b73d7;border-color:#6aaaf2}.field input[readonly]{background:#0a244f;color:#bdd0e8}
+.modal-footer{background:#09295a;border-top-color:#315e9c}
+.country-chip{color:#fff}.country-preview{background:#092a5b;border-color:#3a65a0;color:#b8cae5}.country-preview.active{background:#113e7f;border-color:#5794dd;color:#fff}
+.soft-pill{background:#163f78;color:#d9e8fb}
+.action-btn{color:#bcd1ec}.action-btn:hover{color:#fff}
