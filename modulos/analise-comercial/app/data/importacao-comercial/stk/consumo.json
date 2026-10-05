@@ -656,6 +656,30 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 296,
+    "dt_movto": "2026-10-02"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11869",
+    "produto": "11869",
+    "desc_completa": "NAPA OLIMPIC PRETO - PU 1.4MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 297,
+    "dt_movto": "2026-10-02"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11869",
+    "produto": "11869",
+    "desc_completa": "NAPA OLIMPIC PRETO - PU 1.4MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 400,
     "dt_movto": "2026-08-13"
   },
@@ -3646,6 +3670,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 200,
     "dt_movto": "2026-05-19"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11903",
+    "produto": "11903",
+    "desc_completa": "NAPA MADRID BEGE - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 200,
+    "dt_movto": "2026-10-02"
   },
   {
     "fonte_comercial": "STK",
@@ -15620,8 +15656,32 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 479.8,
+    "dt_movto": "2026-10-02"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20034",
+    "produto": "20034",
+    "desc_completa": "NAPA BARI PRETO - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 517,
     "dt_movto": "2026-09-18"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20034",
+    "produto": "20034",
+    "desc_completa": "NAPA BARI PRETO - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 522,
+    "dt_movto": "2026-10-02"
   },
   {
     "fonte_comercial": "STK",
@@ -16237,6 +16297,42 @@
   },
   {
     "fonte_comercial": "STK",
+    "cod_prod": "20088",
+    "produto": "20088",
+    "desc_completa": "SEVILLA OFF WHITE - 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 217,
+    "dt_movto": "2026-10-02"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20088",
+    "produto": "20088",
+    "desc_completa": "SEVILLA OFF WHITE - 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 261,
+    "dt_movto": "2026-10-02"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20088",
+    "produto": "20088",
+    "desc_completa": "SEVILLA OFF WHITE - 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 517,
+    "dt_movto": "2026-10-02"
+  },
+  {
+    "fonte_comercial": "STK",
     "cod_prod": "20098",
     "produto": "20098",
     "desc_completa": "NAPA MADRID BELLINI - PU 0.9MM",
@@ -16366,6 +16462,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 392,
     "dt_movto": "2026-09-03"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20104",
+    "produto": "20104",
+    "desc_completa": "NAPA BARI BEGE - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 400,
+    "dt_movto": "2026-10-02"
   },
   {
     "fonte_comercial": "STK",

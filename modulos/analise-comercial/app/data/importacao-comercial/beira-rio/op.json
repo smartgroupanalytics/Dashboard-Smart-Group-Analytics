@@ -71,16 +71,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "6967",
-    "produto": "15681",
-    "desc_completa": "NAPA PELICA CHOCOLATE 1271",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 100,
-    "dt_saida": "2026-06-19",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "7648",
     "produto": "17444",
     "desc_completa": "BRILHO ITALIA BROWN 1570",
@@ -135,7 +125,7 @@
     "produto": "17962",
     "desc_completa": "NAPA MAXXI POA CHOCOLATE 1271 JEANS 1123",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 97,
+    "qtd_produzir": 92,
     "dt_saida": "2026-09-21",
     "abreviacao": ""
   },
@@ -145,7 +135,7 @@
     "produto": "17851",
     "desc_completa": "TELA SHINE PARIS DOURADO",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 2813.3,
+    "qtd_produzir": 1146.3,
     "dt_saida": "2026-09-23",
     "abreviacao": ""
   },
@@ -164,16 +154,6 @@
     "nro_op": "8366",
     "produto": "17691",
     "desc_completa": "NAPA DALLAS BRANCO OFF 526",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 1000,
-    "dt_saida": "2026-09-25",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8369",
-    "produto": "17670",
-    "desc_completa": "NAPA DALLAS AVELA 1248",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 1000,
     "dt_saida": "2026-09-25",
@@ -317,16 +297,6 @@
     "grupo": "BEIRA RIO",
     "qtd_produzir": 1000,
     "dt_saida": "2026-10-06",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8453",
-    "produto": "17962",
-    "desc_completa": "NAPA MAXXI POA CHOCOLATE 1271 JEANS 1123",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 4,
-    "dt_saida": "2026-10-02",
     "abreviacao": ""
   },
   {
@@ -537,6 +507,46 @@
     "grupo": "BEIRA RIO",
     "qtd_produzir": 220,
     "dt_saida": "2026-10-06",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8593",
+    "produto": "18148",
+    "desc_completa": "NAPA MAXXI POA PRETO 01  BRANCO 99",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 200,
+    "dt_saida": "2026-10-09",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8594",
+    "produto": "18142",
+    "desc_completa": "NAPA LISTRAS MADRI BRANCO OFF 526/MARINHO 1071",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 200,
+    "dt_saida": "2026-10-09",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8595",
+    "produto": "17961",
+    "desc_completa": "NAPA LISTRAS MADRI BRANCO OFF 526 VERMELHO 1025",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 199,
+    "dt_saida": "2026-10-09",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8596",
+    "produto": "18141",
+    "desc_completa": "NAPA LISTRAS MADRI BRANCO OFF 526/ROSA 1541",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 200,
+    "dt_saida": "2026-10-09",
     "abreviacao": ""
   }
 ]

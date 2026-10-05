@@ -217,18 +217,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8380",
-    "produto": "30095",
-    "desc_completa": "BORGONHA WHISKY",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 400,
-    "dt_saida": "2026-09-30",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8381",
     "produto": "11846",
     "desc_completa": "BORGONHA OURO ROSADO",
@@ -248,8 +236,8 @@
     "subgrupo": 41,
     "qtd_produzir": 800,
     "dt_saida": "2026-09-30",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 3,
+    "abreviacao": "GR 1"
   },
   {
     "fonte_comercial": "STK",
@@ -262,30 +250,6 @@
     "dt_saida": "2026-09-30",
     "centro_custo": 13,
     "abreviacao": "JUMBO 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8384",
-    "produto": "17416",
-    "desc_completa": "DENVER NUDE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 600,
-    "dt_saida": "2026-09-30",
-    "centro_custo": 3,
-    "abreviacao": "GR 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8385",
-    "produto": "17420",
-    "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 1000,
-    "dt_saida": "2026-09-30",
-    "centro_custo": 3,
-    "abreviacao": "GR 1"
   },
   {
     "fonte_comercial": "STK",
@@ -325,18 +289,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8389",
-    "produto": "15709",
-    "desc_completa": "TEGUS CANELA",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 21,
-    "dt_saida": "2026-09-30",
-    "centro_custo": 10,
-    "abreviacao": "REV 1"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8395",
     "produto": "11845",
     "desc_completa": "BORGONHA OURO LIGHT",
@@ -368,8 +320,8 @@
     "subgrupo": 40,
     "qtd_produzir": 50,
     "dt_saida": "2026-10-02",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 8,
+    "abreviacao": "CALAND"
   },
   {
     "fonte_comercial": "STK",
@@ -380,8 +332,8 @@
     "subgrupo": 41,
     "qtd_produzir": 800,
     "dt_saida": "2026-10-07",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 1,
+    "abreviacao": "RECOB"
   },
   {
     "fonte_comercial": "STK",
@@ -392,8 +344,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-10-07",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 1,
+    "abreviacao": "RECOB"
   },
   {
     "fonte_comercial": "STK",
@@ -464,8 +416,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-10-08",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -500,8 +452,8 @@
     "subgrupo": 41,
     "qtd_produzir": 600,
     "dt_saida": "2026-10-09",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -572,6 +524,222 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-10-05",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8568",
+    "produto": "18047",
+    "desc_completa": "NAPA LINHO DAKAR BRANCO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 100,
+    "dt_saida": "2026-10-09",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8569",
+    "produto": "18046",
+    "desc_completa": "NAPA LINHO DAKAR SALVIA",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 100,
+    "dt_saida": "2026-10-09",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8570",
+    "produto": "18043",
+    "desc_completa": "NAPA LINHO DAKAR CAFE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 100,
+    "dt_saida": "2026-10-09",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8571",
+    "produto": "18171",
+    "desc_completa": "ARUBA BEGE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 100,
+    "dt_saida": "2026-10-09",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8572",
+    "produto": "18177",
+    "desc_completa": "ARUBA CAMOMILA",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 100,
+    "dt_saida": "2026-10-09",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8573",
+    "produto": "18059",
+    "desc_completa": "ARUBA CONHAQUE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 100,
+    "dt_saida": "2026-10-09",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8574",
+    "produto": "18173",
+    "desc_completa": "ARUBA CANELA",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 100,
+    "dt_saida": "2026-10-09",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8575",
+    "produto": "18175",
+    "desc_completa": "ARUBA ESPRESSO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 100,
+    "dt_saida": "2026-10-09",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8576",
+    "produto": "18163",
+    "desc_completa": "ARUBA PRETO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 100,
+    "dt_saida": "2026-10-09",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8577",
+    "produto": "18157",
+    "desc_completa": "JACARTA PRATA",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 100,
+    "dt_saida": "2026-10-09",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8578",
+    "produto": "18158",
+    "desc_completa": "JACARTA OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 100,
+    "dt_saida": "2026-10-09",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8579",
+    "produto": "18160",
+    "desc_completa": "JACARTA OURO ROSADO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 100,
+    "dt_saida": "2026-10-09",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8580",
+    "produto": "18161",
+    "desc_completa": "JACARTA GRAFITE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 100,
+    "dt_saida": "2026-10-09",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8581",
+    "produto": "18162",
+    "desc_completa": "JACARTA BRONZE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 100,
+    "dt_saida": "2026-10-09",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8582",
+    "produto": "18048",
+    "desc_completa": "JACARTA PRETO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 100,
+    "dt_saida": "2026-10-09",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8583",
+    "produto": "18180",
+    "desc_completa": "SEVILLA ESPRESSO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-10-09",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8584",
+    "produto": "18039",
+    "desc_completa": "LILLY CAMOMILA",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 100,
+    "dt_saida": "2026-10-09",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8585",
+    "produto": "18041",
+    "desc_completa": "LILLY GUAVA",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 100,
+    "dt_saida": "2026-10-09",
     "centro_custo": 0,
     "abreviacao": ""
   },
