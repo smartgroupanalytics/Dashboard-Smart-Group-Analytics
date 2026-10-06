@@ -12,6 +12,7 @@ const mapaPermissoes = {
     // SG-MARCAS-FAMILIAS:PERMISSAO
     "marcas-familias": "marcas-familias",
     financeiro: "financeiro",
+    "custos-rentabilidade": "custos-rentabilidade",
     compras: "compras",
     producao: "producao",
     "analise-comercial": "analise-comercial",
@@ -118,6 +119,25 @@ case "financeiro":
             src="modulos/financeiro/index.html?v=3"
             class="iframe-modulo"
             title="Módulo Financeiro"
+            frameborder="0">
+        </iframe>
+    `;
+
+break;
+
+
+case "custos-rentabilidade":
+
+    titulo.innerText = "Custos e Rentabilidade";
+
+    subtitulo.innerText =
+    "Faturamento, custos, margem e rentabilidade por produto.";
+
+    conteudo.innerHTML = `
+        <iframe
+            src="modulos/custos-rentabilidade/index.html?v=20261006-1"
+            class="iframe-modulo"
+            title="Módulo Custos e Rentabilidade"
             frameborder="0">
         </iframe>
     `;
@@ -459,6 +479,13 @@ function gerarCardsDashboardPermitidos() {
                 "Acompanhe recebimentos, pagamentos e fluxo de caixa."
         },
         {
+            modulo: "custos-rentabilidade",
+            icone: "fa-solid fa-chart-line",
+            titulo: "Custos e Rentabilidade",
+            descricao:
+                "Analise faturamento, custos e margem por produto, pedido e OP."
+        },
+        {
             modulo: "compras",
             icone: "fa-solid fa-cart-shopping",
             titulo: "Compras e Suprimentos",
@@ -600,6 +627,11 @@ const modulosBusca = [
         nome: "Financeiro",
         descricao: "Recebimentos, pagamentos e fluxo de caixa",
         modulo: "financeiro"
+    },
+    {
+        nome: "Custos e Rentabilidade",
+        descricao: "Faturamento, custos, margem, produtos, pedidos e OPs",
+        modulo: "custos-rentabilidade"
     },
     {
         nome: "Compras e Suprimentos",

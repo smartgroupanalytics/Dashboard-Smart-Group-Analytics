@@ -1,0 +1,46 @@
+ATUALIZAÇÃO — CUSTOS E RENTABILIDADE
+Data: 06/10/2026
+
+Esta versão foi criada sobre o projeto enviado nesta conversa.
+
+NOVO MÓDULO
+modulos/custos-rentabilidade/
+
+ARQUIVOS EXISTENTES ALTERADOS
+- app.js
+- index.html
+- usuarios/index.html
+
+O QUE FOI INCLUÍDO
+- Menu: Custos e Rentabilidade
+- Card no Dashboard
+- Busca do portal
+- Permissão de usuário independente: custos-rentabilidade
+- Tela Faturamento
+- Tela Total por Produto
+- Tela Detalhamento Produção preparada para futura base produtiva
+- Filtros por empresa, período, nota fiscal, pedido, OP e produto
+- Exportação CSV das duas visões
+- Paginação para evitar renderizar milhares de linhas de uma vez
+- Base inicial gerada a partir do Excel SIGER enviado
+
+MAPEAMENTO UTILIZADO
+B Dt. faturamento
+W Sigla
+E Produto
+F Desc. completa
+C Pedido
+D OP
+J Nota Fiscal
+L Quantidade
+O Valor Venda
+P Valor Metro
+AG Custo Unitário
+AB Comissão
+AJ % Comissão
+
+IMPORTANTE
+A margem mostrada nesta primeira etapa é "Margem Base" e considera:
+Valor Venda - (Qtd x Custo Unitário) - (Qtd x Comissão)
+
+Impostos, frete e outros custos ainda NÃO foram aplicados porque suas colunas não foram informadas. Isso aparece claramente na tela para não apresentar lucro incorreto.

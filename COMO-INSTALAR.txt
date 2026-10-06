@@ -1,0 +1,17 @@
+PACOTE DE ATUALIZAÇÃO — CUSTOS E RENTABILIDADE
+
+Este pacote foi gerado sobre a cópia do projeto que você enviou em 06/10/2026.
+
+FORMA MAIS SEGURA
+1. Faça uma cópia de segurança da sua pasta atual do Analytics.
+2. Extraia este ZIP.
+3. Copie o conteúdo extraído PARA A RAIZ do seu projeto Dashboard-Smart-Group-Analytics.
+4. Confirme a substituição somente de:
+   - app.js
+   - index.html
+   - usuarios/index.html
+5. A pasta nova modulos/custos-rentabilidade/ deve ser adicionada inteira.
+6. Abra o GitHub Desktop e confira os arquivos alterados antes do commit.
+
+NÃO há .git neste pacote.
+NÃO há alteração nos arquivos internos dos demais módulos.

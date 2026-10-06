@@ -1,0 +1,32 @@
+SMART GROUP ANALYTICS — CUSTOS E RENTABILIDADE
+Criado em 06/10/2026
+
+MAPEAMENTO DO RELATÓRIO SIGER
+B  = Dt. Faturamento
+W  = Sigla
+E  = Produto
+F  = Desc. completa
+C  = Pedido
+D  = OP
+J  = Nota Fiscal
+L  = Quantidade
+O  = Valor Venda
+P  = Valor Metro
+AG = Custo Unitário
+AB = Comissão por metro/unidade
+AJ = % Comissão
+
+CÁLCULOS DESTA PRIMEIRA ETAPA
+Custo Total = Quantidade x Custo Unitário
+Comissão Total = Quantidade x Comissão (AB)
+Margem Base = Valor Venda - Custo Total - Comissão Total
+% Margem Base = Margem Base / Valor Venda x 100
+
+ATENÇÃO
+A margem é PARCIAL nesta primeira etapa, pois imposto, frete e demais custos ainda não foram mapeados.
+Não há dados de consumo, etapas, tempos ou paradas no relatório atual. A tela "Detalhamento Produção" está preparada para receber outra base sem inventar valores.
+
+ARQUIVO DE DADOS PUBLICADO
+modulos/custos-rentabilidade/data/base.json
+
+O módulo foi integrado ao menu, ao controle de permissões, aos cards do Dashboard e à busca do portal.

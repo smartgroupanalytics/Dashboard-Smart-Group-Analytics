@@ -122,6 +122,17 @@
             </a>
 
             <a
+                data-modulo="custos-rentabilidade"
+                onclick="abrirModulo('custos-rentabilidade', this)"
+            >
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                Custos e Rentabilidade
+
+            </a>
+
+            <a
                 data-modulo="compras"
                 onclick="abrirModulo('compras', this)"
             >
@@ -641,6 +652,31 @@
 
                     <div
                         class="card-home"
+                        data-modulo="custos-rentabilidade"
+                        role="button"
+                        tabindex="0"
+                        onclick="abrirModulo(
+                            'custos-rentabilidade',
+                            document.querySelector(
+                                '.menu a[data-modulo=&quot;custos-rentabilidade&quot;]'
+                            )
+                        )"
+                    >
+
+                        <i class="fa-solid fa-chart-line"></i>
+
+                        <h3>
+                            Custos e Rentabilidade
+                        </h3>
+
+                        <p>
+                            Analise faturamento, custos e margem por produto, pedido e OP.
+                        </p>
+
+                    </div>
+
+                    <div
+                        class="card-home"
                         data-modulo="compras"
                         role="button"
                         tabindex="0"
@@ -840,7 +876,7 @@
          SCRIPTS
     ================================================== -->
 
-    <script src="app.js?v=marcas-familias-20261001"></script>
+    <script src="app.js?v=custos-rentabilidade-20261006"></script>
 
     <script
         type="module"
