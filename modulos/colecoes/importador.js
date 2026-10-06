@@ -187,14 +187,323 @@
     syncChips();document.querySelectorAll("#origChips .chip").forEach(x=>x.classList.add("on"));render();
   }
 
-  function abrirBanco() {
-    return new Promise((resolve,reject)=>{const req=indexedDB.open("smart-group-colecoes",1);req.onupgradeneeded=()=>req.result.createObjectStore("dados");req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)});
+  // ============================================================
+  // BASE COMPARTILHADA NO FIRESTORE
+  // ============================================================
+  // A planilha continua sendo processada no navegador, mas o resultado
+  // consolidado é compactado e salvo no Firestore. Assim, o último
+  // carregamento feito por um usuário fica disponível para todos os demais.
+
+  const TAMANHO_PARTE = 450000; // bem abaixo do limite de 1 MiB por documento
+  let firebaseApiPromise = null;
+  let sincronizacaoIniciada = false;
+  let versaoAplicada = null;
+
+  function mostrarStatus(texto, cor) {
+    status.textContent = texto;
+    status.hidden = false;
+    status.style.color = cor || "var(--tx2)";
   }
-  async function salvarBase(dados) { const db=await abrirBanco();await new Promise((resolve,reject)=>{const tx=db.transaction("dados","readwrite");tx.objectStore("dados").put(dados,"base-importada");tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error)});db.close(); }
-  async function recuperarBase() { const db=await abrirBanco();const dados=await new Promise((resolve,reject)=>{const req=db.transaction("dados").objectStore("dados").get("base-importada");req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)});db.close();return dados; }
+
+  function dataHoraBR(iso) {
+    if (!iso) return "";
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return "";
+    return new Intl.DateTimeFormat("pt-BR", {
+      day: "2-digit", month: "2-digit", year: "numeric",
+      hour: "2-digit", minute: "2-digit"
+    }).format(d);
+  }
+
+  function mostrarUltimaBase(meta) {
+    const quando = dataHoraBR(meta?.atualizadoEmIso);
+    const nome = String(meta?.arquivo || "").trim();
+    const partes = ["Compartilhado ✅"];
+    if (quando) partes.push(quando);
+    if (nome) partes.push(nome);
+    mostrarStatus(partes.join(" · "), "var(--ok)");
+  }
+
+  async function obterFirebaseApi() {
+    if (!firebaseApiPromise) {
+      firebaseApiPromise = Promise.all([
+        import("../../firebase-config.js"),
+        import("https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js")
+      ]).then(([cfg, fs]) => ({
+        db: cfg.db,
+        doc: fs.doc,
+        getDoc: fs.getDoc,
+        setDoc: fs.setDoc,
+        deleteDoc: fs.deleteDoc,
+        onSnapshot: fs.onSnapshot,
+        serverTimestamp: fs.serverTimestamp
+      }));
+    }
+    return firebaseApiPromise;
+  }
+
+  function bytesParaBase64(bytes) {
+    let bin = "";
+    const passo = 0x8000;
+    for (let i = 0; i < bytes.length; i += passo) {
+      bin += String.fromCharCode.apply(null, bytes.subarray(i, i + passo));
+    }
+    return btoa(bin);
+  }
+
+  function base64ParaBytes(base64) {
+    const bin = atob(base64);
+    const out = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+    return out;
+  }
+
+  async function codificarBase(dados) {
+    const texto = JSON.stringify(dados);
+    const bruto = new TextEncoder().encode(texto);
+
+    if ("CompressionStream" in window) {
+      const fluxo = new Blob([bruto])
+        .stream()
+        .pipeThrough(new CompressionStream("gzip"));
+      const compactado = new Uint8Array(await new Response(fluxo).arrayBuffer());
+      return {
+        codificacao: "gzip-base64",
+        conteudo: bytesParaBase64(compactado),
+        bytesOriginais: bruto.byteLength,
+        bytesCompactados: compactado.byteLength
+      };
+    }
+
+    return {
+      codificacao: "base64",
+      conteudo: bytesParaBase64(bruto),
+      bytesOriginais: bruto.byteLength,
+      bytesCompactados: bruto.byteLength
+    };
+  }
+
+  async function decodificarBase(conteudo, codificacao) {
+    let bytes = base64ParaBytes(conteudo);
+
+    if (codificacao === "gzip-base64") {
+      if (!("DecompressionStream" in window)) {
+        throw new Error("Este navegador não suporta a descompactação da base compartilhada.");
+      }
+      const fluxo = new Blob([bytes])
+        .stream()
+        .pipeThrough(new DecompressionStream("gzip"));
+      bytes = new Uint8Array(await new Response(fluxo).arrayBuffer());
+    }
+
+    return JSON.parse(new TextDecoder().decode(bytes));
+  }
+
+  function dividirConteudo(texto) {
+    const partes = [];
+    for (let i = 0; i < texto.length; i += TAMANHO_PARTE) {
+      partes.push(texto.slice(i, i + TAMANHO_PARTE));
+    }
+    return partes;
+  }
+
+  function idParte(versao, indice) {
+    return `${versao}_${String(indice).padStart(3, "0")}`;
+  }
+
+  async function salvarBaseCompartilhada(dados, nomeArquivo) {
+    const api = await obterFirebaseApi();
+    const metaRef = api.doc(api.db, "colecoes_base", "atual");
+    const atualSnap = await api.getDoc(metaRef);
+    const metaAtual = atualSnap.exists() ? atualSnap.data() : {};
+
+    mostrarStatus("Compactando base…", "var(--tx2)");
+    const pacote = await codificarBase(dados);
+    const partes = dividirConteudo(pacote.conteudo);
+
+    const sufixo = (window.crypto?.randomUUID?.() || String(Date.now()))
+      .replace(/[^a-zA-Z0-9]/g, "")
+      .slice(0, 12);
+    const versao = `v${Date.now()}_${sufixo}`;
+
+    mostrarStatus(`Salvando para todos… 0/${partes.length}`, "var(--tx2)");
+
+    for (let i = 0; i < partes.length; i++) {
+      const parteRef = api.doc(
+        api.db,
+        "colecoes_base", "atual",
+        "partes", idParte(versao, i)
+      );
+      await api.setDoc(parteRef, {
+        versao,
+        indice: i,
+        conteudo: partes[i]
+      });
+      mostrarStatus(`Salvando para todos… ${i + 1}/${partes.length}`, "var(--tx2)");
+    }
+
+    const usuario = window.usuarioAnalytics || {};
+    const metaNova = {
+      versao,
+      partes: partes.length,
+      codificacao: pacote.codificacao,
+      bytesOriginais: pacote.bytesOriginais,
+      bytesCompactados: pacote.bytesCompactados,
+      arquivo: nomeArquivo || "planilha.xlsx",
+      atualizadoEm: api.serverTimestamp(),
+      atualizadoEmIso: new Date().toISOString(),
+      atualizadoPorUid: usuario.uid || null,
+      atualizadoPorNome: usuario.nome || usuario.emailFirebase || null,
+      ultimaDataFaturamento: dados.ultima_data_faturamento || null,
+      versaoAnterior: metaAtual.versao || null,
+      partesAnterior: Number(metaAtual.partes || 0)
+    };
+
+    // O ponteiro para a nova versão é atualizado por último. Dessa forma,
+    // nenhum outro usuário tenta ler uma base enquanto os pedaços ainda
+    // estão sendo gravados.
+    await api.setDoc(metaRef, metaNova);
+
+    // Mantém a versão atual e a imediatamente anterior. A versão mais antiga
+    // pode ser removida com segurança depois que o novo ponteiro já existe.
+    const antigaVersao = metaAtual.versaoAnterior;
+    const antigasPartes = Number(metaAtual.partesAnterior || 0);
+    if (antigaVersao && antigasPartes > 0) {
+      Promise.allSettled(
+        Array.from({ length: antigasPartes }, (_, i) =>
+          api.deleteDoc(api.doc(
+            api.db,
+            "colecoes_base", "atual",
+            "partes", idParte(antigaVersao, i)
+          ))
+        )
+      ).catch(() => {});
+    }
+
+    return metaNova;
+  }
+
+  async function carregarBaseCompartilhada(meta) {
+    const api = await obterFirebaseApi();
+    const total = Number(meta?.partes || 0);
+    if (!meta?.versao || total < 1) return;
+
+    mostrarStatus("Carregando última base compartilhada…", "var(--tx2)");
+
+    const leituras = await Promise.all(
+      Array.from({ length: total }, (_, i) =>
+        api.getDoc(api.doc(
+          api.db,
+          "colecoes_base", "atual",
+          "partes", idParte(meta.versao, i)
+        ))
+      )
+    );
+
+    const faltando = leituras.findIndex(s => !s.exists());
+    if (faltando >= 0) {
+      throw new Error(`Parte ${faltando + 1}/${total} da base compartilhada não foi encontrada.`);
+    }
+
+    const conteudo = leituras
+      .map(s => String(s.data().conteudo || ""))
+      .join("");
+
+    const dados = await decodificarBase(conteudo, meta.codificacao || "base64");
+    aplicar(dados);
+    versaoAplicada = meta.versao;
+    mostrarUltimaBase(meta);
+  }
+
+  async function iniciarSincronizacaoCompartilhada() {
+    if (sincronizacaoIniciada) return;
+    sincronizacaoIniciada = true;
+
+    try {
+      const api = await obterFirebaseApi();
+      const metaRef = api.doc(api.db, "colecoes_base", "atual");
+
+      mostrarStatus("Buscando última base compartilhada…", "var(--tx2)");
+
+      api.onSnapshot(
+        metaRef,
+        async snap => {
+          if (!snap.exists()) {
+            status.hidden = true;
+            return;
+          }
+
+          const meta = snap.data();
+          if (!meta?.versao) {
+            status.hidden = true;
+            return;
+          }
+
+          if (meta.versao === versaoAplicada) {
+            mostrarUltimaBase(meta);
+            return;
+          }
+
+          try {
+            await carregarBaseCompartilhada(meta);
+          } catch (erro) {
+            console.error("Erro ao carregar base compartilhada de coleções:", erro);
+            mostrarStatus("⚠ Base compartilhada indisponível", "var(--warn)");
+          }
+        },
+        erro => {
+          console.error("Erro na sincronização das coleções:", erro);
+          mostrarStatus("⚠ Sem acesso à base compartilhada", "var(--warn)");
+        }
+      );
+    } catch (erro) {
+      console.error("Erro ao iniciar sincronização das coleções:", erro);
+      mostrarStatus("⚠ Sincronização indisponível", "var(--warn)");
+    }
+  }
 
   window.__processarColecoes = processar;
-  const input=document.getElementById("arquivoColecoes"),btn=document.getElementById("btnImportarColecoes"),status=document.getElementById("statusImportacao");
-  btn.addEventListener("click",()=>input.click());
-  input.addEventListener("change",async()=>{const file=input.files?.[0];if(!file)return;btn.disabled=true;const set=t=>{status.textContent=t;status.hidden=false};try{set("Lendo planilha…");const wb=XLSX.read(await file.arrayBuffer(),{type:"array",cellDates:true});const obrig=["AMOSTRAS","ESTOQUE","Faturamento"];const faltam=obrig.filter(n=>!wb.SheetNames.some(s=>nrm(s)===nrm(n)));if(faltam.length)throw new Error("Abas não encontradas: "+faltam.join(", "));const novo=await processar(wb,set);aplicar(novo);set("Planilha importada com sucesso");setTimeout(()=>status.hidden=true,5000)}catch(e){console.error(e);set("Erro: "+e.message);alert("Não foi possível importar a planilha.\n\n"+e.message)}finally{btn.disabled=false;input.value=""}});
+  window.__iniciarSincronizacaoColecoes = iniciarSincronizacaoCompartilhada;
+
+  const input = document.getElementById("arquivoColecoes");
+  const btn = document.getElementById("btnImportarColecoes");
+  const status = document.getElementById("statusImportacao");
+
+  btn.addEventListener("click", () => input.click());
+
+  input.addEventListener("change", async () => {
+    const file = input.files?.[0];
+    if (!file) return;
+
+    btn.disabled = true;
+
+    try {
+      mostrarStatus("Lendo planilha…", "var(--tx2)");
+      const wb = XLSX.read(await file.arrayBuffer(), { type: "array", cellDates: true });
+      const obrig = ["AMOSTRAS", "ESTOQUE", "Faturamento"];
+      const faltam = obrig.filter(n => !wb.SheetNames.some(s => nrm(s) === nrm(n)));
+      if (faltam.length) throw new Error("Abas não encontradas: " + faltam.join(", "));
+
+      const novo = await processar(wb, t => mostrarStatus(t, "var(--tx2)"));
+
+      // Primeiro grava a base central. Só depois considera a importação concluída.
+      // Assim, o usuário não recebe uma falsa confirmação caso o Firestore rejeite
+      // a gravação por regra/permissão ou falha de rede.
+      const meta = await salvarBaseCompartilhada(novo, file.name);
+      versaoAplicada = meta.versao;
+      aplicar(novo);
+      mostrarUltimaBase(meta);
+    } catch (e) {
+      console.error(e);
+      mostrarStatus("Erro ao compartilhar: " + e.message, "var(--bad)");
+      alert(
+        "Não foi possível importar e compartilhar a planilha.\n\n" +
+        e.message +
+        "\n\nSe esta for a primeira instalação da sincronização, publique também as regras do arquivo ADICIONAR-NAS-REGRAS-FIRESTORE-COLECOES.txt."
+      );
+    } finally {
+      btn.disabled = false;
+      input.value = "";
+    }
+  });
 })();

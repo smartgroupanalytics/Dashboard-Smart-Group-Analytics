@@ -1092,10 +1092,12 @@ document.addEventListener('pointermove',e=>{if(e.pointerType!=='mouse')return;co
 window.addEventListener('scroll',tipHide,true);
 </script>
 <script src="xlsx.full.min.js"></script>
-<script src="importador.js?v=5"></script>
+<script src="importador.js?v=6"></script>
 <script type="module">
   import { protegerModulo } from "../../module-guard.js";
-  protegerModulo("colecoes");
+  protegerModulo("colecoes")
+    .then(() => window.__iniciarSincronizacaoColecoes?.())
+    .catch(() => {});
 </script>
 </body>
 </html>
