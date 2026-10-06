@@ -21,6 +21,7 @@ html,body{margin:0;min-height:100%;font-family:Inter,Segoe UI,Arial,sans-serif;b
 body{padding:14px}
 button,input,select{font:inherit}
 button{cursor:pointer}
+[hidden]{display:none!important}
 #access-status{min-height:60vh;display:grid;place-items:center;color:#cce0fb;font-weight:700}
 .dashboard{max-width:1800px;margin:0 auto}
 .hero{display:flex;justify-content:space-between;gap:24px;align-items:center;padding:6px 4px 18px}
