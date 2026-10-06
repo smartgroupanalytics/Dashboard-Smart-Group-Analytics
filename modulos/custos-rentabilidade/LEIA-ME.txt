@@ -30,3 +30,12 @@ ARQUIVO DE DADOS PUBLICADO
 modulos/custos-rentabilidade/data/base.json
 
 O módulo foi integrado ao menu, ao controle de permissões, aos cards do Dashboard e à busca do portal.
+
+
+ATUALIZAÇÃO 06/10/2026 - EXPORTAÇÃO EXCEL PROFISSIONAL
+- Exportações de Faturamento e Total por Produto agora geram .xlsx formatado.
+- ExcelJS é carregado somente quando o usuário clica em Exportar Excel, evitando impacto no carregamento do módulo.
+- O arquivo inclui identidade visual do módulo, KPIs, filtros aplicados, cabeçalho congelado, autofiltro, linhas alternadas, formatos monetários/percentuais e totais.
+- Custo Total, Comissão Total, Margem Base e % Margem usam fórmulas no Excel com valores de resultado pré-calculados.
+- A geração em XLSX evita o problema de interpretação de ponto/vírgula do antigo CSV.
+- Não há serviço pago; a biblioteca é gratuita e carregada via CDN somente no momento da exportação.

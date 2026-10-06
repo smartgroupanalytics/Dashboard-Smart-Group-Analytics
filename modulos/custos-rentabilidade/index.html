@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Custos e Rentabilidade · Smart Group Analytics</title>
-  <link rel="stylesheet" href="style.css?v=20261006-1">
+  <link rel="stylesheet" href="style.css?v=20261006-2">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -95,7 +95,7 @@
     <section id="billingView" class="view active">
       <div class="panel-heading">
         <div><h2>Faturamento por item</h2><p>Leitura direta das colunas definidas no relatório SIGER.</p></div>
-        <div class="panel-actions"><span id="billingCount">0 registros</span><button id="exportBilling" type="button"><i class="fa-solid fa-download"></i> Exportar CSV</button></div>
+        <div class="panel-actions"><span id="billingCount">0 registros</span><button id="exportBilling" type="button"><i class="fa-solid fa-file-excel"></i> Exportar Excel</button></div>
       </div>
       <div class="table-wrap">
         <table>
@@ -111,7 +111,7 @@
     <section id="productsView" class="view">
       <div class="panel-heading">
         <div><h2>Total por Produto</h2><p>Consolidação dos registros filtrados por código e descrição.</p></div>
-        <div class="panel-actions"><span id="productsCount">0 produtos</span><button id="exportProducts" type="button"><i class="fa-solid fa-download"></i> Exportar CSV</button></div>
+        <div class="panel-actions"><span id="productsCount">0 produtos</span><button id="exportProducts" type="button"><i class="fa-solid fa-file-excel"></i> Exportar Excel</button></div>
       </div>
       <div class="product-summary-grid">
         <article><span>Produtos</span><strong id="sumProducts">0</strong></article>
@@ -168,6 +168,6 @@
     </footer>
   </main>
 
-  <script type="module" src="app.js?v=20261006-1"></script>
+  <script type="module" src="app.js?v=20261006-2"></script>
 </body>
 </html>

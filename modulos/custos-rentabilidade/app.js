@@ -232,16 +232,412 @@ function switchView(view){
 
 function selectDetail(product){ selectedProduct = product; switchView('production'); document.querySelector('.tabs')?.scrollIntoView({behavior:'smooth',block:'start'}); }
 
-function csvEscape(value){ const s=String(value ?? ''); return /[;"\n]/.test(s)?`"${s.replace(/"/g,'""')}"`:s; }
-function downloadCsv(filename,headers,rows){
-  const content='\uFEFF'+[headers,...rows].map(row=>row.map(csvEscape).join(';')).join('\r\n');
-  const blob=new Blob([content],{type:'text/csv;charset=utf-8'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=filename; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+const EXCELJS_URLS = [
+  'https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js',
+  'https://unpkg.com/exceljs@4.4.0/dist/exceljs.min.js'
+];
+let excelJsPromise = null;
+
+function ensureExcelJS(){
+  if(window.ExcelJS) return Promise.resolve(window.ExcelJS);
+  if(excelJsPromise) return excelJsPromise;
+
+  excelJsPromise = new Promise((resolve,reject)=>{
+    let index = 0;
+    const tryNext = () => {
+      if(index >= EXCELJS_URLS.length){
+        reject(new Error('Não foi possível carregar o gerador de Excel. Verifique a conexão com a internet e tente novamente.'));
+        return;
+      }
+      const script = document.createElement('script');
+      script.src = EXCELJS_URLS[index++];
+      script.async = true;
+      script.onload = () => window.ExcelJS ? resolve(window.ExcelJS) : tryNext();
+      script.onerror = () => { script.remove(); tryNext(); };
+      document.head.appendChild(script);
+    };
+    tryNext();
+  });
+
+  return excelJsPromise;
 }
-function exportBilling(){
-  downloadCsv('custos-rentabilidade-faturamento.csv',['Dt. Fat.','Sigla','Produto','Desc. completa','Pedido','OP','Nota','Qtd','Vlr Venda','Vlr Metro','Cst Unit','Comissão','% Comis','Custo Total','Comissão Total','Margem Base','% Margem'],filtered.map(r=>[dateBR(r.dataFaturamento),r.sigla,r.produto,r.descricaoCompleta,r.pedido,r.op,r.nota,r.quantidade,r.valorVenda,r.valorMetro,r.custoUnitario,r.comissaoUnitario,r.percentualComissao,r.custoTotal,r.comissaoTotal,r.margemBase,r.margemBasePercentual]));
+
+function downloadBlob(filename, blob){
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
-function exportProducts(){
-  downloadCsv('custos-rentabilidade-produtos.csv',['Produto','Desc. completa','Qtd','Faturamento','Custo Total','Comissão Total','Margem Base','% Margem'],groupedProducts.map(g=>[g.produto,g.descricaoCompleta,g.quantidade,g.valorVenda,g.custoTotal,g.comissaoTotal,g.margemBase,g.margemBasePercentual]));
+
+function excelDate(value){
+  if(!value) return null;
+  const [y,m,d] = String(value).slice(0,10).split('-').map(Number);
+  return y && m && d ? new Date(y,m-1,d) : null;
+}
+
+function exportStamp(){
+  const now = new Date();
+  const p = n => String(n).padStart(2,'0');
+  return `${now.getFullYear()}${p(now.getMonth()+1)}${p(now.getDate())}_${p(now.getHours())}${p(now.getMinutes())}`;
+}
+
+function filterSummary(){
+  const f = getFilters();
+  const parts = [
+    `Empresa: ${f.company || 'Todas'}`,
+    `Período: ${f.start ? dateBR(f.start) : '—'} a ${f.end ? dateBR(f.end) : '—'}`,
+    `NF: ${f.invoice || 'Todas'}`,
+    `Pedido: ${f.order || 'Todos'}`,
+    `OP: ${f.op || 'Todas'}`
+  ];
+  if(f.search) parts.push(`Produto: ${$('productSearch').value.trim()}`);
+  return parts.join('   |   ');
+}
+
+const XLS_COLORS = {
+  navy: 'FF071C3C',
+  navy2: 'FF0B2B57',
+  blue: 'FF0C63CE',
+  blue2: 'FF0B4E9B',
+  cyan: 'FF0AAFC6',
+  green: 'FF12A36D',
+  purple: 'FF6C56D9',
+  orange: 'FFF29A38',
+  white: 'FFFFFFFF',
+  text: 'FF10233F',
+  muted: 'FF5F738E',
+  line: 'FFD7E2F0',
+  zebra: 'FFF3F7FC',
+  negative: 'FFD64545',
+  positive: 'FF078553',
+  lightBlue: 'FFEAF3FF'
+};
+
+function excelBorder(){
+  return {
+    top:{style:'thin',color:{argb:XLS_COLORS.line}},
+    left:{style:'thin',color:{argb:XLS_COLORS.line}},
+    bottom:{style:'thin',color:{argb:XLS_COLORS.line}},
+    right:{style:'thin',color:{argb:XLS_COLORS.line}}
+  };
+}
+
+function styleRange(ws,r1,c1,r2,c2,style){
+  for(let r=r1;r<=r2;r++){
+    for(let c=c1;c<=c2;c++){
+      const cell = ws.getCell(r,c);
+      if(style.fill) cell.fill = style.fill;
+      if(style.font) cell.font = style.font;
+      if(style.alignment) cell.alignment = style.alignment;
+      if(style.border) cell.border = style.border;
+    }
+  }
+}
+
+function mergeStyled(ws,r1,c1,r2,c2,value,style){
+  ws.mergeCells(r1,c1,r2,c2);
+  styleRange(ws,r1,c1,r2,c2,style);
+  ws.getCell(r1,c1).value = value;
+}
+
+function addKpiCard(ws,startCol,endCol,label,value,fillColor,numFmt){
+  const border = excelBorder();
+  mergeStyled(ws,4,startCol,4,endCol,label,{
+    fill:{type:'pattern',pattern:'solid',fgColor:{argb:fillColor}},
+    font:{name:'Aptos',size:9,bold:true,color:{argb:'FFDCEAFF'}},
+    alignment:{vertical:'middle',horizontal:'left'},border
+  });
+  mergeStyled(ws,5,startCol,5,endCol,value,{
+    fill:{type:'pattern',pattern:'solid',fgColor:{argb:fillColor}},
+    font:{name:'Aptos Display',size:16,bold:true,color:{argb:XLS_COLORS.white}},
+    alignment:{vertical:'middle',horizontal:'left'},border
+  });
+  if(numFmt) ws.getCell(5,startCol).numFmt = numFmt;
+}
+
+function setupReportHeader(ws,title,subtitle,kpis){
+  ws.sheetViews = [{showGridLines:false}];
+  mergeStyled(ws,1,1,1,17,'SMART GROUP ANALYTICS',{
+    fill:{type:'pattern',pattern:'solid',fgColor:{argb:XLS_COLORS.navy}},
+    font:{name:'Aptos Display',size:12,bold:true,color:{argb:'FF59B8FF'}},
+    alignment:{vertical:'middle',horizontal:'left'}
+  });
+  mergeStyled(ws,2,1,2,17,title,{
+    fill:{type:'pattern',pattern:'solid',fgColor:{argb:XLS_COLORS.navy}},
+    font:{name:'Aptos Display',size:22,bold:true,color:{argb:XLS_COLORS.white}},
+    alignment:{vertical:'middle',horizontal:'left'}
+  });
+  mergeStyled(ws,3,1,3,17,subtitle,{
+    fill:{type:'pattern',pattern:'solid',fgColor:{argb:XLS_COLORS.navy}},
+    font:{name:'Aptos',size:10,color:{argb:'FFB9D4F4'}},
+    alignment:{vertical:'middle',horizontal:'left'}
+  });
+  ws.getRow(1).height = 21;
+  ws.getRow(2).height = 33;
+  ws.getRow(3).height = 24;
+
+  addKpiCard(ws,1,3,kpis[0].label,kpis[0].value,kpis[0].color,kpis[0].numFmt);
+  addKpiCard(ws,4,6,kpis[1].label,kpis[1].value,kpis[1].color,kpis[1].numFmt);
+  addKpiCard(ws,7,9,kpis[2].label,kpis[2].value,kpis[2].color,kpis[2].numFmt);
+  addKpiCard(ws,10,13,kpis[3].label,kpis[3].value,kpis[3].color,kpis[3].numFmt);
+  addKpiCard(ws,14,17,kpis[4].label,kpis[4].value,kpis[4].color,kpis[4].numFmt);
+  ws.getRow(4).height = 18;
+  ws.getRow(5).height = 28;
+
+  mergeStyled(ws,7,1,7,17,filterSummary(),{
+    fill:{type:'pattern',pattern:'solid',fgColor:{argb:XLS_COLORS.lightBlue}},
+    font:{name:'Aptos',size:9,bold:true,color:{argb:XLS_COLORS.text}},
+    alignment:{vertical:'middle',horizontal:'left'},border:excelBorder()
+  });
+  const source = base?.meta?.fonte || 'SIGER';
+  const updated = base?.meta?.geradoEm ? new Date(base.meta.geradoEm).toLocaleString('pt-BR') : '—';
+  mergeStyled(ws,8,1,8,17,`Fonte: ${source}   |   Base atualizada em: ${updated}   |   Exportado em: ${new Date().toLocaleString('pt-BR')}`,{
+    font:{name:'Aptos',size:9,color:{argb:XLS_COLORS.muted}},
+    alignment:{vertical:'middle',horizontal:'left'}
+  });
+  ws.getRow(7).height = 24;
+  ws.getRow(8).height = 20;
+}
+
+function setupSheetColumns(ws,widths){
+  widths.forEach((width,index)=>ws.getColumn(index+1).width=width);
+  ws.properties.defaultRowHeight = 18;
+  ws.pageSetup = {orientation:'landscape',fitToPage:true,fitToWidth:1,fitToHeight:0,paperSize:9,margins:{left:0.25,right:0.25,top:0.5,bottom:0.5,header:0.2,footer:0.2}};
+}
+
+function styleTableHeader(ws,rowNumber,columnCount){
+  const row = ws.getRow(rowNumber);
+  row.height = 26;
+  for(let c=1;c<=columnCount;c++){
+    const cell = row.getCell(c);
+    cell.fill = {type:'pattern',pattern:'solid',fgColor:{argb:XLS_COLORS.blue2}};
+    cell.font = {name:'Aptos',size:9,bold:true,color:{argb:XLS_COLORS.white}};
+    cell.alignment = {vertical:'middle',horizontal:c>=8?'right':'left',wrapText:true};
+    cell.border = excelBorder();
+  }
+}
+
+function styleDataRows(ws,startRow,endRow,columnCount,numericCols=[]){
+  for(let r=startRow;r<=endRow;r++){
+    const row = ws.getRow(r);
+    row.height = 20;
+    for(let c=1;c<=columnCount;c++){
+      const cell = row.getCell(c);
+      if(r % 2 === 0) cell.fill = {type:'pattern',pattern:'solid',fgColor:{argb:XLS_COLORS.zebra}};
+      cell.font = {name:'Aptos',size:9,color:{argb:XLS_COLORS.text}};
+      cell.alignment = {vertical:'middle',horizontal:numericCols.includes(c)?'right':'left',wrapText:c===4};
+      cell.border = excelBorder();
+    }
+  }
+}
+
+function styleTotalRow(ws,rowNumber,columnCount){
+  const row=ws.getRow(rowNumber);
+  row.height=24;
+  for(let c=1;c<=columnCount;c++){
+    const cell=row.getCell(c);
+    cell.fill={type:'pattern',pattern:'solid',fgColor:{argb:XLS_COLORS.navy2}};
+    cell.font={name:'Aptos',size:9,bold:true,color:{argb:XLS_COLORS.white}};
+    cell.border=excelBorder();
+    cell.alignment={vertical:'middle',horizontal:c>=8?'right':'left'};
+  }
+}
+
+function applyProfitColors(ws,startRow,endRow,amountCol,pctCol){
+  for(let r=startRow;r<=endRow;r++){
+    const amount = ws.getCell(r,amountCol);
+    const pct = ws.getCell(r,pctCol);
+    const result = amount.value?.result ?? amount.value;
+    const color = Number(result) < 0 ? XLS_COLORS.negative : XLS_COLORS.positive;
+    amount.font = {...amount.font,bold:true,color:{argb:color}};
+    pct.font = {...pct.font,bold:true,color:{argb:color}};
+  }
+}
+
+async function exportBilling(){
+  const button = $('exportBilling');
+  const original = button.innerHTML;
+  button.disabled = true;
+  button.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gerando Excel…';
+  try{
+    const ExcelJS = await ensureExcelJS();
+    const workbook = new ExcelJS.Workbook();
+    workbook.creator = 'Smart Group Analytics';
+    workbook.lastModifiedBy = 'Smart Group Analytics';
+    workbook.created = new Date();
+    workbook.modified = new Date();
+    workbook.calculation = {fullCalcOnLoad:true,forceFullCalc:true};
+
+    const ws = workbook.addWorksheet('Faturamento',{views:[{state:'frozen',ySplit:10,xSplit:0,showGridLines:false}]});
+    setupSheetColumns(ws,[12,9,12,38,11,10,11,10,15,13,13,13,11,15,15,15,12]);
+
+    const revenue = sum(filtered,'valorVenda');
+    const cost = sum(filtered,'custoTotal');
+    const commission = sum(filtered,'comissaoTotal');
+    const margin = revenue-cost-commission;
+    const marginPct = revenue ? margin/revenue : 0;
+    setupReportHeader(ws,'CUSTOS E RENTABILIDADE — FATURAMENTO','Relatório detalhado por item faturado.',[
+      {label:'FATURAMENTO',value:revenue,color:XLS_COLORS.blue,numFmt:'R$ #,##0.00'},
+      {label:'CUSTO TOTAL',value:cost,color:XLS_COLORS.purple,numFmt:'R$ #,##0.00'},
+      {label:'COMISSÕES',value:commission,color:XLS_COLORS.orange,numFmt:'R$ #,##0.00'},
+      {label:'MARGEM BASE',value:margin,color:XLS_COLORS.green,numFmt:'R$ #,##0.00'},
+      {label:'% MARGEM',value:marginPct,color:XLS_COLORS.cyan,numFmt:'0.00%'}
+    ]);
+
+    const headers=['Dt. Fat.','Sigla','Produto','Desc. completa','Pedido','OP','Nota','Qtd','Vlr Venda','Vlr Metro','Cst Unit','Comissão','% Comis','Custo Total','Comissão Total','Margem Base','% Margem'];
+    const headerRow = 10;
+    ws.getRow(headerRow).values = headers;
+    styleTableHeader(ws,headerRow,headers.length);
+
+    const startRow=headerRow+1;
+    filtered.forEach((r,index)=>{
+      const rowNumber=startRow+index;
+      const row=ws.getRow(rowNumber);
+      row.values=[
+        excelDate(r.dataFaturamento), String(r.sigla??''), String(r.produto??''), String(r.descricaoCompleta??''),
+        meaningful(r.pedido)?String(r.pedido):'', meaningful(r.op)?String(r.op):'', meaningful(r.nota)?String(r.nota):'',
+        Number(r.quantidade||0), Number(r.valorVenda||0), Number(r.valorMetro||0), Number(r.custoUnitario||0),
+        Number(r.comissaoUnitario||0), Number(r.percentualComissao||0)/100,
+        {formula:`H${rowNumber}*K${rowNumber}`,result:Number(r.custoTotal||0)},
+        {formula:`H${rowNumber}*L${rowNumber}`,result:Number(r.comissaoTotal||0)},
+        {formula:`I${rowNumber}-N${rowNumber}-O${rowNumber}`,result:Number(r.margemBase||0)},
+        {formula:`IFERROR(P${rowNumber}/I${rowNumber},0)`,result:Number(r.margemBasePercentual||0)/100}
+      ];
+    });
+
+    const endRow=Math.max(startRow,startRow+filtered.length-1);
+    if(filtered.length){
+      styleDataRows(ws,startRow,endRow,headers.length,[8,9,10,11,12,13,14,15,16,17]);
+      for(let r=startRow;r<=endRow;r++){
+        ws.getCell(r,1).numFmt='dd/mm/yyyy';
+        ws.getCell(r,8).numFmt='#,##0.00';
+        [9,10,11,12,14,15,16].forEach(c=>ws.getCell(r,c).numFmt='R$ #,##0.00;[Red]-R$ #,##0.00');
+        [13,17].forEach(c=>ws.getCell(r,c).numFmt='0.00%');
+      }
+      applyProfitColors(ws,startRow,endRow,16,17);
+    }
+
+    const totalRow=(filtered.length?endRow:headerRow)+1;
+    ws.mergeCells(totalRow,1,totalRow,7);
+    ws.getCell(totalRow,1).value='TOTAIS DO PERÍODO FILTRADO';
+    if(filtered.length){
+      ws.getCell(totalRow,8).value={formula:`SUM(H${startRow}:H${endRow})`,result:sum(filtered,'quantidade')};
+      ws.getCell(totalRow,9).value={formula:`SUM(I${startRow}:I${endRow})`,result:revenue};
+      ws.getCell(totalRow,14).value={formula:`SUM(N${startRow}:N${endRow})`,result:cost};
+      ws.getCell(totalRow,15).value={formula:`SUM(O${startRow}:O${endRow})`,result:commission};
+      ws.getCell(totalRow,16).value={formula:`SUM(P${startRow}:P${endRow})`,result:margin};
+      ws.getCell(totalRow,17).value={formula:`IFERROR(P${totalRow}/I${totalRow},0)`,result:marginPct};
+    }else{
+      [8,9,14,15,16,17].forEach(c=>ws.getCell(totalRow,c).value=0);
+    }
+    styleTotalRow(ws,totalRow,headers.length);
+    ws.getCell(totalRow,8).numFmt='#,##0.00';
+    [9,14,15,16].forEach(c=>ws.getCell(totalRow,c).numFmt='R$ #,##0.00;[Red]-R$ #,##0.00');
+    ws.getCell(totalRow,17).numFmt='0.00%';
+
+    ws.autoFilter={from:{row:headerRow,column:1},to:{row:headerRow,column:headers.length}};
+
+    const buffer = await workbook.xlsx.writeBuffer();
+    downloadBlob(`Custos-Rentabilidade-Faturamento-${exportStamp()}.xlsx`,new Blob([buffer],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}));
+  }catch(error){
+    console.error('Exportação Excel:',error);
+    alert(`Não foi possível gerar o Excel. ${error?.message || error}`);
+  }finally{
+    button.disabled=false;
+    button.innerHTML=original;
+  }
+}
+
+async function exportProducts(){
+  const button = $('exportProducts');
+  const original = button.innerHTML;
+  button.disabled = true;
+  button.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gerando Excel…';
+  try{
+    buildProductGroups();
+    const ExcelJS = await ensureExcelJS();
+    const workbook = new ExcelJS.Workbook();
+    workbook.creator = 'Smart Group Analytics';
+    workbook.lastModifiedBy = 'Smart Group Analytics';
+    workbook.created = new Date();
+    workbook.modified = new Date();
+    workbook.calculation = {fullCalcOnLoad:true,forceFullCalc:true};
+
+    const ws = workbook.addWorksheet('Total por Produto',{views:[{state:'frozen',ySplit:10,xSplit:0,showGridLines:false}]});
+    setupSheetColumns(ws,[14,44,12,17,17,17,17,13,12,12,12,12,12,12,12,12,12]);
+
+    const revenue=sum(groupedProducts,'valorVenda');
+    const cost=sum(groupedProducts,'custoTotal');
+    const commission=sum(groupedProducts,'comissaoTotal');
+    const margin=sum(groupedProducts,'margemBase');
+    const marginPct=revenue?margin/revenue:0;
+    setupReportHeader(ws,'CUSTOS E RENTABILIDADE — TOTAL POR PRODUTO','Consolidação dos registros do período e filtros selecionados.',[
+      {label:'PRODUTOS',value:groupedProducts.length,color:XLS_COLORS.blue,numFmt:'#,##0'},
+      {label:'FATURAMENTO',value:revenue,color:XLS_COLORS.cyan,numFmt:'R$ #,##0.00'},
+      {label:'CUSTO TOTAL',value:cost,color:XLS_COLORS.purple,numFmt:'R$ #,##0.00'},
+      {label:'MARGEM BASE',value:margin,color:XLS_COLORS.green,numFmt:'R$ #,##0.00'},
+      {label:'% MARGEM',value:marginPct,color:XLS_COLORS.orange,numFmt:'0.00%'}
+    ]);
+
+    const headers=['Produto','Desc. completa','Qtd','Faturamento','Custo Total','Comissão Total','Margem Base','% Margem'];
+    const headerRow=10;
+    ws.getRow(headerRow).values=headers;
+    styleTableHeader(ws,headerRow,headers.length);
+
+    const startRow=headerRow+1;
+    groupedProducts.forEach((g,index)=>{
+      const rn=startRow+index;
+      ws.getRow(rn).values=[
+        String(g.produto??''),String(g.descricaoCompleta??''),Number(g.quantidade||0),Number(g.valorVenda||0),
+        Number(g.custoTotal||0),Number(g.comissaoTotal||0),
+        {formula:`D${rn}-E${rn}-F${rn}`,result:Number(g.margemBase||0)},
+        {formula:`IFERROR(G${rn}/D${rn},0)`,result:Number(g.margemBasePercentual||0)/100}
+      ];
+    });
+
+    const endRow=Math.max(startRow,startRow+groupedProducts.length-1);
+    if(groupedProducts.length){
+      styleDataRows(ws,startRow,endRow,headers.length,[3,4,5,6,7,8]);
+      for(let r=startRow;r<=endRow;r++){
+        ws.getCell(r,3).numFmt='#,##0.00';
+        [4,5,6,7].forEach(c=>ws.getCell(r,c).numFmt='R$ #,##0.00;[Red]-R$ #,##0.00');
+        ws.getCell(r,8).numFmt='0.00%';
+      }
+      applyProfitColors(ws,startRow,endRow,7,8);
+    }
+
+    const totalRow=(groupedProducts.length?endRow:headerRow)+1;
+    ws.mergeCells(totalRow,1,totalRow,2);
+    ws.getCell(totalRow,1).value='TOTAIS DO PERÍODO FILTRADO';
+    if(groupedProducts.length){
+      ws.getCell(totalRow,3).value={formula:`SUM(C${startRow}:C${endRow})`,result:sum(groupedProducts,'quantidade')};
+      ws.getCell(totalRow,4).value={formula:`SUM(D${startRow}:D${endRow})`,result:revenue};
+      ws.getCell(totalRow,5).value={formula:`SUM(E${startRow}:E${endRow})`,result:cost};
+      ws.getCell(totalRow,6).value={formula:`SUM(F${startRow}:F${endRow})`,result:commission};
+      ws.getCell(totalRow,7).value={formula:`SUM(G${startRow}:G${endRow})`,result:margin};
+      ws.getCell(totalRow,8).value={formula:`IFERROR(G${totalRow}/D${totalRow},0)`,result:marginPct};
+    }else{
+      [3,4,5,6,7,8].forEach(c=>ws.getCell(totalRow,c).value=0);
+    }
+    styleTotalRow(ws,totalRow,headers.length);
+    ws.getCell(totalRow,3).numFmt='#,##0.00';
+    [4,5,6,7].forEach(c=>ws.getCell(totalRow,c).numFmt='R$ #,##0.00;[Red]-R$ #,##0.00');
+    ws.getCell(totalRow,8).numFmt='0.00%';
+    ws.autoFilter={from:{row:headerRow,column:1},to:{row:headerRow,column:headers.length}};
+
+    const buffer=await workbook.xlsx.writeBuffer();
+    downloadBlob(`Custos-Rentabilidade-Produtos-${exportStamp()}.xlsx`,new Blob([buffer],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}));
+  }catch(error){
+    console.error('Exportação Excel:',error);
+    alert(`Não foi possível gerar o Excel. ${error?.message || error}`);
+  }finally{
+    button.disabled=false;
+    button.innerHTML=original;
+  }
 }
 
 function bindEvents(){
