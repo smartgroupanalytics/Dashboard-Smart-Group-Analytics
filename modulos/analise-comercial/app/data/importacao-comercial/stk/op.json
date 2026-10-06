@@ -104,8 +104,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-08-24",
-    "centro_custo": 23,
-    "abreviacao": "RAMA"
+    "centro_custo": 7,
+    "abreviacao": "ESTAM"
   },
   {
     "fonte_comercial": "STK",
@@ -116,8 +116,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-09-10",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -140,8 +140,8 @@
     "subgrupo": 41,
     "qtd_produzir": 336,
     "dt_saida": "2026-09-25",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 23,
+    "abreviacao": "RAMA"
   },
   {
     "fonte_comercial": "STK",
@@ -152,8 +152,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-24",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "centro_custo": 3,
+    "abreviacao": "GR 1"
   },
   {
     "fonte_comercial": "STK",
@@ -164,8 +164,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-25",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "centro_custo": 3,
+    "abreviacao": "GR 1"
   },
   {
     "fonte_comercial": "STK",
@@ -176,8 +176,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-28",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "centro_custo": 3,
+    "abreviacao": "GR 1"
   },
   {
     "fonte_comercial": "STK",
@@ -188,8 +188,20 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-28",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "centro_custo": 3,
+    "abreviacao": "GR 1"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8367",
+    "produto": "18016",
+    "desc_completa": "DELHI GLAM OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-09-29",
+    "centro_custo": 0,
+    "abreviacao": ""
   },
   {
     "fonte_comercial": "STK",
@@ -200,8 +212,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-09-30",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -212,8 +224,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1440,
     "dt_saida": "2026-09-30",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -226,18 +238,6 @@
     "dt_saida": "2026-09-30",
     "centro_custo": 1,
     "abreviacao": "RECOB"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8382",
-    "produto": "16503",
-    "desc_completa": "CANYON CANELA",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 800,
-    "dt_saida": "2026-09-30",
-    "centro_custo": 3,
-    "abreviacao": "GR 1"
   },
   {
     "fonte_comercial": "STK",
@@ -296,8 +296,8 @@
     "subgrupo": 41,
     "qtd_produzir": 240,
     "dt_saida": "2026-10-02",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -332,8 +332,8 @@
     "subgrupo": 41,
     "qtd_produzir": 800,
     "dt_saida": "2026-10-07",
-    "centro_custo": 1,
-    "abreviacao": "RECOB"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -368,8 +368,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-10-07",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -409,18 +409,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8528",
-    "produto": "16642",
-    "desc_completa": "NAPA BARI FOSCO PRETO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 1000,
-    "dt_saida": "2026-10-08",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8529",
     "produto": "16650",
     "desc_completa": "NAPA BARI FOSCO CAFE",
@@ -428,8 +416,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-10-09",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -452,8 +440,8 @@
     "subgrupo": 41,
     "qtd_produzir": 600,
     "dt_saida": "2026-10-09",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 1,
+    "abreviacao": "RECOB"
   },
   {
     "fonte_comercial": "STK",
@@ -476,8 +464,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-10-09",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -488,8 +476,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-10-09",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -500,8 +488,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-10-06",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -752,6 +740,66 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-10-08",
+    "centro_custo": 1,
+    "abreviacao": "RECOB"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8597",
+    "produto": "17899",
+    "desc_completa": "NAPA MADRID ESPRESSO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 40,
+    "dt_saida": "2026-10-09",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8598",
+    "produto": "17918",
+    "desc_completa": "NAPA MADRID CAMOMILA",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 40,
+    "dt_saida": "2026-10-09",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8599",
+    "produto": "18012",
+    "desc_completa": "NAPA MADRID NEVOA",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 100,
+    "dt_saida": "2026-10-09",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8601",
+    "produto": "18214",
+    "desc_completa": "NAPA MADRID SALVIA",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 100,
+    "dt_saida": "2026-10-12",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8602",
+    "produto": "17900",
+    "desc_completa": "NAPA MADRID GUAVA",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 40,
+    "dt_saida": "2026-10-12",
     "centro_custo": 0,
     "abreviacao": ""
   }
