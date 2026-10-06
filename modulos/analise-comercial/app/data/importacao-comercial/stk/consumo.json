@@ -5432,6 +5432,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 200,
+    "dt_movto": "2026-10-05"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11906",
+    "produto": "11906",
+    "desc_completa": "NAPA MADRID MANTEIGA - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 209.3,
     "dt_movto": "2026-04-10"
   },
@@ -5518,6 +5530,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 315.7,
     "dt_movto": "2026-07-21"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11906",
+    "produto": "11906",
+    "desc_completa": "NAPA MADRID MANTEIGA - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 316,
+    "dt_movto": "2026-10-05"
   },
   {
     "fonte_comercial": "STK",
@@ -7856,6 +7880,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 394,
+    "dt_movto": "2026-10-05"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11923",
+    "produto": "11923",
+    "desc_completa": "NAPA METAL LYON PRETO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 399,
     "dt_movto": "2026-04-17"
   },
@@ -8098,6 +8134,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 160.1,
     "dt_movto": "2026-09-28"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11924",
+    "produto": "11924",
+    "desc_completa": "NAPA METAL LYON PRATA - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 195,
+    "dt_movto": "2026-10-05"
   },
   {
     "fonte_comercial": "STK",
@@ -15056,6 +15104,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 185,
+    "dt_movto": "2026-10-05"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20012",
+    "produto": "20012",
+    "desc_completa": "NAPA MADRID CANELA - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 190.6,
     "dt_movto": "2026-03-31"
   },
@@ -15214,6 +15274,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 201,
     "dt_movto": "2026-03-17"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20012",
+    "produto": "20012",
+    "desc_completa": "NAPA MADRID CANELA - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 210,
+    "dt_movto": "2026-10-05"
   },
   {
     "fonte_comercial": "STK",
@@ -15944,6 +16016,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 5,
+    "dt_movto": "2026-10-05"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20082",
+    "produto": "20082",
+    "desc_completa": "NAPA BARI CAFE - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 9.8,
     "dt_movto": "2026-05-06"
   },
@@ -16136,6 +16220,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 400,
+    "dt_movto": "2026-10-05"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20082",
+    "produto": "20082",
+    "desc_completa": "NAPA BARI CAFE - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 478,
     "dt_movto": "2026-07-17"
   },
@@ -16150,6 +16246,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 484,
     "dt_movto": "2026-07-03"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20082",
+    "produto": "20082",
+    "desc_completa": "NAPA BARI CAFE - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 485,
+    "dt_movto": "2026-10-05"
   },
   {
     "fonte_comercial": "STK",
@@ -16222,6 +16330,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 500,
     "dt_movto": "2026-07-17"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20082",
+    "produto": "20082",
+    "desc_completa": "NAPA BARI CAFE - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 510,
+    "dt_movto": "2026-10-05"
   },
   {
     "fonte_comercial": "STK",
@@ -16498,6 +16618,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 506,
     "dt_movto": "2026-09-23"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20104",
+    "produto": "20104",
+    "desc_completa": "NAPA BARI BEGE - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 512,
+    "dt_movto": "2026-10-05"
   },
   {
     "fonte_comercial": "STK",
