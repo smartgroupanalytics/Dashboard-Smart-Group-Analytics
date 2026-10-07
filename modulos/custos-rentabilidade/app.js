@@ -542,7 +542,7 @@ async function exportBilling(){
     ws.autoFilter={from:{row:headerRow,column:1},to:{row:headerRow,column:headers.length}};
 
     const buffer = await workbook.xlsx.writeBuffer();
-    downloadBlob(`Custos-Rentabilidade-Faturamento-${exportStamp()}.xlsx`,new Blob([buffer],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}));
+    downloadBlob(`Custos-Rentabilidade-Faturamento-XLSX-${exportStamp()}.xlsx`,new Blob([buffer],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}));
   }catch(error){
     console.error('Exportação Excel:',error);
     alert(`Não foi possível gerar o Excel. ${error?.message || error}`);
@@ -630,7 +630,7 @@ async function exportProducts(){
     ws.autoFilter={from:{row:headerRow,column:1},to:{row:headerRow,column:headers.length}};
 
     const buffer=await workbook.xlsx.writeBuffer();
-    downloadBlob(`Custos-Rentabilidade-Produtos-${exportStamp()}.xlsx`,new Blob([buffer],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}));
+    downloadBlob(`Custos-Rentabilidade-Produtos-XLSX-${exportStamp()}.xlsx`,new Blob([buffer],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}));
   }catch(error){
     console.error('Exportação Excel:',error);
     alert(`Não foi possível gerar o Excel. ${error?.message || error}`);
