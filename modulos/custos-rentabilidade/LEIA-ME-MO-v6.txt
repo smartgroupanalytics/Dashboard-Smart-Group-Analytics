@@ -1,0 +1,30 @@
+CUSTOS E RENTABILIDADE — v6 MÃO DE OBRA POR QUANTIDADE APROVADA
+Data: 07/10/2026
+
+CÁLCULO DE M.O.
+1) Cruza as bases pela OP.
+2) Produção:
+   custo da etapa = Tempo Produção (em minutos) × Campo calculado (R$/minuto).
+   Se Campo calculado não vier preenchido, usa Vlr.hr./homem ÷ 60.
+3) Setup:
+   considera somente Motivo Parada = SETUP.
+   custo do setup = Duração (em minutos) × custo/minuto da mesma OP + centro de custo/recurso encontrado na base de produção.
+4) Custo M.O. total da OP = soma custos de Produção + soma custos de Setup.
+5) Cst MO unitário = Custo M.O. total ÷ Quantidade Aprovada.
+6) A Quantidade Aprovada é obtida da base de produção; quando houver um valor por etapa, é usado o último valor positivo da OP conforme a ordem original do relatório.
+7) O dashboard aplica o Cst MO unitário na linha do faturamento quando a coluna OP tiver correspondência.
+
+VALIDAÇÃO OP 8361
+Setup: 01:22 = 82 min
+Produção: 03:06 = 186 min
+Tempo total: 04:28 = 268 min
+Custo Setup: R$ 792,94
+Custo Produção: R$ 1.214,40
+Custo M.O. total: R$ 2.007,34
+Quantidade aprovada: 206 metros
+Cst MO unitário: R$ 9,7444 (exibido no painel como R$ 9,74)
+
+IMPORTANTE
+- O rateio não usa mais Qtd.OP = 200.
+- Para a OP 8361, a base correta é Quantidade Aprovada = 206.
+- Imposto e Frete continuam sem fórmula nesta versão.

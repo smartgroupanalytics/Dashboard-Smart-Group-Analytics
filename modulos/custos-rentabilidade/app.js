@@ -73,6 +73,7 @@ function buildMaoObraMap(productionRows=[],setupRows=[]){
         producao:[],
         setups:[],
         qtdOP:0,
+        qtdAprovada:0,
         tempoProducaoMin:0,
         tempoSetupMin:0,
         custoProducaoTotal:0,
@@ -91,6 +92,12 @@ function buildMaoObraMap(productionRows=[],setupRows=[]){
     const custo = minutos * custoMinuto;
     const qtdOP = Number(row.qtdOP || 0);
     if(qtdOP > 0) g.qtdOP = Math.max(g.qtdOP,qtdOP);
+    // A quantidade aprovada é a base correta para ratear a M.O. da OP.
+    // Como a planilha pode trazer uma quantidade aprovada por etapa, usamos
+    // o último valor positivo da OP (ordem original do relatório), que
+    // representa a quantidade aprovada da operação final.
+    const qtdAprovada = Number(row.qtdAprovada || 0);
+    if(qtdAprovada > 0) g.qtdAprovada = qtdAprovada;
     if(minutos > 0 && custoMinuto <= 0){
       g.completo=false;
       g.pendencias.push(`Produção ${row.recurso || row.centroCusto || ''}: custo/minuto não encontrado`);
@@ -145,11 +152,11 @@ function buildMaoObraMap(productionRows=[],setupRows=[]){
 
     g.tempoTotalMin = g.tempoProducaoMin + g.tempoSetupMin;
     g.custoMaoObraTotal = g.custoProducaoTotal + g.custoSetupTotal;
-    if(g.qtdOP > 0){
-      g.custoMaoObraUnitario = g.custoMaoObraTotal / g.qtdOP;
+    if(g.qtdAprovada > 0){
+      g.custoMaoObraUnitario = g.custoMaoObraTotal / g.qtdAprovada;
     }else{
       g.completo=false;
-      g.pendencias.push('Qtd.OP não encontrada para ratear o custo total');
+      g.pendencias.push('Quantidade aprovada não encontrada para ratear o custo total');
     }
     g.tempoProducao = minutesToHHMM(g.tempoProducaoMin);
     g.tempoSetup = minutesToHHMM(g.tempoSetupMin);
@@ -372,7 +379,7 @@ function renderProductionMO(rows){
     <div class="mo-op-card ${g.completo ? '' : 'incomplete'}">
       <div class="mo-op-head">
         <div><span>ORDEM DE PRODUÇÃO</span><strong>OP ${esc(g.op)}</strong></div>
-        <div class="mo-op-qty"><span>Qtd. OP</span><strong>${number(g.qtdOP)}</strong></div>
+        <div class="mo-op-qty"><span>Qtd. Aprovada</span><strong>${number(g.qtdAprovada)}</strong></div>
         <span class="mo-status ${g.completo ? 'ok' : 'warn'}">${g.completo ? 'Cálculo completo' : 'Revisar cálculo'}</span>
       </div>
       <div class="mo-metrics">
@@ -380,9 +387,9 @@ function renderProductionMO(rows){
         <article><span>Tempo Produção</span><strong>${esc(g.tempoProducao)}</strong><small>${money(g.custoProducaoTotal)}</small></article>
         <article><span>Tempo Total</span><strong>${esc(g.tempoTotal)}</strong><small>Setup + produção</small></article>
         <article class="highlight"><span>Custo M.O. total</span><strong>${money(g.custoMaoObraTotal)}</strong><small>Custo total da OP</small></article>
-        <article class="highlight"><span>Cst MO unit.</span><strong>${money(g.custoMaoObraUnitario)}</strong><small>Total M.O. ÷ Qtd. OP</small></article>
+        <article class="highlight"><span>Cst MO unit.</span><strong>${money(g.custoMaoObraUnitario)}</strong><small>Total M.O. ÷ Qtd. aprovada</small></article>
       </div>
-      <div class="mo-formula"><i class="fa-solid fa-calculator"></i><span><strong>Regra:</strong> Σ (tempo produção × custo/minuto) + Σ (tempo setup × custo/minuto da mesma operação) = Custo M.O. total. Depois, Custo M.O. total ÷ Qtd.OP = Cst MO unitário.</span></div>
+      <div class="mo-formula"><i class="fa-solid fa-calculator"></i><span><strong>Regra:</strong> Σ (tempo produção × custo/minuto) + Σ (tempo setup × custo/minuto da mesma operação) = Custo M.O. total. Depois, Custo M.O. total ÷ Quantidade Aprovada = Cst MO unitário.</span></div>
       <div class="mo-table-wrap">
         <table class="mo-table">
           <thead><tr><th>Tipo</th><th>Centro</th><th>Recurso</th><th class="num">Tempo</th><th class="num">R$/min</th><th class="num">Custo</th></tr></thead>

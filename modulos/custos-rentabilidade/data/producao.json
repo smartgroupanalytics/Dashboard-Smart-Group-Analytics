@@ -2,7 +2,7 @@
   "meta": {
     "fonte": "REGISTROS DE PRODUÇÃO POR O.P.XLSX",
     "geradoEm": "2026-10-07T11:23:00-03:00",
-    "regra": "Tempo de produção × custo por minuto (Campo calculado; fallback Vlr.hr./homem ÷ 60), agrupado pela OP."
+    "regra": "Tempo de produção × custo por minuto (Campo calculado; fallback Vlr.hr./homem ÷ 60), agrupado pela OP. O Cst MO unitário é rateado pela Quantidade Aprovada da OP, usando o último valor positivo do relatório para a OP."
   },
   "registros": [
     {
