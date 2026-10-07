@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Custos e Rentabilidade · Smart Group Analytics</title>
-  <link rel="stylesheet" href="style.css?v=20261006-2">
+  <link rel="stylesheet" href="style.css?v=20261007-4">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -83,7 +83,7 @@
 
     <div class="scope-warning" role="note">
       <i class="fa-solid fa-circle-info"></i>
-      <span><strong>Primeira etapa:</strong> a margem exibida é parcial. Ela considera faturamento, custo base e comissão. Impostos, frete e demais custos serão incorporados quando as respectivas colunas forem mapeadas.</span>
+      <span><strong>Leitura atual:</strong> os campos Cst MO, Imposto e Frete já estão preparados na tela. Enquanto não houver mapeamento na base, aparecem como “—” e não entram no cálculo. Itens sem lucro ficam destacados em vermelho.</span>
     </div>
 
     <nav class="tabs" aria-label="Visões do módulo">
@@ -100,7 +100,7 @@
       <div class="table-wrap">
         <table>
           <thead><tr>
-            <th>Dt. Fat.</th><th>Sigla</th><th>Produto</th><th>Descrição completa</th><th>Pedido</th><th>OP</th><th>Nota</th><th class="num">Qtd.</th><th class="num">Vlr Venda</th><th class="num">Vlr Metro</th><th class="num">Cst. Unit.</th><th class="num">Comissão</th><th class="num">% Comis.</th><th class="num">Custo Total</th><th class="num">Margem Base</th><th class="num">% Margem</th><th>Sinal</th><th></th>
+            <th>Dt. Fat.</th><th>Sigla</th><th>Produto</th><th>Descrição completa</th><th>Pedido</th><th>OP</th><th>Nota</th><th class="num">Qtd.</th><th class="num">Vlr Venda</th><th class="num">Vlr Metro</th><th class="num">Cst. Unit.</th><th class="num">Cst MO</th><th class="num">Imposto</th><th class="num">Frete</th><th class="num">Comissão</th><th class="num">% Comis.</th><th class="num">Custo Total</th><th class="num">Lucro</th><th class="num">Margem Base</th><th class="num">% Margem</th><th></th>
           </tr></thead>
           <tbody id="billingRows"></tbody>
         </table>
@@ -121,7 +121,7 @@
       </div>
       <div class="table-wrap compact-table">
         <table>
-          <thead><tr><th>Produto</th><th>Descrição completa</th><th class="num">Qtd.</th><th class="num">Faturamento</th><th class="num">Custo Total</th><th class="num">Comissão</th><th class="num">Margem Base</th><th class="num">% Margem</th><th>Sinal</th><th></th></tr></thead>
+          <thead><tr><th>Produto</th><th>Descrição completa</th><th class="num">Qtd.</th><th class="num">Faturamento</th><th class="num">Custo Total</th><th class="num">Comissão</th><th class="num">Margem Base</th><th class="num">% Margem</th><th></th></tr></thead>
           <tbody id="productRows"></tbody>
         </table>
       </div>
@@ -164,10 +164,10 @@
 
     <footer class="module-footer">
       <span id="footerStatus">Base em carregamento…</span>
-      <details><summary>Mapeamento do Excel</summary><p>B Dt. faturamento · W Sigla · E Produto · F Desc. completa · C Pedido · D OP · J Nota · L Qtd · O Vlr Venda · P Vlr Metro · AG Cst. Unit · AB Comissão · AJ % Comissão.</p></details>
+      <details><summary>Mapeamento do Excel</summary><p>B Dt. faturamento · W Sigla · E Produto · F Desc. completa · C Pedido · D OP · J Nota · L Qtd · O Vlr Venda · P Vlr Metro · AG Cst. Unit · AB Comissão · AJ % Comissão. Cst MO, Imposto e Frete aguardam a definição das respectivas fontes/colunas.</p></details>
     </footer>
   </main>
 
-  <script type="module" src="app.js?v=20261006-3"></script>
+  <script type="module" src="app.js?v=20261007-4"></script>
 </body>
 </html>

@@ -41,3 +41,27 @@ button{cursor:pointer}
 @media(max-width:1350px){.filter-panel{grid-template-columns:repeat(4,1fr)}.search-field{grid-column:span 2}.kpi-grid{grid-template-columns:repeat(3,1fr)}.detail-kpis{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:900px){body{padding:8px}.hero{align-items:flex-start;flex-direction:column}.hero-meta{align-items:flex-start;width:100%}.hero-meta span{text-align:left}.filter-panel{grid-template-columns:repeat(2,1fr)}.search-field{grid-column:1/-1}.clear-button{grid-column:1/-1}.kpi-grid{grid-template-columns:repeat(2,1fr)}.tabs{grid-template-columns:1fr}.detail-kpis,.detail-grid,.product-summary-grid{grid-template-columns:1fr}.reference-list{grid-template-columns:1fr}.production-head{align-items:stretch;flex-direction:column}.back-button{height:40px}.module-footer{flex-direction:column}.module-footer details{text-align:left}}
 @media(max-width:520px){.filter-panel,.kpi-grid{grid-template-columns:1fr}.field,.search-field,.clear-button{grid-column:auto}.kpi-card{min-height:90px}.hero h1{font-size:23px}.panel-heading{align-items:flex-start;flex-direction:column}.panel-actions{width:100%;justify-content:space-between}}
+
+
+/* v4 — leitura visual de rentabilidade */
+tbody tr.row-loss,
+tbody tr.row-loss:nth-child(even),
+tbody tr.row-loss:hover{
+  background:rgba(168,29,50,.22)!important;
+  box-shadow:inset 4px 0 0 #ff5e70;
+}
+tbody tr.row-loss td,
+tbody tr.row-loss td strong,
+tbody tr.row-loss td .money-positive,
+tbody tr.row-loss td .money-negative{
+  color:#ff8390!important;
+  font-weight:800;
+}
+tbody tr.row-loss .detail-button{
+  background:#6d2533;
+  border-color:#d75163;
+  color:#ffd9dd;
+}
+tbody tr.row-loss .detail-button:hover{background:#843143}
+.optional-cost{color:#b8c8dc}
+tbody tr.row-loss .optional-cost{color:#ff8390!important}

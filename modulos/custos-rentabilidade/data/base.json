@@ -18,7 +18,9 @@
       "custoUnitario": "AG",
       "comissaoUnitario": "AB",
       "percentualComissao": "AJ"
-    }
+    },
+    "versaoLayout": "v4-20261007",
+    "observacaoCustosAdicionais": "Cst MO, Imposto e Frete estão preparados no dashboard, porém ainda não possuem colunas-fonte mapeadas no relatório informado."
   },
   "registros": [
     {
@@ -38,7 +40,10 @@
       "custoTotal": 680.2656,
       "comissaoTotal": 71.55,
       "margemBase": 1629.2044,
-      "margemBasePercentual": 68.4246
+      "margemBasePercentual": 68.4246,
+      "custoMaoObraUnitario": null,
+      "impostoUnitario": null,
+      "freteUnitario": null
     },
     {
       "dataFaturamento": "2026-09-15",
@@ -57,7 +62,10 @@
       "custoTotal": 747.568,
       "comissaoTotal": 72.0,
       "margemBase": 1576.432,
-      "margemBasePercentual": 65.7943
+      "margemBasePercentual": 65.7943,
+      "custoMaoObraUnitario": null,
+      "impostoUnitario": null,
+      "freteUnitario": null
     },
     {
       "dataFaturamento": "2026-09-15",
@@ -76,7 +84,10 @@
       "custoTotal": 466.3425,
       "comissaoTotal": 50.625,
       "margemBase": 1168.6525,
-      "margemBasePercentual": 69.3307
+      "margemBasePercentual": 69.3307,
+      "custoMaoObraUnitario": null,
+      "impostoUnitario": null,
+      "freteUnitario": null
     },
     {
       "dataFaturamento": "2026-09-15",
@@ -95,7 +106,10 @@
       "custoTotal": 450.136,
       "comissaoTotal": 52.8,
       "margemBase": 1253.064,
-      "margemBasePercentual": 71.359
+      "margemBasePercentual": 71.359,
+      "custoMaoObraUnitario": null,
+      "impostoUnitario": null,
+      "freteUnitario": null
     },
     {
       "dataFaturamento": "2026-09-15",
@@ -114,7 +128,10 @@
       "custoTotal": 312.108,
       "comissaoTotal": 26.4,
       "margemBase": 539.492,
-      "margemBasePercentual": 61.4456
+      "margemBasePercentual": 61.4456,
+      "custoMaoObraUnitario": null,
+      "impostoUnitario": null,
+      "freteUnitario": null
     }
   ]
 }

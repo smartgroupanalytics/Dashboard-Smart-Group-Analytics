@@ -21,10 +21,10 @@ const dateBR = value => {
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const meaningful = value => String(value ?? '').trim() && String(value).trim() !== '0';
 const displayRef = value => meaningful(value) ? esc(value) : '—';
+const optionalMoney = (value, mapped) => mapped ? money(value) : '—';
 
 function sum(list, field){ return list.reduce((acc, item) => acc + Number(item[field] || 0), 0); }
 function unique(list, field){ return [...new Set(list.map(r => String(r[field] ?? '').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pt-BR',{numeric:true})); }
-function signalClass(pct){ return pct < 0 ? 'bad' : pct < 20 ? 'warn' : 'good'; }
 function marginClass(value){ return Number(value) < 0 ? 'money-negative' : 'money-positive'; }
 
 function normalizeRecord(r){
@@ -32,19 +32,48 @@ function normalizeRecord(r){
   const venda = Number(r.valorVenda || 0);
   const custoUnit = Number(r.custoUnitario || 0);
   const comissaoUnit = Number(r.comissaoUnitario || 0);
+
+  // Campos preparados para as próximas integrações. Se ainda não vierem na base,
+  // permanecem como não mapeados e são exibidos como “—” na tabela.
+  const hasValue = value => value !== undefined && value !== null && String(value).trim() !== '';
+  const custoMaoObraRaw = r.custoMaoObraUnitario ?? r.custoMOUnitario ?? r.custoMO;
+  const impostoRaw = r.impostoUnitario ?? r.imposto;
+  const freteRaw = r.freteUnitario ?? r.frete;
+  const custoMaoObraMapeado = hasValue(custoMaoObraRaw);
+  const impostoMapeado = hasValue(impostoRaw);
+  const freteMapeado = hasValue(freteRaw);
+  const custoMaoObraUnitario = Number(custoMaoObraRaw || 0);
+  const impostoUnitario = Number(impostoRaw || 0);
+  const freteUnitario = Number(freteRaw || 0);
+
   const custoTotal = qtd * custoUnit;
+  const custoMaoObraTotal = qtd * custoMaoObraUnitario;
+  const impostoTotal = qtd * impostoUnitario;
+  const freteTotal = qtd * freteUnitario;
   const comissaoTotal = qtd * comissaoUnit;
-  const margemBase = venda - custoTotal - comissaoTotal;
+  const margemBase = venda - custoTotal - custoMaoObraTotal - impostoTotal - freteTotal - comissaoTotal;
+  const lucroUnitario = qtd ? margemBase / qtd : margemBase;
+
   return {
     ...r,
     quantidade: qtd,
     valorVenda: venda,
     valorMetro: Number(r.valorMetro || 0),
     custoUnitario: custoUnit,
+    custoMaoObraUnitario,
+    impostoUnitario,
+    freteUnitario,
+    custoMaoObraMapeado,
+    impostoMapeado,
+    freteMapeado,
     comissaoUnitario: comissaoUnit,
     percentualComissao: Number(r.percentualComissao || 0),
     custoTotal,
+    custoMaoObraTotal,
+    impostoTotal,
+    freteTotal,
     comissaoTotal,
+    lucroUnitario,
     margemBase,
     margemBasePercentual: venda ? (margemBase / venda) * 100 : 0
   };
@@ -103,7 +132,7 @@ function renderKpis(){
   const revenue = sum(filtered,'valorVenda');
   const cost = sum(filtered,'custoTotal');
   const commission = sum(filtered,'comissaoTotal');
-  const margin = revenue - cost - commission;
+  const margin = sum(filtered,'margemBase');
   const marginPct = revenue ? margin / revenue * 100 : 0;
   $('kpiInvoices').textContent = unique(filtered,'nota').length.toLocaleString('pt-BR');
   $('kpiRows').textContent = `${filtered.length.toLocaleString('pt-BR')} ${filtered.length === 1 ? 'item faturado' : 'itens faturados'}`;
@@ -121,7 +150,7 @@ function renderBilling(){
   const start = (billingPage-1)*PAGE_SIZE;
   const pageRows = filtered.slice(start,start+PAGE_SIZE);
   $('billingRows').innerHTML = pageRows.length ? pageRows.map(r => `
-    <tr>
+    <tr class="${r.margemBase <= 0 ? 'row-loss' : ''}">
       <td>${dateBR(r.dataFaturamento)}</td>
       <td><strong>${esc(r.sigla)}</strong></td>
       <td><strong>${esc(r.produto)}</strong></td>
@@ -131,14 +160,17 @@ function renderBilling(){
       <td class="num">${money(r.valorVenda)}</td>
       <td class="num">${money(r.valorMetro)}</td>
       <td class="num">${money(r.custoUnitario)}</td>
+      <td class="num optional-cost">${optionalMoney(r.custoMaoObraUnitario,r.custoMaoObraMapeado)}</td>
+      <td class="num optional-cost">${optionalMoney(r.impostoUnitario,r.impostoMapeado)}</td>
+      <td class="num optional-cost">${optionalMoney(r.freteUnitario,r.freteMapeado)}</td>
       <td class="num">${money(r.comissaoUnitario)}</td>
       <td class="num">${percent(r.percentualComissao)}</td>
       <td class="num">${money(r.custoTotal)}</td>
+      <td class="num ${marginClass(r.lucroUnitario)}">${money(r.lucroUnitario)}</td>
       <td class="num ${marginClass(r.margemBase)}">${money(r.margemBase)}</td>
       <td class="num ${marginClass(r.margemBase)}">${percent(r.margemBasePercentual)}</td>
-      <td><span class="signal ${signalClass(r.margemBasePercentual)}" title="Margem base ${percent(r.margemBasePercentual)}"></span></td>
       <td><button class="detail-button" type="button" data-detail-product="${esc(r.produto)}"><i class="fa-solid fa-magnifying-glass-chart"></i> Detalhar</button></td>
-    </tr>`).join('') : '<tr class="empty-row"><td colspan="18">Nenhum registro encontrado para os filtros selecionados.</td></tr>';
+    </tr>`).join('') : '<tr class="empty-row"><td colspan="21">Nenhum registro encontrado para os filtros selecionados.</td></tr>';
   $('billingCount').textContent = `${filtered.length.toLocaleString('pt-BR')} registros`;
   $('billingPage').textContent = `Página ${billingPage} de ${totalPages}`;
   $('billingPrev').disabled = billingPage <= 1;
@@ -149,15 +181,16 @@ function buildProductGroups(){
   const map = new Map();
   filtered.forEach(r => {
     const key = `${r.produto}¦${r.descricaoCompleta}`;
-    if(!map.has(key)) map.set(key,{produto:r.produto,descricaoCompleta:r.descricaoCompleta,quantidade:0,valorVenda:0,custoTotal:0,comissaoTotal:0,rows:[]});
+    if(!map.has(key)) map.set(key,{produto:r.produto,descricaoCompleta:r.descricaoCompleta,quantidade:0,valorVenda:0,custoTotal:0,comissaoTotal:0,margemBase:0,rows:[]});
     const g = map.get(key);
     g.quantidade += r.quantidade;
     g.valorVenda += r.valorVenda;
     g.custoTotal += r.custoTotal;
     g.comissaoTotal += r.comissaoTotal;
+    g.margemBase += r.margemBase;
     g.rows.push(r);
   });
-  groupedProducts = [...map.values()].map(g => ({...g,margemBase:g.valorVenda-g.custoTotal-g.comissaoTotal,margemBasePercentual:g.valorVenda?(g.valorVenda-g.custoTotal-g.comissaoTotal)/g.valorVenda*100:0})).sort((a,b)=>b.valorVenda-a.valorVenda);
+  groupedProducts = [...map.values()].map(g => ({...g,margemBasePercentual:g.valorVenda?g.margemBase/g.valorVenda*100:0})).sort((a,b)=>b.valorVenda-a.valorVenda);
 }
 
 function renderProducts(){
@@ -174,7 +207,7 @@ function renderProducts(){
   const start = (productsPage-1)*PAGE_SIZE;
   const pageRows = groupedProducts.slice(start,start+PAGE_SIZE);
   $('productRows').innerHTML = pageRows.length ? pageRows.map(g => `
-    <tr><td><strong>${esc(g.produto)}</strong></td><td class="description-cell" title="${esc(g.descricaoCompleta)}">${esc(g.descricaoCompleta)}</td><td class="num">${number(g.quantidade)}</td><td class="num">${money(g.valorVenda)}</td><td class="num">${money(g.custoTotal)}</td><td class="num">${money(g.comissaoTotal)}</td><td class="num ${marginClass(g.margemBase)}">${money(g.margemBase)}</td><td class="num ${marginClass(g.margemBase)}">${percent(g.margemBasePercentual)}</td><td><span class="signal ${signalClass(g.margemBasePercentual)}"></span></td><td><button class="detail-button" type="button" data-detail-product="${esc(g.produto)}"><i class="fa-solid fa-magnifying-glass-chart"></i> Detalhar</button></td></tr>`).join('') : '<tr class="empty-row"><td colspan="10">Nenhum produto encontrado.</td></tr>';
+    <tr class="${g.margemBase <= 0 ? 'row-loss' : ''}"><td><strong>${esc(g.produto)}</strong></td><td class="description-cell" title="${esc(g.descricaoCompleta)}">${esc(g.descricaoCompleta)}</td><td class="num">${number(g.quantidade)}</td><td class="num">${money(g.valorVenda)}</td><td class="num">${money(g.custoTotal)}</td><td class="num">${money(g.comissaoTotal)}</td><td class="num ${marginClass(g.margemBase)}">${money(g.margemBase)}</td><td class="num ${marginClass(g.margemBase)}">${percent(g.margemBasePercentual)}</td><td><button class="detail-button" type="button" data-detail-product="${esc(g.produto)}"><i class="fa-solid fa-magnifying-glass-chart"></i> Detalhar</button></td></tr>`).join('') : '<tr class="empty-row"><td colspan="9">Nenhum produto encontrado.</td></tr>';
   $('productsPage').textContent = `Página ${productsPage} de ${totalPages}`;
   $('productsPrev').disabled = productsPage <= 1;
   $('productsNext').disabled = productsPage >= totalPages;
@@ -191,7 +224,7 @@ function renderDetail(){
   const allProductRows = records.filter(r => String(r.produto) === String(selectedProduct));
   const rows = allProductRows.length ? allProductRows : filtered.filter(r => String(r.produto) === String(selectedProduct));
   if(!rows.length){ selectedProduct=null; renderDetail(); return; }
-  const first=rows[0], revenue=sum(rows,'valorVenda'), cost=sum(rows,'custoTotal'), commission=sum(rows,'comissaoTotal'), margin=revenue-cost-commission, qty=sum(rows,'quantidade');
+  const first=rows[0], revenue=sum(rows,'valorVenda'), cost=sum(rows,'custoTotal'), commission=sum(rows,'comissaoTotal'), margin=sum(rows,'margemBase'), qty=sum(rows,'quantidade');
   const weightedUnitCost = qty ? cost/qty : 0;
   const avgCommissionPct = revenue ? commission/revenue*100 : 0;
   const marginPct = revenue ? margin/revenue*100 : 0;
@@ -359,19 +392,19 @@ function addKpiCard(ws,startCol,endCol,label,value,fillColor,numFmt){
   if(numFmt) ws.getCell(5,startCol).numFmt = numFmt;
 }
 
-function setupReportHeader(ws,title,subtitle,kpis){
+function setupReportHeader(ws,title,subtitle,kpis,columnCount=17){
   ws.sheetViews = [{showGridLines:false}];
-  mergeStyled(ws,1,1,1,17,'SMART GROUP ANALYTICS',{
+  mergeStyled(ws,1,1,1,columnCount,'SMART GROUP ANALYTICS',{
     fill:{type:'pattern',pattern:'solid',fgColor:{argb:XLS_COLORS.navy}},
     font:{name:'Aptos Display',size:12,bold:true,color:{argb:'FF59B8FF'}},
     alignment:{vertical:'middle',horizontal:'left'}
   });
-  mergeStyled(ws,2,1,2,17,title,{
+  mergeStyled(ws,2,1,2,columnCount,title,{
     fill:{type:'pattern',pattern:'solid',fgColor:{argb:XLS_COLORS.navy}},
     font:{name:'Aptos Display',size:22,bold:true,color:{argb:XLS_COLORS.white}},
     alignment:{vertical:'middle',horizontal:'left'}
   });
-  mergeStyled(ws,3,1,3,17,subtitle,{
+  mergeStyled(ws,3,1,3,columnCount,subtitle,{
     fill:{type:'pattern',pattern:'solid',fgColor:{argb:XLS_COLORS.navy}},
     font:{name:'Aptos',size:10,color:{argb:'FFB9D4F4'}},
     alignment:{vertical:'middle',horizontal:'left'}
@@ -388,14 +421,14 @@ function setupReportHeader(ws,title,subtitle,kpis){
   ws.getRow(4).height = 18;
   ws.getRow(5).height = 28;
 
-  mergeStyled(ws,7,1,7,17,filterSummary(),{
+  mergeStyled(ws,7,1,7,columnCount,filterSummary(),{
     fill:{type:'pattern',pattern:'solid',fgColor:{argb:XLS_COLORS.lightBlue}},
     font:{name:'Aptos',size:9,bold:true,color:{argb:XLS_COLORS.text}},
     alignment:{vertical:'middle',horizontal:'left'},border:excelBorder()
   });
   const source = base?.meta?.fonte || 'SIGER';
   const updated = base?.meta?.geradoEm ? new Date(base.meta.geradoEm).toLocaleString('pt-BR') : '—';
-  mergeStyled(ws,8,1,8,17,`Fonte: ${source}   |   Base atualizada em: ${updated}   |   Exportado em: ${new Date().toLocaleString('pt-BR')}`,{
+  mergeStyled(ws,8,1,8,columnCount,`Fonte: ${source}   |   Base atualizada em: ${updated}   |   Exportado em: ${new Date().toLocaleString('pt-BR')}`,{
     font:{name:'Aptos',size:9,color:{argb:XLS_COLORS.muted}},
     alignment:{vertical:'middle',horizontal:'left'}
   });
@@ -458,6 +491,20 @@ function applyProfitColors(ws,startRow,endRow,amountCol,pctCol){
   }
 }
 
+function styleLossRows(ws,startRow,endRow,profitCol,columnCount){
+  for(let r=startRow;r<=endRow;r++){
+    const profitCell = ws.getCell(r,profitCol);
+    const result = profitCell.value?.result ?? profitCell.value;
+    if(Number(result) <= 0){
+      for(let c=1;c<=columnCount;c++){
+        const cell=ws.getCell(r,c);
+        cell.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFFFE7EA'}};
+        cell.font={...(cell.font||{}),bold:true,color:{argb:XLS_COLORS.negative}};
+      }
+    }
+  }
+}
+
 async function exportBilling(){
   const button = $('exportBilling');
   const original = button.innerHTML;
@@ -473,12 +520,12 @@ async function exportBilling(){
     workbook.calculation = {fullCalcOnLoad:true,forceFullCalc:true};
 
     const ws = workbook.addWorksheet('Faturamento',{views:[{state:'frozen',ySplit:10,xSplit:0,showGridLines:false}]});
-    setupSheetColumns(ws,[12,9,12,38,11,10,11,10,15,13,13,13,11,15,15,15,12]);
+    setupSheetColumns(ws,[12,9,12,38,11,10,11,10,15,13,13,13,13,13,13,11,15,14,15,12]);
 
     const revenue = sum(filtered,'valorVenda');
     const cost = sum(filtered,'custoTotal');
     const commission = sum(filtered,'comissaoTotal');
-    const margin = revenue-cost-commission;
+    const margin = sum(filtered,'margemBase');
     const marginPct = revenue ? margin/revenue : 0;
     setupReportHeader(ws,'CUSTOS E RENTABILIDADE — FATURAMENTO','Relatório detalhado por item faturado.',[
       {label:'FATURAMENTO',value:revenue,color:XLS_COLORS.blue,numFmt:'R$ #,##0.00'},
@@ -486,9 +533,9 @@ async function exportBilling(){
       {label:'COMISSÕES',value:commission,color:XLS_COLORS.orange,numFmt:'R$ #,##0.00'},
       {label:'MARGEM BASE',value:margin,color:XLS_COLORS.green,numFmt:'R$ #,##0.00'},
       {label:'% MARGEM',value:marginPct,color:XLS_COLORS.cyan,numFmt:'0.00%'}
-    ]);
+    ],20);
 
-    const headers=['Dt. Fat.','Sigla','Produto','Desc. completa','Pedido','OP','Nota','Qtd','Vlr Venda','Vlr Metro','Cst Unit','Comissão','% Comis','Custo Total','Comissão Total','Margem Base','% Margem'];
+    const headers=['Dt. Fat.','Sigla','Produto','Desc. completa','Pedido','OP','Nota','Qtd','Vlr Venda','Vlr Metro','Cst Unit','Cst MO','Imposto','Frete','Comissão','% Comis','Custo Total','Lucro','Margem Base','% Margem'];
     const headerRow = 10;
     ws.getRow(headerRow).values = headers;
     styleTableHeader(ws,headerRow,headers.length);
@@ -501,24 +548,28 @@ async function exportBilling(){
         excelDate(r.dataFaturamento), String(r.sigla??''), String(r.produto??''), String(r.descricaoCompleta??''),
         meaningful(r.pedido)?String(r.pedido):'', meaningful(r.op)?String(r.op):'', meaningful(r.nota)?String(r.nota):'',
         Number(r.quantidade||0), Number(r.valorVenda||0), Number(r.valorMetro||0), Number(r.custoUnitario||0),
+        r.custoMaoObraMapeado ? Number(r.custoMaoObraUnitario||0) : '',
+        r.impostoMapeado ? Number(r.impostoUnitario||0) : '',
+        r.freteMapeado ? Number(r.freteUnitario||0) : '',
         Number(r.comissaoUnitario||0), Number(r.percentualComissao||0)/100,
         {formula:`H${rowNumber}*K${rowNumber}`,result:Number(r.custoTotal||0)},
-        {formula:`H${rowNumber}*L${rowNumber}`,result:Number(r.comissaoTotal||0)},
-        {formula:`I${rowNumber}-N${rowNumber}-O${rowNumber}`,result:Number(r.margemBase||0)},
-        {formula:`IFERROR(P${rowNumber}/I${rowNumber},0)`,result:Number(r.margemBasePercentual||0)/100}
+        {formula:`IFERROR(S${rowNumber}/H${rowNumber},0)`,result:Number(r.lucroUnitario||0)},
+        {formula:`I${rowNumber}-Q${rowNumber}-(H${rowNumber}*IF(L${rowNumber}="",0,L${rowNumber}))-(H${rowNumber}*IF(M${rowNumber}="",0,M${rowNumber}))-(H${rowNumber}*IF(N${rowNumber}="",0,N${rowNumber}))-(H${rowNumber}*O${rowNumber})`,result:Number(r.margemBase||0)},
+        {formula:`IFERROR(S${rowNumber}/I${rowNumber},0)`,result:Number(r.margemBasePercentual||0)/100}
       ];
     });
 
     const endRow=Math.max(startRow,startRow+filtered.length-1);
     if(filtered.length){
-      styleDataRows(ws,startRow,endRow,headers.length,[8,9,10,11,12,13,14,15,16,17]);
+      styleDataRows(ws,startRow,endRow,headers.length,[8,9,10,11,12,13,14,15,16,17,18,19,20]);
       for(let r=startRow;r<=endRow;r++){
         ws.getCell(r,1).numFmt='dd/mm/yyyy';
         ws.getCell(r,8).numFmt='#,##0.00';
-        [9,10,11,12,14,15,16].forEach(c=>ws.getCell(r,c).numFmt='R$ #,##0.00;[Red]-R$ #,##0.00');
-        [13,17].forEach(c=>ws.getCell(r,c).numFmt='0.00%');
+        [9,10,11,12,13,14,15,17,18,19].forEach(c=>ws.getCell(r,c).numFmt='R$ #,##0.00;[Red]-R$ #,##0.00');
+        [16,20].forEach(c=>ws.getCell(r,c).numFmt='0.00%');
       }
-      applyProfitColors(ws,startRow,endRow,16,17);
+      applyProfitColors(ws,startRow,endRow,19,20);
+      styleLossRows(ws,startRow,endRow,19,headers.length);
     }
 
     const totalRow=(filtered.length?endRow:headerRow)+1;
@@ -527,17 +578,16 @@ async function exportBilling(){
     if(filtered.length){
       ws.getCell(totalRow,8).value={formula:`SUM(H${startRow}:H${endRow})`,result:sum(filtered,'quantidade')};
       ws.getCell(totalRow,9).value={formula:`SUM(I${startRow}:I${endRow})`,result:revenue};
-      ws.getCell(totalRow,14).value={formula:`SUM(N${startRow}:N${endRow})`,result:cost};
-      ws.getCell(totalRow,15).value={formula:`SUM(O${startRow}:O${endRow})`,result:commission};
-      ws.getCell(totalRow,16).value={formula:`SUM(P${startRow}:P${endRow})`,result:margin};
-      ws.getCell(totalRow,17).value={formula:`IFERROR(P${totalRow}/I${totalRow},0)`,result:marginPct};
+      ws.getCell(totalRow,17).value={formula:`SUM(Q${startRow}:Q${endRow})`,result:cost};
+      ws.getCell(totalRow,19).value={formula:`SUM(S${startRow}:S${endRow})`,result:margin};
+      ws.getCell(totalRow,20).value={formula:`IFERROR(S${totalRow}/I${totalRow},0)`,result:marginPct};
     }else{
-      [8,9,14,15,16,17].forEach(c=>ws.getCell(totalRow,c).value=0);
+      [8,9,17,19,20].forEach(c=>ws.getCell(totalRow,c).value=0);
     }
     styleTotalRow(ws,totalRow,headers.length);
     ws.getCell(totalRow,8).numFmt='#,##0.00';
-    [9,14,15,16].forEach(c=>ws.getCell(totalRow,c).numFmt='R$ #,##0.00;[Red]-R$ #,##0.00');
-    ws.getCell(totalRow,17).numFmt='0.00%';
+    [9,17,19].forEach(c=>ws.getCell(totalRow,c).numFmt='R$ #,##0.00;[Red]-R$ #,##0.00');
+    ws.getCell(totalRow,20).numFmt='0.00%';
 
     ws.autoFilter={from:{row:headerRow,column:1},to:{row:headerRow,column:headers.length}};
 
@@ -608,6 +658,7 @@ async function exportProducts(){
         ws.getCell(r,8).numFmt='0.00%';
       }
       applyProfitColors(ws,startRow,endRow,7,8);
+      styleLossRows(ws,startRow,endRow,7,headers.length);
     }
 
     const totalRow=(groupedProducts.length?endRow:headerRow)+1;
@@ -661,7 +712,7 @@ async function loadData(){
   $('sourceFile').textContent=`Base: ${base.meta?.fonte || 'SIGER'}`;
   const updated=base.meta?.geradoEm ? new Date(base.meta.geradoEm).toLocaleString('pt-BR') : '—';
   $('updatedAt').textContent=`Atualizado em ${updated}`;
-  $('footerStatus').textContent=`${records.length.toLocaleString('pt-BR')} registros carregados · margem parcial conforme colunas mapeadas`;
+  $('footerStatus').textContent=`${records.length.toLocaleString('pt-BR')} registros carregados · linhas sem lucro destacadas em vermelho`;
   setupFilters();
   bindEvents();
   renderAll();

@@ -1,0 +1,18 @@
+ATUALIZAÇÃO — CUSTOS E RENTABILIDADE v4 (07/10/2026)
+
+Alterações:
+- Adicionadas as colunas Cst MO, Imposto, Frete e Lucro na visão Faturamento.
+- Removida a coluna/sinal de bolinha.
+- Produtos sem lucro (Margem Base <= 0) ficam com a linha inteira em vermelho.
+- Produtos com lucro mantêm os valores de margem em verde.
+- Exportação Excel acompanha as novas colunas e também destaca linhas sem lucro.
+- Cst MO, Imposto e Frete aparecem como “—” enquanto não houver fonte/coluna mapeada. Nenhum valor foi inventado.
+
+INSTALAÇÃO:
+1. Copie a pasta modulos/custos-rentabilidade deste pacote.
+2. Substitua a pasta de mesmo nome no projeto oficial.
+3. Commit + Push no GitHub Desktop.
+4. Após publicar, use Ctrl+F5 no navegador.
+
+IMPORTANTE:
+Para preencher Cst MO, Imposto e Frete com valores reais, ainda precisamos definir de quais colunas/arquivos esses três dados virão.
