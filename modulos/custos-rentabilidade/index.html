@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Custos e Rentabilidade · Smart Group Analytics</title>
-  <link rel="stylesheet" href="style.css?v=20261007-4">
+  <link rel="stylesheet" href="style.css?v=20261007-5">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -83,7 +83,7 @@
 
     <div class="scope-warning" role="note">
       <i class="fa-solid fa-circle-info"></i>
-      <span><strong>Leitura atual:</strong> os campos Cst MO, Imposto e Frete já estão preparados na tela. Enquanto não houver mapeamento na base, aparecem como “—” e não entram no cálculo. Itens sem lucro ficam destacados em vermelho.</span>
+      <span id="moIntegrationStatus"><strong>Leitura atual:</strong> carregando integração de M.O. por OP…</span>
     </div>
 
     <nav class="tabs" aria-label="Visões do módulo">
@@ -154,9 +154,9 @@
             <div class="detail-panel-title"><i class="fa-solid fa-receipt"></i><div><h3>Referências do faturamento</h3><p>Pedidos, notas e OPs vinculados ao produto selecionado.</p></div></div>
             <div id="detailReferences" class="reference-list"></div>
           </article>
-          <article class="detail-panel production-pending">
-            <div class="detail-panel-title"><i class="fa-solid fa-industry"></i><div><h3>Dados de produção</h3><p>Estrutura preparada para a próxima etapa.</p></div></div>
-            <div class="pending-box"><i class="fa-solid fa-link"></i><div><strong>Base de produção ainda não vinculada</strong><p>Consumos, etapas, tempos, paradas e produtividade serão exibidos aqui sem inventar dados do relatório atual.</p></div></div>
+          <article class="detail-panel">
+            <div class="detail-panel-title"><i class="fa-solid fa-industry"></i><div><h3>Mão de obra por OP</h3><p>Setup + tempo de produção, valorizados pelo custo/minuto de cada operação.</p></div></div>
+            <div id="detailProduction" class="mo-detail-list"></div>
           </article>
         </section>
       </div>
@@ -164,10 +164,10 @@
 
     <footer class="module-footer">
       <span id="footerStatus">Base em carregamento…</span>
-      <details><summary>Mapeamento do Excel</summary><p>B Dt. faturamento · W Sigla · E Produto · F Desc. completa · C Pedido · D OP · J Nota · L Qtd · O Vlr Venda · P Vlr Metro · AG Cst. Unit · AB Comissão · AJ % Comissão. Cst MO, Imposto e Frete aguardam a definição das respectivas fontes/colunas.</p></details>
+      <details><summary>Mapeamento do Excel</summary><p>Faturamento: B Dt. faturamento · W Sigla · E Produto · F Desc. completa · C Pedido · D OP · J Nota · L Qtd · O Vlr Venda · P Vlr Metro · AG Cst. Unit · AB Comissão · AJ % Comissão. M.O.: REGISTROS DE PRODUÇÃO POR O.P. + SETUP DE PRODUÇÃO, cruzados pela OP. Imposto e Frete aguardam definição.</p></details>
     </footer>
   </main>
 
-  <script type="module" src="app.js?v=20261007-4"></script>
+  <script type="module" src="app.js?v=20261007-5"></script>
 </body>
 </html>

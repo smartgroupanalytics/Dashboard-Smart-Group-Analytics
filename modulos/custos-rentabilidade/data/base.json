@@ -3,7 +3,7 @@
     "titulo": "Custos e Rentabilidade",
     "fonte": "SIGER_XLS_2681611_061026_095207.XLSX",
     "geradoEm": "2026-10-06T10:04:00-03:00",
-    "observacaoMargem": "Margem base = valor de venda - custo total - comissão total. Impostos e demais custos ainda não estão mapeados nesta primeira etapa.",
+    "observacaoMargem": "Margem base = valor de venda - custo base - M.O. - comissão - imposto - frete. Nesta versão, M.O. entra quando a OP do faturamento possui correspondência nas bases de produção/setup; imposto e frete ainda não estão definidos.",
     "mapeamento": {
       "dataFaturamento": "B",
       "sigla": "W",
@@ -19,8 +19,8 @@
       "comissaoUnitario": "AB",
       "percentualComissao": "AJ"
     },
-    "versaoLayout": "v4-20261007",
-    "observacaoCustosAdicionais": "Cst MO, Imposto e Frete estão preparados no dashboard, porém ainda não possuem colunas-fonte mapeadas no relatório informado."
+    "versaoLayout": "v5-20261007-MO",
+    "observacaoCustosAdicionais": "Cst MO calculado pela OP usando REGISTROS DE PRODUÇÃO POR O.P. + SETUP DE PRODUÇÃO. Imposto e Frete aguardam definição."
   },
   "registros": [
     {

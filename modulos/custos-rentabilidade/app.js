@@ -9,6 +9,9 @@ let groupedProducts = [];
 let billingPage = 1;
 let productsPage = 1;
 let selectedProduct = null;
+let productionBase = null;
+let setupBase = null;
+let moByOp = new Map();
 
 const money = value => Number(value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 const number = value => Number(value || 0).toLocaleString('pt-BR', { maximumFractionDigits: 2 });
@@ -27,6 +30,140 @@ function sum(list, field){ return list.reduce((acc, item) => acc + Number(item[f
 function unique(list, field){ return [...new Set(list.map(r => String(r[field] ?? '').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pt-BR',{numeric:true})); }
 function marginClass(value){ return Number(value) < 0 ? 'money-negative' : 'money-positive'; }
 
+function normalizeOp(value){
+  const text = String(value ?? '').trim();
+  if(!meaningful(text)) return '';
+  return text.replace(/^0+(?=\d)/,'');
+}
+
+function durationToMinutes(value){
+  if(value === null || value === undefined || value === '') return 0;
+  if(typeof value === 'number' && Number.isFinite(value)){
+    // Caso futuro venha como fração de dia do Excel.
+    return value > 0 && value < 1 ? value * 24 * 60 : value;
+  }
+  const text = String(value).trim();
+  const parts = text.split(':').map(Number);
+  if(parts.length === 2 && parts.every(Number.isFinite)) return (parts[0] * 60) + parts[1];
+  if(parts.length === 3 && parts.every(Number.isFinite)) return (parts[0] * 60) + parts[1] + (parts[2] / 60);
+  const numeric = Number(text.replace(',','.'));
+  return Number.isFinite(numeric) ? numeric : 0;
+}
+
+function minutesToHHMM(value){
+  const minutes = Math.max(0, Math.round(Number(value || 0)));
+  const h = Math.floor(minutes / 60);
+  const m = minutes % 60;
+  return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
+}
+
+function resourceKey(value){
+  return String(value ?? '').trim().toLocaleUpperCase('pt-BR');
+}
+
+function buildMaoObraMap(productionRows=[],setupRows=[]){
+  const groups = new Map();
+
+  productionRows.forEach(row=>{
+    const op = normalizeOp(row.op);
+    if(!op) return;
+    if(!groups.has(op)){
+      groups.set(op,{
+        op,
+        producao:[],
+        setups:[],
+        qtdOP:0,
+        tempoProducaoMin:0,
+        tempoSetupMin:0,
+        custoProducaoTotal:0,
+        custoSetupTotal:0,
+        custoMaoObraTotal:0,
+        custoMaoObraUnitario:0,
+        completo:true,
+        pendencias:[]
+      });
+    }
+    const g = groups.get(op);
+    const minutos = durationToMinutes(row.tempoProducao);
+    const custoMinutoInformado = Number(row.custoMinuto || 0);
+    const custoHora = Number(row.vlrHoraHomem || 0);
+    const custoMinuto = custoMinutoInformado > 0 ? custoMinutoInformado : (custoHora > 0 ? custoHora / 60 : 0);
+    const custo = minutos * custoMinuto;
+    const qtdOP = Number(row.qtdOP || 0);
+    if(qtdOP > 0) g.qtdOP = Math.max(g.qtdOP,qtdOP);
+    if(minutos > 0 && custoMinuto <= 0){
+      g.completo=false;
+      g.pendencias.push(`Produção ${row.recurso || row.centroCusto || ''}: custo/minuto não encontrado`);
+    }
+    g.tempoProducaoMin += minutos;
+    g.custoProducaoTotal += custo;
+    g.producao.push({
+      tipo:'Produção',
+      centroCusto:String(row.centroCusto ?? ''),
+      recurso:String(row.recurso ?? ''),
+      minutos,
+      tempo:minutesToHHMM(minutos),
+      custoMinuto,
+      custo
+    });
+  });
+
+  groups.forEach(g=>{
+    const rateByCenter = new Map();
+    const rateByResource = new Map();
+    g.producao.forEach(item=>{
+      if(item.custoMinuto > 0){
+        if(item.centroCusto) rateByCenter.set(String(item.centroCusto),item.custoMinuto);
+        if(item.recurso) rateByResource.set(resourceKey(item.recurso),item.custoMinuto);
+      }
+    });
+
+    setupRows
+      .filter(row=>normalizeOp(row.op)===g.op && resourceKey(row.motivo)==='SETUP')
+      .forEach(row=>{
+        const minutos = durationToMinutes(row.duracao);
+        const custoMinuto = rateByCenter.get(String(row.centroCusto ?? ''))
+          || rateByResource.get(resourceKey(row.recurso))
+          || 0;
+        const custo = minutos * custoMinuto;
+        if(minutos > 0 && custoMinuto <= 0){
+          g.completo=false;
+          g.pendencias.push(`Setup ${row.recurso || row.centroCusto || ''}: não foi possível localizar o custo/minuto da operação`);
+        }
+        g.tempoSetupMin += minutos;
+        g.custoSetupTotal += custo;
+        g.setups.push({
+          tipo:'Setup',
+          centroCusto:String(row.centroCusto ?? ''),
+          recurso:String(row.recurso ?? ''),
+          minutos,
+          tempo:minutesToHHMM(minutos),
+          custoMinuto,
+          custo
+        });
+      });
+
+    g.tempoTotalMin = g.tempoProducaoMin + g.tempoSetupMin;
+    g.custoMaoObraTotal = g.custoProducaoTotal + g.custoSetupTotal;
+    if(g.qtdOP > 0){
+      g.custoMaoObraUnitario = g.custoMaoObraTotal / g.qtdOP;
+    }else{
+      g.completo=false;
+      g.pendencias.push('Qtd.OP não encontrada para ratear o custo total');
+    }
+    g.tempoProducao = minutesToHHMM(g.tempoProducaoMin);
+    g.tempoSetup = minutesToHHMM(g.tempoSetupMin);
+    g.tempoTotal = minutesToHHMM(g.tempoTotalMin);
+    g.etapas = [...g.setups,...g.producao];
+  });
+
+  return groups;
+}
+
+function getMaoObraByOp(value){
+  return moByOp.get(normalizeOp(value)) || null;
+}
+
 function normalizeRecord(r){
   const qtd = Number(r.quantidade || 0);
   const venda = Number(r.valorVenda || 0);
@@ -36,7 +173,11 @@ function normalizeRecord(r){
   // Campos preparados para as próximas integrações. Se ainda não vierem na base,
   // permanecem como não mapeados e são exibidos como “—” na tabela.
   const hasValue = value => value !== undefined && value !== null && String(value).trim() !== '';
-  const custoMaoObraRaw = r.custoMaoObraUnitario ?? r.custoMOUnitario ?? r.custoMO;
+  const moResumo = getMaoObraByOp(r.op);
+  const custoMaoObraInformado = r.custoMaoObraUnitario ?? r.custoMOUnitario ?? r.custoMO;
+  const custoMaoObraRaw = hasValue(custoMaoObraInformado)
+    ? custoMaoObraInformado
+    : (moResumo?.completo ? moResumo.custoMaoObraUnitario : undefined);
   const impostoRaw = r.impostoUnitario ?? r.imposto;
   const freteRaw = r.freteUnitario ?? r.frete;
   const custoMaoObraMapeado = hasValue(custoMaoObraRaw);
@@ -64,6 +205,8 @@ function normalizeRecord(r){
     impostoUnitario,
     freteUnitario,
     custoMaoObraMapeado,
+    custoMaoObraFonte: hasValue(custoMaoObraInformado) ? 'base faturamento' : (moResumo?.completo ? `OP ${moResumo.op}` : ''),
+    moResumo,
     impostoMapeado,
     freteMapeado,
     comissaoUnitario: comissaoUnit,
@@ -213,6 +356,44 @@ function renderProducts(){
   $('productsNext').disabled = productsPage >= totalPages;
 }
 
+
+function renderProductionMO(rows){
+  const container = $('detailProduction');
+  if(!container) return;
+  const ops = unique(rows,'op').filter(meaningful);
+  const summaries = ops.map(op=>getMaoObraByOp(op)).filter(Boolean);
+
+  if(!summaries.length){
+    container.innerHTML = `<div class="pending-box"><i class="fa-solid fa-link-slash"></i><div><strong>Nenhum cálculo de M.O. vinculado às OPs deste item</strong><p>As bases de produção e setup estão carregadas, mas as OPs deste faturamento ainda não possuem correspondência nelas.</p></div></div>`;
+    return;
+  }
+
+  container.innerHTML = summaries.map(g=>`
+    <div class="mo-op-card ${g.completo ? '' : 'incomplete'}">
+      <div class="mo-op-head">
+        <div><span>ORDEM DE PRODUÇÃO</span><strong>OP ${esc(g.op)}</strong></div>
+        <div class="mo-op-qty"><span>Qtd. OP</span><strong>${number(g.qtdOP)}</strong></div>
+        <span class="mo-status ${g.completo ? 'ok' : 'warn'}">${g.completo ? 'Cálculo completo' : 'Revisar cálculo'}</span>
+      </div>
+      <div class="mo-metrics">
+        <article><span>Tempo Setup</span><strong>${esc(g.tempoSetup)}</strong><small>${money(g.custoSetupTotal)}</small></article>
+        <article><span>Tempo Produção</span><strong>${esc(g.tempoProducao)}</strong><small>${money(g.custoProducaoTotal)}</small></article>
+        <article><span>Tempo Total</span><strong>${esc(g.tempoTotal)}</strong><small>Setup + produção</small></article>
+        <article class="highlight"><span>Custo M.O. total</span><strong>${money(g.custoMaoObraTotal)}</strong><small>Custo total da OP</small></article>
+        <article class="highlight"><span>Cst MO unit.</span><strong>${money(g.custoMaoObraUnitario)}</strong><small>Total M.O. ÷ Qtd. OP</small></article>
+      </div>
+      <div class="mo-formula"><i class="fa-solid fa-calculator"></i><span><strong>Regra:</strong> Σ (tempo produção × custo/minuto) + Σ (tempo setup × custo/minuto da mesma operação) = Custo M.O. total. Depois, Custo M.O. total ÷ Qtd.OP = Cst MO unitário.</span></div>
+      <div class="mo-table-wrap">
+        <table class="mo-table">
+          <thead><tr><th>Tipo</th><th>Centro</th><th>Recurso</th><th class="num">Tempo</th><th class="num">R$/min</th><th class="num">Custo</th></tr></thead>
+          <tbody>${g.etapas.map(item=>`<tr><td><span class="mo-type ${item.tipo==='Setup'?'setup':'production'}">${esc(item.tipo)}</span></td><td>${esc(item.centroCusto || '—')}</td><td>${esc(item.recurso || '—')}</td><td class="num">${esc(item.tempo)}</td><td class="num">${money(item.custoMinuto)}</td><td class="num">${money(item.custo)}</td></tr>`).join('')}</tbody>
+        </table>
+      </div>
+      ${g.pendencias.length ? `<div class="mo-pending">${g.pendencias.map(p=>`<span><i class="fa-solid fa-triangle-exclamation"></i> ${esc(p)}</span>`).join('')}</div>` : ''}
+    </div>
+  `).join('');
+}
+
 function renderDetail(){
   if(!selectedProduct){
     $('detailEmpty').hidden = false;
@@ -252,6 +433,7 @@ function renderDetail(){
     ['Último faturamento',dateBR([...rows].sort((a,b)=>b.dataFaturamento.localeCompare(a.dataFaturamento))[0]?.dataFaturamento)]
   ];
   $('detailReferences').innerHTML = refs.map(([label,value])=>`<div class="reference-group"><span>${label}</span><strong>${esc(value)}</strong></div>`).join('');
+  renderProductionMO(rows);
 }
 
 function renderAll(){ renderKpis(); renderBilling(); renderProducts(); renderDetail(); }
@@ -703,16 +885,43 @@ function bindEvents(){
   $('exportBilling').addEventListener('click',exportBilling); $('exportProducts').addEventListener('click',exportProducts);
 }
 
+async function fetchOptionalJson(url){
+  try{
+    const response = await fetch(`${url}?v=${Date.now()}`,{cache:'no-store'});
+    if(!response.ok) return null;
+    return await response.json();
+  }catch(error){
+    console.warn(`Base opcional não carregada: ${url}`,error);
+    return null;
+  }
+}
+
 async function loadData(){
-  const response = await fetch(`data/base.json?v=${Date.now()}`,{cache:'no-store'});
+  const [response,prodData,setupData] = await Promise.all([
+    fetch(`data/base.json?v=${Date.now()}`,{cache:'no-store'}),
+    fetchOptionalJson('data/producao.json'),
+    fetchOptionalJson('data/setup.json')
+  ]);
   if(!response.ok) throw new Error(`Base não encontrada (${response.status})`);
   base=await response.json();
+  productionBase=prodData;
+  setupBase=setupData;
+  moByOp=buildMaoObraMap(productionBase?.registros||[],setupBase?.registros||[]);
+
   records=(base.registros||[]).map(normalizeRecord).sort((a,b)=>String(b.dataFaturamento).localeCompare(String(a.dataFaturamento)) || String(b.nota).localeCompare(String(a.nota),undefined,{numeric:true}));
   filtered=[...records];
-  $('sourceFile').textContent=`Base: ${base.meta?.fonte || 'SIGER'}`;
+
+  $('sourceFile').textContent=`Base: ${base.meta?.fonte || 'SIGER'} · M.O.: ${moByOp.size.toLocaleString('pt-BR')} OP${moByOp.size===1?'':'s'}`;
   const updated=base.meta?.geradoEm ? new Date(base.meta.geradoEm).toLocaleString('pt-BR') : '—';
   $('updatedAt').textContent=`Atualizado em ${updated}`;
-  $('footerStatus').textContent=`${records.length.toLocaleString('pt-BR')} registros carregados · linhas sem lucro destacadas em vermelho`;
+  const linkedRows = records.filter(r=>r.custoMaoObraMapeado).length;
+  $('footerStatus').textContent=`${records.length.toLocaleString('pt-BR')} registros carregados · M.O. calculada para ${moByOp.size.toLocaleString('pt-BR')} OP${moByOp.size===1?'':'s'} · ${linkedRows.toLocaleString('pt-BR')} item(ns) do faturamento vinculados`;
+  const moStatus=$('moIntegrationStatus');
+  if(moStatus){
+    moStatus.innerHTML = moByOp.size
+      ? `<strong>M.O. integrada:</strong> ${moByOp.size.toLocaleString('pt-BR')} OP${moByOp.size===1?'':'s'} calculada(s) a partir de Setup + Produção. O valor aparece em Cst MO quando a OP do faturamento tiver correspondência. Imposto e Frete continuam pendentes.`
+      : `<strong>M.O.:</strong> bases de produção/setup não encontradas. Imposto e Frete continuam pendentes.`;
+  }
   setupFilters();
   bindEvents();
   renderAll();

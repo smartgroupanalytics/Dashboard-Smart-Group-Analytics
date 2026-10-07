@@ -1,0 +1,75 @@
+{
+  "meta": {
+    "fonte": "REGISTROS DE PRODUÇÃO POR O.P.XLSX",
+    "geradoEm": "2026-10-07T11:23:00-03:00",
+    "regra": "Tempo de produção × custo por minuto (Campo calculado; fallback Vlr.hr./homem ÷ 60), agrupado pela OP."
+  },
+  "registros": [
+    {
+      "op": "8361",
+      "centroCusto": "2",
+      "recurso": "GRAVADORA",
+      "descricaoProduto": "ARUBA GLAM OURO ROSADO",
+      "qtdAprovada": 206,
+      "qtdOP": 200,
+      "tempoProducao": "0000:19",
+      "vlrHoraHomem": 580.2,
+      "custoMinuto": 9.67
+    },
+    {
+      "op": "8361",
+      "centroCusto": "3",
+      "recurso": "GR 1",
+      "descricaoProduto": "ARUBA GLAM OURO ROSADO",
+      "qtdAprovada": 200,
+      "qtdOP": 200,
+      "tempoProducao": "0001:31",
+      "vlrHoraHomem": 195,
+      "custoMinuto": 3.25
+    },
+    {
+      "op": "8361",
+      "centroCusto": "6",
+      "recurso": "ESTAMPA 1",
+      "descricaoProduto": "ARUBA GLAM OURO ROSADO",
+      "qtdAprovada": 206,
+      "qtdOP": 200,
+      "tempoProducao": "0000:20",
+      "vlrHoraHomem": 580.2,
+      "custoMinuto": 9.67
+    },
+    {
+      "op": "8361",
+      "centroCusto": "7",
+      "recurso": "ESTAMPA 2",
+      "descricaoProduto": "ARUBA GLAM OURO ROSADO",
+      "qtdAprovada": 200,
+      "qtdOP": 200,
+      "tempoProducao": "0000:20",
+      "vlrHoraHomem": 580.2,
+      "custoMinuto": 9.67
+    },
+    {
+      "op": "8361",
+      "centroCusto": "24",
+      "recurso": "ESTAMPA 3",
+      "descricaoProduto": "ARUBA GLAM OURO ROSADO",
+      "qtdAprovada": 200,
+      "qtdOP": 200,
+      "tempoProducao": "0000:19",
+      "vlrHoraHomem": 580.2,
+      "custoMinuto": 9.67
+    },
+    {
+      "op": "8361",
+      "centroCusto": "1",
+      "recurso": "RECOBRIMENTO",
+      "descricaoProduto": "ARUBA GLAM OURO ROSADO",
+      "qtdAprovada": 206,
+      "qtdOP": 200,
+      "tempoProducao": "0000:17",
+      "vlrHoraHomem": 580.2,
+      "custoMinuto": 9.67
+    }
+  ]
+}

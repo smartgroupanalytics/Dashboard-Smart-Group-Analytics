@@ -1,0 +1,33 @@
+CUSTOS E RENTABILIDADE — v5 MÃO DE OBRA POR OP
+Data: 07/10/2026
+
+NOVO CÁLCULO DE M.O.
+1) Cruza as bases pela OP.
+2) Produção:
+   custo da etapa = Tempo Produção (em minutos) × Campo calculado (R$/minuto).
+   Se Campo calculado não vier preenchido, usa Vlr.hr./homem ÷ 60.
+3) Setup:
+   considera somente Motivo Parada = SETUP.
+   custo do setup = Duração (em minutos) × custo/minuto da mesma OP + centro de custo/recurso encontrado na base de produção.
+4) Custo M.O. total da OP = soma custos de Produção + soma custos de Setup.
+5) Cst MO unitário = Custo M.O. total ÷ Qtd.OP.
+6) O dashboard aplica o Cst MO unitário na linha do faturamento quando a coluna OP tiver correspondência.
+
+VALIDAÇÃO COM A OP 8361
+Setup: 01:22 = 82 min
+Produção: 03:06 = 186 min
+Tempo total: 04:28 = 268 min
+Custo Setup: R$ 792,94
+Custo Produção: R$ 1.214,40
+Custo M.O. total: R$ 2.007,34
+Qtd.OP: 200
+Cst MO unitário: R$ 10,0367 (exibido no painel como R$ 10,04)
+
+ARQUIVOS DE DADOS NOVOS
+- data/producao.json
+- data/setup.json
+
+IMPORTANTE
+A base de faturamento de exemplo atual possui OP = 0, portanto ela não casa com a OP 8361.
+O cálculo já fica pronto e será aplicado automaticamente assim que uma linha do faturamento vier com OP 8361 (ou qualquer outra OP existente nas novas bases).
+Imposto e Frete continuam sem fórmula nesta versão.
