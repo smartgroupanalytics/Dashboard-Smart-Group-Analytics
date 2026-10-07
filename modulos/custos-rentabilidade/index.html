@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Custos e Rentabilidade · Smart Group Analytics</title>
-  <link rel="stylesheet" href="style.css?v=20261007-6">
+  <link rel="stylesheet" href="style.css?v=20261007-7">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -23,8 +23,21 @@
       <div class="hero-meta">
         <span id="sourceFile">Carregando base…</span>
         <strong id="updatedAt">—</strong>
+        <div class="hero-import-actions">
+          <button id="importReports" class="import-button" type="button"><i class="fa-solid fa-file-import"></i> Importar 4 arquivos</button>
+          <input id="importFiles" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" multiple hidden>
+        </div>
       </div>
     </header>
+
+    <section id="importStatus" class="import-status" aria-label="Status dos relatórios importados">
+      <div class="import-status-head">
+        <div><span class="eyebrow">FONTES DE DADOS</span><strong>Validação dos 4 relatórios SIGER</strong></div>
+        <button id="resetImport" class="reset-import" type="button" hidden><i class="fa-solid fa-rotate-left"></i> Usar base publicada</button>
+      </div>
+      <div id="importSourceBadges" class="import-source-badges"></div>
+      <div id="importOrigin" class="import-origin"><i class="fa-solid fa-spinner fa-spin"></i> Validando bases…</div>
+    </section>
 
     <section class="filter-panel" aria-label="Filtros da rentabilidade">
       <div class="field">
@@ -164,10 +177,10 @@
 
     <footer class="module-footer">
       <span id="footerStatus">Base em carregamento…</span>
-      <details><summary>Mapeamento do Excel</summary><p>Faturamento: B Dt. faturamento · W Sigla · E Produto · F Desc. completa · C Pedido · D OP · J Nota · L Qtd · O Vlr Venda · P Vlr Metro · AG Cst. Unit · AB Comissão · AJ % Comissão. M.O.: REGISTROS DE PRODUÇÃO POR O.P. + SETUP DE PRODUÇÃO, cruzados pela OP. Imposto e Frete aguardam definição.</p></details>
+      <details><summary>Mapeamento do Excel</summary><p>Faturamento: B Dt. faturamento · W Sigla · E Produto · F Desc. completa · C Pedido · D OP · J Nota · L Qtd · O Vlr Venda · P Vlr Metro · AG Cst. Unit · AB Comissão · AJ % Comissão. Rel. 199: Consumos/Insumos por OP · Rel. 200: Faturamento (B/W/E/F/C/D/J/L/O/P/AG/AB/AJ) · Rel. 201: Produção por OP · Rel. 202: Setup/Paradas. M.O. = Produção + Setup, rateada pelo maior total de Qtd. Aprovada entre as operações da OP. Imposto e Frete aguardam definição.</p></details>
     </footer>
   </main>
 
-  <script type="module" src="app.js?v=20261007-6"></script>
+  <script type="module" src="app.js?v=20261007-7"></script>
 </body>
 </html>
