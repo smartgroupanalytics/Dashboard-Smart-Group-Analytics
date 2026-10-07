@@ -111,32 +111,12 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8338",
-    "produto": "17962",
-    "desc_completa": "NAPA MAXXI POA CHOCOLATE 1271 JEANS 1123",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 89,
-    "dt_saida": "2026-09-21",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8347",
     "produto": "17851",
     "desc_completa": "TELA SHINE PARIS DOURADO",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 883.3,
+    "qtd_produzir": 314.3,
     "dt_saida": "2026-09-23",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8351",
-    "produto": "16703",
-    "desc_completa": "NAPA SEVILLE CAMEL 1165",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 800,
-    "dt_saida": "2026-09-22",
     "abreviacao": ""
   },
   {
@@ -161,21 +141,11 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8394",
-    "produto": "17456",
-    "desc_completa": "VERNIZ LONDON ALFAZEMA 1497",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 300,
-    "dt_saida": "2026-09-30",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8417",
     "produto": "18055",
     "desc_completa": "NAPA ONCA SAVANA MULTI BRANCO 99",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 310,
+    "qtd_produzir": 307,
     "dt_saida": "2026-09-29",
     "abreviacao": ""
   },
@@ -251,16 +221,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8450",
-    "produto": "9873",
-    "desc_completa": "METALIZADO NANCY PU 1.0 DOURADO",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 41,
-    "dt_saida": "2026-10-06",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8451",
     "produto": "9895",
     "desc_completa": "METALIZADO NANCY PU 1.0 OURO ROSADO",
@@ -297,46 +257,6 @@
     "grupo": "BEIRA RIO",
     "qtd_produzir": 400,
     "dt_saida": "2026-09-30",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8496",
-    "produto": "16703",
-    "desc_completa": "NAPA SEVILLE CAMEL 1165",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 500,
-    "dt_saida": "2026-09-30",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8497",
-    "produto": "16878",
-    "desc_completa": "NAPA SEVILLE AVELA 1248",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 520,
-    "dt_saida": "2026-09-30",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8498",
-    "produto": "17005",
-    "desc_completa": "NAPA RAVENA PRETO",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 400,
-    "dt_saida": "2026-09-30",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8508",
-    "produto": "9691",
-    "desc_completa": "VERNIZ LONDON 1.0 PRETO 01",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 200,
-    "dt_saida": "2026-09-29",
     "abreviacao": ""
   },
   {
@@ -421,16 +341,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8545",
-    "produto": "30240",
-    "desc_completa": "NAPA LISTRAS CANNES MULTI PRETO 01",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 150,
-    "dt_saida": "2026-10-09",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8547",
     "produto": "18144",
     "desc_completa": "NAPA ZEBRA SAVANA BRANCO 99/PRETO 01",
@@ -485,7 +395,7 @@
     "produto": "18148",
     "desc_completa": "NAPA MAXXI POA PRETO 01  BRANCO 99",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 200,
+    "qtd_produzir": 197,
     "dt_saida": "2026-10-09",
     "abreviacao": ""
   },
@@ -617,6 +527,96 @@
     "grupo": "BEIRA RIO",
     "qtd_produzir": 200,
     "dt_saida": "2026-10-08",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8624",
+    "produto": "18219",
+    "desc_completa": "NAPA LISTRAS MADRI BRANCO OFF 526/ PRETO 01",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 200,
+    "dt_saida": "2026-10-14",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8625",
+    "produto": "18221",
+    "desc_completa": "NAPA LISTRAS MADRI BRANCO OFF 526/ CHOCOLATE 1271",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 200,
+    "dt_saida": "2026-10-14",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8628",
+    "produto": "9100112",
+    "desc_completa": "NAPA MARSELHA OSTRA",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 1700,
+    "dt_saida": "2026-10-09",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8629",
+    "produto": "30139",
+    "desc_completa": "CAMURÇA PARIS GLAM BRANCO OFF 526/ PRATA/ BISCOITO",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 48,
+    "dt_saida": "2026-10-08",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8630",
+    "produto": "17496",
+    "desc_completa": "CAMURÇA PARIS GLAM FLEX PRETO 01/ GRAFITE/ PRETO",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 104,
+    "dt_saida": "2026-10-14",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8631",
+    "produto": "30153",
+    "desc_completa": "CAMURÇA PARIS GLAM + BASE FLEX / NUDE 658- DOURADO/ BISCOITO",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 74.8,
+    "dt_saida": "2026-10-14",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8632",
+    "produto": "30139",
+    "desc_completa": "CAMURÇA PARIS GLAM BRANCO OFF 526/ PRATA/ BISCOITO",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 100,
+    "dt_saida": "2026-10-14",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8643",
+    "produto": "2382",
+    "desc_completa": "METALIZADO PREMIUM PU 0.9 DOURADO",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 2500,
+    "dt_saida": "2026-10-09",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8646",
+    "produto": "2382",
+    "desc_completa": "METALIZADO PREMIUM PU 0.9 DOURADO",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 2550,
+    "dt_saida": "2026-10-09",
     "abreviacao": ""
   }
 ]
