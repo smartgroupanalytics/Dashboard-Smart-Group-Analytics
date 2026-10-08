@@ -18,7 +18,7 @@ let eventsBound = false;
 let currentDataOrigin = 'published';
 let allCfops = [];
 let selectedCfops = new Set();
-const IMPORT_STORAGE_KEY = 'smartgroup.custosRentabilidade.import.v11';
+const IMPORT_STORAGE_KEY = 'smartgroup.custosRentabilidade.import.v12';
 
 const money = value => Number(value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 const number = value => Number(value || 0).toLocaleString('pt-BR', { maximumFractionDigits: 2 });
@@ -97,6 +97,7 @@ function buildMaoObraMap(productionRows=[],setupRows=[],printingRows=[]){
         custoProducaoTotal:0,
         custoSetupTotal:0,
         custoImpressaoTotal:0,
+        custoImpressaoUnitario:0,
         impressoes:[],
         custoMaoObraTotal:0,
         custoMaoObraUnitario:0,
@@ -180,10 +181,10 @@ function buildMaoObraMap(productionRows=[],setupRows=[],printingRows=[]){
         });
       });
 
-    // Custos de impressão entram somente quando a própria OP possui
-    // IMPRESSAO UV ou IMPRESSAO SOLVENTE no relatório complementar.
-    // Preço ven (coluna F) é o valor unitário; multiplicamos pela Qtd.aprovada
-    // do item para obter o custo total de impressão da OP.
+    // IMPRESSAO UV e IMPRESSAO SOLVENTE não fazem mais parte da M.O.
+    // Elas compõem a matéria-prima da mesma OP. O custo total de impressão é
+    // Preço ven (coluna F) × Qtd. aprovada do item e depois é rateado pela
+    // Quantidade Aprovada da OP para obter o adicional unitário de matéria-prima.
     printingRows
       .filter(row=>normalizeOp(row.op)===g.op && row.ehImpressao)
       .forEach(row=>{
@@ -192,7 +193,7 @@ function buildMaoObraMap(productionRows=[],setupRows=[],printingRows=[]){
         const custo=qtdImpressao>0 ? valorUnitario*qtdImpressao : valorUnitario;
         g.custoImpressaoTotal += custo;
         g.impressoes.push({
-          tipo:'Impressão',
+          tipo:'Matéria-prima impressão',
           centroCusto:String(row.centroCusto ?? ''),
           recurso:String(row.descricao ?? ''),
           minutos:0,
@@ -205,17 +206,24 @@ function buildMaoObraMap(productionRows=[],setupRows=[],printingRows=[]){
       });
 
     g.tempoTotalMin = g.tempoProducaoMin + g.tempoSetupMin;
-    g.custoMaoObraTotal = g.custoProducaoTotal + g.custoSetupTotal + g.custoImpressaoTotal;
+    // A M.O. permanece exclusivamente Setup + tempo/máquina de Produção.
+    // Recursos de IMPRESSAO DIGITAL apontados no relatório 201 continuam aqui
+    // normalmente, pois são operações/máquina e já estão dentro de g.producao.
+    g.custoMaoObraTotal = g.custoProducaoTotal + g.custoSetupTotal;
     if(g.qtdAprovada > 0){
       g.custoMaoObraUnitario = g.custoMaoObraTotal / g.qtdAprovada;
+      g.custoImpressaoUnitario = g.custoImpressaoTotal / g.qtdAprovada;
     }else{
       g.completo=false;
-      g.pendencias.push('Quantidade aprovada não encontrada para ratear o custo total');
+      g.custoImpressaoUnitario = 0;
+      g.pendencias.push('Quantidade aprovada não encontrada para ratear os custos unitários');
     }
     g.tempoProducao = minutesToHHMM(g.tempoProducaoMin);
     g.tempoSetup = minutesToHHMM(g.tempoSetupMin);
     g.tempoTotal = minutesToHHMM(g.tempoTotalMin);
-    g.etapas = [...g.setups,...g.producao,...g.impressoes];
+    // UV/Solvente ficam fora da tabela de etapas de M.O.; são exibidos à parte
+    // como adicional de matéria-prima.
+    g.etapas = [...g.setups,...g.producao];
   });
 
   return groups;
@@ -228,7 +236,7 @@ function getMaoObraByOp(value){
 function normalizeRecord(r){
   const qtd = Number(r.quantidade || 0);
   const venda = Number(r.valorVenda || 0);
-  const custoUnit = Number(r.custoUnitario || 0);
+  const custoMateriaPrimaBaseUnitario = Number(r.custoUnitario || 0);
   const comissaoUnit = Number(r.comissaoUnitario || 0);
 
   // Campos preparados para as próximas integrações. Se ainda não vierem na base,
@@ -247,8 +255,12 @@ function normalizeRecord(r){
   const custoMaoObraUnitario = Number(custoMaoObraRaw || 0);
   const impostoUnitario = Number(impostoRaw || 0);
   const freteUnitario = Number(freteRaw || 0);
+  // UV/Solvente é custo adicional de matéria-prima. IMPRESSAO DIGITAL do
+  // relatório de produção continua dentro da M.O. e não entra neste adicional.
+  const custoImpressaoMateriaPrimaUnitario = Number(moResumo?.custoImpressaoUnitario || 0);
+  const custoMateriaPrimaUnitario = custoMateriaPrimaBaseUnitario + custoImpressaoMateriaPrimaUnitario;
 
-  const custoTotal = qtd * custoUnit;
+  const custoTotal = qtd * custoMateriaPrimaUnitario;
   const custoMaoObraTotal = qtd * custoMaoObraUnitario;
   const impostoTotal = qtd * impostoUnitario;
   const freteTotal = qtd * freteUnitario;
@@ -261,7 +273,10 @@ function normalizeRecord(r){
     quantidade: qtd,
     valorVenda: venda,
     valorMetro: Number(r.valorMetro || 0),
-    custoUnitario: custoUnit,
+    custoUnitario: custoMateriaPrimaUnitario,
+    custoMateriaPrimaUnitario,
+    custoMateriaPrimaBaseUnitario,
+    custoImpressaoMateriaPrimaUnitario,
     custoMaoObraUnitario,
     impostoUnitario,
     freteUnitario,
@@ -360,13 +375,15 @@ function applyFilters(){
 }
 
 function renderKpis(){
-  const revenue = sum(filtered,'valorVenda');
-  const cost = sum(filtered,'custoTotal');
-  const commission = sum(filtered,'comissaoTotal');
-  const margin = sum(filtered,'margemBase');
-  const marginPct = revenue ? margin / revenue * 100 : 0;
-  $('kpiInvoices').textContent = unique(filtered,'nota').length.toLocaleString('pt-BR');
+  // Linhas técnicas (IMPRESSAO UV/SOLVENTE e INSUMOS) são fonte de custo e
+  // não devem aparecer nem ser somadas como faturamento independente nos KPIs.
   const visibleRows=getGridRows();
+  const revenue = sum(visibleRows,'valorVenda');
+  const cost = sum(visibleRows,'custoTotal');
+  const commission = sum(visibleRows,'comissaoTotal');
+  const margin = sum(visibleRows,'margemBase');
+  const marginPct = revenue ? margin / revenue * 100 : 0;
+  $('kpiInvoices').textContent = unique(visibleRows,'nota').length.toLocaleString('pt-BR');
   const hiddenTechnical=filtered.length-visibleRows.length;
   $('kpiRows').textContent = hiddenTechnical
     ? `${visibleRows.length.toLocaleString('pt-BR')} exibidos · ${hiddenTechnical.toLocaleString('pt-BR')} técnicos ocultos`
@@ -395,7 +412,7 @@ function renderBilling(){
       <td class="num">${number(r.quantidade)}</td>
       <td class="num">${money(r.valorVenda)}</td>
       <td class="num">${money(r.valorMetro)}</td>
-      <td class="num">${money(r.custoUnitario)}</td>
+      <td class="num material-cost-col" title="Base: ${money(r.custoMateriaPrimaBaseUnitario)}${r.custoImpressaoMateriaPrimaUnitario ? ` + Impressão UV/Solvente: ${money(r.custoImpressaoMateriaPrimaUnitario)}` : ''}">${money(r.custoMateriaPrimaUnitario)}</td>
       <td class="num optional-cost">${optionalMoney(r.custoMaoObraUnitario,r.custoMaoObraMapeado)}</td>
       <td class="num optional-cost">${optionalMoney(r.impostoUnitario,r.impostoMapeado)}</td>
       <td class="num optional-cost">${optionalMoney(r.freteUnitario,r.freteMapeado)}</td>
@@ -473,17 +490,17 @@ function renderProductionMO(rows){
         <article><span>Tempo Setup</span><strong>${esc(g.tempoSetup)}</strong><small>${money(g.custoSetupTotal)}</small></article>
         <article><span>Tempo Produção</span><strong>${esc(g.tempoProducao)}</strong><small>${money(g.custoProducaoTotal)}</small></article>
         <article><span>Tempo Total</span><strong>${esc(g.tempoTotal)}</strong><small>Setup + produção</small></article>
-        <article><span>Impressão</span><strong>${money(g.custoImpressaoTotal)}</strong><small>${g.impressoes.length ? `${g.impressoes.length} item(ns) UV/Solvente` : 'Sem impressão nesta OP'}</small></article>
-        <article class="highlight"><span>Custo M.O. total</span><strong>${money(g.custoMaoObraTotal)}</strong><small>Setup + máquina + impressão</small></article>
+        <article class="highlight"><span>Custo M.O. total</span><strong>${money(g.custoMaoObraTotal)}</strong><small>Setup + máquina/produção</small></article>
         <article class="highlight"><span>Cst MO unit.</span><strong>${money(g.custoMaoObraUnitario)}</strong><small>Total M.O. ÷ Qtd. aprovada</small></article>
       </div>
-      <div class="mo-formula"><i class="fa-solid fa-calculator"></i><span><strong>Regra:</strong> custo da produção + custo do setup + impressão UV/Solvente da mesma OP = Custo M.O. total. Para impressão, usa Preço ven (coluna F) × Qtd. aprovada do item. Depois, Custo M.O. total ÷ Quantidade Aprovada da OP = Cst MO unitário.</span></div>
+      <div class="mo-formula"><i class="fa-solid fa-calculator"></i><span><strong>Regra M.O.:</strong> Setup + operações/máquina de Produção. IMPRESSAO DIGITAL apontada no relatório 201 continua dentro da M.O. Já IMPRESSAO UV e IMPRESSAO SOLVENTE do relatório complementar não entram na M.O.; elas são incorporadas ao Cst. Mat. Prima.</span></div>
       <div class="mo-table-wrap">
         <table class="mo-table">
-          <thead><tr><th>Tipo</th><th>Centro</th><th>Recurso</th><th class="num">Tempo / Qtd.</th><th class="num">R$/min ou R$/un.</th><th class="num">Custo</th></tr></thead>
-          <tbody>${g.etapas.map(item=>`<tr><td><span class="mo-type ${item.tipo==='Setup'?'setup':item.tipo==='Impressão'?'printing':'production'}">${esc(item.tipo)}</span></td><td>${esc(item.centroCusto || '—')}</td><td>${esc(item.recurso || '—')}</td><td class="num">${item.tipo==='Impressão' ? number(item.quantidade) : esc(item.tempo)}</td><td class="num">${item.tipo==='Impressão' ? money(item.valorUnitario) : money(item.custoMinuto)}</td><td class="num">${money(item.custo)}</td></tr>`).join('')}</tbody>
+          <thead><tr><th>Tipo</th><th>Centro</th><th>Recurso</th><th class="num">Tempo</th><th class="num">R$/min</th><th class="num">Custo</th></tr></thead>
+          <tbody>${g.etapas.map(item=>`<tr><td><span class="mo-type ${item.tipo==='Setup'?'setup':'production'}">${esc(item.tipo)}</span></td><td>${esc(item.centroCusto || '—')}</td><td>${esc(item.recurso || '—')}</td><td class="num">${esc(item.tempo)}</td><td class="num">${money(item.custoMinuto)}</td><td class="num">${money(item.custo)}</td></tr>`).join('')}</tbody>
         </table>
       </div>
+      ${g.impressoes.length ? `<div class="material-print-block"><div class="material-print-head"><div><span>ADICIONAL DE MATÉRIA-PRIMA</span><strong>Impressão UV / Solvente</strong></div><div><span>Total da OP</span><strong>${money(g.custoImpressaoTotal)}</strong></div><div><span>Adicional unit.</span><strong>${money(g.custoImpressaoUnitario)}</strong></div></div><div class="mo-table-wrap"><table class="mo-table material-print-table"><thead><tr><th>Centro</th><th>Descrição</th><th class="num">Qtd. aprovada</th><th class="num">R$/un.</th><th class="num">Custo</th></tr></thead><tbody>${g.impressoes.map(item=>`<tr><td>${esc(item.centroCusto || '—')}</td><td>${esc(item.recurso || '—')}</td><td class="num">${number(item.quantidade)}</td><td class="num">${money(item.valorUnitario)}</td><td class="num">${money(item.custo)}</td></tr>`).join('')}</tbody></table></div></div>` : ''}
       ${g.pendencias.length ? `<div class="mo-pending">${g.pendencias.map(p=>`<span><i class="fa-solid fa-triangle-exclamation"></i> ${esc(p)}</span>`).join('')}</div>` : ''}
     </div>
   `).join('');
@@ -564,7 +581,7 @@ function printKpisHtml(rows){
   return `<div class="print-kpis">
     <div><span>Número de NF emitidas</span><strong>${invoices.toLocaleString('pt-BR')}</strong></div>
     <div><span>Faturamento</span><strong>${money(revenue)}</strong></div>
-    <div><span>Custo total</span><strong>${money(cost)}</strong></div>
+    <div><span>Custo Matéria-Prima</span><strong>${money(cost)}</strong></div>
     <div><span>Comissões</span><strong>${money(commission)}</strong></div>
     <div><span>Margem base</span><strong>${money(margin)}</strong><small>${percent(marginPct)}</small></div>
   </div>`;
@@ -576,12 +593,12 @@ function printBillingHtml(){
     <td>${dateBR(r.dataFaturamento)}</td><td>${esc(r.sigla)}</td><td>${esc(r.produto)}</td><td>${esc(r.descricaoCompleta)}</td>
     <td>${displayRef(r.pedido)}</td><td>${displayRef(r.op)}</td><td>${displayRef(r.nota)}</td><td>${displayRef(r.cfop)}</td>
     <td class="num">${number(r.quantidade)}</td><td class="num">${money(r.valorVenda)}</td><td class="num">${money(r.valorMetro)}</td>
-    <td class="num">${money(r.custoUnitario)}</td><td class="num">${optionalMoney(r.custoMaoObraUnitario,r.custoMaoObraMapeado)}</td>
+    <td class="num material-cost-col">${money(r.custoMateriaPrimaUnitario)}</td><td class="num">${optionalMoney(r.custoMaoObraUnitario,r.custoMaoObraMapeado)}</td>
     <td class="num">${money(r.comissaoUnitario)}</td><td class="num">${percent(r.percentualComissao)}</td>
     <td class="num">${money(r.custoTotal)}</td><td class="num">${money(r.lucroUnitario)}</td><td class="num">${money(r.margemBase)}</td><td class="num">${percent(r.margemBasePercentual)}</td>
   </tr>`).join('');
   return `<h2>Faturamento por item</h2>
-    <div class="print-table-wrap"><table><thead><tr><th>Dt. Fat.</th><th>Sigla</th><th>Produto</th><th>Descrição completa</th><th>Pedido</th><th>OP</th><th>Nota</th><th>CFOP</th><th>Qtd.</th><th>Vlr Venda</th><th>Vlr Metro</th><th>Cst. Unit.</th><th>Cst MO</th><th>Comissão</th><th>% Comis.</th><th>Custo Total</th><th>Lucro</th><th>Margem Base</th><th>% Margem</th></tr></thead><tbody>${body||'<tr><td colspan="19">Nenhum registro.</td></tr>'}</tbody></table></div>`;
+    <div class="print-table-wrap"><table><thead><tr><th>Dt. Fat.</th><th>Sigla</th><th>Produto</th><th>Descrição completa</th><th>Pedido</th><th>OP</th><th>Nota</th><th>CFOP</th><th>Qtd.</th><th>Vlr Venda</th><th>Vlr Metro</th><th>Cst. Mat. Prima</th><th>Cst MO</th><th>Comissão</th><th>% Comis.</th><th>Custo Total</th><th>Lucro</th><th>Margem Base</th><th>% Margem</th></tr></thead><tbody>${body||'<tr><td colspan="19">Nenhum registro.</td></tr>'}</tbody></table></div>`;
 }
 
 function printProductsHtml(){
@@ -605,9 +622,9 @@ function printProductionHtml(){
     <div class="print-op-kpis">
       <div><span>Tempo Setup</span><strong>${esc(g.tempoSetup)}</strong><small>${money(g.custoSetupTotal)}</small></div>
       <div><span>Tempo Produção</span><strong>${esc(g.tempoProducao)}</strong><small>${money(g.custoProducaoTotal)}</small></div>
-      <div><span>Impressão</span><strong>${money(g.custoImpressaoTotal)}</strong></div>
       <div><span>Custo M.O. total</span><strong>${money(g.custoMaoObraTotal)}</strong></div>
       <div><span>Cst MO unit.</span><strong>${money(g.custoMaoObraUnitario)}</strong></div>
+      <div><span>UV/Solvente → Mat. Prima</span><strong>${money(g.custoImpressaoTotal)}</strong><small>${money(g.custoImpressaoUnitario)} / un.</small></div>
     </div>
   </div>`).join('');
   return `<h2>Detalhamento Produção — ${esc(first.produto)} · ${esc(first.descricaoCompleta)}</h2>${opHtml||'<p>Nenhuma OP calculada para este produto.</p>'}`;
@@ -814,7 +831,7 @@ function mapReport200(parsed){
     percentualComissao:importNumber(byHeader(row,map,'% comissão rep')),
     fretePedidoFonte:importNumber(byHeader(row,map,'Vlr.frete ped'))
   })).filter(row=>row.produto || row.nota || row.valorVenda || row.quantidade);
-  return {meta:{titulo:'Custos e Rentabilidade',fonte:parsed.fileName,relatorio:'200 - Faturamento / Rentabilidade',geradoEm:new Date().toISOString(),versaoLayout:'v11-cfop-k-print-excel-dashboard'},registros};
+  return {meta:{titulo:'Custos e Rentabilidade',fonte:parsed.fileName,relatorio:'200 - Faturamento / Rentabilidade',geradoEm:new Date().toISOString(),versaoLayout:'v12-materia-prima-impressao'},registros};
 }
 
 function mapReport201(parsed){
@@ -893,12 +910,12 @@ function mapReportImpressao(parsed){
       ehImpressao
     };
   }).filter(row=>meaningful(row.op) && row.ehImpressao);
-  return {meta:{fonte:parsed.fileName,relatorio:'Impressão UV / Solvente por O.P.',geradoEm:new Date().toISOString(),regra:'Somente Desc.completa iniciando por IMPRESSAO UV ou IMPRESSAO SOLVENTE. Valor da coluna F (Preço ven) × Qtd.aprovada é somado ao custo total de M.O. da mesma OP.'},registros};
+  return {meta:{fonte:parsed.fileName,relatorio:'Impressão UV / Solvente por O.P.',geradoEm:new Date().toISOString(),regra:'Somente Desc.completa iniciando por IMPRESSAO UV ou IMPRESSAO SOLVENTE. Valor da coluna F (Preço ven) × Qtd.aprovada compõe a matéria-prima da mesma OP e não a M.O.'},registros};
 }
 
 function buildImportedPackage(parsedByType){
   return {
-    version:11,
+    version:12,
     importedAt:new Date().toISOString(),
     base:mapReport200(parsedByType['200']),
     production:mapReport201(parsedByType['201']),
@@ -913,7 +930,7 @@ function loadCachedImport(){
     const raw=localStorage.getItem(IMPORT_STORAGE_KEY);
     if(!raw) return null;
     const parsed=JSON.parse(raw);
-    return parsed?.version===11 && parsed?.base?.registros ? parsed : null;
+    return parsed?.version===12 && parsed?.base?.registros ? parsed : null;
   }catch(error){ console.warn('Não foi possível ler a importação salva.',error); return null; }
 }
 
@@ -989,7 +1006,7 @@ function applyDataPackage(pkg,origin='published',validation=null){
   const moStatus=$('moIntegrationStatus');
   if(moStatus){
     moStatus.innerHTML=moByOp.size
-      ? `<strong>M.O. integrada:</strong> ${moByOp.size.toLocaleString('pt-BR')} OP${moByOp.size===1?'':'s'} calculada(s) por Setup + Produção + Impressão quando houver; ${linkedRows.toLocaleString('pt-BR')} item(ns) do faturamento já receberam Cst MO. Relatório 199 de consumos também está validado e armazenado, sem alterar custos até definirmos a fórmula.`
+      ? `<strong>Custos integrados:</strong> ${moByOp.size.toLocaleString('pt-BR')} OP${moByOp.size===1?'':'s'} calculada(s). M.O. = Setup + Produção/máquina (incluindo IMPRESSAO DIGITAL do apontamento). UV/Solvente do relatório complementar agora compõe Cst. Mat. Prima. ${linkedRows.toLocaleString('pt-BR')} item(ns) já receberam Cst MO. Relatório 199 permanece validado para regra futura de insumos.`
       : `<strong>M.O.:</strong> bases de produção/setup carregadas, mas nenhuma OP pôde ser calculada. Imposto e Frete continuam pendentes.`;
   }
   updateImportStatus(validation);
@@ -1226,6 +1243,21 @@ function styleDataRows(ws,startRow,endRow,columnCount,numericCols=[]){
   }
 }
 
+function highlightMaterialCostColumn(ws,headerRow,startRow,endRow,column=11){
+  const header=ws.getCell(headerRow,column);
+  header.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF2A78B8'}};
+  header.font={name:'Aptos',size:9,bold:true,color:{argb:XLS_COLORS.white}};
+  header.alignment={vertical:'middle',horizontal:'right',wrapText:true};
+  header.border=excelBorder();
+  for(let r=startRow;r<=endRow;r++){
+    const cell=ws.getCell(r,column);
+    cell.fill={type:'pattern',pattern:'solid',fgColor:{argb:r%2===0?'FF16406F':'FF12375F'}};
+    cell.font={name:'Aptos',size:9,bold:true,color:{argb:XLS_COLORS.white}};
+    cell.alignment={vertical:'middle',horizontal:'right'};
+    cell.border=excelBorder();
+  }
+}
+
 function styleTotalRow(ws,rowNumber,columnCount){
   const row=ws.getRow(rowNumber);
   row.height=24;
@@ -1288,13 +1320,13 @@ async function exportBilling(triggerButton=$('exportBilling')){
     const marginPct = revenue ? margin/revenue : 0;
     setupReportHeader(ws,'CUSTOS E RENTABILIDADE — FATURAMENTO','Relatório detalhado por item faturado.',[
       {label:'FATURAMENTO',value:revenue,color:XLS_COLORS.blue,numFmt:'R$ #,##0.00'},
-      {label:'CUSTO TOTAL',value:cost,color:XLS_COLORS.purple,numFmt:'R$ #,##0.00'},
+      {label:'MATÉRIA-PRIMA',value:cost,color:XLS_COLORS.purple,numFmt:'R$ #,##0.00'},
       {label:'COMISSÕES',value:commission,color:XLS_COLORS.orange,numFmt:'R$ #,##0.00'},
       {label:'MARGEM BASE',value:margin,color:XLS_COLORS.green,numFmt:'R$ #,##0.00'},
       {label:'% MARGEM',value:marginPct,color:XLS_COLORS.cyan,numFmt:'0.00%'}
     ],20);
 
-    const headers=['Dt. Fat.','Sigla','Produto','Desc. completa','Pedido','OP','Nota','Qtd','Vlr Venda','Vlr Metro','Cst Unit','Cst MO','Imposto','Frete','Comissão','% Comis','Custo Total','Lucro','Margem Base','% Margem'];
+    const headers=['Dt. Fat.','Sigla','Produto','Desc. completa','Pedido','OP','Nota','Qtd','Vlr Venda','Vlr Metro','Cst Mat. Prima','Cst MO','Imposto','Frete','Comissão','% Comis','Custo Total','Lucro','Margem Base','% Margem'];
     const headerRow = 10;
     ws.getRow(headerRow).values = headers;
     styleTableHeader(ws,headerRow,headers.length);
@@ -1306,7 +1338,7 @@ async function exportBilling(triggerButton=$('exportBilling')){
       row.values=[
         excelDate(r.dataFaturamento), String(r.sigla??''), String(r.produto??''), String(r.descricaoCompleta??''),
         meaningful(r.pedido)?String(r.pedido):'', meaningful(r.op)?String(r.op):'', meaningful(r.nota)?String(r.nota):'',
-        Number(r.quantidade||0), Number(r.valorVenda||0), Number(r.valorMetro||0), Number(r.custoUnitario||0),
+        Number(r.quantidade||0), Number(r.valorVenda||0), Number(r.valorMetro||0), Number(r.custoMateriaPrimaUnitario||0),
         r.custoMaoObraMapeado ? Number(r.custoMaoObraUnitario||0) : '',
         r.impostoMapeado ? Number(r.impostoUnitario||0) : '',
         r.freteMapeado ? Number(r.freteUnitario||0) : '',
@@ -1321,6 +1353,7 @@ async function exportBilling(triggerButton=$('exportBilling')){
     const endRow=Math.max(startRow,startRow+exportRows.length-1);
     if(exportRows.length){
       styleDataRows(ws,startRow,endRow,headers.length,[8,9,10,11,12,13,14,15,16,17,18,19,20]);
+      highlightMaterialCostColumn(ws,headerRow,startRow,endRow,11);
       for(let r=startRow;r<=endRow;r++){
         ws.getCell(r,1).numFmt='dd/mm/yyyy';
         ws.getCell(r,8).numFmt='#,##0.00';
@@ -1387,7 +1420,7 @@ async function exportProducts(triggerButton=$('exportProducts')){
     setupReportHeader(ws,'CUSTOS E RENTABILIDADE — TOTAL POR PRODUTO','Consolidação dos registros do período e filtros selecionados.',[
       {label:'PRODUTOS',value:groupedProducts.length,color:XLS_COLORS.blue,numFmt:'#,##0'},
       {label:'FATURAMENTO',value:revenue,color:XLS_COLORS.cyan,numFmt:'R$ #,##0.00'},
-      {label:'CUSTO TOTAL',value:cost,color:XLS_COLORS.purple,numFmt:'R$ #,##0.00'},
+      {label:'MATÉRIA-PRIMA',value:cost,color:XLS_COLORS.purple,numFmt:'R$ #,##0.00'},
       {label:'MARGEM BASE',value:margin,color:XLS_COLORS.green,numFmt:'R$ #,##0.00'},
       {label:'% MARGEM',value:marginPct,color:XLS_COLORS.orange,numFmt:'0.00%'}
     ]);
@@ -1490,26 +1523,26 @@ async function exportProductionDetail(triggerButton=$('exportDashboard')){
     setupSheetColumns(ws,[13,12,28,16,16,16,16,16,16,16,16,16,16,16,16,16,16]);
     setupReportHeader(ws,`DETALHAMENTO PRODUÇÃO — ${first.produto}`,first.descricaoCompleta,[
       {label:'FATURAMENTO',value:revenue,color:XLS_COLORS.blue,numFmt:'R$ #,##0.00'},
-      {label:'CUSTO TOTAL',value:cost,color:XLS_COLORS.purple,numFmt:'R$ #,##0.00'},
+      {label:'MATÉRIA-PRIMA',value:cost,color:XLS_COLORS.purple,numFmt:'R$ #,##0.00'},
       {label:'COMISSÕES',value:commission,color:XLS_COLORS.orange,numFmt:'R$ #,##0.00'},
       {label:'MARGEM BASE',value:margin,color:XLS_COLORS.green,numFmt:'R$ #,##0.00'},
       {label:'% MARGEM',value:marginPct,color:XLS_COLORS.cyan,numFmt:'0.00%'}
     ],17);
 
     const ops=unique(rows,'op').filter(meaningful).map(op=>getMaoObraByOp(op)).filter(Boolean);
-    const headers=['OP','Qtd. aprovada','Tempo Setup','Custo Setup','Tempo Produção','Custo Produção','Impressão','Custo M.O. Total','Cst MO Unit.'];
+    const headers=['OP','Qtd. aprovada','Tempo Setup','Custo Setup','Tempo Produção','Custo Produção','UV/Solvente (Mat. Prima)','Adic. Mat. Prima Unit.','Custo M.O. Total','Cst MO Unit.'];
     ws.getRow(10).values=headers;
     styleTableHeader(ws,10,headers.length);
     let current=11;
     ops.forEach(g=>{
-      ws.getRow(current).values=[g.op,g.qtdAprovada,g.tempoSetup,g.custoSetupTotal,g.tempoProducao,g.custoProducaoTotal,g.custoImpressaoTotal,g.custoMaoObraTotal,g.custoMaoObraUnitario];
+      ws.getRow(current).values=[g.op,g.qtdAprovada,g.tempoSetup,g.custoSetupTotal,g.tempoProducao,g.custoProducaoTotal,g.custoImpressaoTotal,g.custoImpressaoUnitario,g.custoMaoObraTotal,g.custoMaoObraUnitario];
       current++;
     });
     if(ops.length){
-      styleDataRows(ws,11,current-1,headers.length,[2,4,6,7,8,9]);
+      styleDataRows(ws,11,current-1,headers.length,[2,4,6,7,8,9,10]);
       for(let r=11;r<current;r++){
         ws.getCell(r,2).numFmt='#,##0.00';
-        [4,6,7,8,9].forEach(c=>ws.getCell(r,c).numFmt='R$ #,##0.00;[Red]-R$ #,##0.00');
+        [4,6,7,8,9,10].forEach(c=>ws.getCell(r,c).numFmt='R$ #,##0.00;[Red]-R$ #,##0.00');
       }
     }
 
@@ -1627,7 +1660,7 @@ async function loadData(){
   ]);
   if(!baseResponse.ok) throw new Error(`Base não encontrada (${baseResponse.status})`);
   const published={
-    version:11,
+    version:12,
     base:await baseResponse.json(),
     production:prodData || {meta:{fonte:'Produção não encontrada'},registros:[]},
     setup:setupData || {meta:{fonte:'Setup não encontrado'},registros:[]},
