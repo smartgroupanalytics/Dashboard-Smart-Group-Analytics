@@ -37,6 +37,53 @@ function sum(list, field){ return list.reduce((acc, item) => acc + Number(item[f
 function unique(list, field){ return [...new Set(list.map(r => String(r[field] ?? '').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pt-BR',{numeric:true})); }
 function marginClass(value){ return Number(value) < 0 ? 'money-negative' : 'money-positive'; }
 
+
+function money4(value){
+  return Number(value || 0).toLocaleString('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+    minimumFractionDigits: 4,
+    maximumFractionDigits: 4
+  });
+}
+
+// Agrupa apontamentos repetidos apenas para exibição no detalhamento.
+// O cálculo original da M.O. continua usando todos os registros individuais.
+// A chave preserva Tipo + Centro + Recurso; assim recursos iguais em centros
+// diferentes não são misturados. Tempos e custos são somados e o R$/min exibido
+// vira a média ponderada pelo tempo quando houver mais de um apontamento.
+function groupMaoObraEtapasForDisplay(group){
+  const map = new Map();
+  const qtdAprovada = Number(group?.qtdAprovada || 0);
+  (group?.etapas || []).forEach(item=>{
+    const key = [
+      String(item.tipo || ''),
+      String(item.centroCusto || ''),
+      resourceKey(item.recurso)
+    ].join('¦');
+    if(!map.has(key)){
+      map.set(key,{
+        tipo:item.tipo || '',
+        centroCusto:String(item.centroCusto || ''),
+        recurso:String(item.recurso || ''),
+        minutos:0,
+        custo:0,
+        apontamentos:0
+      });
+    }
+    const g = map.get(key);
+    g.minutos += Number(item.minutos || 0);
+    g.custo += Number(item.custo || 0);
+    g.apontamentos += 1;
+  });
+  return [...map.values()].map(item=>({
+    ...item,
+    tempo:minutesToHHMM(item.minutos),
+    custoMinuto:item.minutos > 0 ? item.custo / item.minutos : 0,
+    custoMetro:qtdAprovada > 0 ? item.custo / qtdAprovada : 0
+  }));
+}
+
 function isTechnicalGridRow(row){
   const desc = normalizeHeader(row?.descricaoCompleta || '');
   return desc.startsWith('impressao uv')
@@ -496,8 +543,8 @@ function renderProductionMO(rows){
       <div class="mo-formula"><i class="fa-solid fa-calculator"></i><span><strong>Regra M.O.:</strong> Setup + operações/máquina de Produção. IMPRESSAO DIGITAL apontada no relatório 201 continua dentro da M.O. Já IMPRESSAO UV e IMPRESSAO SOLVENTE do relatório complementar não entram na M.O.; elas são incorporadas ao Cst. Mat. Prima.</span></div>
       <div class="mo-table-wrap">
         <table class="mo-table">
-          <thead><tr><th>Tipo</th><th>Centro</th><th>Recurso</th><th class="num">Tempo</th><th class="num">R$/min</th><th class="num">Custo</th></tr></thead>
-          <tbody>${g.etapas.map(item=>`<tr><td><span class="mo-type ${item.tipo==='Setup'?'setup':'production'}">${esc(item.tipo)}</span></td><td>${esc(item.centroCusto || '—')}</td><td>${esc(item.recurso || '—')}</td><td class="num">${esc(item.tempo)}</td><td class="num">${money(item.custoMinuto)}</td><td class="num">${money(item.custo)}</td></tr>`).join('')}</tbody>
+          <thead><tr><th>Tipo</th><th>Centro</th><th>Recurso</th><th class="num">Tempo</th><th class="num">R$/min</th><th class="num">Custo</th><th class="num">Custo/m</th></tr></thead>
+          <tbody>${groupMaoObraEtapasForDisplay(g).map(item=>`<tr><td><span class="mo-type ${item.tipo==='Setup'?'setup':'production'}">${esc(item.tipo)}</span></td><td>${esc(item.centroCusto || '—')}</td><td>${esc(item.recurso || '—')}</td><td class="num">${esc(item.tempo)}</td><td class="num">${money(item.custoMinuto)}</td><td class="num">${money(item.custo)}</td><td class="num cost-per-meter">${money4(item.custoMetro)}</td></tr>`).join('')}</tbody>
         </table>
       </div>
       ${g.impressoes.length ? `<div class="material-print-block"><div class="material-print-head"><div><span>ADICIONAL DE MATÉRIA-PRIMA</span><strong>Impressão UV / Solvente</strong></div><div><span>Total da OP</span><strong>${money(g.custoImpressaoTotal)}</strong></div><div><span>Adicional unit.</span><strong>${money(g.custoImpressaoUnitario)}</strong></div></div><div class="mo-table-wrap"><table class="mo-table material-print-table"><thead><tr><th>Centro</th><th>Descrição</th><th class="num">Qtd. aprovada</th><th class="num">R$/un.</th><th class="num">Custo</th></tr></thead><tbody>${g.impressoes.map(item=>`<tr><td>${esc(item.centroCusto || '—')}</td><td>${esc(item.recurso || '—')}</td><td class="num">${number(item.quantidade)}</td><td class="num">${money(item.valorUnitario)}</td><td class="num">${money(item.custo)}</td></tr>`).join('')}</tbody></table></div></div>` : ''}
@@ -1554,25 +1601,27 @@ async function exportProductionDetail(triggerButton=$('exportDashboard')){
     });
     current++;
     const detailHeader=current;
-    const detailHeaders=['OP','Tipo','Centro','Recurso','Tempo / Qtd.','R$/min ou R$/un.','Custo'];
+    const detailHeaders=['OP','Tipo','Centro','Recurso','Tempo','R$/min','Custo','Custo/m'];
     ws.getRow(current).values=detailHeaders;
     styleTableHeader(ws,current,detailHeaders.length);
     current++;
     const detailStart=current;
-    ops.forEach(g=>g.etapas.forEach(item=>{
+    ops.forEach(g=>groupMaoObraEtapasForDisplay(g).forEach(item=>{
       ws.getRow(current).values=[
         g.op,item.tipo,item.centroCusto||'',item.recurso||'',
-        item.tipo==='Impressão'?Number(item.quantidade||0):item.tempo,
-        item.tipo==='Impressão'?Number(item.valorUnitario||0):Number(item.custoMinuto||0),
-        Number(item.custo||0)
+        item.tempo,
+        Number(item.custoMinuto||0),
+        Number(item.custo||0),
+        Number(item.custoMetro||0)
       ];
       current++;
     }));
     if(current>detailStart){
-      styleDataRows(ws,detailStart,current-1,detailHeaders.length,[5,6,7]);
+      styleDataRows(ws,detailStart,current-1,detailHeaders.length,[6,7,8]);
       for(let r=detailStart;r<current;r++){
         ws.getCell(r,6).numFmt='R$ #,##0.00;[Red]-R$ #,##0.00';
         ws.getCell(r,7).numFmt='R$ #,##0.00;[Red]-R$ #,##0.00';
+        ws.getCell(r,8).numFmt='R$ #,##0.0000;[Red]-R$ #,##0.0000';
       }
       ws.autoFilter={from:{row:detailHeader,column:1},to:{row:detailHeader,column:detailHeaders.length}};
     }

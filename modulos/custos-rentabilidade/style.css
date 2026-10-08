@@ -186,3 +186,7 @@ tbody tr.row-loss td.material-cost-col{color:#ff8390!important;background:rgba(1
 @media print{
   .material-cost-col{font-weight:800!important;color:#111!important;background:#eef5fb!important;border-color:#c9d6e2!important;text-shadow:none!important}
 }
+
+/* v13 — agrupamento visual das etapas repetidas + custo por metro */
+.mo-table td.cost-per-meter{font-weight:800;color:#dff7ff;background:rgba(255,255,255,.035);}
+.mo-table th:last-child{white-space:nowrap;}
