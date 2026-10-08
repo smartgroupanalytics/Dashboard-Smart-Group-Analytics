@@ -18,7 +18,7 @@ let eventsBound = false;
 let currentDataOrigin = 'published';
 let allCfops = [];
 let selectedCfops = new Set();
-const IMPORT_STORAGE_KEY = 'smartgroup.custosRentabilidade.import.v9';
+const IMPORT_STORAGE_KEY = 'smartgroup.custosRentabilidade.import.v10';
 
 const money = value => Number(value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 const number = value => Number(value || 0).toLocaleString('pt-BR', { maximumFractionDigits: 2 });
@@ -640,7 +640,7 @@ function importRef(value){
 
 const IMPORT_SCHEMAS = {
   '199': {label:'Consumos / Insumos por O.P.', required:['data apontamento','descricao insumo','r realizado','vlr efetivo']},
-  '200': {label:'Faturamento / Rentabilidade', required:['dt faturam','valor fat valor ipi valor frete','comissao metros','preco custo']},
+  '200': {label:'Faturamento / Rentabilidade', required:['dt faturam','nat oper','valor fat valor ipi valor frete','comissao metros','preco custo']},
   '201': {label:'Registros de Produção por O.P.', required:['numero da ordem de producao','tempo producao','vlr hr homem','campo calculado']},
   '202': {label:'Setup / Paradas de Produção', required:['motivo parada','num op','duracao','descricao do recurso ativo']},
   'IMP': {label:'Impressão UV / Solvente por O.P.', required:['op','cod prod item','desc completa','preco ven','cons previsto item op','qtd aprovada']}
@@ -677,6 +677,11 @@ async function parseImportFile(file,ExcelJS){
   for(let c=1;c<=colCount;c++) headers.push(primitiveCellValue(ws.getRow(1).getCell(c).value));
   const type=classifyHeaders(headers);
   if(!type) throw new Error(`${file.name}: estrutura não reconhecida como um dos 5 relatórios esperados (199, 200, 201, 202 ou o relatório de Impressão).`);
+  // No relatório 200, o CFOP deve vir EXCLUSIVAMENTE da coluna K — cabeçalho "Nat.oper".
+  // Validamos a posição para evitar usar por engano outro campo/natureza da planilha.
+  if(type==='200' && normalizeHeader(headers[10]) !== 'nat oper'){
+    throw new Error(`${file.name}: no relatório de Faturamento, a coluna K deve ser "Nat.oper". Ela é a fonte oficial do filtro CFOP.`);
+  }
   const rows=[];
   for(let r=2;r<=ws.actualRowCount;r++){
     const row=[];
@@ -701,7 +706,8 @@ function mapReport200(parsed){
     pedido:importRef(byHeader(row,map,'Pedido')),
     op:importRef(byHeader(row,map,'N°OP')),
     nota:importRef(byHeader(row,map,'Nro.nota')),
-    cfop:importRef(byHeader(row,map,'Nat.oper')),
+    // CFOP: coluna K (índice 10), cabeçalho Nat.oper, conforme relatório SIGER.
+    cfop:importRef(row[10]),
     quantidade:importNumber(byHeader(row,map,'Qtd.item/Ft')),
     valorVenda:importNumber(byHeader(row,map,'Valor Fat+Valor IPI+Valor Frete')),
     valorMetro:importNumber(byHeader(row,map,'Vlr.unit.líq')),
@@ -710,7 +716,7 @@ function mapReport200(parsed){
     percentualComissao:importNumber(byHeader(row,map,'% comissão rep')),
     fretePedidoFonte:importNumber(byHeader(row,map,'Vlr.frete ped'))
   })).filter(row=>row.produto || row.nota || row.valorVenda || row.quantidade);
-  return {meta:{titulo:'Custos e Rentabilidade',fonte:parsed.fileName,relatorio:'200 - Faturamento / Rentabilidade',geradoEm:new Date().toISOString(),versaoLayout:'v9-cfop-multisselecao-impressao-grid-tecnico'},registros};
+  return {meta:{titulo:'Custos e Rentabilidade',fonte:parsed.fileName,relatorio:'200 - Faturamento / Rentabilidade',geradoEm:new Date().toISOString(),versaoLayout:'v10-cfop-coluna-k-nat-oper'},registros};
 }
 
 function mapReport201(parsed){
