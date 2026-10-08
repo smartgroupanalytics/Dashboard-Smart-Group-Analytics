@@ -64,9 +64,15 @@
         <label for="opFilter">OP</label>
         <select id="opFilter"><option value="">Todas</option></select>
       </div>
-      <div class="field">
-        <label for="cfopFilter">CFOP</label>
-        <select id="cfopFilter"><option value="">Todos</option></select>
+      <div class="field multiselect-field" id="cfopField">
+        <label for="cfopToggle">CFOP</label>
+        <button id="cfopToggle" class="multi-toggle" type="button" aria-haspopup="true" aria-expanded="false">
+          <span id="cfopLabel">Todos</span><i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div id="cfopMenu" class="multi-menu" hidden>
+          <label class="multi-option multi-all"><input id="cfopAll" type="checkbox" checked><span>Marcar todos</span></label>
+          <div id="cfopOptions" class="multi-options"></div>
+        </div>
       </div>
       <div class="field search-field">
         <label for="productSearch">Produto</label>
@@ -181,7 +187,7 @@
 
     <footer class="module-footer">
       <span id="footerStatus">Base em carregamento…</span>
-      <details><summary>Mapeamento do Excel</summary><p>Faturamento: B Dt. faturamento · W Sigla · E Produto · F Desc. completa · C Pedido · D OP · J Nota · L Qtd · O Vlr Venda · P Vlr Metro · AG Cst. Unit · AB Comissão · AJ % Comissão. Rel. 199: Consumos/Insumos por OP · Rel. 200: Faturamento (B/W/E/F/C/D/J/L/O/P/AG/AB/AJ) · Rel. 201: Produção por OP · Rel. 202: Setup/Paradas · Rel. Impressão: itens de impressão por OP (somente IMPRESSAO UV / IMPRESSAO SOLVENTE, coluna F Preço ven). CFOP = Nat.oper do Rel. 200. M.O. = Produção + Setup + Impressão quando houver, rateada pela Qtd. Aprovada da OP. Imposto e Frete aguardam definição.</p></details>
+      <details><summary>Mapeamento do Excel</summary><p>Faturamento: B Dt. faturamento · W Sigla · E Produto · F Desc. completa · C Pedido · D OP · J Nota · L Qtd · O Vlr Venda · P Vlr Metro · AG Cst. Unit · AB Comissão · AJ % Comissão. Rel. 199: Consumos/Insumos por OP · Rel. 200: Faturamento (B/W/E/F/C/D/J/L/O/P/AG/AB/AJ) · Rel. 201: Produção por OP · Rel. 202: Setup/Paradas · Rel. Impressão: itens de impressão por OP (somente IMPRESSAO UV / IMPRESSAO SOLVENTE, coluna F Preço ven). CFOP = Nat.oper do Rel. 200, com seleção múltipla por caixas. Linhas técnicas de IMPRESSAO UV/SOLVENTE e INSUMOS ficam ocultas dos grids, mas permanecem na base para cálculos e totais. M.O. = Produção + Setup + Impressão quando houver, rateada pela Qtd. Aprovada da OP. Imposto e Frete aguardam definição.</p></details>
     </footer>
   </main>
 

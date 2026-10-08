@@ -16,7 +16,9 @@ let printingBase = null;
 let moByOp = new Map();
 let eventsBound = false;
 let currentDataOrigin = 'published';
-const IMPORT_STORAGE_KEY = 'smartgroup.custosRentabilidade.import.v8';
+let allCfops = [];
+let selectedCfops = new Set();
+const IMPORT_STORAGE_KEY = 'smartgroup.custosRentabilidade.import.v9';
 
 const money = value => Number(value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 const number = value => Number(value || 0).toLocaleString('pt-BR', { maximumFractionDigits: 2 });
@@ -34,6 +36,17 @@ const optionalMoney = (value, mapped) => mapped ? money(value) : '—';
 function sum(list, field){ return list.reduce((acc, item) => acc + Number(item[field] || 0), 0); }
 function unique(list, field){ return [...new Set(list.map(r => String(r[field] ?? '').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pt-BR',{numeric:true})); }
 function marginClass(value){ return Number(value) < 0 ? 'money-negative' : 'money-positive'; }
+
+function isTechnicalGridRow(row){
+  const desc = normalizeHeader(row?.descricaoCompleta || '');
+  return desc.startsWith('impressao uv')
+    || desc.startsWith('impressao solvente')
+    || desc.startsWith('insumos');
+}
+
+function getGridRows(){
+  return filtered.filter(row=>!isTechnicalGridRow(row));
+}
 
 function normalizeOp(value){
   const text = String(value ?? '').trim();
@@ -275,12 +288,36 @@ function fillSelect(id, values, allText){
   el.innerHTML = `<option value="">${allText}</option>` + values.map(v => `<option value="${esc(v)}">${esc(v)}</option>`).join('');
 }
 
+function updateCfopLabel(){
+  const label=$('cfopLabel');
+  const allBox=$('cfopAll');
+  if(!label || !allBox) return;
+  const count=selectedCfops.size;
+  const total=allCfops.length;
+  allBox.checked=total>0 && count===total;
+  allBox.indeterminate=count>0 && count<total;
+  label.textContent = count===total ? 'Todos' : count===0 ? 'Nenhum' : count===1 ? [...selectedCfops][0] : `${count} selecionados`;
+  $('cfopOptions')?.querySelectorAll('input[data-cfop]').forEach(input=>{ input.checked=selectedCfops.has(input.dataset.cfop); });
+}
+
+function setupCfopFilter(){
+  allCfops=unique(records,'cfop').filter(meaningful);
+  selectedCfops=new Set(allCfops);
+  const wrap=$('cfopOptions');
+  if(wrap){
+    wrap.innerHTML=allCfops.length
+      ? allCfops.map(value=>`<label class="multi-option"><input type="checkbox" data-cfop="${esc(value)}" checked><span>${esc(value)}</span></label>`).join('')
+      : '<div class="multi-empty">Nenhum CFOP disponível</div>';
+  }
+  updateCfopLabel();
+}
+
 function setupFilters(){
   fillSelect('companyFilter', unique(records,'sigla'), 'Todas');
   fillSelect('invoiceFilter', unique(records,'nota'), 'Todas');
   fillSelect('orderFilter', unique(records,'pedido'), 'Todos');
   fillSelect('opFilter', unique(records,'op').filter(meaningful), 'Todas');
-  fillSelect('cfopFilter', unique(records,'cfop').filter(meaningful), 'Todos');
+  setupCfopFilter();
   const dates = records.map(r=>r.dataFaturamento).filter(Boolean).sort();
   if(dates.length){
     $('startDate').min = dates[0]; $('startDate').max = dates.at(-1); $('startDate').value = dates[0];
@@ -296,7 +333,7 @@ function getFilters(){
     invoice: $('invoiceFilter').value,
     order: $('orderFilter').value,
     op: $('opFilter').value,
-    cfop: $('cfopFilter').value,
+    cfops: [...selectedCfops],
     search: $('productSearch').value.trim().toLocaleLowerCase('pt-BR')
   };
 }
@@ -310,7 +347,7 @@ function applyFilters(){
     if(f.invoice && String(r.nota) !== f.invoice) return false;
     if(f.order && String(r.pedido) !== f.order) return false;
     if(f.op && String(r.op) !== f.op) return false;
-    if(f.cfop && String(r.cfop) !== f.cfop) return false;
+    if(allCfops.length && selectedCfops.size < allCfops.length && !selectedCfops.has(String(r.cfop))) return false;
     if(f.search){
       const haystack = `${r.produto} ${r.descricaoCompleta}`.toLocaleLowerCase('pt-BR');
       if(!haystack.includes(f.search)) return false;
@@ -329,7 +366,11 @@ function renderKpis(){
   const margin = sum(filtered,'margemBase');
   const marginPct = revenue ? margin / revenue * 100 : 0;
   $('kpiInvoices').textContent = unique(filtered,'nota').length.toLocaleString('pt-BR');
-  $('kpiRows').textContent = `${filtered.length.toLocaleString('pt-BR')} ${filtered.length === 1 ? 'item faturado' : 'itens faturados'}`;
+  const visibleRows=getGridRows();
+  const hiddenTechnical=filtered.length-visibleRows.length;
+  $('kpiRows').textContent = hiddenTechnical
+    ? `${visibleRows.length.toLocaleString('pt-BR')} exibidos · ${hiddenTechnical.toLocaleString('pt-BR')} técnicos ocultos`
+    : `${visibleRows.length.toLocaleString('pt-BR')} ${visibleRows.length === 1 ? 'item faturado' : 'itens faturados'}`;
   $('kpiRevenue').textContent = money(revenue);
   $('kpiCost').textContent = money(cost);
   $('kpiCommission').textContent = money(commission);
@@ -339,10 +380,11 @@ function renderKpis(){
 }
 
 function renderBilling(){
-  const totalPages = Math.max(1, Math.ceil(filtered.length/PAGE_SIZE));
+  const gridRows=getGridRows();
+  const totalPages = Math.max(1, Math.ceil(gridRows.length/PAGE_SIZE));
   billingPage = Math.min(billingPage,totalPages);
   const start = (billingPage-1)*PAGE_SIZE;
-  const pageRows = filtered.slice(start,start+PAGE_SIZE);
+  const pageRows = gridRows.slice(start,start+PAGE_SIZE);
   $('billingRows').innerHTML = pageRows.length ? pageRows.map(r => `
     <tr class="${r.margemBase <= 0 ? 'row-loss' : ''}">
       <td>${dateBR(r.dataFaturamento)}</td>
@@ -365,7 +407,8 @@ function renderBilling(){
       <td class="num ${marginClass(r.margemBase)}">${percent(r.margemBasePercentual)}</td>
       <td><button class="detail-button" type="button" data-detail-product="${esc(r.produto)}"><i class="fa-solid fa-magnifying-glass-chart"></i> Detalhar</button></td>
     </tr>`).join('') : '<tr class="empty-row"><td colspan="21">Nenhum registro encontrado para os filtros selecionados.</td></tr>';
-  $('billingCount').textContent = `${filtered.length.toLocaleString('pt-BR')} registros`;
+  const hiddenTechnical=filtered.length-gridRows.length;
+  $('billingCount').textContent = hiddenTechnical ? `${gridRows.length.toLocaleString('pt-BR')} registros · ${hiddenTechnical.toLocaleString('pt-BR')} técnicos ocultos` : `${gridRows.length.toLocaleString('pt-BR')} registros`;
   $('billingPage').textContent = `Página ${billingPage} de ${totalPages}`;
   $('billingPrev').disabled = billingPage <= 1;
   $('billingNext').disabled = billingPage >= totalPages;
@@ -373,7 +416,7 @@ function renderBilling(){
 
 function buildProductGroups(){
   const map = new Map();
-  filtered.forEach(r => {
+  getGridRows().forEach(r => {
     const key = `${r.produto}¦${r.descricaoCompleta}`;
     if(!map.has(key)) map.set(key,{produto:r.produto,descricaoCompleta:r.descricaoCompleta,quantidade:0,valorVenda:0,custoTotal:0,comissaoTotal:0,margemBase:0,rows:[]});
     const g = map.get(key);
@@ -667,7 +710,7 @@ function mapReport200(parsed){
     percentualComissao:importNumber(byHeader(row,map,'% comissão rep')),
     fretePedidoFonte:importNumber(byHeader(row,map,'Vlr.frete ped'))
   })).filter(row=>row.produto || row.nota || row.valorVenda || row.quantidade);
-  return {meta:{titulo:'Custos e Rentabilidade',fonte:parsed.fileName,relatorio:'200 - Faturamento / Rentabilidade',geradoEm:new Date().toISOString(),versaoLayout:'v8-importacao-5-relatorios-cfop-impressao'},registros};
+  return {meta:{titulo:'Custos e Rentabilidade',fonte:parsed.fileName,relatorio:'200 - Faturamento / Rentabilidade',geradoEm:new Date().toISOString(),versaoLayout:'v9-cfop-multisselecao-impressao-grid-tecnico'},registros};
 }
 
 function mapReport201(parsed){
@@ -751,7 +794,7 @@ function mapReportImpressao(parsed){
 
 function buildImportedPackage(parsedByType){
   return {
-    version:8,
+    version:9,
     importedAt:new Date().toISOString(),
     base:mapReport200(parsedByType['200']),
     production:mapReport201(parsedByType['201']),
@@ -766,7 +809,7 @@ function loadCachedImport(){
     const raw=localStorage.getItem(IMPORT_STORAGE_KEY);
     if(!raw) return null;
     const parsed=JSON.parse(raw);
-    return parsed?.version===8 && parsed?.base?.registros ? parsed : null;
+    return parsed?.version===9 && parsed?.base?.registros ? parsed : null;
   }catch(error){ console.warn('Não foi possível ler a importação salva.',error); return null; }
 }
 
@@ -837,7 +880,8 @@ function applyDataPackage(pkg,origin='published',validation=null){
   $('sourceFile').textContent=`Rel. 200: ${base?.meta?.fonte || 'SIGER'} · 5 relatórios validados`;
   const updated=origin==='imported' && pkg.importedAt ? new Date(pkg.importedAt).toLocaleString('pt-BR') : (base?.meta?.geradoEm ? new Date(base.meta.geradoEm).toLocaleString('pt-BR') : '—');
   $('updatedAt').textContent=`Atualizado em ${updated}`;
-  $('footerStatus').textContent=`${records.length.toLocaleString('pt-BR')} itens faturados · ${productionBase?.registros?.length?.toLocaleString('pt-BR')||0} apontamentos de produção · ${setupBase?.registros?.length?.toLocaleString('pt-BR')||0} paradas/setup · ${consumptionBase?.registros?.length?.toLocaleString('pt-BR')||0} linhas de consumos · ${printingBase?.registros?.length?.toLocaleString('pt-BR')||0} itens de impressão`;
+  const technicalRows=records.filter(isTechnicalGridRow).length;
+  $('footerStatus').textContent=`${records.length.toLocaleString('pt-BR')} itens faturados · ${technicalRows.toLocaleString('pt-BR')} linhas técnicas ocultas do grid · ${productionBase?.registros?.length?.toLocaleString('pt-BR')||0} apontamentos de produção · ${setupBase?.registros?.length?.toLocaleString('pt-BR')||0} paradas/setup · ${consumptionBase?.registros?.length?.toLocaleString('pt-BR')||0} linhas de consumos · ${printingBase?.registros?.length?.toLocaleString('pt-BR')||0} itens de impressão`;
   const moStatus=$('moIntegrationStatus');
   if(moStatus){
     moStatus.innerHTML=moByOp.size
@@ -933,7 +977,7 @@ function filterSummary(){
     `NF: ${f.invoice || 'Todas'}`,
     `Pedido: ${f.order || 'Todos'}`,
     `OP: ${f.op || 'Todas'}`,
-    `CFOP: ${f.cfop || 'Todos'}`
+    `CFOP: ${selectedCfops.size===allCfops.length ? 'Todos' : selectedCfops.size ? [...selectedCfops].join(', ') : 'Nenhum'}`
   ];
   if(f.search) parts.push(`Produto: ${$('productSearch').value.trim()}`);
   return parts.join('   |   ');
@@ -1302,12 +1346,45 @@ async function exportProducts(){
 function bindEvents(){
   if(eventsBound) return;
   eventsBound=true;
-  ['companyFilter','startDate','endDate','invoiceFilter','orderFilter','opFilter','cfopFilter'].forEach(id=>$(id).addEventListener('change',applyFilters));
+  ['companyFilter','startDate','endDate','invoiceFilter','orderFilter','opFilter'].forEach(id=>$(id).addEventListener('change',applyFilters));
   let timer; $('productSearch').addEventListener('input',()=>{clearTimeout(timer); timer=setTimeout(applyFilters,180)});
-  $('clearFilters').addEventListener('click',()=>{['companyFilter','invoiceFilter','orderFilter','opFilter','cfopFilter'].forEach(id=>$(id).value=''); $('productSearch').value=''; const dates=records.map(r=>r.dataFaturamento).filter(Boolean).sort(); if(dates.length){$('startDate').value=dates[0];$('endDate').value=dates.at(-1)} applyFilters();});
+
+  $('cfopToggle').addEventListener('click',event=>{
+    event.stopPropagation();
+    const menu=$('cfopMenu');
+    const opening=menu.hidden;
+    menu.hidden=!opening;
+    $('cfopToggle').setAttribute('aria-expanded',String(opening));
+  });
+  $('cfopMenu').addEventListener('click',event=>event.stopPropagation());
+  $('cfopAll').addEventListener('change',event=>{
+    selectedCfops=event.target.checked ? new Set(allCfops) : new Set();
+    updateCfopLabel();
+    applyFilters();
+  });
+  $('cfopOptions').addEventListener('change',event=>{
+    const input=event.target.closest('input[data-cfop]');
+    if(!input) return;
+    if(input.checked) selectedCfops.add(input.dataset.cfop); else selectedCfops.delete(input.dataset.cfop);
+    updateCfopLabel();
+    applyFilters();
+  });
+  document.addEventListener('click',event=>{
+    const field=$('cfopField');
+    if(field && !field.contains(event.target)){ $('cfopMenu').hidden=true; $('cfopToggle').setAttribute('aria-expanded','false'); }
+  });
+
+  $('clearFilters').addEventListener('click',()=>{
+    ['companyFilter','invoiceFilter','orderFilter','opFilter'].forEach(id=>$(id).value='');
+    selectedCfops=new Set(allCfops); updateCfopLabel(); $('cfopMenu').hidden=true; $('cfopToggle').setAttribute('aria-expanded','false');
+    $('productSearch').value='';
+    const dates=records.map(r=>r.dataFaturamento).filter(Boolean).sort();
+    if(dates.length){$('startDate').value=dates[0];$('endDate').value=dates.at(-1)}
+    applyFilters();
+  });
   document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>switchView(btn.dataset.view)));
   document.addEventListener('click',event=>{const btn=event.target.closest('[data-detail-product]'); if(btn) selectDetail(btn.dataset.detailProduct);});
-  $('billingPrev').addEventListener('click',()=>{if(billingPage>1){billingPage--;renderBilling()}}); $('billingNext').addEventListener('click',()=>{if(billingPage*PAGE_SIZE<filtered.length){billingPage++;renderBilling()}});
+  $('billingPrev').addEventListener('click',()=>{if(billingPage>1){billingPage--;renderBilling()}}); $('billingNext').addEventListener('click',()=>{if(billingPage*PAGE_SIZE<getGridRows().length){billingPage++;renderBilling()}});
   $('productsPrev').addEventListener('click',()=>{if(productsPage>1){productsPage--;renderProducts()}}); $('productsNext').addEventListener('click',()=>{if(productsPage*PAGE_SIZE<groupedProducts.length){productsPage++;renderProducts()}});
   $('backToBilling').addEventListener('click',()=>switchView('billing'));
   $('exportBilling').addEventListener('click',exportBilling); $('exportProducts').addEventListener('click',exportProducts);
@@ -1337,7 +1414,7 @@ async function loadData(){
   ]);
   if(!baseResponse.ok) throw new Error(`Base não encontrada (${baseResponse.status})`);
   const published={
-    version:8,
+    version:9,
     base:await baseResponse.json(),
     production:prodData || {meta:{fonte:'Produção não encontrada'},registros:[]},
     setup:setupData || {meta:{fonte:'Setup não encontrado'},registros:[]},
