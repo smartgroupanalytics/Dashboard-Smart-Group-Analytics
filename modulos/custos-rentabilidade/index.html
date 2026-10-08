@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Custos e Rentabilidade · Smart Group Analytics</title>
-  <link rel="stylesheet" href="style.css?v=20261008-10">
+  <link rel="stylesheet" href="style.css?v=20261008-11">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -24,6 +24,8 @@
         <span id="sourceFile">Carregando base…</span>
         <strong id="updatedAt">—</strong>
         <div class="hero-import-actions">
+          <button id="printDashboard" class="hero-action print-button" type="button"><i class="fa-solid fa-print"></i> Imprimir</button>
+          <button id="exportDashboard" class="hero-action excel-button" type="button"><i class="fa-solid fa-file-excel"></i> Exportar Excel</button>
           <button id="importReports" class="import-button" type="button"><i class="fa-solid fa-file-import"></i> Importar 5 arquivos</button>
           <input id="importFiles" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" multiple hidden>
         </div>
@@ -187,10 +189,10 @@
 
     <footer class="module-footer">
       <span id="footerStatus">Base em carregamento…</span>
-      <details><summary>Mapeamento do Excel</summary><p>Faturamento: B Dt. faturamento · W Sigla · E Produto · F Desc. completa · C Pedido · D OP · J Nota · L Qtd · O Vlr Venda · P Vlr Metro · AG Cst. Unit · AB Comissão · AJ % Comissão. Rel. 199: Consumos/Insumos por OP · Rel. 200: Faturamento (B/W/E/F/C/D/J/L/O/P/AG/AB/AJ) · Rel. 201: Produção por OP · Rel. 202: Setup/Paradas · Rel. Impressão: itens de impressão por OP (somente IMPRESSAO UV / IMPRESSAO SOLVENTE, coluna F Preço ven). CFOP = Nat.oper do Rel. 200, com seleção múltipla por caixas. Linhas técnicas de IMPRESSAO UV/SOLVENTE e INSUMOS ficam ocultas dos grids, mas permanecem na base para cálculos e totais. M.O. = Produção + Setup + Impressão quando houver, rateada pela Qtd. Aprovada da OP. Imposto e Frete aguardam definição.</p></details>
+      <details><summary>Mapeamento do Excel</summary><p>Faturamento: B Dt. faturamento · W Sigla · E Produto · F Desc. completa · C Pedido · D OP · J Nota · L Qtd · O Vlr Venda · P Vlr Metro · AG Cst. Unit · AB Comissão · AJ % Comissão. Rel. 199: Consumos/Insumos por OP · Rel. 200: Faturamento (B/W/E/F/C/D/J/L/O/P/AG/AB/AJ) · Rel. 201: Produção por OP · Rel. 202: Setup/Paradas · Rel. Impressão: itens de impressão por OP (somente IMPRESSAO UV / IMPRESSAO SOLVENTE, coluna F Preço ven). CFOP = coluna K (Nat.oper) do Rel. 200, com seleção múltipla por caixas. Linhas técnicas de IMPRESSAO UV/SOLVENTE e INSUMOS ficam ocultas dos grids, mas permanecem na base para cálculos e totais. M.O. = Produção + Setup + Impressão quando houver, rateada pela Qtd. Aprovada da OP. Imposto e Frete aguardam definição.</p></details>
     </footer>
   </main>
 
-  <script type="module" src="app.js?v=20261008-10"></script>
+  <script type="module" src="app.js?v=20261008-11"></script>
 </body>
 </html>

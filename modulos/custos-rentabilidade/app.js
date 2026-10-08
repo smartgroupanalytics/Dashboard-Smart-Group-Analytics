@@ -18,7 +18,7 @@ let eventsBound = false;
 let currentDataOrigin = 'published';
 let allCfops = [];
 let selectedCfops = new Set();
-const IMPORT_STORAGE_KEY = 'smartgroup.custosRentabilidade.import.v10';
+const IMPORT_STORAGE_KEY = 'smartgroup.custosRentabilidade.import.v11';
 
 const money = value => Number(value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 const number = value => Number(value || 0).toLocaleString('pt-BR', { maximumFractionDigits: 2 });
@@ -543,6 +543,104 @@ function switchView(view){
 
 function selectDetail(product){ selectedProduct = product; switchView('production'); document.querySelector('.tabs')?.scrollIntoView({behavior:'smooth',block:'start'}); }
 
+function activeView(){
+  return document.querySelector('.tab.active')?.dataset.view || 'billing';
+}
+
+function reportRowsForSelectedProduct(){
+  if(!selectedProduct) return [];
+  const allProductRows=records.filter(r=>String(r.produto)===String(selectedProduct));
+  return allProductRows.length ? allProductRows : filtered.filter(r=>String(r.produto)===String(selectedProduct));
+}
+
+function printKpisHtml(rows){
+  const visibleRows=(rows||[]).filter(row=>!isTechnicalGridRow(row));
+  const revenue=sum(visibleRows,'valorVenda');
+  const cost=sum(visibleRows,'custoTotal');
+  const commission=sum(visibleRows,'comissaoTotal');
+  const margin=sum(visibleRows,'margemBase');
+  const marginPct=revenue ? margin/revenue*100 : 0;
+  const invoices=unique(visibleRows,'nota').length;
+  return `<div class="print-kpis">
+    <div><span>Número de NF emitidas</span><strong>${invoices.toLocaleString('pt-BR')}</strong></div>
+    <div><span>Faturamento</span><strong>${money(revenue)}</strong></div>
+    <div><span>Custo total</span><strong>${money(cost)}</strong></div>
+    <div><span>Comissões</span><strong>${money(commission)}</strong></div>
+    <div><span>Margem base</span><strong>${money(margin)}</strong><small>${percent(marginPct)}</small></div>
+  </div>`;
+}
+
+function printBillingHtml(){
+  const rows=getGridRows();
+  const body=rows.map(r=>`<tr class="${r.margemBase<=0?'loss':''}">
+    <td>${dateBR(r.dataFaturamento)}</td><td>${esc(r.sigla)}</td><td>${esc(r.produto)}</td><td>${esc(r.descricaoCompleta)}</td>
+    <td>${displayRef(r.pedido)}</td><td>${displayRef(r.op)}</td><td>${displayRef(r.nota)}</td><td>${displayRef(r.cfop)}</td>
+    <td class="num">${number(r.quantidade)}</td><td class="num">${money(r.valorVenda)}</td><td class="num">${money(r.valorMetro)}</td>
+    <td class="num">${money(r.custoUnitario)}</td><td class="num">${optionalMoney(r.custoMaoObraUnitario,r.custoMaoObraMapeado)}</td>
+    <td class="num">${money(r.comissaoUnitario)}</td><td class="num">${percent(r.percentualComissao)}</td>
+    <td class="num">${money(r.custoTotal)}</td><td class="num">${money(r.lucroUnitario)}</td><td class="num">${money(r.margemBase)}</td><td class="num">${percent(r.margemBasePercentual)}</td>
+  </tr>`).join('');
+  return `<h2>Faturamento por item</h2>
+    <div class="print-table-wrap"><table><thead><tr><th>Dt. Fat.</th><th>Sigla</th><th>Produto</th><th>Descrição completa</th><th>Pedido</th><th>OP</th><th>Nota</th><th>CFOP</th><th>Qtd.</th><th>Vlr Venda</th><th>Vlr Metro</th><th>Cst. Unit.</th><th>Cst MO</th><th>Comissão</th><th>% Comis.</th><th>Custo Total</th><th>Lucro</th><th>Margem Base</th><th>% Margem</th></tr></thead><tbody>${body||'<tr><td colspan="19">Nenhum registro.</td></tr>'}</tbody></table></div>`;
+}
+
+function printProductsHtml(){
+  buildProductGroups();
+  const body=groupedProducts.map(g=>`<tr class="${g.margemBase<=0?'loss':''}">
+    <td>${esc(g.produto)}</td><td>${esc(g.descricaoCompleta)}</td><td class="num">${number(g.quantidade)}</td>
+    <td class="num">${money(g.valorVenda)}</td><td class="num">${money(g.custoTotal)}</td><td class="num">${money(g.comissaoTotal)}</td>
+    <td class="num">${money(g.margemBase)}</td><td class="num">${percent(g.margemBasePercentual)}</td>
+  </tr>`).join('');
+  return `<h2>Total por Produto</h2>
+    <div class="print-table-wrap"><table><thead><tr><th>Produto</th><th>Descrição completa</th><th>Qtd.</th><th>Faturamento</th><th>Custo Total</th><th>Comissão</th><th>Margem Base</th><th>% Margem</th></tr></thead><tbody>${body||'<tr><td colspan="8">Nenhum produto.</td></tr>'}</tbody></table></div>`;
+}
+
+function printProductionHtml(){
+  const rows=reportRowsForSelectedProduct();
+  if(!rows.length) return '';
+  const first=rows[0];
+  const ops=unique(rows,'op').filter(meaningful).map(op=>getMaoObraByOp(op)).filter(Boolean);
+  const opHtml=ops.map(g=>`<div class="print-op">
+    <h3>OP ${esc(g.op)} <span>Qtd. aprovada: ${number(g.qtdAprovada)}</span></h3>
+    <div class="print-op-kpis">
+      <div><span>Tempo Setup</span><strong>${esc(g.tempoSetup)}</strong><small>${money(g.custoSetupTotal)}</small></div>
+      <div><span>Tempo Produção</span><strong>${esc(g.tempoProducao)}</strong><small>${money(g.custoProducaoTotal)}</small></div>
+      <div><span>Impressão</span><strong>${money(g.custoImpressaoTotal)}</strong></div>
+      <div><span>Custo M.O. total</span><strong>${money(g.custoMaoObraTotal)}</strong></div>
+      <div><span>Cst MO unit.</span><strong>${money(g.custoMaoObraUnitario)}</strong></div>
+    </div>
+  </div>`).join('');
+  return `<h2>Detalhamento Produção — ${esc(first.produto)} · ${esc(first.descricaoCompleta)}</h2>${opHtml||'<p>Nenhuma OP calculada para este produto.</p>'}`;
+}
+
+function printDashboard(){
+  const view=activeView();
+  if(view==='production' && !selectedProduct){
+    alert('Selecione um produto em “Detalhar” antes de imprimir o Detalhamento Produção.');
+    return;
+  }
+  document.getElementById('printReport')?.remove();
+  const rows=view==='production' ? reportRowsForSelectedProduct() : getGridRows();
+  const report=document.createElement('section');
+  report.id='printReport';
+  report.className='print-report';
+  report.innerHTML=`<div class="print-head">
+      <div><span>SMART GROUP ANALYTICS</span><h1>Custos e Rentabilidade</h1><p>${esc(filterSummary())}</p></div>
+      <div class="print-source">${esc(base?.meta?.fonte||'SIGER')}<br>${new Date().toLocaleString('pt-BR')}</div>
+    </div>
+    ${printKpisHtml(rows)}
+    ${view==='products' ? printProductsHtml() : view==='production' ? printProductionHtml() : printBillingHtml()}
+    <div class="print-footer">Smart Group Analytics · Custos e Rentabilidade</div>`;
+  document.body.appendChild(report);
+  document.body.classList.add('print-mode');
+  const cleanup=()=>{
+    document.body.classList.remove('print-mode');
+    report.remove();
+  };
+  window.addEventListener('afterprint',cleanup,{once:true});
+  requestAnimationFrame(()=>window.print());
+}
+
 const EXCELJS_URLS = [
   'https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js',
   'https://unpkg.com/exceljs@4.4.0/dist/exceljs.min.js'
@@ -707,7 +805,7 @@ function mapReport200(parsed){
     op:importRef(byHeader(row,map,'N°OP')),
     nota:importRef(byHeader(row,map,'Nro.nota')),
     // CFOP: coluna K (índice 10), cabeçalho Nat.oper, conforme relatório SIGER.
-    cfop:importRef(row[10]),
+    cfop:importRef(byHeader(row,map,'Nat.oper')),
     quantidade:importNumber(byHeader(row,map,'Qtd.item/Ft')),
     valorVenda:importNumber(byHeader(row,map,'Valor Fat+Valor IPI+Valor Frete')),
     valorMetro:importNumber(byHeader(row,map,'Vlr.unit.líq')),
@@ -716,7 +814,7 @@ function mapReport200(parsed){
     percentualComissao:importNumber(byHeader(row,map,'% comissão rep')),
     fretePedidoFonte:importNumber(byHeader(row,map,'Vlr.frete ped'))
   })).filter(row=>row.produto || row.nota || row.valorVenda || row.quantidade);
-  return {meta:{titulo:'Custos e Rentabilidade',fonte:parsed.fileName,relatorio:'200 - Faturamento / Rentabilidade',geradoEm:new Date().toISOString(),versaoLayout:'v10-cfop-coluna-k-nat-oper'},registros};
+  return {meta:{titulo:'Custos e Rentabilidade',fonte:parsed.fileName,relatorio:'200 - Faturamento / Rentabilidade',geradoEm:new Date().toISOString(),versaoLayout:'v11-cfop-k-print-excel-dashboard'},registros};
 }
 
 function mapReport201(parsed){
@@ -800,7 +898,7 @@ function mapReportImpressao(parsed){
 
 function buildImportedPackage(parsedByType){
   return {
-    version:9,
+    version:11,
     importedAt:new Date().toISOString(),
     base:mapReport200(parsedByType['200']),
     production:mapReport201(parsedByType['201']),
@@ -815,7 +913,7 @@ function loadCachedImport(){
     const raw=localStorage.getItem(IMPORT_STORAGE_KEY);
     if(!raw) return null;
     const parsed=JSON.parse(raw);
-    return parsed?.version===9 && parsed?.base?.registros ? parsed : null;
+    return parsed?.version===11 && parsed?.base?.registros ? parsed : null;
   }catch(error){ console.warn('Não foi possível ler a importação salva.',error); return null; }
 }
 
@@ -999,13 +1097,14 @@ const XLS_COLORS = {
   purple: 'FF6C56D9',
   orange: 'FFF29A38',
   white: 'FFFFFFFF',
-  text: 'FF10233F',
-  muted: 'FF5F738E',
-  line: 'FFD7E2F0',
-  zebra: 'FFF3F7FC',
+  text: 'FFFFFFFF',
+  muted: 'FFAFC8E5',
+  line: 'FF245C9A',
+  zebra: 'FF0B3168',
   negative: 'FFD64545',
   positive: 'FF078553',
-  lightBlue: 'FFEAF3FF'
+  lightBlue: 'FF103B73',
+  darkRow: 'FF082454'
 };
 
 function excelBorder(){
@@ -1081,12 +1180,13 @@ function setupReportHeader(ws,title,subtitle,kpis,columnCount=17){
 
   mergeStyled(ws,7,1,7,columnCount,filterSummary(),{
     fill:{type:'pattern',pattern:'solid',fgColor:{argb:XLS_COLORS.lightBlue}},
-    font:{name:'Aptos',size:9,bold:true,color:{argb:XLS_COLORS.text}},
+    font:{name:'Aptos',size:9,bold:true,color:{argb:XLS_COLORS.white}},
     alignment:{vertical:'middle',horizontal:'left'},border:excelBorder()
   });
   const source = base?.meta?.fonte || 'SIGER';
   const updated = base?.meta?.geradoEm ? new Date(base.meta.geradoEm).toLocaleString('pt-BR') : '—';
   mergeStyled(ws,8,1,8,columnCount,`Fonte: ${source}   |   Base atualizada em: ${updated}   |   Exportado em: ${new Date().toLocaleString('pt-BR')}`,{
+    fill:{type:'pattern',pattern:'solid',fgColor:{argb:XLS_COLORS.navy}},
     font:{name:'Aptos',size:9,color:{argb:XLS_COLORS.muted}},
     alignment:{vertical:'middle',horizontal:'left'}
   });
@@ -1118,8 +1218,8 @@ function styleDataRows(ws,startRow,endRow,columnCount,numericCols=[]){
     row.height = 20;
     for(let c=1;c<=columnCount;c++){
       const cell = row.getCell(c);
-      if(r % 2 === 0) cell.fill = {type:'pattern',pattern:'solid',fgColor:{argb:XLS_COLORS.zebra}};
-      cell.font = {name:'Aptos',size:9,color:{argb:XLS_COLORS.text}};
+      cell.fill = {type:'pattern',pattern:'solid',fgColor:{argb:r % 2 === 0 ? XLS_COLORS.zebra : XLS_COLORS.darkRow}};
+      cell.font = {name:'Aptos',size:9,color:{argb:XLS_COLORS.white}};
       cell.alignment = {vertical:'middle',horizontal:numericCols.includes(c)?'right':'left',wrapText:c===4};
       cell.border = excelBorder();
     }
@@ -1156,19 +1256,20 @@ function styleLossRows(ws,startRow,endRow,profitCol,columnCount){
     if(Number(result) <= 0){
       for(let c=1;c<=columnCount;c++){
         const cell=ws.getCell(r,c);
-        cell.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFFFE7EA'}};
-        cell.font={...(cell.font||{}),bold:true,color:{argb:XLS_COLORS.negative}};
+        cell.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF52233A'}};
+        cell.font={...(cell.font||{}),bold:true,color:{argb:'FFFF9AA5'}};
       }
     }
   }
 }
 
-async function exportBilling(){
-  const button = $('exportBilling');
+async function exportBilling(triggerButton=$('exportBilling')){
+  const button = triggerButton;
   const original = button.innerHTML;
   button.disabled = true;
   button.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gerando Excel…';
   try{
+    const exportRows=getGridRows();
     const ExcelJS = await ensureExcelJS();
     const workbook = new ExcelJS.Workbook();
     workbook.creator = 'Smart Group Analytics';
@@ -1180,10 +1281,10 @@ async function exportBilling(){
     const ws = workbook.addWorksheet('Faturamento',{views:[{state:'frozen',ySplit:10,xSplit:0,showGridLines:false}]});
     setupSheetColumns(ws,[12,9,12,38,11,10,11,10,15,13,13,13,13,13,13,11,15,14,15,12]);
 
-    const revenue = sum(filtered,'valorVenda');
-    const cost = sum(filtered,'custoTotal');
-    const commission = sum(filtered,'comissaoTotal');
-    const margin = sum(filtered,'margemBase');
+    const revenue = sum(exportRows,'valorVenda');
+    const cost = sum(exportRows,'custoTotal');
+    const commission = sum(exportRows,'comissaoTotal');
+    const margin = sum(exportRows,'margemBase');
     const marginPct = revenue ? margin/revenue : 0;
     setupReportHeader(ws,'CUSTOS E RENTABILIDADE — FATURAMENTO','Relatório detalhado por item faturado.',[
       {label:'FATURAMENTO',value:revenue,color:XLS_COLORS.blue,numFmt:'R$ #,##0.00'},
@@ -1199,7 +1300,7 @@ async function exportBilling(){
     styleTableHeader(ws,headerRow,headers.length);
 
     const startRow=headerRow+1;
-    filtered.forEach((r,index)=>{
+    exportRows.forEach((r,index)=>{
       const rowNumber=startRow+index;
       const row=ws.getRow(rowNumber);
       row.values=[
@@ -1217,8 +1318,8 @@ async function exportBilling(){
       ];
     });
 
-    const endRow=Math.max(startRow,startRow+filtered.length-1);
-    if(filtered.length){
+    const endRow=Math.max(startRow,startRow+exportRows.length-1);
+    if(exportRows.length){
       styleDataRows(ws,startRow,endRow,headers.length,[8,9,10,11,12,13,14,15,16,17,18,19,20]);
       for(let r=startRow;r<=endRow;r++){
         ws.getCell(r,1).numFmt='dd/mm/yyyy';
@@ -1230,11 +1331,11 @@ async function exportBilling(){
       styleLossRows(ws,startRow,endRow,19,headers.length);
     }
 
-    const totalRow=(filtered.length?endRow:headerRow)+1;
+    const totalRow=(exportRows.length?endRow:headerRow)+1;
     ws.mergeCells(totalRow,1,totalRow,7);
     ws.getCell(totalRow,1).value='TOTAIS DO PERÍODO FILTRADO';
-    if(filtered.length){
-      ws.getCell(totalRow,8).value={formula:`SUM(H${startRow}:H${endRow})`,result:sum(filtered,'quantidade')};
+    if(exportRows.length){
+      ws.getCell(totalRow,8).value={formula:`SUM(H${startRow}:H${endRow})`,result:sum(exportRows,'quantidade')};
       ws.getCell(totalRow,9).value={formula:`SUM(I${startRow}:I${endRow})`,result:revenue};
       ws.getCell(totalRow,17).value={formula:`SUM(Q${startRow}:Q${endRow})`,result:cost};
       ws.getCell(totalRow,19).value={formula:`SUM(S${startRow}:S${endRow})`,result:margin};
@@ -1260,8 +1361,8 @@ async function exportBilling(){
   }
 }
 
-async function exportProducts(){
-  const button = $('exportProducts');
+async function exportProducts(triggerButton=$('exportProducts')){
+  const button = triggerButton;
   const original = button.innerHTML;
   button.disabled = true;
   button.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gerando Excel…';
@@ -1349,6 +1450,111 @@ async function exportProducts(){
   }
 }
 
+async function exportCurrentView(){
+  const button=$('exportDashboard');
+  const view=activeView();
+  if(view==='products') return exportProducts(button);
+  if(view==='production'){
+    if(!selectedProduct){
+      alert('Selecione um produto em “Detalhar” antes de exportar o Detalhamento Produção.');
+      return;
+    }
+    return exportProductionDetail(button);
+  }
+  return exportBilling(button);
+}
+
+async function exportProductionDetail(triggerButton=$('exportDashboard')){
+  const button=triggerButton;
+  const original=button.innerHTML;
+  button.disabled=true;
+  button.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Gerando Excel…';
+  try{
+    const rows=reportRowsForSelectedProduct();
+    if(!rows.length) throw new Error('Produto selecionado sem registros.');
+    const first=rows[0];
+    const visibleRows=rows.filter(row=>!isTechnicalGridRow(row));
+    const revenue=sum(visibleRows,'valorVenda');
+    const cost=sum(visibleRows,'custoTotal');
+    const commission=sum(visibleRows,'comissaoTotal');
+    const margin=sum(visibleRows,'margemBase');
+    const marginPct=revenue?margin/revenue:0;
+    const ExcelJS=await ensureExcelJS();
+    const workbook=new ExcelJS.Workbook();
+    workbook.creator='Smart Group Analytics';
+    workbook.lastModifiedBy='Smart Group Analytics';
+    workbook.created=new Date();
+    workbook.modified=new Date();
+
+    const ws=workbook.addWorksheet('Detalhamento Produção',{views:[{state:'frozen',ySplit:10,showGridLines:false}]});
+    setupSheetColumns(ws,[13,12,28,16,16,16,16,16,16,16,16,16,16,16,16,16,16]);
+    setupReportHeader(ws,`DETALHAMENTO PRODUÇÃO — ${first.produto}`,first.descricaoCompleta,[
+      {label:'FATURAMENTO',value:revenue,color:XLS_COLORS.blue,numFmt:'R$ #,##0.00'},
+      {label:'CUSTO TOTAL',value:cost,color:XLS_COLORS.purple,numFmt:'R$ #,##0.00'},
+      {label:'COMISSÕES',value:commission,color:XLS_COLORS.orange,numFmt:'R$ #,##0.00'},
+      {label:'MARGEM BASE',value:margin,color:XLS_COLORS.green,numFmt:'R$ #,##0.00'},
+      {label:'% MARGEM',value:marginPct,color:XLS_COLORS.cyan,numFmt:'0.00%'}
+    ],17);
+
+    const ops=unique(rows,'op').filter(meaningful).map(op=>getMaoObraByOp(op)).filter(Boolean);
+    const headers=['OP','Qtd. aprovada','Tempo Setup','Custo Setup','Tempo Produção','Custo Produção','Impressão','Custo M.O. Total','Cst MO Unit.'];
+    ws.getRow(10).values=headers;
+    styleTableHeader(ws,10,headers.length);
+    let current=11;
+    ops.forEach(g=>{
+      ws.getRow(current).values=[g.op,g.qtdAprovada,g.tempoSetup,g.custoSetupTotal,g.tempoProducao,g.custoProducaoTotal,g.custoImpressaoTotal,g.custoMaoObraTotal,g.custoMaoObraUnitario];
+      current++;
+    });
+    if(ops.length){
+      styleDataRows(ws,11,current-1,headers.length,[2,4,6,7,8,9]);
+      for(let r=11;r<current;r++){
+        ws.getCell(r,2).numFmt='#,##0.00';
+        [4,6,7,8,9].forEach(c=>ws.getCell(r,c).numFmt='R$ #,##0.00;[Red]-R$ #,##0.00');
+      }
+    }
+
+    current+=2;
+    mergeStyled(ws,current,1,current,17,'ETAPAS DE MÃO DE OBRA POR OP',{
+      fill:{type:'pattern',pattern:'solid',fgColor:{argb:XLS_COLORS.navy2}},
+      font:{name:'Aptos',size:11,bold:true,color:{argb:XLS_COLORS.white}},
+      alignment:{vertical:'middle',horizontal:'left'}
+    });
+    current++;
+    const detailHeader=current;
+    const detailHeaders=['OP','Tipo','Centro','Recurso','Tempo / Qtd.','R$/min ou R$/un.','Custo'];
+    ws.getRow(current).values=detailHeaders;
+    styleTableHeader(ws,current,detailHeaders.length);
+    current++;
+    const detailStart=current;
+    ops.forEach(g=>g.etapas.forEach(item=>{
+      ws.getRow(current).values=[
+        g.op,item.tipo,item.centroCusto||'',item.recurso||'',
+        item.tipo==='Impressão'?Number(item.quantidade||0):item.tempo,
+        item.tipo==='Impressão'?Number(item.valorUnitario||0):Number(item.custoMinuto||0),
+        Number(item.custo||0)
+      ];
+      current++;
+    }));
+    if(current>detailStart){
+      styleDataRows(ws,detailStart,current-1,detailHeaders.length,[5,6,7]);
+      for(let r=detailStart;r<current;r++){
+        ws.getCell(r,6).numFmt='R$ #,##0.00;[Red]-R$ #,##0.00';
+        ws.getCell(r,7).numFmt='R$ #,##0.00;[Red]-R$ #,##0.00';
+      }
+      ws.autoFilter={from:{row:detailHeader,column:1},to:{row:detailHeader,column:detailHeaders.length}};
+    }
+
+    const buffer=await workbook.xlsx.writeBuffer();
+    downloadBlob(`Custos-Rentabilidade-Detalhamento-${first.produto}-${exportStamp()}.xlsx`,new Blob([buffer],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}));
+  }catch(error){
+    console.error('Exportação Detalhamento:',error);
+    alert(`Não foi possível gerar o Excel. ${error?.message||error}`);
+  }finally{
+    button.disabled=false;
+    button.innerHTML=original;
+  }
+}
+
 function bindEvents(){
   if(eventsBound) return;
   eventsBound=true;
@@ -1393,7 +1599,8 @@ function bindEvents(){
   $('billingPrev').addEventListener('click',()=>{if(billingPage>1){billingPage--;renderBilling()}}); $('billingNext').addEventListener('click',()=>{if(billingPage*PAGE_SIZE<getGridRows().length){billingPage++;renderBilling()}});
   $('productsPrev').addEventListener('click',()=>{if(productsPage>1){productsPage--;renderProducts()}}); $('productsNext').addEventListener('click',()=>{if(productsPage*PAGE_SIZE<groupedProducts.length){productsPage++;renderProducts()}});
   $('backToBilling').addEventListener('click',()=>switchView('billing'));
-  $('exportBilling').addEventListener('click',exportBilling); $('exportProducts').addEventListener('click',exportProducts);
+  $('exportBilling').addEventListener('click',()=>exportBilling()); $('exportProducts').addEventListener('click',()=>exportProducts());
+  $('printDashboard').addEventListener('click',printDashboard); $('exportDashboard').addEventListener('click',exportCurrentView);
   $('importReports').addEventListener('click',()=> $('importFiles').click());
   $('importFiles').addEventListener('change',handleImportFiles);
   $('resetImport').addEventListener('click',resetImportedData);
@@ -1420,7 +1627,7 @@ async function loadData(){
   ]);
   if(!baseResponse.ok) throw new Error(`Base não encontrada (${baseResponse.status})`);
   const published={
-    version:9,
+    version:11,
     base:await baseResponse.json(),
     production:prodData || {meta:{fonte:'Produção não encontrada'},registros:[]},
     setup:setupData || {meta:{fonte:'Setup não encontrado'},registros:[]},

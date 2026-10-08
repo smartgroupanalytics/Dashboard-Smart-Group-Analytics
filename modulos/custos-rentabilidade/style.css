@@ -105,3 +105,47 @@ tbody tr.row-loss .optional-cost{color:#ff8390!important}
 @media(max-width:900px){.multi-menu{position:absolute;min-width:100%}}
 
 /* v10 — CFOP obtido exclusivamente da coluna K (Nat.oper) do relatório 200 */
+
+
+/* v11 — CFOP coluna K + ações de impressão/Excel e exportação com identidade do dashboard */
+.hero-import-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:7px}
+.hero-action{display:inline-flex;align-items:center;justify-content:center;gap:7px;border-radius:10px;padding:9px 12px;font-weight:800;font-size:11px;cursor:pointer}
+.print-button{border:1px solid rgba(139,190,240,.48);background:#0a356f;color:#e9f5ff}
+.print-button:hover{background:#10478f}
+.excel-button{border:1px solid rgba(67,217,151,.5);background:linear-gradient(135deg,#0c7254,#10966d);color:#fff}
+.excel-button:hover{filter:brightness(1.08)}
+.hero-action:disabled{opacity:.62;cursor:wait}
+
+.print-report{display:none}
+@media print{
+  @page{size:A4 landscape;margin:8mm}
+  html,body{background:#fff!important}
+  body.print-mode{padding:0!important;background:#fff!important;color:#10233f!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body.print-mode #dashboard,
+  body.print-mode #access-status{display:none!important}
+  body.print-mode .print-report{display:block!important;width:100%;font-family:Arial,Helvetica,sans-serif;color:#10233f}
+  .print-head{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;background:#071c3c!important;color:#fff!important;padding:14px 16px;border-radius:10px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .print-head span{font-size:10px;font-weight:800;letter-spacing:.12em;color:#59b8ff!important}
+  .print-head h1{margin:3px 0 4px;font-size:24px}
+  .print-head p{margin:0;font-size:9px;color:#b9d4f4!important;line-height:1.45}
+  .print-source{text-align:right;font-size:9px;color:#c7ddf5!important;line-height:1.5;max-width:32%}
+  .print-kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:8px 0}
+  .print-kpis>div,.print-op-kpis>div{border:1px solid #2a67a8;background:#0b2b57!important;color:#fff!important;border-radius:8px;padding:8px 10px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .print-kpis span,.print-op-kpis span{display:block;font-size:8px;color:#a9c9e8!important}
+  .print-kpis strong,.print-op-kpis strong{display:block;margin-top:3px;font-size:14px}
+  .print-kpis small,.print-op-kpis small{display:block;margin-top:2px;font-size:8px;color:#9fc1df!important}
+  .print-report h2{margin:10px 0 6px;color:#0b2b57;font-size:14px}
+  .print-table-wrap{overflow:visible}
+  .print-report table{width:100%;border-collapse:collapse;font-size:7px;table-layout:auto}
+  .print-report th{background:#0b448d!important;color:#fff!important;padding:5px 4px;text-align:left;border:1px solid #2b69aa;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .print-report td{background:#082454!important;color:#fff!important;padding:4px;border:1px solid #245c9a;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .print-report tbody tr:nth-child(even) td{background:#0b3168!important}
+  .print-report tr.loss td{background:#52233a!important;color:#ff9aa5!important;font-weight:700}
+  .print-report .num{text-align:right;white-space:nowrap}
+  .print-op{page-break-inside:avoid;margin:8px 0;border:1px solid #2b69aa;border-radius:8px;padding:8px}
+  .print-op h3{display:flex;justify-content:space-between;margin:0 0 6px;color:#0b2b57;font-size:12px}
+  .print-op h3 span{font-size:9px;font-weight:600}
+  .print-op-kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
+  .print-footer{margin-top:8px;border-top:1px solid #b7cce4;padding-top:5px;text-align:right;color:#607d9f;font-size:8px}
+}
+@media(max-width:900px){.hero-import-actions{justify-content:flex-start}.hero-action{flex:1 1 auto}}
