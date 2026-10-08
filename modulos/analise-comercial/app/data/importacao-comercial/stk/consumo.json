@@ -3536,6 +3536,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 196,
+    "dt_movto": "2026-10-07"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11903",
+    "produto": "11903",
+    "desc_completa": "NAPA MADRID BEGE - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 199,
     "dt_movto": "2026-02-24"
   },
@@ -13328,6 +13340,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 397,
+    "dt_movto": "2026-10-07"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20000",
+    "produto": "20000",
+    "desc_completa": "NAPA MADRID PRETO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 399,
     "dt_movto": "2026-06-16"
   },
@@ -13354,6 +13378,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 6.8,
     "dt_movto": "2026-05-19"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20002",
+    "produto": "20002",
+    "desc_completa": "NAPA MADRID OFF WHITE - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 12.5,
+    "dt_movto": "2026-10-08"
   },
   {
     "fonte_comercial": "STK",
@@ -13582,6 +13618,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 132,
     "dt_movto": "2026-06-15"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20002",
+    "produto": "20002",
+    "desc_completa": "NAPA MADRID OFF WHITE - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 187.5,
+    "dt_movto": "2026-10-08"
   },
   {
     "fonte_comercial": "STK",
