@@ -12,10 +12,11 @@ let selectedProduct = null;
 let productionBase = null;
 let setupBase = null;
 let consumptionBase = null;
+let printingBase = null;
 let moByOp = new Map();
 let eventsBound = false;
 let currentDataOrigin = 'published';
-const IMPORT_STORAGE_KEY = 'smartgroup.custosRentabilidade.import.v7';
+const IMPORT_STORAGE_KEY = 'smartgroup.custosRentabilidade.import.v8';
 
 const money = value => Number(value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 const number = value => Number(value || 0).toLocaleString('pt-BR', { maximumFractionDigits: 2 });
@@ -65,7 +66,7 @@ function resourceKey(value){
   return String(value ?? '').trim().toLocaleUpperCase('pt-BR');
 }
 
-function buildMaoObraMap(productionRows=[],setupRows=[]){
+function buildMaoObraMap(productionRows=[],setupRows=[],printingRows=[]){
   const groups = new Map();
 
   productionRows.forEach(row=>{
@@ -82,6 +83,8 @@ function buildMaoObraMap(productionRows=[],setupRows=[]){
         tempoSetupMin:0,
         custoProducaoTotal:0,
         custoSetupTotal:0,
+        custoImpressaoTotal:0,
+        impressoes:[],
         custoMaoObraTotal:0,
         custoMaoObraUnitario:0,
         completo:true,
@@ -164,8 +167,32 @@ function buildMaoObraMap(productionRows=[],setupRows=[]){
         });
       });
 
+    // Custos de impressão entram somente quando a própria OP possui
+    // IMPRESSAO UV ou IMPRESSAO SOLVENTE no relatório complementar.
+    // Preço ven (coluna F) é o valor unitário; multiplicamos pela Qtd.aprovada
+    // do item para obter o custo total de impressão da OP.
+    printingRows
+      .filter(row=>normalizeOp(row.op)===g.op && row.ehImpressao)
+      .forEach(row=>{
+        const valorUnitario=Number(row.valorImpressaoUnitario||0);
+        const qtdImpressao=Number(row.qtdAprovada||0);
+        const custo=qtdImpressao>0 ? valorUnitario*qtdImpressao : valorUnitario;
+        g.custoImpressaoTotal += custo;
+        g.impressoes.push({
+          tipo:'Impressão',
+          centroCusto:String(row.centroCusto ?? ''),
+          recurso:String(row.descricao ?? ''),
+          minutos:0,
+          tempo:'—',
+          custoMinuto:0,
+          valorUnitario,
+          quantidade:qtdImpressao,
+          custo
+        });
+      });
+
     g.tempoTotalMin = g.tempoProducaoMin + g.tempoSetupMin;
-    g.custoMaoObraTotal = g.custoProducaoTotal + g.custoSetupTotal;
+    g.custoMaoObraTotal = g.custoProducaoTotal + g.custoSetupTotal + g.custoImpressaoTotal;
     if(g.qtdAprovada > 0){
       g.custoMaoObraUnitario = g.custoMaoObraTotal / g.qtdAprovada;
     }else{
@@ -175,7 +202,7 @@ function buildMaoObraMap(productionRows=[],setupRows=[]){
     g.tempoProducao = minutesToHHMM(g.tempoProducaoMin);
     g.tempoSetup = minutesToHHMM(g.tempoSetupMin);
     g.tempoTotal = minutesToHHMM(g.tempoTotalMin);
-    g.etapas = [...g.setups,...g.producao];
+    g.etapas = [...g.setups,...g.producao,...g.impressoes];
   });
 
   return groups;
@@ -253,6 +280,7 @@ function setupFilters(){
   fillSelect('invoiceFilter', unique(records,'nota'), 'Todas');
   fillSelect('orderFilter', unique(records,'pedido'), 'Todos');
   fillSelect('opFilter', unique(records,'op').filter(meaningful), 'Todas');
+  fillSelect('cfopFilter', unique(records,'cfop').filter(meaningful), 'Todos');
   const dates = records.map(r=>r.dataFaturamento).filter(Boolean).sort();
   if(dates.length){
     $('startDate').min = dates[0]; $('startDate').max = dates.at(-1); $('startDate').value = dates[0];
@@ -268,6 +296,7 @@ function getFilters(){
     invoice: $('invoiceFilter').value,
     order: $('orderFilter').value,
     op: $('opFilter').value,
+    cfop: $('cfopFilter').value,
     search: $('productSearch').value.trim().toLocaleLowerCase('pt-BR')
   };
 }
@@ -281,6 +310,7 @@ function applyFilters(){
     if(f.invoice && String(r.nota) !== f.invoice) return false;
     if(f.order && String(r.pedido) !== f.order) return false;
     if(f.op && String(r.op) !== f.op) return false;
+    if(f.cfop && String(r.cfop) !== f.cfop) return false;
     if(f.search){
       const haystack = `${r.produto} ${r.descricaoCompleta}`.toLocaleLowerCase('pt-BR');
       if(!haystack.includes(f.search)) return false;
@@ -400,14 +430,15 @@ function renderProductionMO(rows){
         <article><span>Tempo Setup</span><strong>${esc(g.tempoSetup)}</strong><small>${money(g.custoSetupTotal)}</small></article>
         <article><span>Tempo Produção</span><strong>${esc(g.tempoProducao)}</strong><small>${money(g.custoProducaoTotal)}</small></article>
         <article><span>Tempo Total</span><strong>${esc(g.tempoTotal)}</strong><small>Setup + produção</small></article>
-        <article class="highlight"><span>Custo M.O. total</span><strong>${money(g.custoMaoObraTotal)}</strong><small>Custo total da OP</small></article>
+        <article><span>Impressão</span><strong>${money(g.custoImpressaoTotal)}</strong><small>${g.impressoes.length ? `${g.impressoes.length} item(ns) UV/Solvente` : 'Sem impressão nesta OP'}</small></article>
+        <article class="highlight"><span>Custo M.O. total</span><strong>${money(g.custoMaoObraTotal)}</strong><small>Setup + máquina + impressão</small></article>
         <article class="highlight"><span>Cst MO unit.</span><strong>${money(g.custoMaoObraUnitario)}</strong><small>Total M.O. ÷ Qtd. aprovada</small></article>
       </div>
-      <div class="mo-formula"><i class="fa-solid fa-calculator"></i><span><strong>Regra:</strong> Σ (tempo produção × custo/minuto) + Σ (tempo setup × custo/minuto da mesma operação) = Custo M.O. total. Depois, Custo M.O. total ÷ Quantidade Aprovada = Cst MO unitário.</span></div>
+      <div class="mo-formula"><i class="fa-solid fa-calculator"></i><span><strong>Regra:</strong> custo da produção + custo do setup + impressão UV/Solvente da mesma OP = Custo M.O. total. Para impressão, usa Preço ven (coluna F) × Qtd. aprovada do item. Depois, Custo M.O. total ÷ Quantidade Aprovada da OP = Cst MO unitário.</span></div>
       <div class="mo-table-wrap">
         <table class="mo-table">
-          <thead><tr><th>Tipo</th><th>Centro</th><th>Recurso</th><th class="num">Tempo</th><th class="num">R$/min</th><th class="num">Custo</th></tr></thead>
-          <tbody>${g.etapas.map(item=>`<tr><td><span class="mo-type ${item.tipo==='Setup'?'setup':'production'}">${esc(item.tipo)}</span></td><td>${esc(item.centroCusto || '—')}</td><td>${esc(item.recurso || '—')}</td><td class="num">${esc(item.tempo)}</td><td class="num">${money(item.custoMinuto)}</td><td class="num">${money(item.custo)}</td></tr>`).join('')}</tbody>
+          <thead><tr><th>Tipo</th><th>Centro</th><th>Recurso</th><th class="num">Tempo / Qtd.</th><th class="num">R$/min ou R$/un.</th><th class="num">Custo</th></tr></thead>
+          <tbody>${g.etapas.map(item=>`<tr><td><span class="mo-type ${item.tipo==='Setup'?'setup':item.tipo==='Impressão'?'printing':'production'}">${esc(item.tipo)}</span></td><td>${esc(item.centroCusto || '—')}</td><td>${esc(item.recurso || '—')}</td><td class="num">${item.tipo==='Impressão' ? number(item.quantidade) : esc(item.tempo)}</td><td class="num">${item.tipo==='Impressão' ? money(item.valorUnitario) : money(item.custoMinuto)}</td><td class="num">${money(item.custo)}</td></tr>`).join('')}</tbody>
         </table>
       </div>
       ${g.pendencias.length ? `<div class="mo-pending">${g.pendencias.map(p=>`<span><i class="fa-solid fa-triangle-exclamation"></i> ${esc(p)}</span>`).join('')}</div>` : ''}
@@ -449,6 +480,7 @@ function renderDetail(){
     ['Pedidos',unique(rows,'pedido').filter(meaningful).join(', ')||'—'],
     ['Notas Fiscais',unique(rows,'nota').filter(meaningful).join(', ')||'—'],
     ['OPs',unique(rows,'op').filter(meaningful).join(', ')||'—'],
+    ['CFOPs',unique(rows,'cfop').filter(meaningful).join(', ')||'—'],
     ['Empresas',unique(rows,'sigla').join(', ')||'—'],
     ['Primeiro faturamento',dateBR([...rows].sort((a,b)=>a.dataFaturamento.localeCompare(b.dataFaturamento))[0]?.dataFaturamento)],
     ['Último faturamento',dateBR([...rows].sort((a,b)=>b.dataFaturamento.localeCompare(a.dataFaturamento))[0]?.dataFaturamento)]
@@ -567,7 +599,8 @@ const IMPORT_SCHEMAS = {
   '199': {label:'Consumos / Insumos por O.P.', required:['data apontamento','descricao insumo','r realizado','vlr efetivo']},
   '200': {label:'Faturamento / Rentabilidade', required:['dt faturam','valor fat valor ipi valor frete','comissao metros','preco custo']},
   '201': {label:'Registros de Produção por O.P.', required:['numero da ordem de producao','tempo producao','vlr hr homem','campo calculado']},
-  '202': {label:'Setup / Paradas de Produção', required:['motivo parada','num op','duracao','descricao do recurso ativo']}
+  '202': {label:'Setup / Paradas de Produção', required:['motivo parada','num op','duracao','descricao do recurso ativo']},
+  'IMP': {label:'Impressão UV / Solvente por O.P.', required:['op','cod prod item','desc completa','preco ven','cons previsto item op','qtd aprovada']}
 };
 
 function classifyHeaders(headers){
@@ -600,7 +633,7 @@ async function parseImportFile(file,ExcelJS){
   const headers=[];
   for(let c=1;c<=colCount;c++) headers.push(primitiveCellValue(ws.getRow(1).getCell(c).value));
   const type=classifyHeaders(headers);
-  if(!type) throw new Error(`${file.name}: estrutura não reconhecida como um dos relatórios 199, 200, 201 ou 202.`);
+  if(!type) throw new Error(`${file.name}: estrutura não reconhecida como um dos 5 relatórios esperados (199, 200, 201, 202 ou o relatório de Impressão).`);
   const rows=[];
   for(let r=2;r<=ws.actualRowCount;r++){
     const row=[];
@@ -625,6 +658,7 @@ function mapReport200(parsed){
     pedido:importRef(byHeader(row,map,'Pedido')),
     op:importRef(byHeader(row,map,'N°OP')),
     nota:importRef(byHeader(row,map,'Nro.nota')),
+    cfop:importRef(byHeader(row,map,'Nat.oper')),
     quantidade:importNumber(byHeader(row,map,'Qtd.item/Ft')),
     valorVenda:importNumber(byHeader(row,map,'Valor Fat+Valor IPI+Valor Frete')),
     valorMetro:importNumber(byHeader(row,map,'Vlr.unit.líq')),
@@ -633,7 +667,7 @@ function mapReport200(parsed){
     percentualComissao:importNumber(byHeader(row,map,'% comissão rep')),
     fretePedidoFonte:importNumber(byHeader(row,map,'Vlr.frete ped'))
   })).filter(row=>row.produto || row.nota || row.valorVenda || row.quantidade);
-  return {meta:{titulo:'Custos e Rentabilidade',fonte:parsed.fileName,relatorio:'200 - Faturamento / Rentabilidade',geradoEm:new Date().toISOString(),versaoLayout:'v7-importacao-4-relatorios'},registros};
+  return {meta:{titulo:'Custos e Rentabilidade',fonte:parsed.fileName,relatorio:'200 - Faturamento / Rentabilidade',geradoEm:new Date().toISOString(),versaoLayout:'v8-importacao-5-relatorios-cfop-impressao'},registros};
 }
 
 function mapReport201(parsed){
@@ -692,14 +726,38 @@ function mapReport199(parsed){
   return {meta:{fonte:parsed.fileName,relatorio:'199 - Consumos / Insumos por O.P.',geradoEm:new Date().toISOString(),observacao:'Importado e validado. Não altera a fórmula de custo de insumos até a regra ser definida.'},registros};
 }
 
+function mapReportImpressao(parsed){
+  const map=headerIndexMap(parsed.headers);
+  const registros=parsed.rows.map(row=>{
+    const descricao=importText(byHeader(row,map,'Desc.completa'));
+    const descNorm=normalizeHeader(descricao);
+    const ehImpressao=descNorm.startsWith('impressao uv') || descNorm.startsWith('impressao solvente');
+    return {
+      op:importRef(byHeader(row,map,'OP')),
+      produtoItem:importRef(byHeader(row,map,'Cód.prod.item')),
+      descricao,
+      unidade:importText(byHeader(row,map,'UN')),
+      valorImpressaoUnitario:importNumber(byHeader(row,map,'Preço ven')),
+      qtdPrevista:importNumber(byHeader(row,map,'Cons.previsto item OP')),
+      qtdEfetiva:importNumber(byHeader(row,map,'Qtd.efetiva')),
+      qtdAprovada:importNumber(byHeader(row,map,'Qtd.aprovada')),
+      centroCusto:importRef(byHeader(row,map,'Cent.custo item OP')),
+      recurso:importText(byHeader(row,map,'Abreviação')),
+      ehImpressao
+    };
+  }).filter(row=>meaningful(row.op) && row.ehImpressao);
+  return {meta:{fonte:parsed.fileName,relatorio:'Impressão UV / Solvente por O.P.',geradoEm:new Date().toISOString(),regra:'Somente Desc.completa iniciando por IMPRESSAO UV ou IMPRESSAO SOLVENTE. Valor da coluna F (Preço ven) × Qtd.aprovada é somado ao custo total de M.O. da mesma OP.'},registros};
+}
+
 function buildImportedPackage(parsedByType){
   return {
-    version:7,
+    version:8,
     importedAt:new Date().toISOString(),
     base:mapReport200(parsedByType['200']),
     production:mapReport201(parsedByType['201']),
     setup:mapReport202(parsedByType['202']),
-    consumption:mapReport199(parsedByType['199'])
+    consumption:mapReport199(parsedByType['199']),
+    printing:mapReportImpressao(parsedByType['IMP'])
   };
 }
 
@@ -708,7 +766,7 @@ function loadCachedImport(){
     const raw=localStorage.getItem(IMPORT_STORAGE_KEY);
     if(!raw) return null;
     const parsed=JSON.parse(raw);
-    return parsed?.version===7 && parsed?.base?.registros ? parsed : null;
+    return parsed?.version===8 && parsed?.base?.registros ? parsed : null;
   }catch(error){ console.warn('Não foi possível ler a importação salva.',error); return null; }
 }
 
@@ -728,15 +786,18 @@ function validateImportedPackage(pkg){
   if(!pkg.production?.registros?.length) errors.push('Relatório 201 sem registros válidos.');
   if(!pkg.setup?.registros?.length) errors.push('Relatório 202 sem registros válidos.');
   if(!pkg.consumption?.registros?.length) errors.push('Relatório 199 sem registros válidos.');
+  if(!pkg.printing?.registros?.length) errors.push('Relatório de Impressão sem linhas IMPRESSAO UV ou IMPRESSAO SOLVENTE válidas.');
   const billingOps=reportOpSet(pkg.base?.registros||[]);
   const productionOps=reportOpSet(pkg.production?.registros||[]);
   const setupOps=reportOpSet((pkg.setup?.registros||[]).filter(row=>resourceKey(row.motivo)==='SETUP'));
   const consumptionOps=reportOpSet(pkg.consumption?.registros||[]);
+  const printingOps=reportOpSet(pkg.printing?.registros||[]);
   const linkedProduction=[...billingOps].filter(op=>productionOps.has(op));
   const linkedSetup=[...billingOps].filter(op=>setupOps.has(op));
   const linkedConsumption=[...billingOps].filter(op=>consumptionOps.has(op));
+  const linkedPrinting=[...billingOps].filter(op=>printingOps.has(op));
   if(billingOps.size && !linkedProduction.length) warnings.push('Nenhuma OP do faturamento foi localizada no relatório 201. Confira se os relatórios são do mesmo período.');
-  return {errors,warnings,stats:{billingOps:billingOps.size,productionOps:productionOps.size,setupOps:setupOps.size,consumptionOps:consumptionOps.size,linkedProduction:linkedProduction.length,linkedSetup:linkedSetup.length,linkedConsumption:linkedConsumption.length}};
+  return {errors,warnings,stats:{billingOps:billingOps.size,productionOps:productionOps.size,setupOps:setupOps.size,consumptionOps:consumptionOps.size,printingOps:printingOps.size,linkedProduction:linkedProduction.length,linkedSetup:linkedSetup.length,linkedConsumption:linkedConsumption.length,linkedPrinting:linkedPrinting.length}};
 }
 
 function updateImportStatus(validation=null){
@@ -746,13 +807,14 @@ function updateImportStatus(validation=null){
     ['200','Faturamento',base?.registros?.length||0,base?.meta?.fonte],
     ['199','Consumos',consumptionBase?.registros?.length||0,consumptionBase?.meta?.fonte],
     ['201','Produção',productionBase?.registros?.length||0,productionBase?.meta?.fonte],
-    ['202','Setup/Paradas',setupBase?.registros?.length||0,setupBase?.meta?.fonte]
+    ['202','Setup/Paradas',setupBase?.registros?.length||0,setupBase?.meta?.fonte],
+    ['IMP','Impressão',printingBase?.registros?.length||0,printingBase?.meta?.fonte]
   ];
   $('importSourceBadges').innerHTML=sources.map(([id,label,count,file])=>`<div class="import-badge ok" title="${esc(file||'')}"><span>${id}</span><strong>${esc(label)}</strong><small>${Number(count).toLocaleString('pt-BR')} linhas</small><i class="fa-solid fa-circle-check"></i></div>`).join('');
   const saved=currentDataOrigin==='imported';
   $('importOrigin').innerHTML=saved
     ? `<i class="fa-solid fa-database"></i> Base importada e salva neste navegador${validation?.stats ? ` · ${validation.stats.linkedProduction} OPs do faturamento encontradas na Produção` : ''}`
-    : `<i class="fa-solid fa-cloud-arrow-down"></i> Base publicada no módulo · use “Importar 4 arquivos” para atualizar manualmente`;
+    : `<i class="fa-solid fa-cloud-arrow-down"></i> Base publicada no módulo · use “Importar 5 arquivos” para atualizar manualmente`;
   $('resetImport').hidden=!saved;
 }
 
@@ -761,8 +823,9 @@ function applyDataPackage(pkg,origin='published',validation=null){
   productionBase=pkg.production;
   setupBase=pkg.setup;
   consumptionBase=pkg.consumption || {meta:{fonte:'Não informado'},registros:[]};
+  printingBase=pkg.printing || {meta:{fonte:'Impressão não informada'},registros:[]};
   currentDataOrigin=origin;
-  moByOp=buildMaoObraMap(productionBase?.registros||[],setupBase?.registros||[]);
+  moByOp=buildMaoObraMap(productionBase?.registros||[],setupBase?.registros||[],printingBase?.registros||[]);
   records=(base?.registros||[]).map(normalizeRecord).sort((a,b)=>String(b.dataFaturamento).localeCompare(String(a.dataFaturamento)) || String(b.nota).localeCompare(String(a.nota),undefined,{numeric:true}));
   filtered=[...records];
   selectedProduct=null;
@@ -771,14 +834,14 @@ function applyDataPackage(pkg,origin='published',validation=null){
   setupFilters();
 
   const linkedRows=records.filter(r=>r.custoMaoObraMapeado).length;
-  $('sourceFile').textContent=`Rel. 200: ${base?.meta?.fonte || 'SIGER'} · 4 relatórios validados`;
+  $('sourceFile').textContent=`Rel. 200: ${base?.meta?.fonte || 'SIGER'} · 5 relatórios validados`;
   const updated=origin==='imported' && pkg.importedAt ? new Date(pkg.importedAt).toLocaleString('pt-BR') : (base?.meta?.geradoEm ? new Date(base.meta.geradoEm).toLocaleString('pt-BR') : '—');
   $('updatedAt').textContent=`Atualizado em ${updated}`;
-  $('footerStatus').textContent=`${records.length.toLocaleString('pt-BR')} itens faturados · ${productionBase?.registros?.length?.toLocaleString('pt-BR')||0} apontamentos de produção · ${setupBase?.registros?.length?.toLocaleString('pt-BR')||0} paradas/setup · ${consumptionBase?.registros?.length?.toLocaleString('pt-BR')||0} linhas de consumos`;
+  $('footerStatus').textContent=`${records.length.toLocaleString('pt-BR')} itens faturados · ${productionBase?.registros?.length?.toLocaleString('pt-BR')||0} apontamentos de produção · ${setupBase?.registros?.length?.toLocaleString('pt-BR')||0} paradas/setup · ${consumptionBase?.registros?.length?.toLocaleString('pt-BR')||0} linhas de consumos · ${printingBase?.registros?.length?.toLocaleString('pt-BR')||0} itens de impressão`;
   const moStatus=$('moIntegrationStatus');
   if(moStatus){
     moStatus.innerHTML=moByOp.size
-      ? `<strong>M.O. integrada:</strong> ${moByOp.size.toLocaleString('pt-BR')} OP${moByOp.size===1?'':'s'} calculada(s) por Setup + Produção; ${linkedRows.toLocaleString('pt-BR')} item(ns) do faturamento já receberam Cst MO. Relatório 199 de consumos também está validado e armazenado, sem alterar custos até definirmos a fórmula.`
+      ? `<strong>M.O. integrada:</strong> ${moByOp.size.toLocaleString('pt-BR')} OP${moByOp.size===1?'':'s'} calculada(s) por Setup + Produção + Impressão quando houver; ${linkedRows.toLocaleString('pt-BR')} item(ns) do faturamento já receberam Cst MO. Relatório 199 de consumos também está validado e armazenado, sem alterar custos até definirmos a fórmula.`
       : `<strong>M.O.:</strong> bases de produção/setup carregadas, mas nenhuma OP pôde ser calculada. Imposto e Frete continuam pendentes.`;
   }
   updateImportStatus(validation);
@@ -788,8 +851,8 @@ function applyDataPackage(pkg,origin='published',validation=null){
 async function handleImportFiles(event){
   const files=[...(event.target.files||[])];
   event.target.value='';
-  if(files.length!==4){
-    alert(`Selecione os 4 arquivos Excel de uma vez. Foram selecionados ${files.length}.`);
+  if(files.length!==5){
+    alert(`Selecione os 5 arquivos Excel de uma vez. Foram selecionados ${files.length}.`);
     return;
   }
   const invalidExt=files.find(file=>!file.name.toLocaleLowerCase('pt-BR').endsWith('.xlsx'));
@@ -801,9 +864,9 @@ async function handleImportFiles(event){
     const ExcelJS=await ensureExcelJS();
     const parsedByType={};
     for(let index=0;index<files.length;index++){
-      button.innerHTML=`<i class="fa-solid fa-spinner fa-spin"></i> Validando ${index+1}/4…`;
+      button.innerHTML=`<i class="fa-solid fa-spinner fa-spin"></i> Validando ${index+1}/5…`;
       const parsed=await parseImportFile(files[index],ExcelJS);
-      if(parsedByType[parsed.type]) throw new Error(`Dois arquivos foram identificados como relatório ${parsed.type}. Selecione um arquivo de cada relatório: 199, 200, 201 e 202.`);
+      if(parsedByType[parsed.type]) throw new Error(`Dois arquivos foram identificados como relatório ${parsed.type}. Selecione um arquivo de cada relatório: 199, 200, 201, 202 e o relatório de Impressão.`);
       parsedByType[parsed.type]=parsed;
     }
     const missing=Object.keys(IMPORT_SCHEMAS).filter(type=>!parsedByType[type]);
@@ -818,6 +881,7 @@ async function handleImportFiles(event){
       `199 Consumos: ${pkg.consumption.registros.length.toLocaleString('pt-BR')} linhas`,
       `201 Produção: ${pkg.production.registros.length.toLocaleString('pt-BR')} linhas`,
       `202 Setup/Paradas: ${pkg.setup.registros.length.toLocaleString('pt-BR')} linhas`,
+      `Impressão UV/Solvente: ${pkg.printing.registros.length.toLocaleString('pt-BR')} linhas`,
       `${validation.stats.linkedProduction} OPs do faturamento encontradas no relatório de Produção`
     ];
     if(validation.warnings.length) details.push(`Aviso: ${validation.warnings.join(' ')}`);
@@ -868,7 +932,8 @@ function filterSummary(){
     `Período: ${f.start ? dateBR(f.start) : '—'} a ${f.end ? dateBR(f.end) : '—'}`,
     `NF: ${f.invoice || 'Todas'}`,
     `Pedido: ${f.order || 'Todos'}`,
-    `OP: ${f.op || 'Todas'}`
+    `OP: ${f.op || 'Todas'}`,
+    `CFOP: ${f.cfop || 'Todos'}`
   ];
   if(f.search) parts.push(`Produto: ${$('productSearch').value.trim()}`);
   return parts.join('   |   ');
@@ -1237,9 +1302,9 @@ async function exportProducts(){
 function bindEvents(){
   if(eventsBound) return;
   eventsBound=true;
-  ['companyFilter','startDate','endDate','invoiceFilter','orderFilter','opFilter'].forEach(id=>$(id).addEventListener('change',applyFilters));
+  ['companyFilter','startDate','endDate','invoiceFilter','orderFilter','opFilter','cfopFilter'].forEach(id=>$(id).addEventListener('change',applyFilters));
   let timer; $('productSearch').addEventListener('input',()=>{clearTimeout(timer); timer=setTimeout(applyFilters,180)});
-  $('clearFilters').addEventListener('click',()=>{['companyFilter','invoiceFilter','orderFilter','opFilter'].forEach(id=>$(id).value=''); $('productSearch').value=''; const dates=records.map(r=>r.dataFaturamento).filter(Boolean).sort(); if(dates.length){$('startDate').value=dates[0];$('endDate').value=dates.at(-1)} applyFilters();});
+  $('clearFilters').addEventListener('click',()=>{['companyFilter','invoiceFilter','orderFilter','opFilter','cfopFilter'].forEach(id=>$(id).value=''); $('productSearch').value=''; const dates=records.map(r=>r.dataFaturamento).filter(Boolean).sort(); if(dates.length){$('startDate').value=dates[0];$('endDate').value=dates.at(-1)} applyFilters();});
   document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>switchView(btn.dataset.view)));
   document.addEventListener('click',event=>{const btn=event.target.closest('[data-detail-product]'); if(btn) selectDetail(btn.dataset.detailProduct);});
   $('billingPrev').addEventListener('click',()=>{if(billingPage>1){billingPage--;renderBilling()}}); $('billingNext').addEventListener('click',()=>{if(billingPage*PAGE_SIZE<filtered.length){billingPage++;renderBilling()}});
@@ -1263,19 +1328,21 @@ async function fetchOptionalJson(url){
 }
 
 async function loadData(){
-  const [baseResponse,prodData,setupData,consData] = await Promise.all([
+  const [baseResponse,prodData,setupData,consData,printingData] = await Promise.all([
     fetch(`data/base.json?v=${Date.now()}`,{cache:'no-store'}),
     fetchOptionalJson('data/producao.json'),
     fetchOptionalJson('data/setup.json'),
-    fetchOptionalJson('data/consumos.json')
+    fetchOptionalJson('data/consumos.json'),
+    fetchOptionalJson('data/impressao.json')
   ]);
   if(!baseResponse.ok) throw new Error(`Base não encontrada (${baseResponse.status})`);
   const published={
-    version:7,
+    version:8,
     base:await baseResponse.json(),
     production:prodData || {meta:{fonte:'Produção não encontrada'},registros:[]},
     setup:setupData || {meta:{fonte:'Setup não encontrado'},registros:[]},
-    consumption:consData || {meta:{fonte:'Consumos não encontrado'},registros:[]}
+    consumption:consData || {meta:{fonte:'Consumos não encontrado'},registros:[]},
+    printing:printingData || {meta:{fonte:'Impressão não encontrada'},registros:[]}
   };
   const cached=loadCachedImport();
   applyDataPackage(cached || published,cached ? 'imported' : 'published');
