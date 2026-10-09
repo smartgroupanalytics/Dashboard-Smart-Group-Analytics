@@ -133,42 +133,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8343",
-    "produto": "17953",
-    "desc_completa": "ARUBA GLAM OURO LIGHT",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 200,
-    "dt_saida": "2026-09-24",
-    "centro_custo": 24,
-    "abreviacao": "EST 3"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8360",
-    "produto": "17952",
-    "desc_completa": "ARUBA GLAM PRATA",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 200,
-    "dt_saida": "2026-09-25",
-    "centro_custo": 24,
-    "abreviacao": "EST 3"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8361",
-    "produto": "17954",
-    "desc_completa": "ARUBA GLAM OURO ROSADO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 200,
-    "dt_saida": "2026-09-28",
-    "centro_custo": 24,
-    "abreviacao": "EST 3"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8362",
     "produto": "18000",
     "desc_completa": "ARUBA GLAM BRONZE",
@@ -176,8 +140,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-28",
-    "centro_custo": 24,
-    "abreviacao": "EST 3"
+    "centro_custo": 10,
+    "abreviacao": "REV 1"
   },
   {
     "fonte_comercial": "STK",
@@ -198,19 +162,7 @@
     "desc_completa": "BORGONHA PRATA",
     "grupo": 39,
     "subgrupo": 41,
-    "qtd_produzir": 1000,
-    "dt_saida": "2026-09-30",
-    "centro_custo": 7,
-    "abreviacao": "ESTAM"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8379",
-    "produto": "11845",
-    "desc_completa": "BORGONHA OURO LIGHT",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 774.5,
+    "qtd_produzir": 497.5,
     "dt_saida": "2026-09-30",
     "centro_custo": 10,
     "abreviacao": "REV 1"
@@ -236,8 +188,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-30",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -284,8 +236,8 @@
     "subgrupo": 41,
     "qtd_produzir": 120,
     "dt_saida": "2026-09-30",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -325,18 +277,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8524",
-    "produto": "17333",
-    "desc_completa": "DALLAS BEGE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 200,
-    "dt_saida": "2026-10-07",
-    "centro_custo": 23,
-    "abreviacao": "RAMA"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8525",
     "produto": "15361",
     "desc_completa": "LENNY BEGE",
@@ -344,8 +284,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-10-08",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -368,8 +308,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-10-08",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -385,42 +325,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8532",
-    "produto": "15247",
-    "desc_completa": "OPHIDIA PRETO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 200,
-    "dt_saida": "2026-10-09",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8533",
-    "produto": "14788",
-    "desc_completa": "OPHIDIA METAL PRATA",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 200,
-    "dt_saida": "2026-10-09",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8534",
-    "produto": "15622",
-    "desc_completa": "TABLAS NATURAL",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 200,
-    "dt_saida": "2026-10-09",
-    "centro_custo": 26,
-    "abreviacao": "IMP DIG"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8561",
     "produto": "12560",
     "desc_completa": "TWIST METAL OFF WHITE/PRATA",
@@ -428,8 +332,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-10-05",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -440,8 +344,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-10-05",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -632,8 +536,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-10-09",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 1,
+    "abreviacao": "RECOB"
   },
   {
     "fonte_comercial": "STK",
@@ -776,8 +680,20 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-10-14",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8637",
+    "produto": "17322",
+    "desc_completa": "MACKAY GLAM OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 400,
+    "dt_saida": "2026-10-14",
+    "centro_custo": 0,
+    "abreviacao": ""
   },
   {
     "fonte_comercial": "STK",
@@ -824,8 +740,8 @@
     "subgrupo": 41,
     "qtd_produzir": 2000,
     "dt_saida": "2026-10-14",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",

@@ -154734,7 +154734,7 @@
   {
     "fonte_comercial": "STK",
     "dt_entrada": "2026-10-02",
-    "dt_faturam": "2026-10-02",
+    "dt_faturam": "2026-10-09",
     "produto": "9000101",
     "desc_completa": "DELHI PRETO",
     "pedido": "7319",
@@ -154753,9 +154753,7 @@
     "representante": "18",
     "abreviacao": "GREICE",
     "vlr_comissao_rep": 122.22,
-    "cod_altern_1": "INVERNO 2027",
-    "dt_faturam_original": "2026-10-09",
-    "data_venda_ajustada": true
+    "cod_altern_1": "INVERNO 2027"
   },
   {
     "fonte_comercial": "STK",
