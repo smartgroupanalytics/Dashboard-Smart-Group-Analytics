@@ -48,6 +48,7 @@ const estado = {
   habilidadesVisiveis: [],
   alertasIntegridade: [],
   podeAdministrar: false,
+  podeVerTodos: false,
   departamentoChave: ""
 };
 
@@ -65,22 +66,36 @@ function configurarEscopo() {
   const setor = String(usuario.setor || usuario.departamento || "").trim();
   const setorChave = texto(usuario.setorChave) || normalizarTexto(setor);
   const setoresRh = ["rh", "recursos humanos", "gestao de pessoas", "gestao pessoas"];
+  const acessoGeralConsulta = usuario.modulos?.rhGeral === true;
 
+  // Administradores e o próprio RH podem importar/sincronizar.
   estado.podeAdministrar =
     perfil === "administrador" ||
     setoresRh.includes(setorChave);
 
+  // Usuários com rhGeral podem consultar todos os departamentos, sem ganhar
+  // permissão de importação/sincronização administrativa.
+  estado.podeVerTodos = estado.podeAdministrar || acessoGeralConsulta;
   estado.departamentoChave = setorChave;
 
-  if (estado.podeAdministrar) {
-    elementos.escopoAcesso.innerHTML = '<i class="fa-solid fa-unlock-keyhole"></i> Acesso geral do RH';
-    elementos.btnSelecionarArquivos.hidden = false;
-    elementos.btnImportarVazio.hidden = false;
+  if (estado.podeVerTodos) {
+    elementos.escopoAcesso.innerHTML = estado.podeAdministrar
+      ? '<i class="fa-solid fa-unlock-keyhole"></i> Acesso geral do RH'
+      : '<i class="fa-solid fa-unlock-keyhole"></i> Acesso geral de consulta';
     elementos.filtroDepartamento.disabled = false;
-    elementos.btnAtualizar.title = "Sincronizar planilhas do Drive agora";
   } else {
     elementos.escopoAcesso.innerHTML = `<i class="fa-solid fa-lock"></i> Departamento: ${escaparHtml(setor || "não informado")}`;
     elementos.filtroDepartamento.disabled = true;
+  }
+
+  if (estado.podeAdministrar) {
+    elementos.btnSelecionarArquivos.hidden = false;
+    elementos.btnImportarVazio.hidden = false;
+    elementos.btnAtualizar.title = "Sincronizar planilhas do Drive agora";
+  } else {
+    elementos.btnSelecionarArquivos.hidden = true;
+    elementos.btnImportarVazio.hidden = true;
+    elementos.btnAtualizar.title = "Atualizar dados";
   }
 }
 
@@ -254,7 +269,7 @@ async function carregarColaboradores() {
     const referencia = collection(db, "rh_colaboradores");
     let consulta = referencia;
 
-    if (!estado.podeAdministrar) {
+    if (!estado.podeVerTodos) {
       if (!estado.departamentoChave) {
         throw new Error("Seu usuário não possui um setor definido.");
       }
@@ -410,7 +425,7 @@ function preencherDepartamentos() {
       .filter(Boolean)
   )].sort((a, b) => a.localeCompare(b, "pt-BR"));
 
-  if (!estado.podeAdministrar) {
+  if (!estado.podeVerTodos) {
     const nomeSetor = String(usuario.setor || usuario.departamento || "Meu departamento");
     elementos.filtroDepartamento.innerHTML = `<option value="${escaparAtributo(nomeSetor)}">${escaparHtml(nomeSetor)}</option>`;
     return;

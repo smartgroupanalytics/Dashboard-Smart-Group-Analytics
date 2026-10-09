@@ -1,0 +1,28 @@
+ACESSO GERAL DO RH PARA O ADERILDO
+
+O ajuste cria uma permissão separada chamada:
+RH — Acesso geral de consulta
+
+Ela permite visualizar colaboradores de TODOS os departamentos sem transformar
+o usuário em Administrador e sem liberar importação/sincronização administrativa.
+
+1) Copie os arquivos deste pacote para o projeto, preservando as pastas.
+
+2) FIRESTORE — obrigatório
+Abra Firebase > Firestore Database > Regras.
+Aplique a atualização indicada em ADICIONAR-NAS-REGRAS-FIRESTORE-RH.txt.
+A parte nova cria rhPodeVerTodos() e usa modulos.rhGeral == true na leitura.
+Publique as regras.
+
+3) No Analytics, entre em Administração > Usuários.
+Edite a conta do Aderildo e marque:
+- Recursos Humanos
+- RH — Acesso geral de consulta
+Salve.
+
+4) Peça para o Aderildo sair e entrar novamente no Analytics (ou atualizar a página).
+Ao abrir Recursos Humanos, o topo deve mostrar:
+Acesso geral de consulta
+
+O filtro Departamento ficará liberado e ele poderá escolher Todos os departamentos.
+A importação e a sincronização do Drive continuam restritas ao Administrador/RH.

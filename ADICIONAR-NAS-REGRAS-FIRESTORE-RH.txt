@@ -33,8 +33,18 @@ function rhAdministradorOuRh() {
     );
 }
 
+// Permissão especial somente para consultar todos os departamentos do RH.
+// Não concede importação, alteração ou exclusão de dados.
+function rhPodeVerTodos() {
+  return rhAdministradorOuRh()
+    || (
+      rhUsuarioAtivo()
+      && rhUsuarioAnalytics().modulos.rhGeral == true
+    );
+}
+
 match /rh_colaboradores/{colaboradorId} {
-  allow read: if rhAdministradorOuRh()
+  allow read: if rhPodeVerTodos()
     || (
       rhUsuarioAtivo()
       && resource.data.departamentoChave == rhUsuarioAnalytics().setorChave
@@ -62,3 +72,14 @@ devem consultar os colaboradores de seu próprio setor.
 
 Administradores e usuários do setor "RH" ou "Recursos Humanos" visualizam
 todos os departamentos e podem importar/atualizar planilhas.
+
+
+ACESSO GERAL DE CONSULTA
+Para um diretor/gestor visualizar todos os departamentos sem virar administrador:
+1. Em Administração > Usuários, marque "Recursos Humanos".
+2. Marque também "RH — Acesso geral de consulta".
+3. Salve o usuário.
+
+Essa permissão grava modulos.rhGeral = true e permite somente leitura geral.
+A importação e a sincronização do Drive continuam restritas a Administradores
+e usuários cujo setor seja RH/Recursos Humanos/Gestão de Pessoas.

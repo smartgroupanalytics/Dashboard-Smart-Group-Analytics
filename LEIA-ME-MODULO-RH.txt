@@ -16,6 +16,7 @@ MÓDULO DE RECURSOS HUMANOS — PRIMEIRA CONFIGURAÇÃO
 
    - Administrador: visualiza todos os departamentos e importa planilhas.
    - Usuário do setor RH ou Recursos Humanos: visualiza todos e importa.
+   - Usuário com "RH — Acesso geral de consulta": visualiza todos, mas não importa.
    - Demais gestores com permissão RH: visualizam somente o próprio setor.
 
 4. IMPORTAÇÃO DA BASE

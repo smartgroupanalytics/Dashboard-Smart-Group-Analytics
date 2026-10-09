@@ -387,6 +387,11 @@ if(
     modulos[campo.dataset.modulo] = campo.checked;
   });
 
+  // A permissão de acesso geral do RH sempre pressupõe acesso ao módulo de RH.
+  if (modulos.rhGeral === true) {
+    modulos.rh = true;
+  }
+
   const setor = String(campoSetor.value || "").trim();
 
   const dados = {
