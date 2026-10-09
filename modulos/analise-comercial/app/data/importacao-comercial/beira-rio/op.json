@@ -111,16 +111,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8370",
-    "produto": "16509",
-    "desc_completa": "NAPA SEVILLE BRANCO OFF 526",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 1000,
-    "dt_saida": "2026-09-25",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8371",
     "produto": "14995",
     "desc_completa": "NOBUCK TUNISIA AVELA 1248",
@@ -211,16 +201,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8451",
-    "produto": "9895",
-    "desc_completa": "METALIZADO NANCY PU 1.0 OURO ROSADO",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 1000,
-    "dt_saida": "2026-10-06",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8493",
     "produto": "30160",
     "desc_completa": "CROCO METALIZADO IBIZA OURO ROSADO",
@@ -245,7 +225,7 @@
     "produto": "17475",
     "desc_completa": "NAPA RAVENA CAMEL 1165",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 200,
+    "qtd_produzir": 13,
     "dt_saida": "2026-10-05",
     "abreviacao": ""
   },
@@ -295,7 +275,7 @@
     "produto": "18144",
     "desc_completa": "NAPA ZEBRA SAVANA BRANCO 99/PRETO 01",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 400,
+    "qtd_produzir": 395,
     "dt_saida": "2026-10-09",
     "abreviacao": ""
   },
