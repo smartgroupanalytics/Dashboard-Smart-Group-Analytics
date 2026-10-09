@@ -200,3 +200,16 @@ tbody tr.row-loss td.material-cost-col{color:#ff8390!important;background:rgba(1
 /* v13 — agrupamento visual das etapas repetidas + custo por metro */
 .mo-table td.cost-per-meter{font-weight:800;color:#dff7ff;background:rgba(255,255,255,.035);}
 .mo-table th:last-child{white-space:nowrap;}
+
+/* v17 — detalhamento contextual e vínculo NF/Pedido/OP */
+.detail-linkage-panel{margin-top:12px;min-height:0;padding:0;overflow:hidden}
+.detail-linkage-panel .detail-panel-title{padding:13px 15px 11px;margin:0;border-bottom:1px solid var(--line-soft)}
+.linkage-title{align-items:center}
+.linkage-title>div{min-width:0;flex:1}
+.linkage-count{margin-left:auto;color:#8fb6de;font-size:10px;font-weight:800;white-space:nowrap}
+.detail-linkage-wrap{max-height:340px;border-bottom:0}
+.detail-linkage-table{min-width:1320px;font-size:10px}
+.detail-linkage-table th,.detail-linkage-table td{padding:7px 8px}
+.detail-linkage-table .table-price-col{background:rgba(255,255,255,.035)}
+.detail-linkage-table .material-cost-col{font-weight:900;color:#fff;background:rgba(255,255,255,.06)}
+@media(max-width:900px){.linkage-title{align-items:flex-start}.linkage-count{white-space:normal;text-align:right}}
