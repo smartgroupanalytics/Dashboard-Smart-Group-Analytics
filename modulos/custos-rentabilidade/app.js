@@ -9,6 +9,8 @@ let groupedProducts = [];
 let billingPage = 1;
 let productsPage = 1;
 let selectedProduct = null;
+let selectedDetailMode = 'product';
+let selectedBillingRowId = null;
 let productionBase = null;
 let setupBase = null;
 let printingBase = null;
@@ -494,7 +496,7 @@ function renderBilling(){
       <td class="num ${marginClass(r.lucroUnitario)}">${money(r.lucroUnitario)}</td>
       <td class="num ${marginClass(r.margemBase)}">${money(r.margemBase)}</td>
       <td class="num ${marginClass(r.margemBase)}">${percent(r.margemBasePercentual)}</td>
-      <td><button class="detail-button" type="button" data-detail-product="${esc(r.produto)}"><i class="fa-solid fa-magnifying-glass-chart"></i> Detalhar</button></td>
+      <td><button class="detail-button" type="button" data-detail-source="billing" data-detail-row="${esc(r._rowId)}" data-detail-product="${esc(r.produto)}"><i class="fa-solid fa-magnifying-glass-chart"></i> Detalhar</button></td>
     </tr>`).join('') : '<tr class="empty-row"><td colspan="22">Nenhum registro encontrado para os filtros selecionados.</td></tr>';
   const hiddenTechnical=filtered.length-gridRows.length;
   $('billingCount').textContent = hiddenTechnical ? `${gridRows.length.toLocaleString('pt-BR')} registros · ${hiddenTechnical.toLocaleString('pt-BR')} técnicos ocultos` : `${gridRows.length.toLocaleString('pt-BR')} registros`;
@@ -533,7 +535,7 @@ function renderProducts(){
   const start = (productsPage-1)*PAGE_SIZE;
   const pageRows = groupedProducts.slice(start,start+PAGE_SIZE);
   $('productRows').innerHTML = pageRows.length ? pageRows.map(g => `
-    <tr class="${g.margemBase <= 0 ? 'row-loss' : ''}"><td><strong>${esc(g.produto)}</strong></td><td class="description-cell" title="${esc(g.descricaoCompleta)}">${esc(g.descricaoCompleta)}</td><td class="num">${number(g.quantidade)}</td><td class="num">${money(g.valorVenda)}</td><td class="num">${money(g.custoTotal)}</td><td class="num">${money(g.comissaoTotal)}</td><td class="num ${marginClass(g.margemBase)}">${money(g.margemBase)}</td><td class="num ${marginClass(g.margemBase)}">${percent(g.margemBasePercentual)}</td><td><button class="detail-button" type="button" data-detail-product="${esc(g.produto)}"><i class="fa-solid fa-magnifying-glass-chart"></i> Detalhar</button></td></tr>`).join('') : '<tr class="empty-row"><td colspan="9">Nenhum produto encontrado.</td></tr>';
+    <tr class="${g.margemBase <= 0 ? 'row-loss' : ''}"><td><strong>${esc(g.produto)}</strong></td><td class="description-cell" title="${esc(g.descricaoCompleta)}">${esc(g.descricaoCompleta)}</td><td class="num">${number(g.quantidade)}</td><td class="num">${money(g.valorVenda)}</td><td class="num">${money(g.custoTotal)}</td><td class="num">${money(g.comissaoTotal)}</td><td class="num ${marginClass(g.margemBase)}">${money(g.margemBase)}</td><td class="num ${marginClass(g.margemBase)}">${percent(g.margemBasePercentual)}</td><td><button class="detail-button" type="button" data-detail-source="product" data-detail-product="${esc(g.produto)}"><i class="fa-solid fa-magnifying-glass-chart"></i> Detalhar</button></td></tr>`).join('') : '<tr class="empty-row"><td colspan="9">Nenhum produto encontrado.</td></tr>';
   $('productsPage').textContent = `Página ${productsPage} de ${totalPages}`;
   $('productsPrev').disabled = productsPage <= 1;
   $('productsNext').disabled = productsPage >= totalPages;
@@ -578,6 +580,45 @@ function renderProductionMO(rows){
   `).join('');
 }
 
+function selectedDetailRows(){
+  if(!selectedProduct) return [];
+  if(selectedDetailMode==='billing' && selectedBillingRowId!==null){
+    const row=records.find(r=>String(r._rowId)===String(selectedBillingRowId));
+    return row ? [row] : [];
+  }
+  return getGridRows().filter(r=>String(r.produto)===String(selectedProduct));
+}
+
+function renderProductLinkage(rows){
+  const panel=$('detailLinkagePanel');
+  const body=$('detailLinkageRows');
+  const count=$('detailLinkageCount');
+  if(!panel || !body || !count) return;
+  if(selectedDetailMode!=='product'){
+    panel.hidden=true;
+    body.innerHTML='';
+    count.textContent='';
+    return;
+  }
+  panel.hidden=false;
+  const sorted=[...rows].sort((a,b)=>String(b.dataFaturamento).localeCompare(String(a.dataFaturamento)) || String(b.nota).localeCompare(String(a.nota),undefined,{numeric:true}));
+  count.textContent=`${sorted.length.toLocaleString('pt-BR')} ${sorted.length===1?'faturamento vinculado':'faturamentos vinculados'}`;
+  body.innerHTML=sorted.length ? sorted.map(r=>`<tr class="${r.margemBase<=0?'row-loss':''}">
+    <td>${dateBR(r.dataFaturamento)}</td>
+    <td>${displayRef(r.nota)}</td>
+    <td>${displayRef(r.pedido)}</td>
+    <td>${displayRef(r.op)}</td>
+    <td>${displayRef(r.cfop)}</td>
+    <td class="num">${number(r.quantidade)}</td>
+    <td class="num">${money(r.valorVenda)}</td>
+    <td class="num">${money(r.valorMetro)}</td>
+    <td class="num table-price-col">${r.valorTabelaMapeado ? money(r.valorTabela) : ''}</td>
+    <td class="num material-cost-col">${money(r.custoMateriaPrimaUnitario)}</td>
+    <td class="num optional-cost">${optionalMoney(r.custoMaoObraUnitario,r.custoMaoObraMapeado)}</td>
+    <td class="num ${marginClass(r.lucroUnitario)}">${money(r.lucroUnitario)}</td>
+  </tr>`).join('') : '<tr class="empty-row"><td colspan="12">Nenhum faturamento vinculado encontrado para os filtros atuais.</td></tr>';
+}
+
 function renderDetail(){
   if(!selectedProduct){
     $('detailEmpty').hidden = false;
@@ -586,9 +627,8 @@ function renderDetail(){
     $('detailSubtitle').textContent = 'Clique em “Detalhar” nas tabelas para abrir esta visão.';
     return;
   }
-  const allProductRows = records.filter(r => String(r.produto) === String(selectedProduct));
-  const rows = allProductRows.length ? allProductRows : filtered.filter(r => String(r.produto) === String(selectedProduct));
-  if(!rows.length){ selectedProduct=null; renderDetail(); return; }
+  const rows=selectedDetailRows();
+  if(!rows.length){ selectedProduct=null; selectedBillingRowId=null; renderDetail(); return; }
   const first=rows[0], revenue=sum(rows,'valorVenda'), cost=sum(rows,'custoTotal'), commission=sum(rows,'comissaoTotal'), margin=sum(rows,'margemBase'), qty=sum(rows,'quantidade');
   const weightedUnitCost = qty ? cost/qty : 0;
   const avgCommissionPct = revenue ? commission/revenue*100 : 0;
@@ -596,7 +636,12 @@ function renderDetail(){
   $('detailEmpty').hidden = true;
   $('detailContent').hidden = false;
   $('detailTitle').textContent = `${first.produto} · ${first.descricaoCompleta}`;
-  $('detailSubtitle').textContent = `${rows.length} ${rows.length===1?'registro':'registros'} encontrados na base publicada`;
+  $('detailSubtitle').textContent = selectedDetailMode==='billing'
+    ? `Linha do faturamento · NF ${meaningful(first.nota)?first.nota:'—'} · Pedido ${meaningful(first.pedido)?first.pedido:'—'} · OP ${meaningful(first.op)?first.op:'—'}`
+    : `${rows.length} ${rows.length===1?'faturamento':'faturamentos'} do produto nos filtros selecionados`;
+  $('backToBilling').innerHTML = selectedDetailMode==='product'
+    ? '<i class="fa-solid fa-arrow-left"></i> Voltar ao total por produto'
+    : '<i class="fa-solid fa-arrow-left"></i> Voltar ao faturamento';
   $('detailProduct').textContent = first.produto;
   $('detailDescription').textContent = first.descricaoCompleta;
   $('detailRevenue').textContent = money(revenue);
@@ -619,6 +664,7 @@ function renderDetail(){
     ['Último faturamento',dateBR([...rows].sort((a,b)=>b.dataFaturamento.localeCompare(a.dataFaturamento))[0]?.dataFaturamento)]
   ];
   $('detailReferences').innerHTML = refs.map(([label,value])=>`<div class="reference-group"><span>${label}</span><strong>${esc(value)}</strong></div>`).join('');
+  renderProductLinkage(rows);
   renderProductionMO(rows);
 }
 
@@ -631,16 +677,20 @@ function switchView(view){
   if(view==='production') renderDetail();
 }
 
-function selectDetail(product){ selectedProduct = product; switchView('production'); document.querySelector('.tabs')?.scrollIntoView({behavior:'smooth',block:'start'}); }
+function selectDetail(product,source='product',rowId=null){
+  selectedProduct=product;
+  selectedDetailMode=source==='billing'?'billing':'product';
+  selectedBillingRowId=selectedDetailMode==='billing' ? rowId : null;
+  switchView('production');
+  document.querySelector('.tabs')?.scrollIntoView({behavior:'smooth',block:'start'});
+}
 
 function activeView(){
   return document.querySelector('.tab.active')?.dataset.view || 'billing';
 }
 
 function reportRowsForSelectedProduct(){
-  if(!selectedProduct) return [];
-  const allProductRows=records.filter(r=>String(r.produto)===String(selectedProduct));
-  return allProductRows.length ? allProductRows : filtered.filter(r=>String(r.produto)===String(selectedProduct));
+  return selectedDetailRows();
 }
 
 function printKpisHtml(rows){
@@ -1050,8 +1100,11 @@ function applyDataPackage(pkg,origin='published',validation=null){
   currentDataOrigin=origin;
   moByOp=buildMaoObraMap(productionBase?.registros||[],setupBase?.registros||[],printingBase?.registros||[]);
   records=(base?.registros||[]).map(normalizeRecord).sort((a,b)=>String(b.dataFaturamento).localeCompare(String(a.dataFaturamento)) || String(b.nota).localeCompare(String(a.nota),undefined,{numeric:true}));
+  records.forEach((row,index)=>{ row._rowId=String(index); });
   filtered=[...records];
   selectedProduct=null;
+  selectedDetailMode='product';
+  selectedBillingRowId=null;
   billingPage=1;
   productsPage=1;
   setupFilters();
@@ -1691,10 +1744,10 @@ function bindEvents(){
     applyFilters();
   });
   document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>switchView(btn.dataset.view)));
-  document.addEventListener('click',event=>{const btn=event.target.closest('[data-detail-product]'); if(btn) selectDetail(btn.dataset.detailProduct);});
+  document.addEventListener('click',event=>{const btn=event.target.closest('[data-detail-product]'); if(btn) selectDetail(btn.dataset.detailProduct,btn.dataset.detailSource||'product',btn.dataset.detailRow||null);});
   $('billingPrev').addEventListener('click',()=>{if(billingPage>1){billingPage--;renderBilling()}}); $('billingNext').addEventListener('click',()=>{if(billingPage*PAGE_SIZE<getGridRows().length){billingPage++;renderBilling()}});
   $('productsPrev').addEventListener('click',()=>{if(productsPage>1){productsPage--;renderProducts()}}); $('productsNext').addEventListener('click',()=>{if(productsPage*PAGE_SIZE<groupedProducts.length){productsPage++;renderProducts()}});
-  $('backToBilling').addEventListener('click',()=>switchView('billing'));
+  $('backToBilling').addEventListener('click',()=>switchView(selectedDetailMode==='product'?'products':'billing'));
   $('exportBilling').addEventListener('click',()=>exportBilling()); $('exportProducts').addEventListener('click',()=>exportProducts());
   $('printDashboard').addEventListener('click',printDashboard); $('exportDashboard').addEventListener('click',exportCurrentView);
   $('importReports').addEventListener('click',()=> $('importFiles').click());

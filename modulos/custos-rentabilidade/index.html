@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Custos e Rentabilidade · Smart Group Analytics</title>
-  <link rel="stylesheet" href="style.css?v=20261009-15">
+  <link rel="stylesheet" href="style.css?v=20261009-17">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -174,6 +174,20 @@
           <article class="success"><span>Margem base</span><strong id="detailMargin">R$ 0,00</strong><small id="detailMarginPct">0,00%</small></article>
         </section>
 
+        <section id="detailLinkagePanel" class="detail-panel detail-linkage-panel" hidden>
+          <div class="detail-panel-title linkage-title">
+            <i class="fa-solid fa-link"></i>
+            <div><h3>Notas, Pedidos e OPs do Produto</h3><p>Relação dos faturamentos do produto dentro dos filtros selecionados.</p></div>
+            <span id="detailLinkageCount" class="linkage-count"></span>
+          </div>
+          <div class="table-wrap detail-linkage-wrap">
+            <table class="detail-linkage-table">
+              <thead><tr><th>Dt. Fat.</th><th>Nota</th><th>Pedido</th><th>OP</th><th>CFOP</th><th class="num">Qtd.</th><th class="num">Vlr Venda</th><th class="num">Vlr Metro</th><th class="num">Valor Tabela</th><th class="num">Cst. Mat. Prima</th><th class="num">Cst MO</th><th class="num">Lucro</th></tr></thead>
+              <tbody id="detailLinkageRows"></tbody>
+            </table>
+          </div>
+        </section>
+
         <section class="detail-grid">
           <article class="detail-panel">
             <div class="detail-panel-title"><i class="fa-solid fa-receipt"></i><div><h3>Referências do faturamento</h3><p>Pedidos, notas e OPs vinculados ao produto selecionado.</p></div></div>
@@ -193,6 +207,6 @@
     </footer>
   </main>
 
-  <script type="module" src="app.js?v=20261009-16"></script>
+  <script type="module" src="app.js?v=20261009-17"></script>
 </body>
 </html>
