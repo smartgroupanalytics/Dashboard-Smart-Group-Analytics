@@ -1,0 +1,20 @@
+CORRECAO DA ROTA - CUSTOS E RENTABILIDADE - v18
+
+Problema identificado:
+O index.html possui o menu e o card "Custos e Rentabilidade", mas o app.js da raiz nao possui o case "custos-rentabilidade". Por isso o clique deixa o menu azul, mas o conteudo continua no Dashboard.
+
+COMO USAR
+1. Extraia este ZIP.
+2. Copie os 3 arquivos deste pacote para a RAIZ do seu projeto, no mesmo local onde existem app.js e index.html.
+3. Execute CORRIGIR-ROTA-CUSTOS-RENTABILIDADE.cmd.
+4. O script cria backup dos arquivos antes de alterar.
+5. Abra o GitHub Desktop e confira as mudancas.
+6. Commit e Push origin.
+7. Aguarde o GitHub Pages publicar.
+8. No navegador, pressione Ctrl+F5.
+
+O script NAO altera a pasta modulos/custos-rentabilidade e NAO altera os outros modulos.
+Ele apenas:
+- adiciona a permissao "custos-rentabilidade" ao mapa do app.js, caso esteja faltando;
+- adiciona o case que abre modulos/custos-rentabilidade/index.html;
+- muda a versao do app.js no index.html para evitar cache.
