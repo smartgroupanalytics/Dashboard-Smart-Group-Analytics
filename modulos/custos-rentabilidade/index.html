@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Custos e Rentabilidade · Smart Group Analytics</title>
-  <link rel="stylesheet" href="style.css?v=20261009-14">
+  <link rel="stylesheet" href="style.css?v=20261009-15">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -26,7 +26,7 @@
         <div class="hero-import-actions">
           <button id="printDashboard" class="hero-action print-button" type="button"><i class="fa-solid fa-print"></i> Imprimir</button>
           <button id="exportDashboard" class="hero-action excel-button" type="button"><i class="fa-solid fa-file-excel"></i> Exportar Excel</button>
-          <button id="importReports" class="import-button" type="button"><i class="fa-solid fa-file-import"></i> Importar 4 arquivos</button>
+          <button id="importReports" class="import-button" type="button"><i class="fa-solid fa-file-import"></i> Importar 5 arquivos</button>
           <input id="importFiles" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" multiple hidden>
         </div>
       </div>
@@ -34,7 +34,7 @@
 
     <section id="importStatus" class="import-status" aria-label="Status dos relatórios importados">
       <div class="import-status-head">
-        <div><span class="eyebrow">FONTES DE DADOS</span><strong>Validação dos 4 relatórios SIGER</strong></div>
+        <div><span class="eyebrow">FONTES DE DADOS</span><strong>Validação dos 5 relatórios SIGER</strong></div>
         <button id="resetImport" class="reset-import" type="button" hidden><i class="fa-solid fa-rotate-left"></i> Usar base publicada</button>
       </div>
       <div id="importSourceBadges" class="import-source-badges"></div>
@@ -125,7 +125,7 @@
       <div class="table-wrap">
         <table>
           <thead><tr>
-            <th>Dt. Fat.</th><th>Sigla</th><th>Produto</th><th>Descrição completa</th><th>Pedido</th><th>OP</th><th>Nota</th><th class="num">Qtd.</th><th class="num">Vlr Venda</th><th class="num">Vlr Metro</th><th class="num material-cost-col">CST. MAT. PRIMA</th><th class="num">Cst MO</th><th class="num">Imposto</th><th class="num">Frete</th><th class="num">Comissão</th><th class="num">% Comis.</th><th class="num">Custo Total</th><th class="num">Lucro</th><th class="num">Margem Base</th><th class="num">% Margem</th><th></th>
+            <th>Dt. Fat.</th><th>Sigla</th><th>Produto</th><th>Descrição completa</th><th>Pedido</th><th>OP</th><th>Nota</th><th class="num">Qtd.</th><th class="num">Vlr Venda</th><th class="num">Vlr Metro</th><th class="num table-price-col">Valor de Tabela</th><th class="num material-cost-col">CST. MAT. PRIMA</th><th class="num">Cst MO</th><th class="num">Imposto</th><th class="num">Frete</th><th class="num">Comissão</th><th class="num">% Comis.</th><th class="num">Custo Total</th><th class="num">Lucro</th><th class="num">Margem Base</th><th class="num">% Margem</th><th></th>
           </tr></thead>
           <tbody id="billingRows"></tbody>
         </table>
@@ -193,6 +193,6 @@
     </footer>
   </main>
 
-  <script type="module" src="app.js?v=20261009-14"></script>
+  <script type="module" src="app.js?v=20261009-16"></script>
 </body>
 </html>

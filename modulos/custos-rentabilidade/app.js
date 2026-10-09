@@ -12,12 +12,14 @@ let selectedProduct = null;
 let productionBase = null;
 let setupBase = null;
 let printingBase = null;
+let priceTableBase = null;
+let priceTableByKey = new Map();
 let moByOp = new Map();
 let eventsBound = false;
 let currentDataOrigin = 'published';
 let allCfops = [];
 let selectedCfops = new Set();
-const IMPORT_STORAGE_KEY = 'smartgroup.custosRentabilidade.import.v14';
+const IMPORT_STORAGE_KEY = 'smartgroup.custosRentabilidade.import.v15';
 
 const money = value => Number(value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 const number = value => Number(value || 0).toLocaleString('pt-BR', { maximumFractionDigits: 2 });
@@ -31,6 +33,25 @@ const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;',
 const meaningful = value => String(value ?? '').trim() && String(value).trim() !== '0';
 const displayRef = value => meaningful(value) ? esc(value) : '—';
 const optionalMoney = (value, mapped) => mapped ? money(value) : '—';
+const normalizeRefKey = value => String(value ?? '').trim().replace(/\.0$/,'');
+const tablePriceKey = (listCode, product) => `${normalizeRefKey(listCode)}¦${normalizeRefKey(product)}`;
+
+function buildTablePriceMap(rows=[]){
+  const map=new Map();
+  (rows||[]).forEach(row=>{
+    const key=tablePriceKey(row.codigoLista,row.produto);
+    if(key==='¦') return;
+    const raw=row.valorTabela;
+    const hasValue=raw !== undefined && raw !== null && String(raw).trim() !== '';
+    if(hasValue) map.set(key,Number(raw||0));
+  });
+  return map;
+}
+
+function getTablePrice(listCode,product){
+  const key=tablePriceKey(listCode,product);
+  return priceTableByKey.has(key) ? {mapped:true,value:Number(priceTableByKey.get(key)||0)} : {mapped:false,value:0};
+}
 
 function sum(list, field){ return list.reduce((acc, item) => acc + Number(item[field] || 0), 0); }
 function unique(list, field){ return [...new Set(list.map(r => String(r[field] ?? '').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pt-BR',{numeric:true})); }
@@ -284,6 +305,7 @@ function normalizeRecord(r){
   const venda = Number(r.valorVenda || 0);
   const custoMateriaPrimaBaseUnitario = Number(r.custoUnitario || 0);
   const comissaoUnit = Number(r.comissaoUnitario || 0);
+  const tabelaPreco = getTablePrice(r.codigoListaPrecos,r.produto);
 
   // Campos preparados para as próximas integrações. Se ainda não vierem na base,
   // permanecem como não mapeados e são exibidos como “—” na tabela.
@@ -319,6 +341,9 @@ function normalizeRecord(r){
     quantidade: qtd,
     valorVenda: venda,
     valorMetro: Number(r.valorMetro || 0),
+    codigoListaPrecos: normalizeRefKey(r.codigoListaPrecos),
+    valorTabela: tabelaPreco.value,
+    valorTabelaMapeado: tabelaPreco.mapped,
     custoUnitario: custoMateriaPrimaUnitario,
     custoMateriaPrimaUnitario,
     custoMateriaPrimaBaseUnitario,
@@ -458,6 +483,7 @@ function renderBilling(){
       <td class="num">${number(r.quantidade)}</td>
       <td class="num">${money(r.valorVenda)}</td>
       <td class="num">${money(r.valorMetro)}</td>
+      <td class="num table-price-col" title="Lista de preços ${esc(r.codigoListaPrecos || '—')}">${r.valorTabelaMapeado ? money(r.valorTabela) : ''}</td>
       <td class="num material-cost-col" title="Base: ${money(r.custoMateriaPrimaBaseUnitario)}${r.custoImpressaoMateriaPrimaUnitario ? ` + Impressão UV/Solvente: ${money(r.custoImpressaoMateriaPrimaUnitario)}` : ''}">${money(r.custoMateriaPrimaUnitario)}</td>
       <td class="num optional-cost">${optionalMoney(r.custoMaoObraUnitario,r.custoMaoObraMapeado)}</td>
       <td class="num optional-cost">${optionalMoney(r.impostoUnitario,r.impostoMapeado)}</td>
@@ -469,7 +495,7 @@ function renderBilling(){
       <td class="num ${marginClass(r.margemBase)}">${money(r.margemBase)}</td>
       <td class="num ${marginClass(r.margemBase)}">${percent(r.margemBasePercentual)}</td>
       <td><button class="detail-button" type="button" data-detail-product="${esc(r.produto)}"><i class="fa-solid fa-magnifying-glass-chart"></i> Detalhar</button></td>
-    </tr>`).join('') : '<tr class="empty-row"><td colspan="21">Nenhum registro encontrado para os filtros selecionados.</td></tr>';
+    </tr>`).join('') : '<tr class="empty-row"><td colspan="22">Nenhum registro encontrado para os filtros selecionados.</td></tr>';
   const hiddenTechnical=filtered.length-gridRows.length;
   $('billingCount').textContent = hiddenTechnical ? `${gridRows.length.toLocaleString('pt-BR')} registros · ${hiddenTechnical.toLocaleString('pt-BR')} técnicos ocultos` : `${gridRows.length.toLocaleString('pt-BR')} registros`;
   $('billingPage').textContent = `Página ${billingPage} de ${totalPages}`;
@@ -587,6 +613,7 @@ function renderDetail(){
     ['Notas Fiscais',unique(rows,'nota').filter(meaningful).join(', ')||'—'],
     ['OPs',unique(rows,'op').filter(meaningful).join(', ')||'—'],
     ['CFOPs',unique(rows,'cfop').filter(meaningful).join(', ')||'—'],
+    ['Listas de preço',unique(rows,'codigoListaPrecos').filter(meaningful).join(', ')||'—'],
     ['Empresas',unique(rows,'sigla').join(', ')||'—'],
     ['Primeiro faturamento',dateBR([...rows].sort((a,b)=>a.dataFaturamento.localeCompare(b.dataFaturamento))[0]?.dataFaturamento)],
     ['Último faturamento',dateBR([...rows].sort((a,b)=>b.dataFaturamento.localeCompare(a.dataFaturamento))[0]?.dataFaturamento)]
@@ -639,12 +666,13 @@ function printBillingHtml(){
     <td>${dateBR(r.dataFaturamento)}</td><td>${esc(r.sigla)}</td><td>${esc(r.produto)}</td><td>${esc(r.descricaoCompleta)}</td>
     <td>${displayRef(r.pedido)}</td><td>${displayRef(r.op)}</td><td>${displayRef(r.nota)}</td><td>${displayRef(r.cfop)}</td>
     <td class="num">${number(r.quantidade)}</td><td class="num">${money(r.valorVenda)}</td><td class="num">${money(r.valorMetro)}</td>
+    <td class="num">${r.valorTabelaMapeado ? money(r.valorTabela) : ''}</td>
     <td class="num material-cost-col">${money(r.custoMateriaPrimaUnitario)}</td><td class="num">${optionalMoney(r.custoMaoObraUnitario,r.custoMaoObraMapeado)}</td>
     <td class="num">${money(r.comissaoUnitario)}</td><td class="num">${percent(r.percentualComissao)}</td>
     <td class="num">${money(r.custoTotal)}</td><td class="num">${money(r.lucroUnitario)}</td><td class="num">${money(r.margemBase)}</td><td class="num">${percent(r.margemBasePercentual)}</td>
   </tr>`).join('');
   return `<h2>Faturamento por item</h2>
-    <div class="print-table-wrap"><table><thead><tr><th>Dt. Fat.</th><th>Sigla</th><th>Produto</th><th>Descrição completa</th><th>Pedido</th><th>OP</th><th>Nota</th><th>CFOP</th><th>Qtd.</th><th>Vlr Venda</th><th>Vlr Metro</th><th>Cst. Mat. Prima</th><th>Cst MO</th><th>Comissão</th><th>% Comis.</th><th>Custo Total</th><th>Lucro</th><th>Margem Base</th><th>% Margem</th></tr></thead><tbody>${body||'<tr><td colspan="19">Nenhum registro.</td></tr>'}</tbody></table></div>`;
+    <div class="print-table-wrap"><table><thead><tr><th>Dt. Fat.</th><th>Sigla</th><th>Produto</th><th>Descrição completa</th><th>Pedido</th><th>OP</th><th>Nota</th><th>CFOP</th><th>Qtd.</th><th>Vlr Venda</th><th>Vlr Metro</th><th>Valor de Tabela</th><th>Cst. Mat. Prima</th><th>Cst MO</th><th>Comissão</th><th>% Comis.</th><th>Custo Total</th><th>Lucro</th><th>Margem Base</th><th>% Margem</th></tr></thead><tbody>${body||'<tr><td colspan="20">Nenhum registro.</td></tr>'}</tbody></table></div>`;
 }
 
 function printProductsHtml(){
@@ -803,7 +831,8 @@ const IMPORT_SCHEMAS = {
   '200': {label:'Faturamento / Rentabilidade', required:['dt faturam','nat oper','valor fat valor ipi valor frete','comissao metros','preco custo','sig emp','nro nota']},
   '201': {label:'Registros de Produção por O.P.', required:['numero da ordem de producao','tempo producao','vlr hr homem','campo calculado']},
   '202': {label:'Setup / Paradas de Produção', required:['motivo parada','num op','duracao','descricao do recurso ativo']},
-  '203': {label:'Impressão UV / Solvente por O.P.', required:['op','cod prod item','desc completa','preco ven','qtd aprovada']}
+  '203': {label:'Impressão UV / Solvente por O.P.', required:['op','cod prod item','desc completa','preco ven','qtd aprovada']},
+  '204': {label:'Tabelas de Preço por Produto', required:['cod lista','produto','preco ven']}
 };
 
 function classifyHeaders(headers){
@@ -836,7 +865,7 @@ async function parseImportFile(file,ExcelJS){
   const headers=[];
   for(let c=1;c<=colCount;c++) headers.push(primitiveCellValue(ws.getRow(1).getCell(c).value));
   const type=classifyHeaders(headers);
-  if(!type) throw new Error(`${file.name}: estrutura não reconhecida como um dos 4 relatórios esperados (200, 201, 202 ou 203 - Impressão).`);
+  if(!type) throw new Error(`${file.name}: estrutura não reconhecida como um dos 5 relatórios esperados (200, 201, 202, 203 - Impressão ou 204 - Tabelas de Preço).`);
   // No relatório 200, o CFOP deve vir EXCLUSIVAMENTE da coluna K — cabeçalho "Nat.oper".
   // Validamos a posição para evitar usar por engano outro campo/natureza da planilha.
   if(type==='200' && normalizeHeader(headers[10]) !== 'nat oper'){
@@ -874,9 +903,10 @@ function mapReport200(parsed){
     custoUnitario:importNumber(byHeader(row,map,'Preço custo')),
     comissaoUnitario:importNumber(byHeader(row,map,'Comissão/Metros')),
     percentualComissao:importNumber(byHeader(row,map,'% comissão rep')),
-    fretePedidoFonte:importNumber(byHeader(row,map,'Vlr.frete ped'))
+    fretePedidoFonte:importNumber(byHeader(row,map,'Vlr.frete ped')),
+    codigoListaPrecos:importRef(byHeader(row,map,'Cód.lista preços'))
   })).filter(row=>meaningful(row.nota) || meaningful(row.op));
-  return {meta:{titulo:'Custos e Rentabilidade',fonte:parsed.fileName,relatorio:'200 - Faturamento / Rentabilidade',geradoEm:new Date().toISOString(),versaoLayout:'v14-base-completa-smt-sm3'},registros};
+  return {meta:{titulo:'Custos e Rentabilidade',fonte:parsed.fileName,relatorio:'200 - Faturamento / Rentabilidade',geradoEm:new Date().toISOString(),versaoLayout:'v15-valor-tabela-rel204'},registros};
 }
 
 function mapReport201(parsed){
@@ -923,17 +953,31 @@ function mapReportImpressao(parsed){
   return {meta:{fonte:parsed.fileName,relatorio:'203 - Impressão UV / Solvente por O.P.',geradoEm:new Date().toISOString(),regra:'Somente Desc.completa iniciando por IMPRESSAO UV ou IMPRESSAO SOLVENTE. Valor da coluna F (Preço ven) × Qtd.aprovada compõe a matéria-prima da mesma OP e não a M.O.'},registros};
 }
 
+function mapReport204(parsed){
+  const map=headerIndexMap(parsed.headers);
+  const registros=parsed.rows.map(row=>({
+    codigoLista:importRef(byHeader(row,map,'Cód.lista')),
+    produto:importRef(byHeader(row,map,'Produto')),
+    valorTabela:importNumber(byHeader(row,map,'Preço ven'))
+  })).filter(row=>meaningful(row.codigoLista) && meaningful(row.produto));
+  return {meta:{fonte:parsed.fileName,relatorio:'204 - Tabelas de Preço por Produto',geradoEm:new Date().toISOString(),regra:'Valor de Tabela = Preço ven do relatório 204 localizado por Cód.lista + Produto; a lista usada na nota vem da coluna AL Cód.lista preços do relatório 200.'},registros};
+}
+
 function buildImportedPackage(parsedByType){
   const base=mapReport200(parsedByType['200']);
   const billingOps=reportOpSet(base.registros);
   const keepLinked=source=>({...source,registros:(source.registros||[]).filter(row=>billingOps.has(normalizeOp(row.op)))});
+  const priceSource=mapReport204(parsedByType['204']);
+  const usedPriceKeys=new Set(base.registros.map(row=>tablePriceKey(row.codigoListaPrecos,row.produto)));
+  priceSource.registros=(priceSource.registros||[]).filter(row=>usedPriceKeys.has(tablePriceKey(row.codigoLista,row.produto)));
   return {
-    version:14,
+    version:15,
     importedAt:new Date().toISOString(),
     base,
     production:keepLinked(mapReport201(parsedByType['201'])),
     setup:keepLinked(mapReport202(parsedByType['202'])),
-    printing:keepLinked(mapReportImpressao(parsedByType['203']))
+    printing:keepLinked(mapReportImpressao(parsedByType['203'])),
+    prices:priceSource
   };
 }
 
@@ -942,7 +986,7 @@ function loadCachedImport(){
     const raw=localStorage.getItem(IMPORT_STORAGE_KEY);
     if(!raw) return null;
     const parsed=JSON.parse(raw);
-    return parsed?.version===14 && parsed?.base?.registros ? parsed : null;
+    return parsed?.version===15 && parsed?.base?.registros ? parsed : null;
   }catch(error){ console.warn('Não foi possível ler a importação salva.',error); return null; }
 }
 
@@ -962,6 +1006,7 @@ function validateImportedPackage(pkg){
   if(!pkg.production?.registros?.length) errors.push('Relatório 201 sem registros válidos.');
   if(!pkg.setup?.registros?.length) errors.push('Relatório 202 sem registros válidos.');
   if(!pkg.printing?.registros?.length) errors.push('Relatório 203 sem linhas IMPRESSAO UV ou IMPRESSAO SOLVENTE válidas.');
+  if(!pkg.prices?.registros?.length) errors.push('Relatório 204 sem preços de tabela válidos.');
   const billingOps=reportOpSet(pkg.base?.registros||[]);
   const productionOps=reportOpSet(pkg.production?.registros||[]);
   const setupOps=reportOpSet((pkg.setup?.registros||[]).filter(row=>resourceKey(row.motivo)==='SETUP'));
@@ -970,7 +1015,11 @@ function validateImportedPackage(pkg){
   const linkedSetup=[...billingOps].filter(op=>setupOps.has(op));
   const linkedPrinting=[...billingOps].filter(op=>printingOps.has(op));
   if(billingOps.size && !linkedProduction.length) warnings.push('Nenhuma OP do faturamento foi localizada no relatório 201. Confira se os relatórios são do mesmo período.');
-  return {errors,warnings,stats:{billingOps:billingOps.size,productionOps:productionOps.size,setupOps:setupOps.size,printingOps:printingOps.size,linkedProduction:linkedProduction.length,linkedSetup:linkedSetup.length,linkedPrinting:linkedPrinting.length}};
+  const priceKeys=new Set((pkg.prices?.registros||[]).map(row=>tablePriceKey(row.codigoLista,row.produto)));
+  const billRows=pkg.base?.registros||[];
+  const linkedTablePrice=billRows.filter(row=>priceKeys.has(tablePriceKey(row.codigoListaPrecos,row.produto))).length;
+  if(billRows.length && !linkedTablePrice) warnings.push('Nenhum item do faturamento encontrou Valor de Tabela no relatório 204. Confira Cód.lista preços + Produto.');
+  return {errors,warnings,stats:{billingOps:billingOps.size,productionOps:productionOps.size,setupOps:setupOps.size,printingOps:printingOps.size,linkedProduction:linkedProduction.length,linkedSetup:linkedSetup.length,linkedPrinting:linkedPrinting.length,linkedTablePrice}};
 }
 
 function updateImportStatus(validation=null){
@@ -980,13 +1029,14 @@ function updateImportStatus(validation=null){
     ['200','Faturamento',base?.registros?.length||0,base?.meta?.fonte],
     ['201','Produção vinculada',productionBase?.registros?.length||0,productionBase?.meta?.fonte],
     ['202','Setup vinculado',setupBase?.registros?.length||0,setupBase?.meta?.fonte],
-    ['203','Impressão vinculada',printingBase?.registros?.length||0,printingBase?.meta?.fonte]
+    ['203','Impressão vinculada',printingBase?.registros?.length||0,printingBase?.meta?.fonte],
+    ['204','Tabelas de preço',priceTableBase?.registros?.length||0,priceTableBase?.meta?.fonte]
   ];
   $('importSourceBadges').innerHTML=sources.map(([id,label,count,file])=>`<div class="import-badge ok" title="${esc(file||'')}"><span>${id}</span><strong>${esc(label)}</strong><small>${Number(count).toLocaleString('pt-BR')} linhas</small><i class="fa-solid fa-circle-check"></i></div>`).join('');
   const saved=currentDataOrigin==='imported';
   $('importOrigin').innerHTML=saved
     ? `<i class="fa-solid fa-database"></i> Base importada e salva neste navegador${validation?.stats ? ` · ${validation.stats.linkedProduction} OPs do faturamento encontradas na Produção` : ''}`
-    : `<i class="fa-solid fa-cloud-arrow-down"></i> Base publicada no módulo · use “Importar 4 arquivos” para atualizar manualmente`;
+    : `<i class="fa-solid fa-cloud-arrow-down"></i> Base publicada no módulo · use “Importar 5 arquivos” para atualizar manualmente`;
   $('resetImport').hidden=!saved;
 }
 
@@ -995,6 +1045,8 @@ function applyDataPackage(pkg,origin='published',validation=null){
   productionBase=pkg.production;
   setupBase=pkg.setup;
   printingBase=pkg.printing || {meta:{fonte:'Impressão não informada'},registros:[]};
+  priceTableBase=pkg.prices || {meta:{fonte:'Tabela de preços não informada'},registros:[]};
+  priceTableByKey=buildTablePriceMap(priceTableBase?.registros||[]);
   currentDataOrigin=origin;
   moByOp=buildMaoObraMap(productionBase?.registros||[],setupBase?.registros||[],printingBase?.registros||[]);
   records=(base?.registros||[]).map(normalizeRecord).sort((a,b)=>String(b.dataFaturamento).localeCompare(String(a.dataFaturamento)) || String(b.nota).localeCompare(String(a.nota),undefined,{numeric:true}));
@@ -1005,11 +1057,12 @@ function applyDataPackage(pkg,origin='published',validation=null){
   setupFilters();
 
   const linkedRows=records.filter(r=>r.custoMaoObraMapeado).length;
-  $('sourceFile').textContent=`Rel. 200: ${base?.meta?.fonte || 'SIGER'} · 4 relatórios validados`;
+  $('sourceFile').textContent=`Rel. 200: ${base?.meta?.fonte || 'SIGER'} · 5 relatórios validados`;
   const updated=origin==='imported' && pkg.importedAt ? new Date(pkg.importedAt).toLocaleString('pt-BR') : (base?.meta?.geradoEm ? new Date(base.meta.geradoEm).toLocaleString('pt-BR') : '—');
   $('updatedAt').textContent=`Atualizado em ${updated}`;
   const technicalRows=records.filter(isTechnicalGridRow).length;
-  $('footerStatus').textContent=`${records.length.toLocaleString('pt-BR')} itens faturados · ${technicalRows.toLocaleString('pt-BR')} linhas técnicas ocultas do grid · ${productionBase?.registros?.length?.toLocaleString('pt-BR')||0} apontamentos de produção · ${setupBase?.registros?.length?.toLocaleString('pt-BR')||0} paradas/setup · ${printingBase?.registros?.length?.toLocaleString('pt-BR')||0} itens de impressão`;
+  const priceMappedRows=records.filter(r=>r.valorTabelaMapeado).length;
+  $('footerStatus').textContent=`${records.length.toLocaleString('pt-BR')} itens faturados · ${technicalRows.toLocaleString('pt-BR')} linhas técnicas ocultas do grid · ${productionBase?.registros?.length?.toLocaleString('pt-BR')||0} apontamentos de produção · ${setupBase?.registros?.length?.toLocaleString('pt-BR')||0} paradas/setup · ${printingBase?.registros?.length?.toLocaleString('pt-BR')||0} itens de impressão · ${priceMappedRows.toLocaleString('pt-BR')} itens com Valor de Tabela`;
   const moStatus=$('moIntegrationStatus');
   if(moStatus){
     moStatus.innerHTML=moByOp.size
@@ -1023,8 +1076,8 @@ function applyDataPackage(pkg,origin='published',validation=null){
 async function handleImportFiles(event){
   const files=[...(event.target.files||[])];
   event.target.value='';
-  if(files.length!==4){
-    alert(`Selecione os 4 arquivos Excel de uma vez: 200, 201, 202 e 203. Foram selecionados ${files.length}.`);
+  if(files.length!==5){
+    alert(`Selecione os 5 arquivos Excel de uma vez: 200, 201, 202, 203 e 204. Foram selecionados ${files.length}.`);
     return;
   }
   const invalidExt=files.find(file=>!file.name.toLocaleLowerCase('pt-BR').endsWith('.xlsx'));
@@ -1036,9 +1089,9 @@ async function handleImportFiles(event){
     const ExcelJS=await ensureExcelJS();
     const parsedByType={};
     for(let index=0;index<files.length;index++){
-      button.innerHTML=`<i class="fa-solid fa-spinner fa-spin"></i> Validando ${index+1}/4…`;
+      button.innerHTML=`<i class="fa-solid fa-spinner fa-spin"></i> Validando ${index+1}/5…`;
       const parsed=await parseImportFile(files[index],ExcelJS);
-      if(parsedByType[parsed.type]) throw new Error(`Dois arquivos foram identificados como relatório ${parsed.type}. Selecione um arquivo de cada relatório: 200, 201, 202 e 203.`);
+      if(parsedByType[parsed.type]) throw new Error(`Dois arquivos foram identificados como relatório ${parsed.type}. Selecione um arquivo de cada relatório: 200, 201, 202, 203 e 204.`);
       parsedByType[parsed.type]=parsed;
     }
     const missing=Object.keys(IMPORT_SCHEMAS).filter(type=>!parsedByType[type]);
@@ -1053,7 +1106,9 @@ async function handleImportFiles(event){
       `201 Produção: ${pkg.production.registros.length.toLocaleString('pt-BR')} linhas`,
       `202 Setup/Paradas: ${pkg.setup.registros.length.toLocaleString('pt-BR')} linhas`,
       `203 Impressão UV/Solvente: ${pkg.printing.registros.length.toLocaleString('pt-BR')} linhas`,
-      `${validation.stats.linkedProduction} OPs do faturamento encontradas no relatório de Produção`
+      `204 Tabelas de preço: ${pkg.prices.registros.length.toLocaleString('pt-BR')} combinações usadas`,
+      `${validation.stats.linkedProduction} OPs do faturamento encontradas no relatório de Produção`,
+      `${validation.stats.linkedTablePrice.toLocaleString('pt-BR')} linhas do faturamento encontraram Valor de Tabela`
     ];
     if(validation.warnings.length) details.push(`Aviso: ${validation.warnings.join(' ')}`);
     if(!persisted) details.push('A base foi aplicada nesta sessão, mas o navegador não permitiu salvá-la localmente.');
@@ -1317,7 +1372,7 @@ async function exportBilling(triggerButton=$('exportBilling')){
     workbook.calculation = {fullCalcOnLoad:true,forceFullCalc:true};
 
     const ws = workbook.addWorksheet('Faturamento',{views:[{state:'frozen',ySplit:10,xSplit:0,showGridLines:false}]});
-    setupSheetColumns(ws,[12,9,12,38,11,10,11,10,15,13,13,13,13,13,13,11,15,14,15,12]);
+    setupSheetColumns(ws,[12,9,12,38,11,10,11,10,15,13,14,13,13,13,13,13,11,15,14,15,12]);
 
     const revenue = sum(exportRows,'valorVenda');
     const cost = sum(exportRows,'custoTotal');
@@ -1330,9 +1385,9 @@ async function exportBilling(triggerButton=$('exportBilling')){
       {label:'COMISSÕES',value:commission,color:XLS_COLORS.orange,numFmt:'R$ #,##0.00'},
       {label:'MARGEM BASE',value:margin,color:XLS_COLORS.green,numFmt:'R$ #,##0.00'},
       {label:'% MARGEM',value:marginPct,color:XLS_COLORS.cyan,numFmt:'0.00%'}
-    ],20);
+    ],21);
 
-    const headers=['Dt. Fat.','Sigla','Produto','Desc. completa','Pedido','OP','Nota','Qtd','Vlr Venda','Vlr Metro','Cst Mat. Prima','Cst MO','Imposto','Frete','Comissão','% Comis','Custo Total','Lucro','Margem Base','% Margem'];
+    const headers=['Dt. Fat.','Sigla','Produto','Desc. completa','Pedido','OP','Nota','Qtd','Vlr Venda','Vlr Metro','Valor de Tabela','Cst Mat. Prima','Cst MO','Imposto','Frete','Comissão','% Comis','Custo Total','Lucro','Margem Base','% Margem'];
     const headerRow = 10;
     ws.getRow(headerRow).values = headers;
     styleTableHeader(ws,headerRow,headers.length);
@@ -1344,30 +1399,30 @@ async function exportBilling(triggerButton=$('exportBilling')){
       row.values=[
         excelDate(r.dataFaturamento), String(r.sigla??''), String(r.produto??''), String(r.descricaoCompleta??''),
         meaningful(r.pedido)?String(r.pedido):'', meaningful(r.op)?String(r.op):'', meaningful(r.nota)?String(r.nota):'',
-        Number(r.quantidade||0), Number(r.valorVenda||0), Number(r.valorMetro||0), Number(r.custoMateriaPrimaUnitario||0),
+        Number(r.quantidade||0), Number(r.valorVenda||0), Number(r.valorMetro||0), r.valorTabelaMapeado ? Number(r.valorTabela||0) : '', Number(r.custoMateriaPrimaUnitario||0),
         r.custoMaoObraMapeado ? Number(r.custoMaoObraUnitario||0) : '',
         r.impostoMapeado ? Number(r.impostoUnitario||0) : '',
         r.freteMapeado ? Number(r.freteUnitario||0) : '',
         Number(r.comissaoUnitario||0), Number(r.percentualComissao||0)/100,
-        {formula:`H${rowNumber}*K${rowNumber}`,result:Number(r.custoTotal||0)},
-        {formula:`IFERROR(S${rowNumber}/H${rowNumber},0)`,result:Number(r.lucroUnitario||0)},
-        {formula:`I${rowNumber}-Q${rowNumber}-(H${rowNumber}*IF(L${rowNumber}="",0,L${rowNumber}))-(H${rowNumber}*IF(M${rowNumber}="",0,M${rowNumber}))-(H${rowNumber}*IF(N${rowNumber}="",0,N${rowNumber}))-(H${rowNumber}*O${rowNumber})`,result:Number(r.margemBase||0)},
-        {formula:`IFERROR(S${rowNumber}/I${rowNumber},0)`,result:Number(r.margemBasePercentual||0)/100}
+        {formula:`H${rowNumber}*L${rowNumber}`,result:Number(r.custoTotal||0)},
+        {formula:`IFERROR(T${rowNumber}/H${rowNumber},0)`,result:Number(r.lucroUnitario||0)},
+        {formula:`I${rowNumber}-R${rowNumber}-(H${rowNumber}*IF(M${rowNumber}="",0,M${rowNumber}))-(H${rowNumber}*IF(N${rowNumber}="",0,N${rowNumber}))-(H${rowNumber}*IF(O${rowNumber}="",0,O${rowNumber}))-(H${rowNumber}*P${rowNumber})`,result:Number(r.margemBase||0)},
+        {formula:`IFERROR(T${rowNumber}/I${rowNumber},0)`,result:Number(r.margemBasePercentual||0)/100}
       ];
     });
 
     const endRow=Math.max(startRow,startRow+exportRows.length-1);
     if(exportRows.length){
-      styleDataRows(ws,startRow,endRow,headers.length,[8,9,10,11,12,13,14,15,16,17,18,19,20]);
-      highlightMaterialCostColumn(ws,headerRow,startRow,endRow,11);
+      styleDataRows(ws,startRow,endRow,headers.length,[8,9,10,11,12,13,14,15,16,17,18,19,20,21]);
+      highlightMaterialCostColumn(ws,headerRow,startRow,endRow,12);
       for(let r=startRow;r<=endRow;r++){
         ws.getCell(r,1).numFmt='dd/mm/yyyy';
         ws.getCell(r,8).numFmt='#,##0.00';
-        [9,10,11,12,13,14,15,17,18,19].forEach(c=>ws.getCell(r,c).numFmt='R$ #,##0.00;[Red]-R$ #,##0.00');
-        [16,20].forEach(c=>ws.getCell(r,c).numFmt='0.00%');
+        [9,10,11,12,13,14,15,16,18,19,20].forEach(c=>ws.getCell(r,c).numFmt='R$ #,##0.00;[Red]-R$ #,##0.00');
+        [17,21].forEach(c=>ws.getCell(r,c).numFmt='0.00%');
       }
-      applyProfitColors(ws,startRow,endRow,19,20);
-      styleLossRows(ws,startRow,endRow,19,headers.length);
+      applyProfitColors(ws,startRow,endRow,20,21);
+      styleLossRows(ws,startRow,endRow,20,headers.length);
     }
 
     const totalRow=(exportRows.length?endRow:headerRow)+1;
@@ -1376,16 +1431,16 @@ async function exportBilling(triggerButton=$('exportBilling')){
     if(exportRows.length){
       ws.getCell(totalRow,8).value={formula:`SUM(H${startRow}:H${endRow})`,result:sum(exportRows,'quantidade')};
       ws.getCell(totalRow,9).value={formula:`SUM(I${startRow}:I${endRow})`,result:revenue};
-      ws.getCell(totalRow,17).value={formula:`SUM(Q${startRow}:Q${endRow})`,result:cost};
-      ws.getCell(totalRow,19).value={formula:`SUM(S${startRow}:S${endRow})`,result:margin};
-      ws.getCell(totalRow,20).value={formula:`IFERROR(S${totalRow}/I${totalRow},0)`,result:marginPct};
+      ws.getCell(totalRow,18).value={formula:`SUM(R${startRow}:R${endRow})`,result:cost};
+      ws.getCell(totalRow,20).value={formula:`SUM(T${startRow}:T${endRow})`,result:margin};
+      ws.getCell(totalRow,21).value={formula:`IFERROR(T${totalRow}/I${totalRow},0)`,result:marginPct};
     }else{
-      [8,9,17,19,20].forEach(c=>ws.getCell(totalRow,c).value=0);
+      [8,9,18,20,21].forEach(c=>ws.getCell(totalRow,c).value=0);
     }
     styleTotalRow(ws,totalRow,headers.length);
     ws.getCell(totalRow,8).numFmt='#,##0.00';
-    [9,17,19].forEach(c=>ws.getCell(totalRow,c).numFmt='R$ #,##0.00;[Red]-R$ #,##0.00');
-    ws.getCell(totalRow,20).numFmt='0.00%';
+    [9,18,20].forEach(c=>ws.getCell(totalRow,c).numFmt='R$ #,##0.00;[Red]-R$ #,##0.00');
+    ws.getCell(totalRow,21).numFmt='0.00%';
 
     ws.autoFilter={from:{row:headerRow,column:1},to:{row:headerRow,column:headers.length}};
 
@@ -1659,19 +1714,21 @@ async function fetchOptionalJson(url){
 }
 
 async function loadData(){
-  const [baseResponse,prodData,setupData,printingData] = await Promise.all([
+  const [baseResponse,prodData,setupData,printingData,priceData] = await Promise.all([
     fetch(`data/base.json?v=${Date.now()}`,{cache:'no-store'}),
     fetchOptionalJson('data/producao.json'),
     fetchOptionalJson('data/setup.json'),
-    fetchOptionalJson('data/impressao.json')
+    fetchOptionalJson('data/impressao.json'),
+    fetchOptionalJson('data/tabela-precos.json')
   ]);
   if(!baseResponse.ok) throw new Error(`Base não encontrada (${baseResponse.status})`);
   const published={
-    version:14,
+    version:15,
     base:await baseResponse.json(),
     production:prodData || {meta:{fonte:'Produção não encontrada'},registros:[]},
     setup:setupData || {meta:{fonte:'Setup não encontrado'},registros:[]},
-    printing:printingData || {meta:{fonte:'Impressão não encontrada'},registros:[]}
+    printing:printingData || {meta:{fonte:'Impressão não encontrada'},registros:[]},
+    prices:priceData || {meta:{fonte:'Tabela de preços não encontrada'},registros:[]}
   };
   const cached=loadCachedImport();
   applyDataPackage(cached || published,cached ? 'imported' : 'published');
