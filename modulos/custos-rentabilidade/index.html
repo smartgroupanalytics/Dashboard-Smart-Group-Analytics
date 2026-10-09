@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Custos e Rentabilidade · Smart Group Analytics</title>
-  <link rel="stylesheet" href="style.css?v=20261008-11">
+  <link rel="stylesheet" href="style.css?v=20261009-14">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -26,7 +26,7 @@
         <div class="hero-import-actions">
           <button id="printDashboard" class="hero-action print-button" type="button"><i class="fa-solid fa-print"></i> Imprimir</button>
           <button id="exportDashboard" class="hero-action excel-button" type="button"><i class="fa-solid fa-file-excel"></i> Exportar Excel</button>
-          <button id="importReports" class="import-button" type="button"><i class="fa-solid fa-file-import"></i> Importar 5 arquivos</button>
+          <button id="importReports" class="import-button" type="button"><i class="fa-solid fa-file-import"></i> Importar 4 arquivos</button>
           <input id="importFiles" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" multiple hidden>
         </div>
       </div>
@@ -34,7 +34,7 @@
 
     <section id="importStatus" class="import-status" aria-label="Status dos relatórios importados">
       <div class="import-status-head">
-        <div><span class="eyebrow">FONTES DE DADOS</span><strong>Validação dos 5 relatórios SIGER</strong></div>
+        <div><span class="eyebrow">FONTES DE DADOS</span><strong>Validação dos 4 relatórios SIGER</strong></div>
         <button id="resetImport" class="reset-import" type="button" hidden><i class="fa-solid fa-rotate-left"></i> Usar base publicada</button>
       </div>
       <div id="importSourceBadges" class="import-source-badges"></div>
@@ -189,10 +189,10 @@
 
     <footer class="module-footer">
       <span id="footerStatus">Base em carregamento…</span>
-      <details><summary>Mapeamento do Excel</summary><p>Faturamento: B Dt. faturamento · W Sigla · E Produto · F Desc. completa · C Pedido · D OP · J Nota · L Qtd · O Vlr Venda · P Vlr Metro · AG custo base de matéria-prima · AB Comissão · AJ % Comissão. Rel. 199: Consumos/Insumos por OP · Rel. 200: Faturamento · Rel. 201: Produção por OP · Rel. 202: Setup/Paradas · Rel. Impressão: IMPRESSAO UV / IMPRESSAO SOLVENTE por OP, usando coluna F Preço ven e Qtd.aprovada. CFOP = coluna K (Nat.oper) do Rel. 200. Linhas técnicas de IMPRESSAO UV/SOLVENTE e INSUMOS ficam ocultas dos grids. M.O. = Produção/máquina + Setup (incluindo IMPRESSAO DIGITAL quando apontada na produção). UV/Solvente não entra na M.O.; é rateado por Qtd. Aprovada da OP e somado ao Cst. Mat. Prima. Imposto e Frete aguardam definição.</p></details>
+      <details><summary>Mapeamento do Excel</summary><p>Faturamento: B Dt. faturamento · W Sigla · E Produto · F Desc. completa · C Pedido · D OP · J Nota · L Qtd · O Vlr Venda · P Vlr Metro · AG custo base de matéria-prima · AB Comissão · AJ % Comissão. Rel. 200: Faturamento · Rel. 201: Produção por OP · Rel. 202: Setup/Paradas · Rel. 203 Impressão: IMPRESSAO UV / IMPRESSAO SOLVENTE por OP, usando coluna F Preço ven e Qtd.aprovada. CFOP = coluna K (Nat.oper) do Rel. 200. Linhas técnicas de IMPRESSAO UV/SOLVENTE e INSUMOS ficam ocultas dos grids. M.O. = Produção/máquina + Setup (incluindo IMPRESSAO DIGITAL quando apontada na produção). UV/Solvente não entra na M.O.; é rateado por Qtd. Aprovada da OP e somado ao Cst. Mat. Prima. Imposto e Frete aguardam definição.</p></details>
     </footer>
   </main>
 
-  <script type="module" src="app.js?v=20261008-13"></script>
+  <script type="module" src="app.js?v=20261009-14"></script>
 </body>
 </html>
