@@ -152,20 +152,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-29",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8378",
-    "produto": "11844",
-    "desc_completa": "BORGONHA PRATA",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 497.5,
-    "dt_saida": "2026-09-30",
-    "centro_custo": 10,
-    "abreviacao": "REV 1"
+    "centro_custo": 1,
+    "abreviacao": "RECOB"
   },
   {
     "fonte_comercial": "STK",
@@ -178,18 +166,6 @@
     "dt_saida": "2026-09-30",
     "centro_custo": 13,
     "abreviacao": "JUMBO 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8386",
-    "produto": "15536",
-    "desc_completa": "MIRAGE PRETO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 200,
-    "dt_saida": "2026-09-30",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -236,8 +212,8 @@
     "subgrupo": 41,
     "qtd_produzir": 120,
     "dt_saida": "2026-09-30",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -272,20 +248,8 @@
     "subgrupo": 41,
     "qtd_produzir": 600,
     "dt_saida": "2026-10-07",
-    "centro_custo": 1,
-    "abreviacao": "RECOB"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8525",
-    "produto": "15361",
-    "desc_completa": "LENNY BEGE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 200,
-    "dt_saida": "2026-10-08",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "centro_custo": 25,
+    "abreviacao": "TRANSFE"
   },
   {
     "fonte_comercial": "STK",
@@ -308,8 +272,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-10-08",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 26,
+    "abreviacao": "IMP DIG"
   },
   {
     "fonte_comercial": "STK",
@@ -332,8 +296,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-10-05",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "centro_custo": 3,
+    "abreviacao": "GR 1"
   },
   {
     "fonte_comercial": "STK",
@@ -344,8 +308,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-10-05",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "centro_custo": 7,
+    "abreviacao": "ESTAM"
   },
   {
     "fonte_comercial": "STK",
@@ -368,8 +332,8 @@
     "subgrupo": 41,
     "qtd_produzir": 100,
     "dt_saida": "2026-10-09",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -380,8 +344,8 @@
     "subgrupo": 41,
     "qtd_produzir": 100,
     "dt_saida": "2026-10-09",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -536,8 +500,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-10-09",
-    "centro_custo": 1,
-    "abreviacao": "RECOB"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -572,8 +536,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-10-08",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -608,8 +572,8 @@
     "subgrupo": 41,
     "qtd_produzir": 100,
     "dt_saida": "2026-10-09",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -620,8 +584,8 @@
     "subgrupo": 41,
     "qtd_produzir": 100,
     "dt_saida": "2026-10-12",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -670,18 +634,6 @@
     "dt_saida": "2026-10-14",
     "centro_custo": 13,
     "abreviacao": "JUMBO 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8636",
-    "produto": "9000101",
-    "desc_completa": "DELHI PRETO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 400,
-    "dt_saida": "2026-10-14",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -740,8 +692,8 @@
     "subgrupo": 41,
     "qtd_produzir": 2000,
     "dt_saida": "2026-10-14",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 23,
+    "abreviacao": "RAMA"
   },
   {
     "fonte_comercial": "STK",
