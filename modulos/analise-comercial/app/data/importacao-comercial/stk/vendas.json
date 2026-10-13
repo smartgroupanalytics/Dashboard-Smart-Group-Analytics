@@ -124684,7 +124684,7 @@
   {
     "fonte_comercial": "STK",
     "dt_entrada": "2026-09-30",
-    "dt_faturam": "2026-09-30",
+    "dt_faturam": "2026-10-13",
     "produto": "17322",
     "desc_completa": "MACKAY GLAM OURO LIGHT",
     "pedido": "7272",
@@ -124703,9 +124703,7 @@
     "representante": "4",
     "abreviacao": "CRISTIANO",
     "vlr_comissao_rep": 537.66,
-    "cod_altern_1": "INVERNO 2027",
-    "dt_faturam_original": "2026-10-13",
-    "data_venda_ajustada": true
+    "cod_altern_1": "INVERNO 2027"
   },
   {
     "fonte_comercial": "STK",
