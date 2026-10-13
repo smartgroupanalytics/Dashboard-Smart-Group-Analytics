@@ -1,0 +1,373 @@
+{
+  "meta": {
+    "fonte": "Imposto dash (1).xlsx",
+    "regra": "Imposto unitário = Vlr Metro (coluna P do relatório 200) × alíquota conforme empresa de origem (SMT=RS, SM3=SC) e UF destino da coluna V. Imposto total = imposto unitário × quantidade faturada.",
+    "observacao": "Na planilha enviada, o texto Santa Catarina aparece com a sigla (PR). Para o cálculo, foi interpretado como SC pelo nome do estado. Distrito Federal (DF) não possui percentual informado na planilha e, se aparecer, ficará sem imposto mapeado."
+  },
+  "registros": [
+    {
+      "sigla": "SMT",
+      "ufOrigem": "RS",
+      "ufDestino": "RS",
+      "aliquota": 0.2354,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SMT",
+      "ufOrigem": "RS",
+      "ufDestino": "SC",
+      "aliquota": 0.1628,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SMT",
+      "ufOrigem": "RS",
+      "ufDestino": "PR",
+      "aliquota": 0.1628,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SMT",
+      "ufOrigem": "RS",
+      "ufDestino": "ES",
+      "aliquota": 0.1628,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SMT",
+      "ufOrigem": "RS",
+      "ufDestino": "MG",
+      "aliquota": 0.1628,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SMT",
+      "ufOrigem": "RS",
+      "ufDestino": "RJ",
+      "aliquota": 0.1628,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SMT",
+      "ufOrigem": "RS",
+      "ufDestino": "SP",
+      "aliquota": 0.1628,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SMT",
+      "ufOrigem": "RS",
+      "ufDestino": "GO",
+      "aliquota": 0.1628,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SMT",
+      "ufOrigem": "RS",
+      "ufDestino": "MT",
+      "aliquota": 0.1628,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SMT",
+      "ufOrigem": "RS",
+      "ufDestino": "MS",
+      "aliquota": 0.1628,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SMT",
+      "ufOrigem": "RS",
+      "ufDestino": "AC",
+      "aliquota": 0.1628,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SMT",
+      "ufOrigem": "RS",
+      "ufDestino": "AP",
+      "aliquota": 0.1628,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SMT",
+      "ufOrigem": "RS",
+      "ufDestino": "AM",
+      "aliquota": 0.1628,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SMT",
+      "ufOrigem": "RS",
+      "ufDestino": "PA",
+      "aliquota": 0.1628,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SMT",
+      "ufOrigem": "RS",
+      "ufDestino": "RO",
+      "aliquota": 0.1628,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SMT",
+      "ufOrigem": "RS",
+      "ufDestino": "RR",
+      "aliquota": 0.1628,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SMT",
+      "ufOrigem": "RS",
+      "ufDestino": "TO",
+      "aliquota": 0.1628,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SMT",
+      "ufOrigem": "RS",
+      "ufDestino": "AL",
+      "aliquota": 0.19,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SMT",
+      "ufOrigem": "RS",
+      "ufDestino": "BA",
+      "aliquota": 0.19,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SMT",
+      "ufOrigem": "RS",
+      "ufDestino": "CE",
+      "aliquota": 0.19,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SMT",
+      "ufOrigem": "RS",
+      "ufDestino": "MA",
+      "aliquota": 0.19,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SMT",
+      "ufOrigem": "RS",
+      "ufDestino": "PB",
+      "aliquota": 0.19,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SMT",
+      "ufOrigem": "RS",
+      "ufDestino": "PE",
+      "aliquota": 0.19,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SMT",
+      "ufOrigem": "RS",
+      "ufDestino": "PI",
+      "aliquota": 0.19,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SMT",
+      "ufOrigem": "RS",
+      "ufDestino": "RN",
+      "aliquota": 0.19,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SMT",
+      "ufOrigem": "RS",
+      "ufDestino": "SE",
+      "aliquota": 0.19,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SM3",
+      "ufOrigem": "SC",
+      "ufDestino": "SC",
+      "aliquota": 0.2354,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SM3",
+      "ufOrigem": "SC",
+      "ufDestino": "RS",
+      "aliquota": 0.1628,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SM3",
+      "ufOrigem": "SC",
+      "ufDestino": "PR",
+      "aliquota": 0.1628,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SM3",
+      "ufOrigem": "SC",
+      "ufDestino": "ES",
+      "aliquota": 0.1628,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SM3",
+      "ufOrigem": "SC",
+      "ufDestino": "MG",
+      "aliquota": 0.1628,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SM3",
+      "ufOrigem": "SC",
+      "ufDestino": "RJ",
+      "aliquota": 0.1628,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SM3",
+      "ufOrigem": "SC",
+      "ufDestino": "SP",
+      "aliquota": 0.1628,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SM3",
+      "ufOrigem": "SC",
+      "ufDestino": "GO",
+      "aliquota": 0.1628,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SM3",
+      "ufOrigem": "SC",
+      "ufDestino": "MT",
+      "aliquota": 0.1628,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SM3",
+      "ufOrigem": "SC",
+      "ufDestino": "MS",
+      "aliquota": 0.1628,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SM3",
+      "ufOrigem": "SC",
+      "ufDestino": "AC",
+      "aliquota": 0.1628,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SM3",
+      "ufOrigem": "SC",
+      "ufDestino": "AP",
+      "aliquota": 0.1628,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SM3",
+      "ufOrigem": "SC",
+      "ufDestino": "AM",
+      "aliquota": 0.1628,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SM3",
+      "ufOrigem": "SC",
+      "ufDestino": "PA",
+      "aliquota": 0.1628,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SM3",
+      "ufOrigem": "SC",
+      "ufDestino": "RO",
+      "aliquota": 0.1628,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SM3",
+      "ufOrigem": "SC",
+      "ufDestino": "RR",
+      "aliquota": 0.1628,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SM3",
+      "ufOrigem": "SC",
+      "ufDestino": "TO",
+      "aliquota": 0.1628,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SM3",
+      "ufOrigem": "SC",
+      "ufDestino": "AL",
+      "aliquota": 0.19,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SM3",
+      "ufOrigem": "SC",
+      "ufDestino": "BA",
+      "aliquota": 0.19,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SM3",
+      "ufOrigem": "SC",
+      "ufDestino": "CE",
+      "aliquota": 0.19,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SM3",
+      "ufOrigem": "SC",
+      "ufDestino": "MA",
+      "aliquota": 0.19,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SM3",
+      "ufOrigem": "SC",
+      "ufDestino": "PB",
+      "aliquota": 0.19,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SM3",
+      "ufOrigem": "SC",
+      "ufDestino": "PE",
+      "aliquota": 0.19,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SM3",
+      "ufOrigem": "SC",
+      "ufDestino": "PI",
+      "aliquota": 0.19,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SM3",
+      "ufOrigem": "SC",
+      "ufDestino": "RN",
+      "aliquota": 0.19,
+      "fonte": "Imposto dash (1).xlsx"
+    },
+    {
+      "sigla": "SM3",
+      "ufOrigem": "SC",
+      "ufDestino": "SE",
+      "aliquota": 0.19,
+      "fonte": "Imposto dash (1).xlsx"
+    }
+  ]
+}

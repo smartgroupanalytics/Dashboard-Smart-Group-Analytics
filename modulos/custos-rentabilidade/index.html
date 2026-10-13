@@ -100,6 +100,10 @@
         <span class="kpi-icon"><i class="fa-solid fa-percent"></i></span>
         <div><small>Comissões</small><strong id="kpiCommission">R$ 0,00</strong><span>Quantidade × comissão/metro</span></div>
       </article>
+      <article class="kpi-card red">
+        <span class="kpi-icon"><i class="fa-solid fa-receipt"></i></span>
+        <div><small>Impostos</small><strong id="kpiTax">R$ 0,00</strong><span>Vlr Metro × alíquota por UF</span></div>
+      </article>
       <article class="kpi-card green">
         <span class="kpi-icon"><i class="fa-solid fa-arrow-trend-up"></i></span>
         <div><small>Margem base</small><strong id="kpiMargin">R$ 0,00</strong><span id="kpiMarginPct">0,00%</span></div>
@@ -146,7 +150,7 @@
       </div>
       <div class="table-wrap compact-table">
         <table>
-          <thead><tr><th>Produto</th><th>Descrição completa</th><th class="num">Qtd.</th><th class="num">Faturamento</th><th class="num">Custo Total</th><th class="num">Comissão</th><th class="num">Margem Base</th><th class="num">% Margem</th><th></th></tr></thead>
+          <thead><tr><th>Produto</th><th>Descrição completa</th><th class="num">Qtd.</th><th class="num">Faturamento</th><th class="num">Custo Total</th><th class="num">Comissão</th><th class="num">Impostos</th><th class="num">Margem Base</th><th class="num">% Margem</th><th></th></tr></thead>
           <tbody id="productRows"></tbody>
         </table>
       </div>
@@ -171,6 +175,7 @@
           <article><span>Faturamento</span><strong id="detailRevenue">R$ 0,00</strong><small id="detailQty">0 unidades</small></article>
           <article><span>Custo Matéria-Prima</span><strong id="detailCost">R$ 0,00</strong><small id="detailUnitCost">R$ 0,00 / un.</small></article>
           <article><span>Comissões</span><strong id="detailCommission">R$ 0,00</strong><small id="detailCommissionPct">0,00%</small></article>
+          <article><span>Impostos</span><strong id="detailTax">R$ 0,00</strong><small id="detailTaxPct">0,00%</small></article>
           <article class="success"><span>Margem base</span><strong id="detailMargin">R$ 0,00</strong><small id="detailMarginPct">0,00%</small></article>
         </section>
 
@@ -182,7 +187,7 @@
           </div>
           <div class="table-wrap detail-linkage-wrap">
             <table class="detail-linkage-table">
-              <thead><tr><th>Dt. Fat.</th><th>Nota</th><th>Pedido</th><th>OP</th><th>CFOP</th><th class="num">Qtd.</th><th class="num">Vlr Venda</th><th class="num">Vlr Metro</th><th class="num">Valor Tabela</th><th class="num">Cst. Mat. Prima</th><th class="num">Cst MO</th><th class="num">Lucro</th></tr></thead>
+              <thead><tr><th>Dt. Fat.</th><th>Nota</th><th>Pedido</th><th>OP</th><th>CFOP</th><th>UF</th><th class="num">Qtd.</th><th class="num">Vlr Venda</th><th class="num">Vlr Metro</th><th class="num">Valor Tabela</th><th class="num">Cst. Mat. Prima</th><th class="num">Cst MO</th><th class="num">Imposto</th><th class="num">Lucro</th></tr></thead>
               <tbody id="detailLinkageRows"></tbody>
             </table>
           </div>
@@ -203,10 +208,10 @@
 
     <footer class="module-footer">
       <span id="footerStatus">Base em carregamento…</span>
-      <details><summary>Mapeamento do Excel</summary><p>Faturamento: B Dt. faturamento · W Sigla · E Produto · F Desc. completa · C Pedido · D OP · J Nota · L Qtd · O Vlr Venda · P Vlr Metro · AG custo base de matéria-prima · AB Comissão · AJ % Comissão. Rel. 200: Faturamento · Rel. 201: Produção por OP · Rel. 202: Setup/Paradas · Rel. 203 Impressão: IMPRESSAO UV / IMPRESSAO SOLVENTE por OP, usando coluna F Preço ven e Qtd.aprovada. CFOP = coluna K (Nat.oper) do Rel. 200. Linhas técnicas de IMPRESSAO UV/SOLVENTE e INSUMOS ficam ocultas dos grids. M.O. = Produção/máquina + Setup (incluindo IMPRESSAO DIGITAL quando apontada na produção). UV/Solvente não entra na M.O.; é rateado por Qtd. Aprovada da OP e somado ao Cst. Mat. Prima. Imposto e Frete aguardam definição.</p></details>
+      <details><summary>Mapeamento do Excel</summary><p>Faturamento: B Dt. faturamento · W Sigla · E Produto · F Desc. completa · C Pedido · D OP · J Nota · L Qtd · O Vlr Venda · P Vlr Metro · AG custo base de matéria-prima · AB Comissão · AJ % Comissão. Rel. 200: Faturamento · Rel. 201: Produção por OP · Rel. 202: Setup/Paradas · Rel. 203 Impressão: IMPRESSAO UV / IMPRESSAO SOLVENTE por OP, usando coluna F Preço ven e Qtd.aprovada. CFOP = coluna K (Nat.oper) do Rel. 200. Linhas técnicas de IMPRESSAO UV/SOLVENTE e INSUMOS ficam ocultas dos grids. M.O. = Produção/máquina + Setup (incluindo IMPRESSAO DIGITAL quando apontada na produção). UV/Solvente não entra na M.O.; é rateado por Qtd. Aprovada da OP e somado ao Cst. Mat. Prima. Imposto = Vlr Metro × alíquota por UF (coluna V) conforme tabela de impostos. Frete aguarda definição.</p></details>
     </footer>
   </main>
 
-  <script type="module" src="app.js?v=20261009-17"></script>
+  <script type="module" src="app.js?v=20261013-20-impostos-vlr-metro"></script>
 </body>
 </html>

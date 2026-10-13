@@ -1,0 +1,19 @@
+CUSTOS E RENTABILIDADE - v20
+
+ALTERAÇÃO DO CÁLCULO DE IMPOSTOS
+
+Regra nova:
+- Base unitária do imposto = Vlr Metro (coluna P do relatório 200).
+- UF destino = coluna V do relatório 200.
+- Empresa de origem = Sig.emp (SMT=RS / SM3=SC).
+- Imposto unitário = Vlr Metro x alíquota por UF.
+- Imposto total da linha = Imposto unitário x quantidade faturada.
+
+Exemplo validado:
+Produto 15247 - OPHIDIA PRETO
+Pedido 7241 / destino SP / SMT
+Vlr Metro = R$ 36,95
+Alíquota SP = 16,28%
+Imposto unitário = 36,95 x 16,28% = R$ 6,01546, exibido como R$ 6,02.
+
+A lógica de localização da UF e a tabela de alíquotas permanecem iguais.

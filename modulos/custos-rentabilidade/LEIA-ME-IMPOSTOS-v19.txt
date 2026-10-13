@@ -1,0 +1,34 @@
+SMART GROUP ANALYTICS — CUSTOS E RENTABILIDADE
+ATUALIZAÇÃO v19 — IMPOSTOS POR UF
+
+REGRA IMPLEMENTADA
+1. O estado de destino vem do relatório 200, coluna V = UF.
+2. A empresa de origem define a tabela da planilha Imposto dash (1).xlsx:
+   - SMT = origem Rio Grande do Sul (RS)
+   - SM3 = origem Santa Catarina (SC)
+3. Imposto Total da linha = Vlr Venda (coluna O do relatório 200) x alíquota.
+4. No grid, a coluna Imposto exibe o valor unitário:
+   Imposto Unitário = Imposto Total / Quantidade faturada.
+5. A Margem Base e o Lucro passam a descontar o Imposto Total.
+
+ALÍQUOTAS DA PLANILHA ENVIADA
+- Operação dentro do estado de origem (RS->RS ou SC->SC): 23,54%
+- SC/RS, PR, ES, MG, RJ, SP, GO, MT, MS, AC, AP, AM, PA, RO, RR e TO: 16,28% conforme a origem.
+- AL, BA, CE, MA, PB, PE, PI, RN e SE: 19,00%.
+
+OBSERVAÇÃO IMPORTANTE
+Na planilha enviada, Santa Catarina aparece escrito como "Santa Catarina (PR)". A atualização interpreta esse item como SC pelo nome do estado. O Distrito Federal (DF) não possui percentual informado na planilha; se surgir uma venda para DF, o imposto ficará não mapeado até a regra ser definida.
+
+ALTERAÇÕES VISUAIS
+- Novo card "Impostos" no topo.
+- Coluna Imposto agora é calculada e mostra no tooltip UF, alíquota e imposto total.
+- Total por Produto ganhou coluna Impostos.
+- Detalhamento do produto mostra UF e Imposto por faturamento.
+- Detalhamento ganhou card Impostos.
+- Impressão e exportações Excel passam a considerar os impostos.
+
+INSTALAÇÃO
+Substitua somente a pasta:
+modulos/custos-rentabilidade
+
+Depois: Commit -> Push origin -> aguarde publicação -> Ctrl+F5.
