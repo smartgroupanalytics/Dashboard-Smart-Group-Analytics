@@ -25,7 +25,7 @@ let eventsBound = false;
 let currentDataOrigin = 'published';
 let allCfops = [];
 let selectedCfops = new Set();
-const IMPORT_STORAGE_KEY = 'smartgroup.custosRentabilidade.import.v19-impostos';
+const IMPORT_STORAGE_KEY = 'smartgroup.custosRentabilidade.import.v22-rel204-alias';
 
 const money = value => Number(value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 const number = value => Number(value || 0).toLocaleString('pt-BR', { maximumFractionDigits: 2 });
@@ -977,12 +977,16 @@ const IMPORT_SCHEMAS = {
   '201': {label:'Registros de Produção por O.P.', required:['numero da ordem de producao','tempo producao','vlr hr homem','campo calculado']},
   '202': {label:'Setup / Paradas de Produção', required:['motivo parada','num op','duracao','descricao do recurso ativo']},
   '203': {label:'Impressão UV / Solvente por O.P.', required:['op','cod prod item','desc completa','preco ven','qtd aprovada']},
-  '204': {label:'Tabelas de Preço por Produto', required:['cod lista','produto','preco ven']}
+  '204': {label:'Tabelas de Preço por Produto', required:['cod lista','produto'], requiredAny:[['preco ven','prc ven']]}
 };
 
 function classifyHeaders(headers){
   const normalized=new Set(headers.map(normalizeHeader).filter(Boolean));
-  const matches=Object.entries(IMPORT_SCHEMAS).filter(([,schema])=>schema.required.every(key=>normalized.has(key)));
+  const matches=Object.entries(IMPORT_SCHEMAS).filter(([,schema])=>{
+    const requiredOk=(schema.required||[]).every(key=>normalized.has(key));
+    const alternativesOk=(schema.requiredAny||[]).every(group=>group.some(key=>normalized.has(key)));
+    return requiredOk && alternativesOk;
+  });
   if(matches.length!==1) return null;
   return matches[0][0];
 }
@@ -999,6 +1003,14 @@ function headerIndexMap(headers){
 function byHeader(row,map,key){
   const index=map.get(normalizeHeader(key));
   return index === undefined ? '' : row[index];
+}
+
+function byHeaderAny(row,map,keys){
+  for(const key of keys){
+    const index=map.get(normalizeHeader(key));
+    if(index !== undefined) return row[index];
+  }
+  return '';
 }
 
 async function parseImportFile(file,ExcelJS){
@@ -1107,9 +1119,9 @@ function mapReport204(parsed){
   const registros=parsed.rows.map(row=>({
     codigoLista:importRef(byHeader(row,map,'Cód.lista')),
     produto:importRef(byHeader(row,map,'Produto')),
-    valorTabela:importNumber(byHeader(row,map,'Preço ven'))
+    valorTabela:importNumber(byHeaderAny(row,map,['Preço ven','Prç.ven']))
   })).filter(row=>meaningful(row.codigoLista) && meaningful(row.produto));
-  return {meta:{fonte:parsed.fileName,relatorio:'204 - Tabelas de Preço por Produto',geradoEm:new Date().toISOString(),regra:'Valor de Tabela = Preço ven do relatório 204 localizado por Cód.lista + Produto; a lista usada na nota vem da coluna AL Cód.lista preços do relatório 200.'},registros};
+  return {meta:{fonte:parsed.fileName,relatorio:'204 - Tabelas de Preço por Produto',geradoEm:new Date().toISOString(),regra:'Valor de Tabela = Preço ven/Prç.ven do relatório 204 localizado por Cód.lista + Produto; a lista usada na nota vem da coluna AL Cód.lista preços do relatório 200.'},registros};
 }
 
 function buildImportedPackage(parsedByType){

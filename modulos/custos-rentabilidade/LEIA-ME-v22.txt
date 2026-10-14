@@ -1,0 +1,16 @@
+CUSTOS E RENTABILIDADE — v22
+
+Correção da importação dos 5 relatórios em 14/10/2026.
+
+Diagnóstico:
+- Rel. 200 reconhecido normalmente.
+- Rel. 201 reconhecido normalmente.
+- Rel. 202 reconhecido normalmente.
+- Rel. 203 reconhecido normalmente.
+- Rel. 204 novo passou a trazer o cabeçalho "Prç.ven" em vez de "Preço ven".
+  A versão anterior exigia literalmente "Preço ven", por isso o arquivo 204 não era reconhecido e a importação dos 5 arquivos era interrompida.
+
+Correção:
+- Relatório 204 aceita agora tanto "Preço ven" quanto "Prç.ven".
+- O valor de tabela continua sendo localizado por Cód.lista + Produto.
+- Nenhuma fórmula de imposto, frete, matéria-prima, M.O., comissão ou margem foi alterada.
