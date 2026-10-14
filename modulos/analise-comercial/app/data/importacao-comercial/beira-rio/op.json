@@ -71,26 +71,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "7648",
-    "produto": "17444",
-    "desc_completa": "BRILHO ITALIA BROWN 1570",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 8.5,
-    "dt_saida": "2026-08-05",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8250",
-    "produto": "9100112",
-    "desc_completa": "NAPA MARSELHA OSTRA",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 416,
-    "dt_saida": "2026-09-16",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8347",
     "produto": "17851",
     "desc_completa": "TELA SHINE PARIS DOURADO",
@@ -125,7 +105,7 @@
     "produto": "17966",
     "desc_completa": "NAPA ONCA SAVANA MULTI ROSA 1541",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 500,
+    "qtd_produzir": 404,
     "dt_saida": "2026-09-29",
     "abreviacao": ""
   },
@@ -211,16 +191,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8540",
-    "produto": "17910",
-    "desc_completa": "NAPA MARSELHA CEREJA 948",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 400,
-    "dt_saida": "2026-10-05",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8547",
     "produto": "18144",
     "desc_completa": "NAPA ZEBRA SAVANA BRANCO 99/PRETO 01",
@@ -265,7 +235,7 @@
     "produto": "18148",
     "desc_completa": "NAPA MAXXI POA PRETO 01  BRANCO 99",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 197,
+    "qtd_produzir": 194,
     "dt_saida": "2026-10-09",
     "abreviacao": ""
   },
@@ -317,16 +287,6 @@
     "grupo": "BEIRA RIO",
     "qtd_produzir": 3290,
     "dt_saida": "2026-10-13",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8605",
-    "produto": "18210",
-    "desc_completa": "NAPA MADAGASCAR PRETO 01",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 320,
-    "dt_saida": "2026-10-14",
     "abreviacao": ""
   },
   {
@@ -391,16 +351,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8613",
-    "produto": "18217",
-    "desc_completa": "NAPA SEVILLE DARK BERRY 1591",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 200,
-    "dt_saida": "2026-10-08",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8624",
     "produto": "18219",
     "desc_completa": "NAPA LISTRAS MADRI BRANCO OFF 526/ PRETO 01",
@@ -425,7 +375,7 @@
     "produto": "9100112",
     "desc_completa": "NAPA MARSELHA OSTRA",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 1700,
+    "qtd_produzir": 784,
     "dt_saida": "2026-10-09",
     "abreviacao": ""
   },
@@ -575,7 +525,7 @@
     "produto": "17917",
     "desc_completa": "NAPA ZEBRA SAVANA BRANCO 99/VERMELHO 1025",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 200,
+    "qtd_produzir": 197,
     "dt_saida": "2026-10-16",
     "abreviacao": ""
   },
@@ -597,6 +547,16 @@
     "grupo": "BEIRA RIO",
     "qtd_produzir": 600,
     "dt_saida": "2026-10-09",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8737",
+    "produto": "14921",
+    "desc_completa": "NAPA LEZARD EVORA CHERRY 1335",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 220,
+    "dt_saida": "2026-10-19",
     "abreviacao": ""
   }
 ]
