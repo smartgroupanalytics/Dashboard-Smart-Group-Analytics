@@ -1,16 +1,16 @@
 {
-  "updatedAt": "2026-10-13T17:51:35.570Z",
+  "updatedAt": "2026-10-14T16:50:37.689Z",
   "fontes": {
     "financeiro": {
       "status": "OK",
-      "ultimoSucessoEm": "2026-10-13T17:51:12.549Z",
-      "atualizadoEm": "2026-10-13T17:51:12.549Z",
+      "ultimoSucessoEm": "2026-10-14T16:50:14.123Z",
+      "atualizadoEm": "2026-10-14T16:50:14.123Z",
       "mensagem": "Atualização automática concluída."
     },
     "fretes": {
       "status": "OK",
-      "ultimoSucessoEm": "2026-10-07T17:31:09.715Z",
-      "atualizadoEm": "2026-10-07T17:31:09.715Z",
+      "ultimoSucessoEm": "2026-10-14T11:53:02.449Z",
+      "atualizadoEm": "2026-10-14T11:53:02.449Z",
       "mensagem": "Atualização automática concluída."
     }
   }
