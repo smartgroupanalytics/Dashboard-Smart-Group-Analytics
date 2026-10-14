@@ -117170,7 +117170,7 @@
   {
     "fonte_comercial": "STK",
     "dt_entrada": "2026-10-02",
-    "dt_faturam": "2026-10-02",
+    "dt_faturam": "2026-10-14",
     "produto": "16605",
     "desc_completa": "NAPA FLOATER VENEZIA DOURADO",
     "pedido": "7308",
@@ -117189,9 +117189,7 @@
     "representante": "4",
     "abreviacao": "CRISTIANO",
     "vlr_comissao_rep": 466.8,
-    "cod_altern_1": "CLASSICO",
-    "dt_faturam_original": "2026-10-14",
-    "data_venda_ajustada": true
+    "cod_altern_1": "CLASSICO"
   },
   {
     "fonte_comercial": "STK",
