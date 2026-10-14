@@ -1,0 +1,23 @@
+SMART GROUP ANALYTICS
+ATUALIZAÇÃO v21 — FRETE POR VLR METRO × % DA UF
+
+Regra:
+1. Base unitária do frete = Vlr Metro (coluna P do relatório 200).
+2. UF de destino = coluna V (UF) do relatório 200.
+3. Origem por empresa: SMT = RS; SM3 = SC.
+4. Frete unitário = Vlr Metro × percentual da tabela Frete dash.xlsx.
+5. Frete total da linha = Frete unitário × Quantidade faturada.
+6. O frete total é descontado da Margem Base/Lucro.
+7. Distrito Federal (DF) não está informado em Frete dash.xlsx e permanece sem frete mapeado.
+
+Percentuais:
+- Origem RS (SMT): RS 2,50%; SC 5,00%; demais UFs presentes na tabela 7,00%.
+- Origem SC (SM3): SC 2,50%; RS 5,00%; demais UFs presentes na tabela 7,00%.
+
+Integrações:
+- coluna Frete do grid;
+- card Frete no topo;
+- Total por Produto;
+- Detalhamento do produto;
+- impressão;
+- exportações Excel.

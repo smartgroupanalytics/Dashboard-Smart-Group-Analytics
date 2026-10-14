@@ -18,6 +18,8 @@ let priceTableBase = null;
 let priceTableByKey = new Map();
 let taxBase = null;
 let taxRateByKey = new Map();
+let freightBase = null;
+let freightRateByKey = new Map();
 let moByOp = new Map();
 let eventsBound = false;
 let currentDataOrigin = 'published';
@@ -80,6 +82,32 @@ function getTaxRule(company,uf){
   const key=taxKey(company,uf);
   return taxRateByKey.has(key)
     ? taxRateByKey.get(key)
+    : {mapped:false,aliquota:0,origem:'',destino:String(uf || ''),fonte:''};
+}
+
+const freightKey = (company,uf) => `${String(company ?? '').trim().toLocaleUpperCase('pt-BR')}¦${String(uf ?? '').trim().toLocaleUpperCase('pt-BR')}`;
+
+function buildFreightRateMap(rows=[]){
+  const map=new Map();
+  (rows||[]).forEach(row=>{
+    const key=freightKey(row.sigla,row.ufDestino);
+    if(key==='¦') return;
+    const rate=Number(row.aliquota || 0);
+    if(Number.isFinite(rate) && rate >= 0) map.set(key,{
+      mapped:true,
+      aliquota:rate,
+      origem:String(row.ufOrigem || ''),
+      destino:String(row.ufDestino || ''),
+      fonte:String(row.fonte || freightBase?.meta?.fonte || 'Frete dash')
+    });
+  });
+  return map;
+}
+
+function getFreightRule(company,uf){
+  const key=freightKey(company,uf);
+  return freightRateByKey.has(key)
+    ? freightRateByKey.get(key)
     : {mapped:false,aliquota:0,origem:'',destino:String(uf || ''),fonte:''};
 }
 
@@ -346,20 +374,24 @@ function normalizeRecord(r){
     ? custoMaoObraInformado
     : (moResumo?.completo ? moResumo.custoMaoObraUnitario : undefined);
   const impostoInformado = r.impostoUnitario ?? r.imposto;
-  const freteRaw = r.freteUnitario ?? r.frete;
+  const freteInformado = r.freteUnitario ?? r.frete;
   const taxRule = getTaxRule(r.sigla,r.uf);
+  const freightRule = getFreightRule(r.sigla,r.uf);
   const custoMaoObraMapeado = hasValue(custoMaoObraRaw);
   const impostoInformadoMapeado = hasValue(impostoInformado);
+  const freteInformadoMapeado = hasValue(freteInformado);
   const impostoMapeado = impostoInformadoMapeado || taxRule.mapped;
-  const freteMapeado = hasValue(freteRaw);
+  const freteMapeado = freteInformadoMapeado || freightRule.mapped;
   const custoMaoObraUnitario = Number(custoMaoObraRaw || 0);
-  // Regra do imposto: usar o Vlr Metro (coluna P do relatório 200) como base unitária
-  // e aplicar a alíquota correspondente à empresa de origem + UF destino (coluna V).
+  // Imposto e frete usam a mesma base unitária: Vlr Metro (coluna P do relatório 200).
+  // A alíquota/percentual é localizada pela empresa de origem + UF destino (coluna V).
   const valorMetro = Number(r.valorMetro || 0);
   const impostoUnitarioCalculado = taxRule.mapped ? valorMetro * Number(taxRule.aliquota || 0) : 0;
   const impostoTotalCalculado = qtd * impostoUnitarioCalculado;
   const impostoUnitario = impostoInformadoMapeado ? Number(impostoInformado || 0) : impostoUnitarioCalculado;
-  const freteUnitario = Number(freteRaw || 0);
+  const freteUnitarioCalculado = freightRule.mapped ? valorMetro * Number(freightRule.aliquota || 0) : 0;
+  const freteTotalCalculado = qtd * freteUnitarioCalculado;
+  const freteUnitario = freteInformadoMapeado ? Number(freteInformado || 0) : freteUnitarioCalculado;
   // UV/Solvente é custo adicional de matéria-prima. IMPRESSAO DIGITAL do
   // relatório de produção continua dentro da M.O. e não entra neste adicional.
   const custoImpressaoMateriaPrimaUnitario = Number(moResumo?.custoImpressaoUnitario || 0);
@@ -368,7 +400,7 @@ function normalizeRecord(r){
   const custoTotal = qtd * custoMateriaPrimaUnitario;
   const custoMaoObraTotal = qtd * custoMaoObraUnitario;
   const impostoTotal = impostoInformadoMapeado ? qtd * impostoUnitario : impostoTotalCalculado;
-  const freteTotal = qtd * freteUnitario;
+  const freteTotal = freteInformadoMapeado ? qtd * freteUnitario : freteTotalCalculado;
   const comissaoTotal = qtd * comissaoUnit;
   const margemBase = venda - custoTotal - custoMaoObraTotal - impostoTotal - freteTotal - comissaoTotal;
   const lucroUnitario = qtd ? margemBase / qtd : margemBase;
@@ -392,6 +424,10 @@ function normalizeRecord(r){
     impostoDestino: taxRule.destino,
     impostoFonte: impostoInformadoMapeado ? 'base faturamento' : (taxRule.mapped ? taxRule.fonte : ''),
     freteUnitario,
+    fretePercentual: freightRule.mapped ? Number(freightRule.aliquota || 0) * 100 : 0,
+    freteOrigem: freightRule.origem,
+    freteDestino: freightRule.destino,
+    freteFonte: freteInformadoMapeado ? 'base faturamento' : (freightRule.mapped ? freightRule.fonte : ''),
     custoMaoObraMapeado,
     custoMaoObraFonte: hasValue(custoMaoObraInformado) ? 'base faturamento' : (moResumo?.completo ? `OP ${moResumo.op}` : ''),
     moResumo,
@@ -494,6 +530,7 @@ function renderKpis(){
   const cost = sum(visibleRows,'custoTotal');
   const commission = sum(visibleRows,'comissaoTotal');
   const tax = sum(visibleRows,'impostoTotal');
+  const freight = sum(visibleRows,'freteTotal');
   const margin = sum(visibleRows,'margemBase');
   const marginPct = revenue ? margin / revenue * 100 : 0;
   $('kpiInvoices').textContent = unique(visibleRows,'nota').length.toLocaleString('pt-BR');
@@ -505,6 +542,7 @@ function renderKpis(){
   $('kpiCost').textContent = money(cost);
   $('kpiCommission').textContent = money(commission);
   $('kpiTax').textContent = money(tax);
+  $('kpiFreight').textContent = money(freight);
   $('kpiMargin').textContent = money(margin);
   $('kpiMargin').className = marginClass(margin);
   $('kpiMarginPct').textContent = `${percent(marginPct)} do faturamento`;
@@ -530,7 +568,7 @@ function renderBilling(){
       <td class="num material-cost-col" title="Base: ${money(r.custoMateriaPrimaBaseUnitario)}${r.custoImpressaoMateriaPrimaUnitario ? ` + Impressão UV/Solvente: ${money(r.custoImpressaoMateriaPrimaUnitario)}` : ''}">${money(r.custoMateriaPrimaUnitario)}</td>
       <td class="num optional-cost">${optionalMoney(r.custoMaoObraUnitario,r.custoMaoObraMapeado)}</td>
       <td class="num optional-cost" title="${r.impostoMapeado ? `UF ${esc(r.uf || '—')} · Alíquota ${percent(r.impostoPercentual)} · Imposto total ${money(r.impostoTotal)}` : 'Imposto não mapeado para esta UF'}">${optionalMoney(r.impostoUnitario,r.impostoMapeado)}</td>
-      <td class="num optional-cost">${optionalMoney(r.freteUnitario,r.freteMapeado)}</td>
+      <td class="num optional-cost" title="${r.freteMapeado ? `UF ${esc(r.uf || '—')} · Percentual ${percent(r.fretePercentual)} · Frete total ${money(r.freteTotal)}` : 'Frete não mapeado para esta UF'}">${optionalMoney(r.freteUnitario,r.freteMapeado)}</td>
       <td class="num">${money(r.comissaoUnitario)}</td>
       <td class="num">${percent(r.percentualComissao)}</td>
       <td class="num">${money(r.custoTotal)}</td>
@@ -550,13 +588,14 @@ function buildProductGroups(){
   const map = new Map();
   getGridRows().forEach(r => {
     const key = `${r.produto}¦${r.descricaoCompleta}`;
-    if(!map.has(key)) map.set(key,{produto:r.produto,descricaoCompleta:r.descricaoCompleta,quantidade:0,valorVenda:0,custoTotal:0,comissaoTotal:0,impostoTotal:0,margemBase:0,rows:[]});
+    if(!map.has(key)) map.set(key,{produto:r.produto,descricaoCompleta:r.descricaoCompleta,quantidade:0,valorVenda:0,custoTotal:0,comissaoTotal:0,impostoTotal:0,freteTotal:0,margemBase:0,rows:[]});
     const g = map.get(key);
     g.quantidade += r.quantidade;
     g.valorVenda += r.valorVenda;
     g.custoTotal += r.custoTotal;
     g.comissaoTotal += r.comissaoTotal;
     g.impostoTotal += r.impostoTotal;
+    g.freteTotal += r.freteTotal;
     g.margemBase += r.margemBase;
     g.rows.push(r);
   });
@@ -577,7 +616,7 @@ function renderProducts(){
   const start = (productsPage-1)*PAGE_SIZE;
   const pageRows = groupedProducts.slice(start,start+PAGE_SIZE);
   $('productRows').innerHTML = pageRows.length ? pageRows.map(g => `
-    <tr class="${g.margemBase <= 0 ? 'row-loss' : ''}"><td><strong>${esc(g.produto)}</strong></td><td class="description-cell" title="${esc(g.descricaoCompleta)}">${esc(g.descricaoCompleta)}</td><td class="num">${number(g.quantidade)}</td><td class="num">${money(g.valorVenda)}</td><td class="num">${money(g.custoTotal)}</td><td class="num">${money(g.comissaoTotal)}</td><td class="num">${money(g.impostoTotal)}</td><td class="num ${marginClass(g.margemBase)}">${money(g.margemBase)}</td><td class="num ${marginClass(g.margemBase)}">${percent(g.margemBasePercentual)}</td><td><button class="detail-button" type="button" data-detail-source="product" data-detail-product="${esc(g.produto)}"><i class="fa-solid fa-magnifying-glass-chart"></i> Detalhar</button></td></tr>`).join('') : '<tr class="empty-row"><td colspan="10">Nenhum produto encontrado.</td></tr>';
+    <tr class="${g.margemBase <= 0 ? 'row-loss' : ''}"><td><strong>${esc(g.produto)}</strong></td><td class="description-cell" title="${esc(g.descricaoCompleta)}">${esc(g.descricaoCompleta)}</td><td class="num">${number(g.quantidade)}</td><td class="num">${money(g.valorVenda)}</td><td class="num">${money(g.custoTotal)}</td><td class="num">${money(g.comissaoTotal)}</td><td class="num">${money(g.impostoTotal)}</td><td class="num">${money(g.freteTotal)}</td><td class="num ${marginClass(g.margemBase)}">${money(g.margemBase)}</td><td class="num ${marginClass(g.margemBase)}">${percent(g.margemBasePercentual)}</td><td><button class="detail-button" type="button" data-detail-source="product" data-detail-product="${esc(g.produto)}"><i class="fa-solid fa-magnifying-glass-chart"></i> Detalhar</button></td></tr>`).join('') : '<tr class="empty-row"><td colspan="11">Nenhum produto encontrado.</td></tr>';
   $('productsPage').textContent = `Página ${productsPage} de ${totalPages}`;
   $('productsPrev').disabled = productsPage <= 1;
   $('productsNext').disabled = productsPage >= totalPages;
@@ -659,8 +698,9 @@ function renderProductLinkage(rows){
     <td class="num material-cost-col">${money(r.custoMateriaPrimaUnitario)}</td>
     <td class="num optional-cost">${optionalMoney(r.custoMaoObraUnitario,r.custoMaoObraMapeado)}</td>
     <td class="num optional-cost" title="${r.impostoMapeado ? `Vlr Metro × ${percent(r.impostoPercentual)} · UF ${esc(r.uf || '—')}` : ''}">${optionalMoney(r.impostoUnitario,r.impostoMapeado)}</td>
+    <td class="num optional-cost" title="${r.freteMapeado ? `Vlr Metro × ${percent(r.fretePercentual)} · UF ${esc(r.uf || '—')}` : ''}">${optionalMoney(r.freteUnitario,r.freteMapeado)}</td>
     <td class="num ${marginClass(r.lucroUnitario)}">${money(r.lucroUnitario)}</td>
-  </tr>`).join('') : '<tr class="empty-row"><td colspan="14">Nenhum faturamento vinculado encontrado para os filtros atuais.</td></tr>';
+  </tr>`).join('') : '<tr class="empty-row"><td colspan="15">Nenhum faturamento vinculado encontrado para os filtros atuais.</td></tr>';
 }
 
 function renderDetail(){
@@ -673,10 +713,11 @@ function renderDetail(){
   }
   const rows=selectedDetailRows();
   if(!rows.length){ selectedProduct=null; selectedBillingRowId=null; renderDetail(); return; }
-  const first=rows[0], revenue=sum(rows,'valorVenda'), cost=sum(rows,'custoTotal'), commission=sum(rows,'comissaoTotal'), tax=sum(rows,'impostoTotal'), margin=sum(rows,'margemBase'), qty=sum(rows,'quantidade');
+  const first=rows[0], revenue=sum(rows,'valorVenda'), cost=sum(rows,'custoTotal'), commission=sum(rows,'comissaoTotal'), tax=sum(rows,'impostoTotal'), freight=sum(rows,'freteTotal'), margin=sum(rows,'margemBase'), qty=sum(rows,'quantidade');
   const weightedUnitCost = qty ? cost/qty : 0;
   const avgCommissionPct = revenue ? commission/revenue*100 : 0;
   const avgTaxPct = revenue ? tax/revenue*100 : 0;
+  const avgFreightPct = revenue ? freight/revenue*100 : 0;
   const marginPct = revenue ? margin/revenue*100 : 0;
   $('detailEmpty').hidden = true;
   $('detailContent').hidden = false;
@@ -697,6 +738,8 @@ function renderDetail(){
   $('detailCommissionPct').textContent = `${percent(avgCommissionPct)} sobre o faturamento`;
   $('detailTax').textContent = money(tax);
   $('detailTaxPct').textContent = `${percent(avgTaxPct)} sobre o faturamento`;
+  $('detailFreight').textContent = money(freight);
+  $('detailFreightPct').textContent = `${percent(avgFreightPct)} sobre o faturamento`;
   $('detailMargin').textContent = money(margin);
   $('detailMargin').className = marginClass(margin);
   $('detailMarginPct').textContent = percent(marginPct);
@@ -747,6 +790,7 @@ function printKpisHtml(rows){
   const cost=sum(visibleRows,'custoTotal');
   const commission=sum(visibleRows,'comissaoTotal');
   const tax=sum(visibleRows,'impostoTotal');
+  const freight=sum(visibleRows,'freteTotal');
   const margin=sum(visibleRows,'margemBase');
   const marginPct=revenue ? margin/revenue*100 : 0;
   const invoices=unique(visibleRows,'nota').length;
@@ -756,6 +800,7 @@ function printKpisHtml(rows){
     <div><span>Custo Matéria-Prima</span><strong>${money(cost)}</strong></div>
     <div><span>Comissões</span><strong>${money(commission)}</strong></div>
     <div><span>Impostos</span><strong>${money(tax)}</strong></div>
+    <div><span>Frete</span><strong>${money(freight)}</strong></div>
     <div><span>Margem base</span><strong>${money(margin)}</strong><small>${percent(marginPct)}</small></div>
   </div>`;
 }
@@ -768,22 +813,22 @@ function printBillingHtml(){
     <td class="num">${number(r.quantidade)}</td><td class="num">${money(r.valorVenda)}</td><td class="num">${money(r.valorMetro)}</td>
     <td class="num">${r.valorTabelaMapeado ? money(r.valorTabela) : ''}</td>
     <td class="num material-cost-col">${money(r.custoMateriaPrimaUnitario)}</td><td class="num">${optionalMoney(r.custoMaoObraUnitario,r.custoMaoObraMapeado)}</td>
-    <td class="num">${optionalMoney(r.impostoUnitario,r.impostoMapeado)}</td><td class="num">${money(r.comissaoUnitario)}</td><td class="num">${percent(r.percentualComissao)}</td>
+    <td class="num">${optionalMoney(r.impostoUnitario,r.impostoMapeado)}</td><td class="num">${optionalMoney(r.freteUnitario,r.freteMapeado)}</td><td class="num">${money(r.comissaoUnitario)}</td><td class="num">${percent(r.percentualComissao)}</td>
     <td class="num">${money(r.custoTotal)}</td><td class="num">${money(r.lucroUnitario)}</td><td class="num">${money(r.margemBase)}</td><td class="num">${percent(r.margemBasePercentual)}</td>
   </tr>`).join('');
   return `<h2>Faturamento por item</h2>
-    <div class="print-table-wrap"><table><thead><tr><th>Dt. Fat.</th><th>Sigla</th><th>Produto</th><th>Descrição completa</th><th>Pedido</th><th>OP</th><th>Nota</th><th>CFOP</th><th>Qtd.</th><th>Vlr Venda</th><th>Vlr Metro</th><th>Valor de Tabela</th><th>Cst. Mat. Prima</th><th>Cst MO</th><th>Imposto</th><th>Comissão</th><th>% Comis.</th><th>Custo Total</th><th>Lucro</th><th>Margem Base</th><th>% Margem</th></tr></thead><tbody>${body||'<tr><td colspan="21">Nenhum registro.</td></tr>'}</tbody></table></div>`;
+    <div class="print-table-wrap"><table><thead><tr><th>Dt. Fat.</th><th>Sigla</th><th>Produto</th><th>Descrição completa</th><th>Pedido</th><th>OP</th><th>Nota</th><th>CFOP</th><th>Qtd.</th><th>Vlr Venda</th><th>Vlr Metro</th><th>Valor de Tabela</th><th>Cst. Mat. Prima</th><th>Cst MO</th><th>Imposto</th><th>Frete</th><th>Comissão</th><th>% Comis.</th><th>Custo Total</th><th>Lucro</th><th>Margem Base</th><th>% Margem</th></tr></thead><tbody>${body||'<tr><td colspan="22">Nenhum registro.</td></tr>'}</tbody></table></div>`;
 }
 
 function printProductsHtml(){
   buildProductGroups();
   const body=groupedProducts.map(g=>`<tr class="${g.margemBase<=0?'loss':''}">
     <td>${esc(g.produto)}</td><td>${esc(g.descricaoCompleta)}</td><td class="num">${number(g.quantidade)}</td>
-    <td class="num">${money(g.valorVenda)}</td><td class="num">${money(g.custoTotal)}</td><td class="num">${money(g.comissaoTotal)}</td><td class="num">${money(g.impostoTotal)}</td>
+    <td class="num">${money(g.valorVenda)}</td><td class="num">${money(g.custoTotal)}</td><td class="num">${money(g.comissaoTotal)}</td><td class="num">${money(g.impostoTotal)}</td><td class="num">${money(g.freteTotal)}</td>
     <td class="num">${money(g.margemBase)}</td><td class="num">${percent(g.margemBasePercentual)}</td>
   </tr>`).join('');
   return `<h2>Total por Produto</h2>
-    <div class="print-table-wrap"><table><thead><tr><th>Produto</th><th>Descrição completa</th><th>Qtd.</th><th>Faturamento</th><th>Custo Total</th><th>Comissão</th><th>Impostos</th><th>Margem Base</th><th>% Margem</th></tr></thead><tbody>${body||'<tr><td colspan="9">Nenhum produto.</td></tr>'}</tbody></table></div>`;
+    <div class="print-table-wrap"><table><thead><tr><th>Produto</th><th>Descrição completa</th><th>Qtd.</th><th>Faturamento</th><th>Custo Total</th><th>Comissão</th><th>Impostos</th><th>Frete</th><th>Margem Base</th><th>% Margem</th></tr></thead><tbody>${body||'<tr><td colspan="10">Nenhum produto.</td></tr>'}</tbody></table></div>`;
 }
 
 function printProductionHtml(){
@@ -972,7 +1017,7 @@ async function parseImportFile(file,ExcelJS){
     throw new Error(`${file.name}: no relatório de Faturamento, a coluna K deve ser "Nat.oper". Ela é a fonte oficial do filtro CFOP.`);
   }
   if(type==='200' && normalizeHeader(headers[21]) !== 'uf'){
-    throw new Error(`${file.name}: no relatório de Faturamento, a coluna V deve ser "UF". Ela é a fonte oficial para calcular a alíquota de impostos.`);
+    throw new Error(`${file.name}: no relatório de Faturamento, a coluna V deve ser "UF". Ela é a fonte oficial para calcular impostos e fretes por estado.`);
   }
   const rows=[];
   for(let r=2;r<=ws.actualRowCount;r++){
@@ -1010,7 +1055,7 @@ function mapReport200(parsed){
     fretePedidoFonte:importNumber(byHeader(row,map,'Vlr.frete ped')),
     codigoListaPrecos:importRef(byHeader(row,map,'Cód.lista preços'))
   })).filter(row=>meaningful(row.nota) || meaningful(row.op));
-  return {meta:{titulo:'Custos e Rentabilidade',fonte:parsed.fileName,relatorio:'200 - Faturamento / Rentabilidade',geradoEm:new Date().toISOString(),versaoLayout:'v20-impostos-vlr-metro-por-uf'},registros};
+  return {meta:{titulo:'Custos e Rentabilidade',fonte:parsed.fileName,relatorio:'200 - Faturamento / Rentabilidade',geradoEm:new Date().toISOString(),versaoLayout:'v21-impostos-fretes-vlr-metro-por-uf'},registros};
 }
 
 function mapReport201(parsed){
@@ -1170,12 +1215,13 @@ function applyDataPackage(pkg,origin='published',validation=null){
   const technicalRows=records.filter(isTechnicalGridRow).length;
   const priceMappedRows=records.filter(r=>r.valorTabelaMapeado).length;
   const taxMappedRows=records.filter(r=>r.impostoMapeado).length;
-  $('footerStatus').textContent=`${records.length.toLocaleString('pt-BR')} itens faturados · ${technicalRows.toLocaleString('pt-BR')} linhas técnicas ocultas do grid · ${productionBase?.registros?.length?.toLocaleString('pt-BR')||0} apontamentos de produção · ${setupBase?.registros?.length?.toLocaleString('pt-BR')||0} paradas/setup · ${printingBase?.registros?.length?.toLocaleString('pt-BR')||0} itens de impressão · ${priceMappedRows.toLocaleString('pt-BR')} itens com Valor de Tabela · ${taxMappedRows.toLocaleString('pt-BR')} itens com imposto por UF`;
+  const freightMappedRows=records.filter(r=>r.freteMapeado).length;
+  $('footerStatus').textContent=`${records.length.toLocaleString('pt-BR')} itens faturados · ${technicalRows.toLocaleString('pt-BR')} linhas técnicas ocultas do grid · ${productionBase?.registros?.length?.toLocaleString('pt-BR')||0} apontamentos de produção · ${setupBase?.registros?.length?.toLocaleString('pt-BR')||0} paradas/setup · ${printingBase?.registros?.length?.toLocaleString('pt-BR')||0} itens de impressão · ${priceMappedRows.toLocaleString('pt-BR')} itens com Valor de Tabela · ${taxMappedRows.toLocaleString('pt-BR')} itens com imposto por UF · ${freightMappedRows.toLocaleString('pt-BR')} itens com frete por UF`;
   const moStatus=$('moIntegrationStatus');
   if(moStatus){
     moStatus.innerHTML=moByOp.size
       ? `<strong>Custos integrados:</strong> ${moByOp.size.toLocaleString('pt-BR')} OP${moByOp.size===1?'':'s'} calculada(s). M.O. = Setup + Produção/máquina (incluindo IMPRESSAO DIGITAL do apontamento). UV/Solvente do relatório complementar agora compõe Cst. Mat. Prima. ${linkedRows.toLocaleString('pt-BR')} item(ns) já receberam Cst MO.`
-      : `<strong>M.O.:</strong> bases de produção/setup carregadas, mas nenhuma OP pôde ser calculada. Frete continua pendente. Impostos são calculados por Vlr Metro × alíquota da UF (coluna V) do relatório 200.`;
+      : `<strong>M.O.:</strong> bases de produção/setup carregadas, mas nenhuma OP pôde ser calculada. Impostos e fretes são calculados por Vlr Metro × percentual da UF (coluna V) do relatório 200.`;
   }
   updateImportStatus(validation);
   renderAll();
@@ -1490,6 +1536,7 @@ async function exportBilling(triggerButton=$('exportBilling')){
     const cost = sum(exportRows,'custoTotal');
     const commission = sum(exportRows,'comissaoTotal');
     const tax = sum(exportRows,'impostoTotal');
+    const freight = sum(exportRows,'freteTotal');
     const margin = sum(exportRows,'margemBase');
     const marginPct = revenue ? margin/revenue : 0;
     setupReportHeader(ws,'CUSTOS E RENTABILIDADE — FATURAMENTO','Relatório detalhado por item faturado.',[
@@ -1497,6 +1544,7 @@ async function exportBilling(triggerButton=$('exportBilling')){
       {label:'MATÉRIA-PRIMA',value:cost,color:XLS_COLORS.purple,numFmt:'R$ #,##0.00'},
       {label:'COMISSÕES',value:commission,color:XLS_COLORS.orange,numFmt:'R$ #,##0.00'},
       {label:'IMPOSTOS',value:tax,color:XLS_COLORS.negative,numFmt:'R$ #,##0.00'},
+      {label:'FRETE',value:freight,color:XLS_COLORS.blue,numFmt:'R$ #,##0.00'},
       {label:'MARGEM BASE',value:margin,color:XLS_COLORS.green,numFmt:'R$ #,##0.00'},
       {label:'% MARGEM',value:marginPct,color:XLS_COLORS.cyan,numFmt:'0.00%'}
     ],21);
@@ -1591,6 +1639,7 @@ async function exportProducts(triggerButton=$('exportProducts')){
     const cost=sum(groupedProducts,'custoTotal');
     const commission=sum(groupedProducts,'comissaoTotal');
     const tax=sum(groupedProducts,'impostoTotal');
+    const freight=sum(groupedProducts,'freteTotal');
     const margin=sum(groupedProducts,'margemBase');
     const marginPct=revenue?margin/revenue:0;
     setupReportHeader(ws,'CUSTOS E RENTABILIDADE — TOTAL POR PRODUTO','Consolidação dos registros do período e filtros selecionados.',[
@@ -1598,11 +1647,12 @@ async function exportProducts(triggerButton=$('exportProducts')){
       {label:'FATURAMENTO',value:revenue,color:XLS_COLORS.cyan,numFmt:'R$ #,##0.00'},
       {label:'MATÉRIA-PRIMA',value:cost,color:XLS_COLORS.purple,numFmt:'R$ #,##0.00'},
       {label:'IMPOSTOS',value:tax,color:XLS_COLORS.orange,numFmt:'R$ #,##0.00'},
+      {label:'FRETE',value:freight,color:XLS_COLORS.blue,numFmt:'R$ #,##0.00'},
       {label:'MARGEM BASE',value:margin,color:XLS_COLORS.green,numFmt:'R$ #,##0.00'},
       {label:'% MARGEM',value:marginPct,color:XLS_COLORS.orange,numFmt:'0.00%'}
     ]);
 
-    const headers=['Produto','Desc. completa','Qtd','Faturamento','Custo Total','Comissão Total','Impostos','Margem Base','% Margem'];
+    const headers=['Produto','Desc. completa','Qtd','Faturamento','Custo Total','Comissão Total','Impostos','Frete','Margem Base','% Margem'];
     const headerRow=10;
     ws.getRow(headerRow).values=headers;
     styleTableHeader(ws,headerRow,headers.length);
@@ -1612,22 +1662,22 @@ async function exportProducts(triggerButton=$('exportProducts')){
       const rn=startRow+index;
       ws.getRow(rn).values=[
         String(g.produto??''),String(g.descricaoCompleta??''),Number(g.quantidade||0),Number(g.valorVenda||0),
-        Number(g.custoTotal||0),Number(g.comissaoTotal||0),Number(g.impostoTotal||0),
+        Number(g.custoTotal||0),Number(g.comissaoTotal||0),Number(g.impostoTotal||0),Number(g.freteTotal||0),
         Number(g.margemBase||0),
-        {formula:`IFERROR(H${rn}/D${rn},0)`,result:Number(g.margemBasePercentual||0)/100}
+        {formula:`IFERROR(I${rn}/D${rn},0)`,result:Number(g.margemBasePercentual||0)/100}
       ];
     });
 
     const endRow=Math.max(startRow,startRow+groupedProducts.length-1);
     if(groupedProducts.length){
-      styleDataRows(ws,startRow,endRow,headers.length,[3,4,5,6,7,8,9]);
+      styleDataRows(ws,startRow,endRow,headers.length,[3,4,5,6,7,8,9,10]);
       for(let r=startRow;r<=endRow;r++){
         ws.getCell(r,3).numFmt='#,##0.00';
-        [4,5,6,7,8].forEach(c=>ws.getCell(r,c).numFmt='R$ #,##0.00;[Red]-R$ #,##0.00');
-        ws.getCell(r,9).numFmt='0.00%';
+        [4,5,6,7,8,9].forEach(c=>ws.getCell(r,c).numFmt='R$ #,##0.00;[Red]-R$ #,##0.00');
+        ws.getCell(r,10).numFmt='0.00%';
       }
-      applyProfitColors(ws,startRow,endRow,8,9);
-      styleLossRows(ws,startRow,endRow,8,headers.length);
+      applyProfitColors(ws,startRow,endRow,9,10);
+      styleLossRows(ws,startRow,endRow,9,headers.length);
     }
 
     const totalRow=(groupedProducts.length?endRow:headerRow)+1;
@@ -1639,15 +1689,16 @@ async function exportProducts(triggerButton=$('exportProducts')){
       ws.getCell(totalRow,5).value={formula:`SUM(E${startRow}:E${endRow})`,result:cost};
       ws.getCell(totalRow,6).value={formula:`SUM(F${startRow}:F${endRow})`,result:commission};
       ws.getCell(totalRow,7).value={formula:`SUM(G${startRow}:G${endRow})`,result:tax};
-      ws.getCell(totalRow,8).value={formula:`SUM(H${startRow}:H${endRow})`,result:margin};
-      ws.getCell(totalRow,9).value={formula:`IFERROR(H${totalRow}/D${totalRow},0)`,result:marginPct};
+      ws.getCell(totalRow,8).value={formula:`SUM(H${startRow}:H${endRow})`,result:freight};
+      ws.getCell(totalRow,9).value={formula:`SUM(I${startRow}:I${endRow})`,result:margin};
+      ws.getCell(totalRow,10).value={formula:`IFERROR(I${totalRow}/D${totalRow},0)`,result:marginPct};
     }else{
-      [3,4,5,6,7,8,9].forEach(c=>ws.getCell(totalRow,c).value=0);
+      [3,4,5,6,7,8,9,10].forEach(c=>ws.getCell(totalRow,c).value=0);
     }
     styleTotalRow(ws,totalRow,headers.length);
     ws.getCell(totalRow,3).numFmt='#,##0.00';
-    [4,5,6,7,8].forEach(c=>ws.getCell(totalRow,c).numFmt='R$ #,##0.00;[Red]-R$ #,##0.00');
-    ws.getCell(totalRow,9).numFmt='0.00%';
+    [4,5,6,7,8,9].forEach(c=>ws.getCell(totalRow,c).numFmt='R$ #,##0.00;[Red]-R$ #,##0.00');
+    ws.getCell(totalRow,10).numFmt='0.00%';
     ws.autoFilter={from:{row:headerRow,column:1},to:{row:headerRow,column:headers.length}};
 
     const buffer=await workbook.xlsx.writeBuffer();
@@ -1833,17 +1884,20 @@ async function fetchOptionalJson(url){
 }
 
 async function loadData(){
-  const [baseResponse,prodData,setupData,printingData,priceData,taxData] = await Promise.all([
+  const [baseResponse,prodData,setupData,printingData,priceData,taxData,freightData] = await Promise.all([
     fetch(`data/base.json?v=${Date.now()}`,{cache:'no-store'}),
     fetchOptionalJson('data/producao.json'),
     fetchOptionalJson('data/setup.json'),
     fetchOptionalJson('data/impressao.json'),
     fetchOptionalJson('data/tabela-precos.json'),
-    fetchOptionalJson('data/impostos.json')
+    fetchOptionalJson('data/impostos.json'),
+    fetchOptionalJson('data/fretes.json')
   ]);
   if(!baseResponse.ok) throw new Error(`Base não encontrada (${baseResponse.status})`);
   taxBase=taxData || {meta:{fonte:'Tabela de impostos não encontrada'},registros:[]};
   taxRateByKey=buildTaxRateMap(taxBase?.registros||[]);
+  freightBase=freightData || {meta:{fonte:'Tabela de fretes não encontrada'},registros:[]};
+  freightRateByKey=buildFreightRateMap(freightBase?.registros||[]);
   const published={
     version:19,
     base:await baseResponse.json(),
