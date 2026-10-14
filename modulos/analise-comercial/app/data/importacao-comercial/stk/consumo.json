@@ -4544,6 +4544,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 479,
+    "dt_movto": "2026-10-13"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11904",
+    "produto": "11904",
+    "desc_completa": "NAPA MADRID NUDE - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 496,
     "dt_movto": "2025-12-09"
   },
@@ -4594,6 +4606,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 511,
     "dt_movto": "2026-10-06"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11904",
+    "produto": "11904",
+    "desc_completa": "NAPA MADRID NUDE - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 516,
+    "dt_movto": "2026-10-13"
   },
   {
     "fonte_comercial": "STK",
@@ -15457,6 +15481,18 @@
   },
   {
     "fonte_comercial": "STK",
+    "cod_prod": "20016",
+    "produto": "20016",
+    "desc_completa": "NAPA LINHO DAKAR CARAMELO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 39,
+    "dt_movto": "2026-10-13"
+  },
+  {
+    "fonte_comercial": "STK",
     "cod_prod": "20017",
     "produto": "20017",
     "desc_completa": "NAPA FLOATER VENEZIA PRETO - PU 0.9MM",
@@ -15778,6 +15814,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 120,
     "dt_movto": "2026-02-19"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20034",
+    "produto": "20034",
+    "desc_completa": "NAPA BARI PRETO - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 198,
+    "dt_movto": "2026-10-13"
   },
   {
     "fonte_comercial": "STK",
@@ -16702,6 +16750,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 300,
     "dt_movto": "2026-09-15"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20104",
+    "produto": "20104",
+    "desc_completa": "NAPA BARI BEGE - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 357,
+    "dt_movto": "2026-10-13"
   },
   {
     "fonte_comercial": "STK",
