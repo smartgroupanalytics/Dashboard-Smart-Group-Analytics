@@ -140,8 +140,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-29",
-    "centro_custo": 1,
-    "abreviacao": "RECOB"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -164,8 +164,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-09-30",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -176,8 +176,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-30",
-    "centro_custo": 1,
-    "abreviacao": "RECOB"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -188,8 +188,8 @@
     "subgrupo": 41,
     "qtd_produzir": 240,
     "dt_saida": "2026-10-02",
-    "centro_custo": 1,
-    "abreviacao": "RECOB"
+    "centro_custo": 3,
+    "abreviacao": "GR 1"
   },
   {
     "fonte_comercial": "STK",
@@ -200,8 +200,20 @@
     "subgrupo": 41,
     "qtd_produzir": 120,
     "dt_saida": "2026-09-30",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 7,
+    "abreviacao": "ESTAM"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8499",
+    "produto": "20081",
+    "desc_completa": "NAPA VIENA PVC OFF WHITE",
+    "grupo": 39,
+    "subgrupo": 40,
+    "qtd_produzir": 50,
+    "dt_saida": "2026-10-02",
+    "centro_custo": 10,
+    "abreviacao": "REV 1"
   },
   {
     "fonte_comercial": "STK",
@@ -224,8 +236,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-10-08",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "centro_custo": 3,
+    "abreviacao": "GR 1"
   },
   {
     "fonte_comercial": "STK",
@@ -234,7 +246,7 @@
     "desc_completa": "MIRAGE OURO LIGHT",
     "grupo": 39,
     "subgrupo": 41,
-    "qtd_produzir": 251.5,
+    "qtd_produzir": 201,
     "dt_saida": "2026-10-08",
     "centro_custo": 10,
     "abreviacao": "REV 1"
@@ -260,20 +272,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-10-05",
-    "centro_custo": 3,
-    "abreviacao": "GR 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8568",
-    "produto": "18047",
-    "desc_completa": "NAPA LINHO DAKAR BRANCO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 100,
-    "dt_saida": "2026-10-09",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 7,
+    "abreviacao": "ESTAM"
   },
   {
     "fonte_comercial": "STK",
@@ -380,8 +380,8 @@
     "subgrupo": 41,
     "qtd_produzir": 100,
     "dt_saida": "2026-10-09",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -476,8 +476,8 @@
     "subgrupo": 41,
     "qtd_produzir": 40,
     "dt_saida": "2026-10-09",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -488,8 +488,8 @@
     "subgrupo": 41,
     "qtd_produzir": 40,
     "dt_saida": "2026-10-09",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -500,8 +500,8 @@
     "subgrupo": 41,
     "qtd_produzir": 100,
     "dt_saida": "2026-10-09",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -512,8 +512,8 @@
     "subgrupo": 41,
     "qtd_produzir": 100,
     "dt_saida": "2026-10-12",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -524,8 +524,8 @@
     "subgrupo": 41,
     "qtd_produzir": 40,
     "dt_saida": "2026-10-12",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -608,8 +608,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-10-14",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 1,
+    "abreviacao": "RECOB"
   },
   {
     "fonte_comercial": "STK",
