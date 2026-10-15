@@ -1,0 +1,39 @@
+CUSTOS E RENTABILIDADE v23 - BASE COMPARTILHADA FIRESTORE
+
+O que mudou
+-----------
+- A importação dos 5 relatórios deixa de ficar apenas no navegador/localStorage.
+- O administrador importa uma vez e a base é publicada no Firestore.
+- Todos os usuários autorizados carregam automaticamente a mesma última base.
+- Somente perfil "administrador" vê/usa o botão de importação.
+- A base é dividida em blocos para respeitar o limite de tamanho dos documentos do Firestore.
+- A publicação usa dois slots (A/B): a nova base só vira "atual" depois que todos os blocos terminaram de gravar.
+
+Instalação
+----------
+1. Substitua SOMENTE a pasta:
+   modulos/custos-rentabilidade
+
+2. Abra o arquivo:
+   REGRAS-FIRESTORE-CUSTOS-RENTABILIDADE.txt
+
+3. No Firebase Console > Firestore Database > Rules:
+   - NÃO substitua suas regras atuais.
+   - Adicione as funções e o match do arquivo DENTRO de:
+     match /databases/{database}/documents { ... }
+   - Publique as regras.
+
+4. GitHub Desktop:
+   Commit > Push origin.
+
+5. Aguarde o GitHub Pages e abra com Ctrl+F5.
+
+6. Entre como administrador e importe os 5 relatórios uma vez.
+
+7. Teste em outro navegador/PC:
+   basta abrir Custos e Rentabilidade; a última base deve aparecer sem nova importação.
+
+Observação
+----------
+Se existir uma carga local antiga no seu navegador, o módulo usa essa carga somente enquanto não existir
+uma base compartilhada no Firestore. Depois da primeira publicação compartilhada, o Firestore passa a ter prioridade.

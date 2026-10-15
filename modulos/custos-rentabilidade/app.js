@@ -1,4 +1,14 @@
 import { protegerModulo } from '../../module-guard.js?v=3';
+import { db } from '../../firebase-config.js';
+
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+  writeBatch
+} from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js';
 
 const $ = id => document.getElementById(id);
 const PAGE_SIZE = 100;
@@ -25,7 +35,13 @@ let eventsBound = false;
 let currentDataOrigin = 'published';
 let allCfops = [];
 let selectedCfops = new Set();
-const IMPORT_STORAGE_KEY = 'smartgroup.custosRentabilidade.import.v22-rel204-alias';
+const IMPORT_STORAGE_KEY = 'smartgroup.custosRentabilidade.import.v22-rel204-alias'; // legado local, somente fallback/migração
+const SHARED_COLLECTION = 'custos_rentabilidade_shared';
+const SHARED_POINTER_DOC = 'current';
+const SHARED_SLOT_A = 'slot-a';
+const SHARED_SLOT_B = 'slot-b';
+const SHARED_CHUNK_BYTES = 600000;
+const SHARED_PACKAGE_VERSION = 23;
 
 const money = value => Number(value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 const number = value => Number(value || 0).toLocaleString('pt-BR', { maximumFractionDigits: 2 });
@@ -1142,18 +1158,163 @@ function buildImportedPackage(parsedByType){
   };
 }
 
+
 function loadCachedImport(){
+  // Mantido apenas como fallback temporário para quem já tinha uma carga local antiga.
+  // Novas importações são gravadas no Firestore e compartilhadas com todos.
   try{
     const raw=localStorage.getItem(IMPORT_STORAGE_KEY);
     if(!raw) return null;
     const parsed=JSON.parse(raw);
     return parsed?.version===15 && parsed?.base?.registros ? parsed : null;
-  }catch(error){ console.warn('Não foi possível ler a importação salva.',error); return null; }
+  }catch(error){
+    console.warn('Não foi possível ler a importação local antiga.',error);
+    return null;
+  }
 }
 
-function saveCachedImport(pkg){
-  try{ localStorage.setItem(IMPORT_STORAGE_KEY,JSON.stringify(pkg)); return true; }
-  catch(error){ console.warn('Importação aplicada, mas não foi possível persistir no navegador.',error); return false; }
+function bytesToBase64(bytes){
+  let binary='';
+  const STEP=0x8000;
+  for(let i=0;i<bytes.length;i+=STEP){
+    binary += String.fromCharCode(...bytes.subarray(i,Math.min(i+STEP,bytes.length)));
+  }
+  return btoa(binary);
+}
+
+function base64ToBytes(base64){
+  const binary=atob(base64);
+  const bytes=new Uint8Array(binary.length);
+  for(let i=0;i<binary.length;i++) bytes[i]=binary.charCodeAt(i);
+  return bytes;
+}
+
+function splitBytes(bytes,maxBytes=SHARED_CHUNK_BYTES){
+  const chunks=[];
+  for(let offset=0;offset<bytes.length;offset+=maxBytes){
+    chunks.push(bytes.slice(offset,Math.min(offset+maxBytes,bytes.length)));
+  }
+  return chunks;
+}
+
+async function deleteSharedSlotChunks(slotId){
+  const snap=await getDocs(collection(db,SHARED_COLLECTION,slotId,'chunks'));
+  const refs=snap.docs.map(item=>item.ref);
+  for(let i=0;i<refs.length;i+=400){
+    const batch=writeBatch(db);
+    refs.slice(i,i+400).forEach(ref=>batch.delete(ref));
+    await batch.commit();
+  }
+}
+
+async function saveSharedImport(pkg){
+  const currentRef=doc(db,SHARED_COLLECTION,SHARED_POINTER_DOC);
+  const currentSnap=await getDoc(currentRef);
+  const currentSlot=currentSnap.exists() ? String(currentSnap.data()?.slot || '') : '';
+  const targetSlot=currentSlot===SHARED_SLOT_A ? SHARED_SLOT_B : SHARED_SLOT_A;
+
+  const json=JSON.stringify({...pkg,sharedVersion:SHARED_PACKAGE_VERSION});
+  const bytes=new TextEncoder().encode(json);
+  const chunks=splitBytes(bytes);
+
+  await deleteSharedSlotChunks(targetSlot);
+
+  const slotRef=doc(db,SHARED_COLLECTION,targetSlot);
+  await setDoc(slotRef,{
+    status:'uploading',
+    version:SHARED_PACKAGE_VERSION,
+    importedAt:pkg.importedAt || new Date().toISOString(),
+    chunkCount:chunks.length,
+    byteLength:bytes.length,
+    updatedAt:new Date().toISOString()
+  });
+
+  for(let i=0;i<chunks.length;i+=400){
+    const batch=writeBatch(db);
+    chunks.slice(i,i+400).forEach((chunk,localIndex)=>{
+      const index=i+localIndex;
+      const chunkId=String(index).padStart(4,'0');
+      batch.set(
+        doc(db,SHARED_COLLECTION,targetSlot,'chunks',chunkId),
+        {index,payload:bytesToBase64(chunk)}
+      );
+    });
+    await batch.commit();
+  }
+
+  await setDoc(slotRef,{
+    status:'ready',
+    version:SHARED_PACKAGE_VERSION,
+    importedAt:pkg.importedAt || new Date().toISOString(),
+    chunkCount:chunks.length,
+    byteLength:bytes.length,
+    updatedAt:new Date().toISOString()
+  });
+
+  // A troca do ponteiro é a última operação. Assim outros usuários nunca veem
+  // uma carga incompleta.
+  await setDoc(currentRef,{
+    slot:targetSlot,
+    version:SHARED_PACKAGE_VERSION,
+    importedAt:pkg.importedAt || new Date().toISOString(),
+    chunkCount:chunks.length,
+    byteLength:bytes.length,
+    updatedAt:new Date().toISOString()
+  });
+
+  return {slot:targetSlot,chunkCount:chunks.length,byteLength:bytes.length};
+}
+
+async function loadSharedImport(){
+  try{
+    const currentSnap=await getDoc(doc(db,SHARED_COLLECTION,SHARED_POINTER_DOC));
+    if(!currentSnap.exists()) return null;
+
+    const pointer=currentSnap.data() || {};
+    const slot=String(pointer.slot || '');
+    if(!slot) return null;
+
+    const slotSnap=await getDoc(doc(db,SHARED_COLLECTION,slot));
+    if(!slotSnap.exists() || slotSnap.data()?.status!=='ready') return null;
+
+    const chunkSnap=await getDocs(collection(db,SHARED_COLLECTION,slot,'chunks'));
+    const docs=[...chunkSnap.docs].sort((a,b)=>a.id.localeCompare(b.id));
+    if(!docs.length) return null;
+
+    const expected=Number(slotSnap.data()?.chunkCount || 0);
+    if(expected && docs.length!==expected){
+      throw new Error(`Base compartilhada incompleta: ${docs.length}/${expected} blocos.`);
+    }
+
+    const parts=docs.map(item=>base64ToBytes(String(item.data()?.payload || '')));
+    const total=parts.reduce((acc,item)=>acc+item.length,0);
+    const bytes=new Uint8Array(total);
+    let offset=0;
+    parts.forEach(part=>{ bytes.set(part,offset); offset+=part.length; });
+
+    const parsed=JSON.parse(new TextDecoder().decode(bytes));
+    if(!parsed?.base?.registros) throw new Error('Base compartilhada inválida.');
+    return parsed;
+  }catch(error){
+    console.warn('Não foi possível carregar a base compartilhada.',error);
+    return null;
+  }
+}
+
+function isCurrentUserAdmin(){
+  return String(window.usuarioAnalytics?.perfil || '').trim().toLocaleLowerCase('pt-BR')==='administrador';
+}
+
+function configureSharedImportPermissions(){
+  const button=$('importReports');
+  if(button){
+    button.hidden=!isCurrentUserAdmin();
+    button.title=isCurrentUserAdmin()
+      ? 'Importar e publicar os 5 relatórios para todos os usuários'
+      : 'Somente administradores podem atualizar a base compartilhada';
+  }
+  const input=$('importFiles');
+  if(input) input.disabled=!isCurrentUserAdmin();
 }
 
 function reportOpSet(rows,field='op'){
@@ -1194,11 +1355,14 @@ function updateImportStatus(validation=null){
     ['204','Tabelas de preço',priceTableBase?.registros?.length||0,priceTableBase?.meta?.fonte]
   ];
   $('importSourceBadges').innerHTML=sources.map(([id,label,count,file])=>`<div class="import-badge ok" title="${esc(file||'')}"><span>${id}</span><strong>${esc(label)}</strong><small>${Number(count).toLocaleString('pt-BR')} linhas</small><i class="fa-solid fa-circle-check"></i></div>`).join('');
-  const saved=currentDataOrigin==='imported';
-  $('importOrigin').innerHTML=saved
-    ? `<i class="fa-solid fa-database"></i> Base importada e salva neste navegador${validation?.stats ? ` · ${validation.stats.linkedProduction} OPs do faturamento encontradas na Produção` : ''}`
-    : `<i class="fa-solid fa-cloud-arrow-down"></i> Base publicada no módulo · use “Importar 5 arquivos” para atualizar manualmente`;
-  $('resetImport').hidden=!saved;
+  const shared=currentDataOrigin==='shared';
+  const legacyLocal=currentDataOrigin==='imported';
+  $('importOrigin').innerHTML=shared
+    ? `<i class="fa-solid fa-cloud"></i> Base compartilhada no Firestore · todos os usuários recebem esta mesma atualização${validation?.stats ? ` · ${validation.stats.linkedProduction} OPs do faturamento encontradas na Produção` : ''}`
+    : legacyLocal
+      ? `<i class="fa-solid fa-triangle-exclamation"></i> Base local antiga deste navegador · faça uma nova importação para publicá-la para todos`
+      : `<i class="fa-solid fa-cloud-arrow-down"></i> Base publicada no módulo · administrador pode usar “Importar 5 arquivos” para atualizar para todos`;
+  $('resetImport').hidden=true;
 }
 
 function applyDataPackage(pkg,origin='published',validation=null){
@@ -1222,7 +1386,7 @@ function applyDataPackage(pkg,origin='published',validation=null){
 
   const linkedRows=records.filter(r=>r.custoMaoObraMapeado).length;
   $('sourceFile').textContent=`Rel. 200: ${base?.meta?.fonte || 'SIGER'} · 5 relatórios validados`;
-  const updated=origin==='imported' && pkg.importedAt ? new Date(pkg.importedAt).toLocaleString('pt-BR') : (base?.meta?.geradoEm ? new Date(base.meta.geradoEm).toLocaleString('pt-BR') : '—');
+  const updated=(origin==='imported' || origin==='shared') && pkg.importedAt ? new Date(pkg.importedAt).toLocaleString('pt-BR') : (base?.meta?.geradoEm ? new Date(base.meta.geradoEm).toLocaleString('pt-BR') : '—');
   $('updatedAt').textContent=`Atualizado em ${updated}`;
   const technicalRows=records.filter(isTechnicalGridRow).length;
   const priceMappedRows=records.filter(r=>r.valorTabelaMapeado).length;
@@ -1240,6 +1404,11 @@ function applyDataPackage(pkg,origin='published',validation=null){
 }
 
 async function handleImportFiles(event){
+  if(!isCurrentUserAdmin()){
+    alert('Somente administradores podem atualizar a base compartilhada de Custos e Rentabilidade.');
+    event.target.value='';
+    return;
+  }
   const files=[...(event.target.files||[])];
   event.target.value='';
   if(files.length!==5){
@@ -1265,8 +1434,10 @@ async function handleImportFiles(event){
     const pkg=buildImportedPackage(parsedByType);
     const validation=validateImportedPackage(pkg);
     if(validation.errors.length) throw new Error(validation.errors.join(' '));
-    const persisted=saveCachedImport(pkg);
-    applyDataPackage(pkg,'imported',validation);
+    button.innerHTML='<i class="fa-solid fa-cloud-arrow-up fa-beat"></i> Publicando para todos…';
+    const sharedResult=await saveSharedImport(pkg);
+    localStorage.removeItem(IMPORT_STORAGE_KEY);
+    applyDataPackage(pkg,'shared',validation);
     const details=[
       `200 Faturamento: ${pkg.base.registros.length.toLocaleString('pt-BR')} linhas`,
       `201 Produção: ${pkg.production.registros.length.toLocaleString('pt-BR')} linhas`,
@@ -1276,9 +1447,10 @@ async function handleImportFiles(event){
       `${validation.stats.linkedProduction} OPs do faturamento encontradas no relatório de Produção`,
       `${validation.stats.linkedTablePrice.toLocaleString('pt-BR')} linhas do faturamento encontraram Valor de Tabela`
     ];
+    details.push(`Base compartilhada publicada em ${sharedResult.chunkCount} bloco(s) no Firestore.`);
+    details.push('Todos os usuários do módulo receberão esta mesma base ao abrir ou atualizar a página.');
     if(validation.warnings.length) details.push(`Aviso: ${validation.warnings.join(' ')}`);
-    if(!persisted) details.push('A base foi aplicada nesta sessão, mas o navegador não permitiu salvá-la localmente.');
-    alert(`Importação concluída e validada.\n\n${details.join('\n')}`);
+    alert(`Importação concluída, validada e publicada para todos.\n\n${details.join('\n')}`);
   }catch(error){
     console.error('Importação dos relatórios:',error);
     alert(`Os arquivos não foram aplicados.\n\n${error?.message || error}`);
@@ -1289,7 +1461,7 @@ async function handleImportFiles(event){
 }
 
 function resetImportedData(){
-  if(!confirm('Voltar para a base publicada no módulo e apagar a importação salva neste navegador?')) return;
+  // Compatibilidade com versões antigas: remove apenas eventual cache local.
   localStorage.removeItem(IMPORT_STORAGE_KEY);
   location.reload();
 }
@@ -1881,7 +2053,7 @@ function bindEvents(){
   $('printDashboard').addEventListener('click',printDashboard); $('exportDashboard').addEventListener('click',exportCurrentView);
   $('importReports').addEventListener('click',()=> $('importFiles').click());
   $('importFiles').addEventListener('change',handleImportFiles);
-  $('resetImport').addEventListener('click',resetImportedData);
+  $('resetImport')?.addEventListener('click',resetImportedData);
 }
 
 async function fetchOptionalJson(url){
@@ -1918,9 +2090,14 @@ async function loadData(){
     printing:printingData || {meta:{fonte:'Impressão não encontrada'},registros:[]},
     prices:priceData || {meta:{fonte:'Tabela de preços não encontrada'},registros:[]}
   };
-  const cached=loadCachedImport();
-  applyDataPackage(cached || published,cached ? 'imported' : 'published');
+  const shared=await loadSharedImport();
+  const cached=shared ? null : loadCachedImport();
+  applyDataPackage(
+    shared || cached || published,
+    shared ? 'shared' : (cached ? 'imported' : 'published')
+  );
   bindEvents();
+  configureSharedImportPermissions();
 }
 
 (async()=>{

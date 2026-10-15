@@ -1,0 +1,32 @@
+// ADICIONE ESTE BLOCO DENTRO DE:
+// service cloud.firestore {
+//   match /databases/{database}/documents {
+//     ... AQUI, junto com os outros match ...
+//   }
+// }
+//
+// NÃO SUBSTITUA suas regras atuais. Apenas acrescente este bloco dentro de /documents.
+
+function crUsuarioAnalytics() {
+  return get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data;
+}
+
+function crPodeLer() {
+  return request.auth != null
+    && crUsuarioAnalytics().ativo == true
+    && (
+      crUsuarioAnalytics().perfil == "administrador"
+      || crUsuarioAnalytics().modulos["custos-rentabilidade"] == true
+    );
+}
+
+function crPodeAtualizar() {
+  return request.auth != null
+    && crUsuarioAnalytics().ativo == true
+    && crUsuarioAnalytics().perfil == "administrador";
+}
+
+match /custos_rentabilidade_shared/{document=**} {
+  allow read: if crPodeLer();
+  allow create, update, delete: if crPodeAtualizar();
+}
