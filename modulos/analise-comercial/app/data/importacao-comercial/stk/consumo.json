@@ -15668,6 +15668,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 1.6,
+    "dt_movto": "2026-10-14"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20021",
+    "produto": "20021",
+    "desc_completa": "NAPA FLOATER VENEZIA CARAMELO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 8,
     "dt_movto": "2026-08-28"
   },
@@ -15680,8 +15692,92 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 34,
+    "dt_movto": "2026-10-14"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20021",
+    "produto": "20021",
+    "desc_completa": "NAPA FLOATER VENEZIA CARAMELO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 39,
     "dt_movto": "2026-06-17"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20021",
+    "produto": "20021",
+    "desc_completa": "NAPA FLOATER VENEZIA CARAMELO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-10-14"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20021",
+    "produto": "20021",
+    "desc_completa": "NAPA FLOATER VENEZIA CARAMELO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-10-14"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20021",
+    "produto": "20021",
+    "desc_completa": "NAPA FLOATER VENEZIA CARAMELO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 111.4,
+    "dt_movto": "2026-10-14"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20021",
+    "produto": "20021",
+    "desc_completa": "NAPA FLOATER VENEZIA CARAMELO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 120,
+    "dt_movto": "2026-10-14"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20021",
+    "produto": "20021",
+    "desc_completa": "NAPA FLOATER VENEZIA CARAMELO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 167,
+    "dt_movto": "2026-10-14"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20021",
+    "produto": "20021",
+    "desc_completa": "NAPA FLOATER VENEZIA CARAMELO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 477,
+    "dt_movto": "2026-10-14"
   },
   {
     "fonte_comercial": "STK",
@@ -16604,6 +16700,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 5,
+    "dt_movto": "2026-10-14"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20088",
+    "produto": "20088",
+    "desc_completa": "SEVILLA OFF WHITE - 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 217,
     "dt_movto": "2026-10-02"
   },
@@ -16618,6 +16726,30 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 261,
     "dt_movto": "2026-10-02"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20088",
+    "produto": "20088",
+    "desc_completa": "SEVILLA OFF WHITE - 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 279,
+    "dt_movto": "2026-10-14"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20088",
+    "produto": "20088",
+    "desc_completa": "SEVILLA OFF WHITE - 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 313,
+    "dt_movto": "2026-10-14"
   },
   {
     "fonte_comercial": "STK",
@@ -16724,6 +16856,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 116,
+    "dt_movto": "2026-10-14"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20104",
+    "produto": "20104",
+    "desc_completa": "NAPA BARI BEGE - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 200,
     "dt_movto": "2026-09-23"
   },
@@ -16772,6 +16916,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 362,
+    "dt_movto": "2026-10-14"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20104",
+    "produto": "20104",
+    "desc_completa": "NAPA BARI BEGE - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 392,
     "dt_movto": "2026-09-03"
   },
@@ -16786,6 +16942,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 400,
     "dt_movto": "2026-10-02"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20104",
+    "produto": "20104",
+    "desc_completa": "NAPA BARI BEGE - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 414,
+    "dt_movto": "2026-10-14"
   },
   {
     "fonte_comercial": "STK",
@@ -16822,6 +16990,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 512,
     "dt_movto": "2026-10-05"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20104",
+    "produto": "20104",
+    "desc_completa": "NAPA BARI BEGE - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 519,
+    "dt_movto": "2026-10-14"
   },
   {
     "fonte_comercial": "STK",
