@@ -1,0 +1,25 @@
+SMART GROUP ANALYTICS — CUSTOS E RENTABILIDADE v29
+
+L.E — PREENCHIMENTO DOS CAMPOS COM AS REGRAS DO RENTABILIDADE
+
+Regra:
+1. Se a OP/item L.E já possui faturamento real no relatório 200, os valores continuam sendo os reais.
+2. Se ainda é estoque sem venda, o painel usa como REFERÊNCIA COMERCIAL a última venda do mesmo produto no relatório 200.
+3. Valores de referência aparecem com o símbolo ≈ e tooltip explicativo.
+
+Campos projetados quando ainda não há venda:
+- Vlr Metro = Vlr Metro da última venda do mesmo produto.
+- Vlr Venda = Qtd. aprovada da L.E × Vlr Metro de referência.
+- Valor de Tabela = tabela/lista da última venda do produto + relatório 204.
+- Custo Matéria-Prima = último custo base conhecido do produto (AG do 200) + UV/Solvente da OP L.E atual (203).
+- Cst M.O. = SEMPRE a OP L.E atual: produção 201 + setup 202 / qtd. aprovada.
+- Imposto = Vlr Metro × alíquota da UF da última venda do produto.
+- Frete = Vlr Metro × percentual da UF da última venda do produto.
+- Comissão = referência da última venda.
+- Lucro/Margem = projeção usando os custos atuais da OP L.E e a referência comercial acima.
+
+Também corrigido:
+- Setup 202 e impressão 203 agora são preservados para OPs L.E mesmo que ainda não tenham faturamento.
+
+IMPORTANTE:
+Após instalar a v29, importe novamente os 5 relatórios uma vez como administrador para gravar no Firestore os Setups/Impressões das OPs L.E.

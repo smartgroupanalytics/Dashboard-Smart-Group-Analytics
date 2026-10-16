@@ -301,3 +301,7 @@ thead th[data-help]{cursor:help;text-decoration:underline dotted rgba(188,221,25
 @media(max-width:700px){
   .le-kpi-grid{grid-template-columns:1fr}
 }
+
+
+/* L.E v29 — valores de referência comercial */
+.le-table td[title*="projetado pela última venda"]{font-style:italic;}

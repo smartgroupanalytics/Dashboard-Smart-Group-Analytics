@@ -45,7 +45,7 @@ const SHARED_POINTER_DOC = 'current';
 const SHARED_SLOT_A = 'slot-a';
 const SHARED_SLOT_B = 'slot-b';
 const SHARED_CHUNK_BYTES = 600000;
-const SHARED_PACKAGE_VERSION = 28;
+const SHARED_PACKAGE_VERSION = 29;
 
 const money = value => Number(value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 const number = value => Number(value || 0).toLocaleString('pt-BR', { maximumFractionDigits: 2 });
@@ -632,6 +632,18 @@ function buildLEGroups(){
   const billingRows=records.filter(row=>!isTechnicalGridRow(row));
   const billingByOp=new Map();
   const billingByPedidoProduto=new Map();
+  const latestBillingByProduct=new Map();
+  const latestBillingByDescription=new Map();
+
+  const newerBilling=(a,b)=>{
+    if(!a) return b;
+    if(!b) return a;
+    const da=String(a.dataFaturamento||'');
+    const db=String(b.dataFaturamento||'');
+    if(db>da) return b;
+    if(db<da) return a;
+    return String(b.nota||'').localeCompare(String(a.nota||''),undefined,{numeric:true})>0 ? b : a;
+  };
 
   billingRows.forEach(row=>{
     const op=normalizeOp(row.op);
@@ -645,6 +657,13 @@ function buildLEGroups(){
       const key=`${pedido}¦${produto}`;
       if(!billingByPedidoProduto.has(key)) billingByPedidoProduto.set(key,[]);
       billingByPedidoProduto.get(key).push(row);
+    }
+    if(produto){
+      latestBillingByProduct.set(produto,newerBilling(latestBillingByProduct.get(produto),row));
+    }
+    const descKey=normalizeHeader(row.descricaoCompleta||'');
+    if(descKey){
+      latestBillingByDescription.set(descKey,newerBilling(latestBillingByDescription.get(descKey),row));
     }
   });
 
@@ -694,28 +713,110 @@ function buildLEGroups(){
       custoMaoObraMapeado=custoMaoObraTotal>0 && qtdAprovada>0;
     }
 
-    const comercialMapeado=linkedBilling.length>0;
-    const quantidadeFaturada=sum(linkedBilling,'quantidade');
-    const valorVenda=sum(linkedBilling,'valorVenda');
-    const valorMetro=comercialMapeado ? weightedAverage(linkedBilling,'valorMetro') : 0;
-    const valorTabelaRows=linkedBilling.filter(row=>row.valorTabelaMapeado);
-    const valorTabelaMapeado=valorTabelaRows.length>0;
-    const valorTabela=valorTabelaMapeado ? weightedAverage(valorTabelaRows,'valorTabela') : 0;
-    const custoMateriaPrimaMapeado=comercialMapeado;
-    const custoMateriaPrimaUnitario=custoMateriaPrimaMapeado ? weightedAverage(linkedBilling,'custoMateriaPrimaUnitario') : 0;
-    const custoMateriaPrimaTotal=sum(linkedBilling,'custoTotal');
-    const comissaoTotal=sum(linkedBilling,'comissaoTotal');
-    const comissaoUnitario=quantidadeFaturada>0 ? comissaoTotal/quantidadeFaturada : 0;
-    const percentualComissao=valorVenda>0 ? comissaoTotal/valorVenda*100 : 0;
-    const impostoMapeado=linkedBilling.some(row=>row.impostoMapeado);
-    const impostoTotal=sum(linkedBilling,'impostoTotal');
-    const impostoUnitario=quantidadeFaturada>0 ? impostoTotal/quantidadeFaturada : 0;
-    const freteMapeado=linkedBilling.some(row=>row.freteMapeado);
-    const freteTotal=sum(linkedBilling,'freteTotal');
-    const freteUnitario=quantidadeFaturada>0 ? freteTotal/quantidadeFaturada : 0;
-    const margemBase=sum(linkedBilling,'margemBase');
-    const margemBasePercentual=valorVenda>0 ? margemBase/valorVenda*100 : 0;
-    const lucroUnitario=quantidadeFaturada>0 ? margemBase/quantidadeFaturada : 0;
+    // 1) Se a própria OP/item já foi faturada, usamos o faturamento real.
+    // 2) Se ainda é estoque sem venda, usamos como REFERÊNCIA COMERCIAL a última venda
+    //    do mesmo produto no relatório 200. Isso permite projetar os mesmos campos do
+    //    Rentabilidade sem esconder que são valores de referência/estimativa.
+    const comercialVinculado=linkedBilling.length>0;
+    let referenciaComercial=null;
+    if(!comercialVinculado){
+      const productKey=normalizeRefKey(g.produto);
+      const descKey=normalizeHeader(g.descricaoCompleta||'');
+      referenciaComercial=(productKey ? latestBillingByProduct.get(productKey) : null)
+        || (descKey ? latestBillingByDescription.get(descKey) : null)
+        || null;
+    }
+    const comercialEstimado=!comercialVinculado && Boolean(referenciaComercial);
+    const comercialMapeado=comercialVinculado || comercialEstimado;
+
+    let quantidadeFaturada=0;
+    let valorVenda=0;
+    let valorMetro=0;
+    let valorTabela=0;
+    let valorTabelaMapeado=false;
+    let custoMateriaPrimaUnitario=0;
+    let custoMateriaPrimaTotal=0;
+    let custoMateriaPrimaMapeado=false;
+    let comissaoUnitario=0;
+    let comissaoTotal=0;
+    let percentualComissao=0;
+    let impostoUnitario=0;
+    let impostoTotal=0;
+    let impostoMapeado=false;
+    let freteUnitario=0;
+    let freteTotal=0;
+    let freteMapeado=false;
+    let margemBase=0;
+    let margemBasePercentual=0;
+    let lucroUnitario=0;
+    let sigla='';
+    let notas=[];
+    let cfoPs=[];
+    let ufs=[];
+
+    if(comercialVinculado){
+      quantidadeFaturada=sum(linkedBilling,'quantidade');
+      valorVenda=sum(linkedBilling,'valorVenda');
+      valorMetro=weightedAverage(linkedBilling,'valorMetro');
+      const valorTabelaRows=linkedBilling.filter(row=>row.valorTabelaMapeado);
+      valorTabelaMapeado=valorTabelaRows.length>0;
+      valorTabela=valorTabelaMapeado ? weightedAverage(valorTabelaRows,'valorTabela') : 0;
+      custoMateriaPrimaMapeado=true;
+      custoMateriaPrimaUnitario=weightedAverage(linkedBilling,'custoMateriaPrimaUnitario');
+      custoMateriaPrimaTotal=sum(linkedBilling,'custoTotal');
+      comissaoTotal=sum(linkedBilling,'comissaoTotal');
+      comissaoUnitario=quantidadeFaturada>0 ? comissaoTotal/quantidadeFaturada : 0;
+      percentualComissao=valorVenda>0 ? comissaoTotal/valorVenda*100 : 0;
+      impostoMapeado=linkedBilling.some(row=>row.impostoMapeado);
+      impostoTotal=sum(linkedBilling,'impostoTotal');
+      impostoUnitario=quantidadeFaturada>0 ? impostoTotal/quantidadeFaturada : 0;
+      freteMapeado=linkedBilling.some(row=>row.freteMapeado);
+      freteTotal=sum(linkedBilling,'freteTotal');
+      freteUnitario=quantidadeFaturada>0 ? freteTotal/quantidadeFaturada : 0;
+      margemBase=sum(linkedBilling,'margemBase');
+      margemBasePercentual=valorVenda>0 ? margemBase/valorVenda*100 : 0;
+      lucroUnitario=quantidadeFaturada>0 ? margemBase/quantidadeFaturada : 0;
+      sigla=unique(linkedBilling,'sigla').join(', ');
+      notas=unique(linkedBilling,'nota').filter(meaningful);
+      cfoPs=unique(linkedBilling,'cfop').filter(meaningful);
+      ufs=unique(linkedBilling,'uf').filter(meaningful);
+    }else if(referenciaComercial){
+      // Projeção para a quantidade aprovada atual da L.E, usando a última venda do
+      // mesmo produto apenas como referência unitária/comercial.
+      quantidadeFaturada=qtdAprovada;
+      valorMetro=Number(referenciaComercial.valorMetro||0);
+      valorVenda=qtdAprovada*valorMetro;
+      valorTabelaMapeado=Boolean(referenciaComercial.valorTabelaMapeado);
+      valorTabela=valorTabelaMapeado ? Number(referenciaComercial.valorTabela||0) : 0;
+
+      // Matéria-prima: último custo base conhecido do produto + UV/Solvente da OP L.E atual.
+      const custoBaseRef=Number(referenciaComercial.custoMateriaPrimaBaseUnitario ?? referenciaComercial.custoUnitario ?? 0);
+      const impressaoAtual=Number(mo?.custoImpressaoUnitario||0);
+      custoMateriaPrimaUnitario=custoBaseRef+impressaoAtual;
+      custoMateriaPrimaMapeado=custoMateriaPrimaUnitario>0;
+      custoMateriaPrimaTotal=qtdAprovada*custoMateriaPrimaUnitario;
+
+      comissaoUnitario=Number(referenciaComercial.comissaoUnitario||0);
+      percentualComissao=Number(referenciaComercial.percentualComissao||0);
+      comissaoTotal=qtdAprovada*comissaoUnitario;
+
+      impostoMapeado=Boolean(referenciaComercial.impostoMapeado);
+      impostoUnitario=impostoMapeado ? Number(referenciaComercial.impostoUnitario||0) : 0;
+      impostoTotal=qtdAprovada*impostoUnitario;
+
+      freteMapeado=Boolean(referenciaComercial.freteMapeado);
+      freteUnitario=freteMapeado ? Number(referenciaComercial.freteUnitario||0) : 0;
+      freteTotal=qtdAprovada*freteUnitario;
+
+      margemBase=valorVenda-custoMateriaPrimaTotal-custoMaoObraTotal-impostoTotal-freteTotal-comissaoTotal;
+      margemBasePercentual=valorVenda>0 ? margemBase/valorVenda*100 : 0;
+      lucroUnitario=qtdAprovada>0 ? margemBase/qtdAprovada : 0;
+      sigla=String(referenciaComercial.sigla||'');
+      cfoPs=meaningful(referenciaComercial.cfop) ? [referenciaComercial.cfop] : [];
+      ufs=meaningful(referenciaComercial.uf) ? [referenciaComercial.uf] : [];
+      // A NF de referência NÃO é tratada como NF da OP L.E.
+      notas=[];
+    }
 
     return {
       ...g,
@@ -726,12 +827,20 @@ function buildLEGroups(){
       custoMaoObraUnitario,
       custoMaoObraMapeado,
       linkedBilling,
+      referenciaComercial,
+      comercialVinculado,
+      comercialEstimado,
       comercialMapeado,
       quantidadeFaturada,
-      sigla:unique(linkedBilling,'sigla').join(', '),
-      notas:unique(linkedBilling,'nota').filter(meaningful),
-      cfoPs:unique(linkedBilling,'cfop').filter(meaningful),
-      ufs:unique(linkedBilling,'uf').filter(meaningful),
+      sigla,
+      notas,
+      cfoPs,
+      ufs,
+      notaReferencia:referenciaComercial?.nota||'',
+      pedidoReferencia:referenciaComercial?.pedido||'',
+      dataReferencia:referenciaComercial?.dataFaturamento||'',
+      ufReferencia:referenciaComercial?.uf||'',
+      codigoListaReferencia:referenciaComercial?.codigoListaPrecos||'',
       valorVenda,
       valorMetro,
       valorTabela,
@@ -759,7 +868,6 @@ function buildLEGroups(){
 
   return leGroups;
 }
-
 function getLEGroups(){
   return buildLEGroups();
 }
@@ -794,6 +902,8 @@ function renderLEKpis(groups){
   const qtd=sum(groups,'qtdAprovada');
   const mo=sum(groups,'custoMaoObraTotal');
   const linked=groups.filter(group=>group.comercialMapeado);
+  const exact=groups.filter(group=>group.comercialVinculado);
+  const estimated=groups.filter(group=>group.comercialEstimado);
   const revenue=sum(linked,'valorVenda');
   const mp=sum(linked,'custoMateriaPrimaTotal');
   const tax=sum(linked,'impostoTotal');
@@ -809,13 +919,27 @@ function renderLEKpis(groups){
   $('leKpiFreight').textContent=money(freight);
   $('leKpiMargin').textContent=money(margin);
   $('leKpiMargin').className=marginClass(margin);
-  $('leKpiLinked').textContent=`${linked.length.toLocaleString('pt-BR')} com vínculo no rel. 200`;
+  $('leKpiLinked').textContent=`${exact.length.toLocaleString('pt-BR')} reais · ${estimated.length.toLocaleString('pt-BR')} por referência`;
 }
 
 function noteCell(group){
+  if(group.comercialEstimado){
+    return group.notaReferencia ? `Ref. NF ${esc(group.notaReferencia)}` : 'Ref. venda';
+  }
   if(!group.notas?.length) return '—';
   if(group.notas.length===1) return esc(group.notas[0]);
   return `${group.notas.length} NFs`;
+}
+
+function leValuePrefix(group){
+  return group.comercialEstimado ? '≈ ' : '';
+}
+
+function leCommercialTitle(group,label='Valor'){
+  if(group.comercialEstimado){
+    return `${label} projetado pela última venda do mesmo produto${group.notaReferencia ? ` · NF ref. ${group.notaReferencia}` : ''}${group.dataReferencia ? ` · ${dateBR(group.dataReferencia)}` : ''}${group.ufReferencia ? ` · UF ${group.ufReferencia}` : ''}`;
+  }
+  return group.comercialVinculado ? `${label} do faturamento real vinculado à OP/item` : `${label} sem referência comercial`;
 }
 
 function renderLEView(){
@@ -849,21 +973,21 @@ function renderLEView(){
     <td class="description-cell" title="${esc(g.descricaoCompleta)}">${esc(g.descricaoCompleta||'—')}</td>
     <td>${displayRef(g.pedido)}</td>
     <td>${displayRef(g.op)}</td>
-    <td title="${esc((g.notas||[]).join(', '))}">${noteCell(g)}</td>
+    <td title="${esc(g.comercialEstimado ? leCommercialTitle(g,'Nota de referência') : (g.notas||[]).join(', '))}">${noteCell(g)}</td>
     <td class="num">${number(g.qtdAprovada)}</td>
-    <td class="num">${g.comercialMapeado ? money(g.valorVenda) : '—'}</td>
-    <td class="num">${g.comercialMapeado ? money(g.valorMetro) : '—'}</td>
-    <td class="num table-price-col">${g.valorTabelaMapeado ? money(g.valorTabela) : ''}</td>
-    <td class="num material-cost-col">${g.custoMateriaPrimaMapeado ? money(g.custoMateriaPrimaUnitario) : '—'}</td>
+    <td class="num" title="${esc(leCommercialTitle(g,'Vlr Venda'))}">${g.comercialMapeado ? `${leValuePrefix(g)}${money(g.valorVenda)}` : '—'}</td>
+    <td class="num" title="${esc(leCommercialTitle(g,'Vlr Metro'))}">${g.comercialMapeado ? `${leValuePrefix(g)}${money(g.valorMetro)}` : '—'}</td>
+    <td class="num table-price-col" title="${esc(leCommercialTitle(g,'Valor de Tabela'))}">${g.valorTabelaMapeado ? `${leValuePrefix(g)}${money(g.valorTabela)}` : ''}</td>
+    <td class="num material-cost-col" title="${esc(g.comercialEstimado ? 'Custo MP = último custo base conhecido do produto + UV/Solvente da OP L.E atual' : 'Custo MP conforme vínculo real')}">${g.custoMateriaPrimaMapeado ? `${leValuePrefix(g)}${money(g.custoMateriaPrimaUnitario)}` : '—'}</td>
     <td class="num">${g.custoMaoObraMapeado ? money(g.custoMaoObraUnitario) : '—'}</td>
-    <td class="num">${g.impostoMapeado ? money(g.impostoUnitario) : '—'}</td>
-    <td class="num">${g.freteMapeado ? money(g.freteUnitario) : '—'}</td>
-    <td class="num">${g.comercialMapeado ? money(g.comissaoUnitario) : '—'}</td>
-    <td class="num">${g.comercialMapeado ? percent(g.percentualComissao) : '—'}</td>
-    <td class="num">${g.custoMateriaPrimaMapeado ? money(g.custoMateriaPrimaTotal) : '—'}</td>
-    <td class="num ${g.comercialMapeado ? marginClass(g.lucroUnitario) : ''}">${g.comercialMapeado ? money(g.lucroUnitario) : '—'}</td>
-    <td class="num ${g.comercialMapeado ? marginClass(g.margemBase) : ''}">${g.comercialMapeado ? money(g.margemBase) : '—'}</td>
-    <td class="num ${g.comercialMapeado ? marginClass(g.margemBase) : ''}">${g.comercialMapeado ? percent(g.margemBasePercentual) : '—'}</td>
+    <td class="num" title="${esc(leCommercialTitle(g,'Imposto'))}">${g.impostoMapeado ? `${leValuePrefix(g)}${money(g.impostoUnitario)}` : '—'}</td>
+    <td class="num" title="${esc(leCommercialTitle(g,'Frete'))}">${g.freteMapeado ? `${leValuePrefix(g)}${money(g.freteUnitario)}` : '—'}</td>
+    <td class="num" title="${esc(leCommercialTitle(g,'Comissão'))}">${g.comercialMapeado ? `${leValuePrefix(g)}${money(g.comissaoUnitario)}` : '—'}</td>
+    <td class="num" title="${esc(leCommercialTitle(g,'% Comissão'))}">${g.comercialMapeado ? `${leValuePrefix(g)}${percent(g.percentualComissao)}` : '—'}</td>
+    <td class="num" title="${esc(g.comercialEstimado ? 'Custo total projetado para a Qtd. aprovada L.E' : 'Custo total do vínculo real')}">${g.custoMateriaPrimaMapeado ? `${leValuePrefix(g)}${money(g.custoMateriaPrimaTotal)}` : '—'}</td>
+    <td class="num ${g.comercialMapeado ? marginClass(g.lucroUnitario) : ''}" title="${esc(leCommercialTitle(g,'Lucro unitário'))}">${g.comercialMapeado ? `${leValuePrefix(g)}${money(g.lucroUnitario)}` : '—'}</td>
+    <td class="num ${g.comercialMapeado ? marginClass(g.margemBase) : ''}" title="${esc(leCommercialTitle(g,'Margem Base'))}">${g.comercialMapeado ? `${leValuePrefix(g)}${money(g.margemBase)}` : '—'}</td>
+    <td class="num ${g.comercialMapeado ? marginClass(g.margemBase) : ''}" title="${esc(leCommercialTitle(g,'% Margem'))}">${g.comercialMapeado ? `${leValuePrefix(g)}${percent(g.margemBasePercentual)}` : '—'}</td>
     <td><button class="detail-button" type="button" data-le-detail="${esc(g.key)}"><i class="fa-solid fa-magnifying-glass-chart"></i> Detalhar</button></td>
   </tr>`).join('') : '<tr class="empty-row"><td colspan="22">Nenhum item L.E encontrado.</td></tr>';
 
@@ -1080,17 +1204,17 @@ function renderLEDetail(){
   $('detailProduct').textContent=meaningful(group.produto)?group.produto:'—';
   $('detailDescription').textContent=group.descricaoCompleta||'—';
 
-  $('detailRevenue').textContent=group.comercialMapeado ? money(revenue) : '—';
+  $('detailRevenue').textContent=group.comercialMapeado ? `${leValuePrefix(group)}${money(revenue)}` : '—';
   $('detailQty').textContent=`${number(group.qtdAprovada)} de quantidade aprovada`;
   $('detailCost').textContent=group.custoMateriaPrimaMapeado ? money(mpTotal) : '—';
-  $('detailUnitCost').textContent=group.custoMateriaPrimaMapeado ? `${money(mpUnit)} / un.` : 'Sem vínculo comercial no rel. 200';
-  $('detailCommission').textContent=group.comercialMapeado ? money(group.comissaoTotal) : '—';
+  $('detailUnitCost').textContent=group.custoMateriaPrimaMapeado ? `${leValuePrefix(group)}${money(mpUnit)} / un.` : 'Sem referência comercial no rel. 200';
+  $('detailCommission').textContent=group.comercialMapeado ? `${leValuePrefix(group)}${money(group.comissaoTotal)}` : '—';
   $('detailCommissionPct').textContent=group.comercialMapeado ? `${percent(group.percentualComissao)} sobre o faturamento` : 'Sem venda vinculada';
-  $('detailTax').textContent=group.impostoMapeado ? money(group.impostoTotal) : '—';
+  $('detailTax').textContent=group.impostoMapeado ? `${leValuePrefix(group)}${money(group.impostoTotal)}` : '—';
   $('detailTaxPct').textContent=group.impostoMapeado && revenue ? `${percent(group.impostoTotal/revenue*100)} sobre o faturamento` : 'Sem UF/venda vinculada';
-  $('detailFreight').textContent=group.freteMapeado ? money(group.freteTotal) : '—';
+  $('detailFreight').textContent=group.freteMapeado ? `${leValuePrefix(group)}${money(group.freteTotal)}` : '—';
   $('detailFreightPct').textContent=group.freteMapeado && revenue ? `${percent(group.freteTotal/revenue*100)} sobre o faturamento` : 'Sem UF/venda vinculada';
-  $('detailMargin').textContent=group.comercialMapeado ? money(margin) : '—';
+  $('detailMargin').textContent=group.comercialMapeado ? `${leValuePrefix(group)}${money(margin)}` : '—';
   $('detailMargin').className=group.comercialMapeado ? marginClass(margin) : '';
   $('detailMarginPct').textContent=group.comercialMapeado && revenue ? percent(margin/revenue*100) : '—';
 
@@ -1104,8 +1228,11 @@ function renderLEDetail(){
     ['M.O. total',group.custoMaoObraMapeado?money(group.custoMaoObraTotal):'—'],
     ['Cst M.O. unit.',group.custoMaoObraMapeado?money(group.custoMaoObraUnitario):'—'],
     ['Notas vinculadas',group.notas?.length ? group.notas.join(', ') : '—'],
-    ['UFs vinculadas',group.ufs?.length ? group.ufs.join(', ') : '—'],
-    ['Vínculo comercial',linked.length ? `${linked.length} linha${linked.length===1?'':'s'} do relatório 200` : 'Nenhum — item ainda sem venda vinculada']
+    ['UFs vinculadas / referência',group.ufs?.length ? group.ufs.join(', ') : (group.ufReferencia||'—')],
+    ['Vínculo comercial',group.comercialVinculado ? `${linked.length} linha${linked.length===1?'':'s'} real${linked.length===1?'':'is'} do relatório 200` : (group.comercialEstimado ? 'Referência: última venda do mesmo produto' : 'Nenhum — produto sem histórico no relatório 200')],
+    ['NF de referência',group.comercialEstimado && group.notaReferencia ? group.notaReferencia : '—'],
+    ['Data referência',group.comercialEstimado && group.dataReferencia ? dateBR(group.dataReferencia) : '—'],
+    ['UF referência',group.comercialEstimado && group.ufReferencia ? group.ufReferencia : '—']
   ];
   $('detailReferences').innerHTML=refs.map(([label,value])=>`<div class="reference-group"><span>${label}</span><strong>${esc(value)}</strong></div>`).join('');
 
@@ -1575,21 +1702,26 @@ function mapReport204(parsed){
 
 function buildImportedPackage(parsedByType){
   const base=mapReport200(parsedByType['200']);
+  const production=mapReport201(parsedByType['201']);
   const billingOps=reportOpSet(base.registros);
-  const keepLinked=source=>({...source,registros:(source.registros||[]).filter(row=>billingOps.has(normalizeOp(row.op)))});
+  const leOps=new Set((production.registros||[])
+    .filter(row=>normalizeHeader(row.tipoProducao)==='estoque')
+    .map(row=>normalizeOp(row.op))
+    .filter(Boolean));
+  const relevantOps=new Set([...billingOps,...leOps]);
+  const keepRelevant=source=>({...source,registros:(source.registros||[]).filter(row=>relevantOps.has(normalizeOp(row.op)))});
   const priceSource=mapReport204(parsedByType['204']);
   const usedPriceKeys=new Set(base.registros.map(row=>tablePriceKey(row.codigoListaPrecos,row.produto)));
   priceSource.registros=(priceSource.registros||[]).filter(row=>usedPriceKeys.has(tablePriceKey(row.codigoLista,row.produto)));
   return {
-    version:28,
+    version:29,
     importedAt:new Date().toISOString(),
     base,
-    // Relatório 201 inteiro é preservado: o L.E precisa enxergar Estoque
-    // com/sem OP e com/sem pedido. A M.O. continua ligada às linhas faturadas
-    // somente quando a OP correspondente existir no relatório 200.
-    production:mapReport201(parsedByType['201']),
-    setup:keepLinked(mapReport202(parsedByType['202'])),
-    printing:keepLinked(mapReportImpressao(parsedByType['203'])),
+    // Relatório 201 completo é preservado. Setup 202 e impressão 203 agora também
+    // preservam as OPs L.E, mesmo quando ainda não houve faturamento no relatório 200.
+    production,
+    setup:keepRelevant(mapReport202(parsedByType['202'])),
+    printing:keepRelevant(mapReportImpressao(parsedByType['203'])),
     prices:priceSource
   };
 }
@@ -2584,7 +2716,7 @@ async function loadData(){
   freightBase=freightData || {meta:{fonte:'Tabela de fretes não encontrada'},registros:[]};
   freightRateByKey=buildFreightRateMap(freightBase?.registros||[]);
   const published={
-    version:28,
+    version:29,
     base:await baseResponse.json(),
     production:prodData || {meta:{fonte:'Produção não encontrada'},registros:[]},
     setup:setupData || {meta:{fonte:'Setup não encontrado'},registros:[]},

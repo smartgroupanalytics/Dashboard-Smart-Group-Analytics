@@ -161,7 +161,7 @@
       <section class="kpi-grid le-kpi-grid">
         <article class="kpi-card">
           <span class="kpi-icon"><i class="fa-solid fa-boxes-stacked"></i></span>
-          <div><small>Itens L.E</small><strong id="leKpiItems">0</strong><span id="leKpiLinked">0 com vínculo no rel. 200</span></div>
+          <div><small>Itens L.E</small><strong id="leKpiItems">0</strong><span id="leKpiLinked">0 reais · 0 por referência</span></div>
         </article>
         <article class="kpi-card cyan">
           <span class="kpi-icon"><i class="fa-solid fa-ruler-horizontal"></i></span>
@@ -169,11 +169,11 @@
         </article>
         <article class="kpi-card cyan">
           <span class="kpi-icon"><i class="fa-solid fa-coins"></i></span>
-          <div><small>Faturamento vinculado</small><strong id="leKpiRevenue">R$ 0,00</strong><span>Somente quando a OP/item já aparece no rel. 200</span></div>
+          <div><small>Venda / referência</small><strong id="leKpiRevenue">R$ 0,00</strong><span>Real quando há vínculo; ≈ última venda do produto quando ainda é estoque</span></div>
         </article>
         <article class="kpi-card purple">
           <span class="kpi-icon"><i class="fa-solid fa-chart-pie"></i></span>
-          <div><small>Custo Matéria-Prima</small><strong id="leKpiMP">R$ 0,00</strong><span>Quando houver vínculo comercial no rel. 200/203</span></div>
+          <div><small>Custo Matéria-Prima</small><strong id="leKpiMP">R$ 0,00</strong><span>Real ou ≈ último custo base + impressão da OP L.E</span></div>
         </article>
         <article class="kpi-card blue">
           <span class="kpi-icon"><i class="fa-solid fa-industry"></i></span>
@@ -181,21 +181,21 @@
         </article>
         <article class="kpi-card red">
           <span class="kpi-icon"><i class="fa-solid fa-receipt"></i></span>
-          <div><small>Impostos</small><strong id="leKpiTax">R$ 0,00</strong><span>Somente com UF/venda vinculada no rel. 200</span></div>
+          <div><small>Impostos</small><strong id="leKpiTax">R$ 0,00</strong><span>Real ou ≈ regra da UF da última venda do produto</span></div>
         </article>
         <article class="kpi-card blue">
           <span class="kpi-icon"><i class="fa-solid fa-truck-fast"></i></span>
-          <div><small>Frete</small><strong id="leKpiFreight">R$ 0,00</strong><span>Somente com UF/venda vinculada no rel. 200</span></div>
+          <div><small>Frete</small><strong id="leKpiFreight">R$ 0,00</strong><span>Real ou ≈ regra da UF da última venda do produto</span></div>
         </article>
         <article class="kpi-card green">
           <span class="kpi-icon"><i class="fa-solid fa-arrow-trend-up"></i></span>
-          <div><small>Margem base vinculada</small><strong id="leKpiMargin">R$ 0,00</strong><span>Não é estimada para item ainda sem venda</span></div>
+          <div><small>Margem Base</small><strong id="leKpiMargin">R$ 0,00</strong><span>Real quando vendido; ≈ projetada pela última venda do produto</span></div>
         </article>
       </section>
 
       <div class="scope-warning le-scope-warning" role="note">
         <i class="fa-solid fa-circle-info"></i>
-        <span><strong>L.E:</strong> a lista vem do relatório 201 (Descr.Tp.produção = Estoque). M.O. é calculada normalmente pela OP. Venda, Vlr Metro, matéria-prima comercial, imposto, frete, comissão e margem só são exibidos quando existe vínculo real da OP/item no relatório 200; caso contrário ficam em branco para não inventar valores.</span>
+        <span><strong>L.E:</strong> a lista vem do relatório 201 (Descr.Tp.produção = Estoque). M.O. usa a OP atual (201 + Setup 202). Quando a OP já foi faturada, os valores comerciais são reais. Quando ainda é estoque sem venda, o símbolo <strong>≈</strong> indica projeção usando a última venda do mesmo produto no relatório 200: Vlr Metro, lista/tabela, custo base, UF para imposto/frete e comissão. UV/Solvente continua vindo da OP L.E atual pelo 203.</span>
       </div>
 
       <div class="panel-heading le-table-heading">
@@ -213,19 +213,19 @@
             <th data-help="Relatório 201 · Número da ordem de produção. É a chave da M.O. e do Setup.">OP</th>
             <th data-help="Nota(s) do relatório 200 somente quando a OP/item L.E já possui faturamento vinculado.">Nota</th>
             <th class="num" data-help="Quantidade Aprovada da OP no relatório 201. Para OPs com vários apontamentos, usa a mesma regra de consolidação da M.O.">Qtd. Aprov.</th>
-            <th class="num" data-help="Vlr Venda do relatório 200 somente quando há vínculo real com a OP/item.">Vlr Venda</th>
-            <th class="num" data-help="Vlr Metro do relatório 200 somente quando há vínculo real com a OP/item.">Vlr Metro</th>
-            <th class="num table-price-col" data-help="Valor de Tabela do relatório 204, via Produto + Cód.lista preços do relatório 200, somente quando existe vínculo comercial.">Valor de Tabela</th>
-            <th class="num material-cost-col" data-help="Custo de Matéria-Prima conforme regra principal: relatório 200 coluna AG + UV/Solvente do 203, quando houver vínculo.">CST. MAT. PRIMA</th>
+            <th class="num" data-help="Vlr Venda real quando há vínculo. Para L.E ainda sem venda: Qtd. aprovada × Vlr Metro da última venda do mesmo produto (valor ≈).">Vlr Venda</th>
+            <th class="num" data-help="Vlr Metro real quando há vínculo. Para L.E ainda sem venda: usa o Vlr Metro da última venda do mesmo produto no relatório 200 (valor ≈).">Vlr Metro</th>
+            <th class="num table-price-col" data-help="Valor de Tabela do 204. Em L.E sem venda, usa a lista de preços da última venda do mesmo produto no 200 (valor ≈).">Valor de Tabela</th>
+            <th class="num material-cost-col" data-help="Custo Matéria-Prima: AG do 200 + UV/Solvente 203. Em L.E sem venda, usa o último custo base conhecido do produto + UV/Solvente da OP L.E atual (valor ≈).">CST. MAT. PRIMA</th>
             <th class="num" data-help="Custo M.O. unitário = Produção/máquina do relatório 201 + Setup do relatório 202, dividido pela Qtd. aprovada da OP.">Cst MO</th>
-            <th class="num" data-help="Imposto usa a regra principal (Vlr Metro × alíquota por UF) somente quando existe venda/UF vinculada no relatório 200.">Imposto</th>
-            <th class="num" data-help="Frete usa a regra principal (Vlr Metro × percentual por UF) somente quando existe venda/UF vinculada no relatório 200.">Frete</th>
-            <th class="num" data-help="Comissão do relatório 200 somente quando existe faturamento vinculado.">Comissão</th>
-            <th class="num" data-help="% Comissão calculado a partir do faturamento vinculado.">% Comis.</th>
+            <th class="num" data-help="Imposto = Vlr Metro × alíquota por UF. Em L.E sem venda, usa a UF da última venda do mesmo produto (valor ≈).">Imposto</th>
+            <th class="num" data-help="Frete = Vlr Metro × percentual por UF. Em L.E sem venda, usa a UF da última venda do mesmo produto (valor ≈).">Frete</th>
+            <th class="num" data-help="Comissão real quando há vínculo. Em L.E sem venda, usa a comissão unitária da última venda do mesmo produto (valor ≈).">Comissão</th>
+            <th class="num" data-help="% Comissão real quando há vínculo; em L.E sem venda usa o percentual da última venda do mesmo produto (valor ≈).">% Comis.</th>
             <th class="num" data-help="Custo total de matéria-prima das linhas comerciais vinculadas. Sem venda vinculada, fica em branco.">Custo Total</th>
-            <th class="num" data-help="Lucro unitário somente quando existe faturamento vinculado.">Lucro</th>
-            <th class="num" data-help="Margem Base somente quando existe faturamento real vinculado; não é estimada para estoque ainda não vendido.">Margem Base</th>
-            <th class="num" data-help="% Margem somente quando há faturamento vinculado.">% Margem</th>
+            <th class="num" data-help="Lucro unitário real quando vendido; em L.E sem venda é projetado usando última referência comercial + custos da OP atual (valor ≈).">Lucro</th>
+            <th class="num" data-help="Margem Base real quando vendido; para L.E sem venda é projetada pela última venda do mesmo produto e custos atuais da OP (valor ≈).">Margem Base</th>
+            <th class="num" data-help="% Margem real quando vendido; em L.E sem venda é projeção baseada na última venda do produto (valor ≈).">% Margem</th>
             <th data-help="Abre o detalhamento da L.E com referências da OP e a M.O. completa."></th>
           </tr></thead>
           <tbody id="leRows"></tbody>
@@ -311,6 +311,6 @@
     </footer>
   </main>
 
-  <script type="module" src="app.js?v=20261016-27-le-rentabilidade"></script>
+  <script type="module" src="app.js?v=20261016-29-le-referencia-comercial"></script>
 </body>
 </html>
