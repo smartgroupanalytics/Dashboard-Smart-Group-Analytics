@@ -186,3 +186,20 @@ td{font-size:9.5px;padding:7px}
 @media(max-width:900px){
   .chart-grid.approved-layout{grid-template-columns:1fr}
 }
+
+/* V7 — reprovações, refações e rastreabilidade de alterações */
+.refacao-block{border:2px solid #e9a83b;background:rgba(11,35,74,.24);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:10px}
+.refacao-title{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;align-items:center;color:#fff;background:#63451c;padding:11px 12px;border-radius:7px;font-size:12px}
+.refacao-title span{font-size:10px;color:#ffe7b2}
+.field textarea{resize:vertical;min-height:68px}
+.process-refacao-title{grid-column:1/-1;border:1px solid #b88928;border-radius:7px;background:#493516;color:#fff0cc;font-weight:800;font-size:11px;padding:10px;margin-top:4px}
+.history-item{padding:10px 0}
+.history-item>strong{font-size:10px}
+.audit-diff{display:grid;grid-template-columns:minmax(96px,1fr) minmax(80px,1fr) auto minmax(80px,1fr);gap:6px;align-items:center;padding:6px 7px;margin-top:5px;background:rgba(1,19,46,.35);border:1px solid #37639a;border-radius:5px;font-size:10px;overflow-wrap:anywhere}
+.audit-field{color:#d6e7ff;font-weight:800}
+.audit-before{color:#ffb7b7}
+.audit-arrow{color:#8cafda}
+.audit-after{color:#b4ffdd;font-size:10px}
+.timeline-cycle-heading{width:100%;flex-basis:100%;font-size:10px;color:#ffdaa0;font-weight:800;margin-bottom:10px}
+.timeline:has(.timeline-cycle-heading){flex-wrap:wrap}
+@media(max-width:900px){.audit-diff{grid-template-columns:1fr;gap:4px}.audit-arrow{display:none}}
