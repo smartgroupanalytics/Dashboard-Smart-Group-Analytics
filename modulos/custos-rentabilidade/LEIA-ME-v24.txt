@@ -1,0 +1,18 @@
+CUSTOS E RENTABILIDADE - V24
+
+ALTERAÇÕES
+1. Novo card L.E (Linha Estoque) na tela Faturamento.
+   Fonte: Relatório 201, coluna P - Descr.Tp.produção.
+   Regra: quando o valor for Estoque, a OP é marcada como L.E.
+   O card mostra a quantidade de itens faturados visíveis ligados a essas OPs e a quantidade de OPs.
+   O card respeita os filtros atuais.
+
+2. Ajuda por hover nas colunas.
+   Ao passar o mouse sobre o cabeçalho de cada coluna, aparece uma explicação da origem e/ou fórmula.
+   Nada fica aberto permanentemente.
+
+3. As demais regras de rentabilidade permanecem iguais.
+
+IMPORTANTE
+Após publicar a v24, faça UMA NOVA importação dos 5 relatórios para gravar no Firestore também a coluna P do relatório 201.
+Sem essa nova importação, a base compartilhada v23 não possui Descr.Tp.produção e o card L.E ficará zerado.

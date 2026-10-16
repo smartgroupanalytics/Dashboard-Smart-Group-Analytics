@@ -41,7 +41,7 @@ const SHARED_POINTER_DOC = 'current';
 const SHARED_SLOT_A = 'slot-a';
 const SHARED_SLOT_B = 'slot-b';
 const SHARED_CHUNK_BYTES = 600000;
-const SHARED_PACKAGE_VERSION = 23;
+const SHARED_PACKAGE_VERSION = 24;
 
 const money = value => Number(value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 const number = value => Number(value || 0).toLocaleString('pt-BR', { maximumFractionDigits: 2 });
@@ -242,12 +242,14 @@ function buildMaoObraMap(productionRows=[],setupRows=[],printingRows=[]){
         impressoes:[],
         custoMaoObraTotal:0,
         custoMaoObraUnitario:0,
+        ehLE:false,
         completo:true,
         pendencias:[],
         qtdAprovadaPorOperacao:new Map()
       });
     }
     const g = groups.get(op);
+    if(normalizeHeader(row.tipoProducao)==='estoque') g.ehLE=true;
     const minutos = durationToMinutes(row.tempoProducao);
     const custoMinutoInformado = Number(row.custoMinuto || 0);
     const custoHora = Number(row.vlrHoraHomem || 0);
@@ -447,6 +449,8 @@ function normalizeRecord(r){
     custoMaoObraMapeado,
     custoMaoObraFonte: hasValue(custoMaoObraInformado) ? 'base faturamento' : (moResumo?.completo ? `OP ${moResumo.op}` : ''),
     moResumo,
+    le: Boolean(moResumo?.ehLE),
+    tipoProducao201: moResumo?.ehLE ? 'Estoque' : '',
     impostoMapeado,
     freteMapeado,
     comissaoUnitario: comissaoUnit,
@@ -564,6 +568,29 @@ function renderKpis(){
   $('kpiMarginPct').textContent = `${percent(marginPct)} do faturamento`;
 }
 
+function renderLECard(){
+  const card=$('leCard');
+  const countEl=$('leCount');
+  const subEl=$('leSub');
+  if(!card || !countEl || !subEl) return;
+
+  // L.E é um indicador DIRETO do relatório 201.
+  // Conta TODAS as linhas cuja coluna P (Descr.Tp.produção) = Estoque,
+  // independentemente de possuir OP, pedido ou vínculo com faturamento.
+  const rows=(productionBase?.registros||[])
+    .filter(row=>normalizeHeader(row.tipoProducao)==='estoque');
+
+  const comOp=rows.filter(row=>meaningful(normalizeOp(row.op))).length;
+  const semOp=rows.length-comOp;
+  const comPedido=rows.filter(row=>meaningful(row.pedido)).length;
+  const semPedido=rows.length-comPedido;
+
+  countEl.textContent=rows.length.toLocaleString('pt-BR');
+  subEl.textContent=`${comOp.toLocaleString('pt-BR')} c/ OP · ${semOp.toLocaleString('pt-BR')} s/ OP`;
+  card.title=`Fonte: relatório 201, coluna P (Descr.Tp.produção = Estoque). Total ${rows.length.toLocaleString('pt-BR')} registros; ${comPedido.toLocaleString('pt-BR')} com pedido e ${semPedido.toLocaleString('pt-BR')} sem pedido.`;
+  card.classList.toggle('is-empty',rows.length===0);
+}
+
 function renderBilling(){
   const gridRows=getGridRows();
   const totalPages = Math.max(1, Math.ceil(gridRows.length/PAGE_SIZE));
@@ -667,11 +694,11 @@ function renderProductionMO(rows){
       <div class="mo-formula"><i class="fa-solid fa-calculator"></i><span><strong>Regra M.O.:</strong> Setup + operações/máquina de Produção. IMPRESSAO DIGITAL apontada no relatório 201 continua dentro da M.O. Já IMPRESSAO UV e IMPRESSAO SOLVENTE do relatório complementar não entram na M.O.; elas são incorporadas ao Cst. Mat. Prima.</span></div>
       <div class="mo-table-wrap">
         <table class="mo-table">
-          <thead><tr><th>Tipo</th><th>Centro</th><th>Recurso</th><th class="num">Tempo</th><th class="num">R$/min</th><th class="num">Custo</th><th class="num">Custo/m</th></tr></thead>
+          <thead><tr><th data-help="Tipo da etapa no cálculo da M.O.: Produção (rel. 201) ou Setup (rel. 202).">Tipo</th><th data-help="Centro de custo da operação, usado também para localizar a taxa de custo/minuto do Setup.">Centro</th><th data-help="Recurso/máquina da operação. Produção vem do relatório 201; Setup vem do relatório 202.">Recurso</th><th class="num" data-help="Tempo consolidado da etapa. Repetições do mesmo Tipo + Centro + Recurso são agrupadas e somadas.">Tempo</th><th class="num" data-help="Custo por minuto. Prioriza Campo calculado do relatório 201; se necessário, usa Vlr.hr./homem ÷ 60.">R$/min</th><th class="num" data-help="Custo da etapa = Tempo em minutos × R$/min.">Custo</th><th class="num" data-help="Custo por metro = Custo da etapa ÷ Quantidade Aprovada da OP.">Custo/m</th></tr></thead>
           <tbody>${groupMaoObraEtapasForDisplay(g).map(item=>`<tr><td><span class="mo-type ${item.tipo==='Setup'?'setup':'production'}">${esc(item.tipo)}</span></td><td>${esc(item.centroCusto || '—')}</td><td>${esc(item.recurso || '—')}</td><td class="num">${esc(item.tempo)}</td><td class="num">${money(item.custoMinuto)}</td><td class="num">${money(item.custo)}</td><td class="num cost-per-meter">${money4(item.custoMetro)}</td></tr>`).join('')}</tbody>
         </table>
       </div>
-      ${g.impressoes.length ? `<div class="material-print-block"><div class="material-print-head"><div><span>ADICIONAL DE MATÉRIA-PRIMA</span><strong>Impressão UV / Solvente</strong></div><div><span>Total da OP</span><strong>${money(g.custoImpressaoTotal)}</strong></div><div><span>Adicional unit.</span><strong>${money(g.custoImpressaoUnitario)}</strong></div></div><div class="mo-table-wrap"><table class="mo-table material-print-table"><thead><tr><th>Centro</th><th>Descrição</th><th class="num">Qtd. aprovada</th><th class="num">R$/un.</th><th class="num">Custo</th></tr></thead><tbody>${g.impressoes.map(item=>`<tr><td>${esc(item.centroCusto || '—')}</td><td>${esc(item.recurso || '—')}</td><td class="num">${number(item.quantidade)}</td><td class="num">${money(item.valorUnitario)}</td><td class="num">${money(item.custo)}</td></tr>`).join('')}</tbody></table></div></div>` : ''}
+      ${g.impressoes.length ? `<div class="material-print-block"><div class="material-print-head"><div><span>ADICIONAL DE MATÉRIA-PRIMA</span><strong>Impressão UV / Solvente</strong></div><div><span>Total da OP</span><strong>${money(g.custoImpressaoTotal)}</strong></div><div><span>Adicional unit.</span><strong>${money(g.custoImpressaoUnitario)}</strong></div></div><div class="mo-table-wrap"><table class="mo-table material-print-table"><thead><tr><th data-help="Centro de custo do item de impressão no relatório 203.">Centro</th><th data-help="Somente IMPRESSAO UV ou IMPRESSAO SOLVENTE do relatório 203 entram aqui.">Descrição</th><th class="num" data-help="Quantidade aprovada do item de impressão no relatório 203.">Qtd. aprovada</th><th class="num" data-help="Preço ven do relatório 203 para UV/Solvente.">R$/un.</th><th class="num" data-help="Custo da impressão = Preço ven × Qtd. aprovada. Este valor compõe Matéria-Prima, não M.O.">Custo</th></tr></thead><tbody>${g.impressoes.map(item=>`<tr><td>${esc(item.centroCusto || '—')}</td><td>${esc(item.recurso || '—')}</td><td class="num">${number(item.quantidade)}</td><td class="num">${money(item.valorUnitario)}</td><td class="num">${money(item.custo)}</td></tr>`).join('')}</tbody></table></div></div>` : ''}
       ${g.pendencias.length ? `<div class="mo-pending">${g.pendencias.map(p=>`<span><i class="fa-solid fa-triangle-exclamation"></i> ${esc(p)}</span>`).join('')}</div>` : ''}
     </div>
   `).join('');
@@ -775,7 +802,7 @@ function renderDetail(){
   renderProductionMO(rows);
 }
 
-function renderAll(){ renderKpis(); renderBilling(); renderProducts(); renderDetail(); }
+function renderAll(){ renderKpis(); renderLECard(); renderBilling(); renderProducts(); renderDetail(); }
 
 function switchView(view){
   document.querySelectorAll('.tab').forEach(btn => btn.classList.toggle('active',btn.dataset.view===view));
@@ -990,7 +1017,7 @@ function importRef(value){
 
 const IMPORT_SCHEMAS = {
   '200': {label:'Faturamento / Rentabilidade', required:['dt faturam','nat oper','valor fat valor ipi valor frete','comissao metros','preco custo','sig emp','nro nota']},
-  '201': {label:'Registros de Produção por O.P.', required:['numero da ordem de producao','tempo producao','vlr hr homem','campo calculado']},
+  '201': {label:'Registros de Produção por O.P.', required:['numero da ordem de producao','descr tp producao','tempo producao','vlr hr homem','campo calculado']},
   '202': {label:'Setup / Paradas de Produção', required:['motivo parada','num op','duracao','descricao do recurso ativo']},
   '203': {label:'Impressão UV / Solvente por O.P.', required:['op','cod prod item','desc completa','preco ven','qtd aprovada']},
   '204': {label:'Tabelas de Preço por Produto', required:['cod lista','produto'], requiredAny:[['preco ven','prc ven']]}
@@ -1090,14 +1117,26 @@ function mapReport201(parsed){
   const map=headerIndexMap(parsed.headers);
   const registros=parsed.rows.map(row=>({
     op:importRef(byHeader(row,map,'Número da ordem de produção')),
+    pedido:importRef(byHeaderAny(row,map,['Ped.vinc','Pedido'])),
+    produto:importRef(byHeader(row,map,'Produto')),
+    descricaoCompleta:importText(byHeader(row,map,'Desc.completa')),
     centroCusto:importRef(byHeader(row,map,'C.custo')),
     recurso:importText(byHeader(row,map,'Descrição')),
+    tipoProducao:importText(byHeader(row,map,'Descr.Tp.produção')),
     qtdAprovada:importNumber(byHeader(row,map,'Qtd.aprovada')),
     tempoProducao:importText(byHeader(row,map,'Tempo Produção')),
     vlrHoraHomem:importNumber(byHeader(row,map,'Vlr.hr./homem')),
     custoMinuto:importNumber(byHeader(row,map,'Campo calculado'))
-  })).filter(row=>meaningful(row.op));
-  return {meta:{fonte:parsed.fileName,relatorio:'201 - Registros de Produção por O.P.',geradoEm:new Date().toISOString(),regra:'Somente campos necessários à M.O.; linhas são vinculadas ao relatório 200 pela OP.'},registros};
+  })).filter(row=>
+    meaningful(row.op)
+    || meaningful(row.pedido)
+    || meaningful(row.produto)
+    || meaningful(row.tipoProducao)
+    || meaningful(row.recurso)
+    || Number(row.qtdAprovada||0) !== 0
+    || meaningful(row.tempoProducao)
+  );
+  return {meta:{fonte:parsed.fileName,relatorio:'201 - Registros de Produção por O.P.',geradoEm:new Date().toISOString(),regra:'M.O. continua vinculada ao relatório 200 pela OP. Para o indicador L.E., todas as linhas com Descr.Tp.produção = Estoque são preservadas, inclusive com ou sem OP e com ou sem pedido.'},registros};
 }
 
 function mapReport202(parsed){
@@ -1148,7 +1187,7 @@ function buildImportedPackage(parsedByType){
   const usedPriceKeys=new Set(base.registros.map(row=>tablePriceKey(row.codigoListaPrecos,row.produto)));
   priceSource.registros=(priceSource.registros||[]).filter(row=>usedPriceKeys.has(tablePriceKey(row.codigoLista,row.produto)));
   return {
-    version:15,
+    version:24,
     importedAt:new Date().toISOString(),
     base,
     production:keepLinked(mapReport201(parsedByType['201'])),
@@ -1392,7 +1431,8 @@ function applyDataPackage(pkg,origin='published',validation=null){
   const priceMappedRows=records.filter(r=>r.valorTabelaMapeado).length;
   const taxMappedRows=records.filter(r=>r.impostoMapeado).length;
   const freightMappedRows=records.filter(r=>r.freteMapeado).length;
-  $('footerStatus').textContent=`${records.length.toLocaleString('pt-BR')} itens faturados · ${technicalRows.toLocaleString('pt-BR')} linhas técnicas ocultas do grid · ${productionBase?.registros?.length?.toLocaleString('pt-BR')||0} apontamentos de produção · ${setupBase?.registros?.length?.toLocaleString('pt-BR')||0} paradas/setup · ${printingBase?.registros?.length?.toLocaleString('pt-BR')||0} itens de impressão · ${priceMappedRows.toLocaleString('pt-BR')} itens com Valor de Tabela · ${taxMappedRows.toLocaleString('pt-BR')} itens com imposto por UF · ${freightMappedRows.toLocaleString('pt-BR')} itens com frete por UF`;
+  const leSourceRows=(productionBase?.registros||[]).filter(r=>normalizeHeader(r.tipoProducao)==='estoque').length;
+  $('footerStatus').textContent=`${records.length.toLocaleString('pt-BR')} itens faturados · ${technicalRows.toLocaleString('pt-BR')} linhas técnicas ocultas do grid · ${productionBase?.registros?.length?.toLocaleString('pt-BR')||0} apontamentos de produção · ${setupBase?.registros?.length?.toLocaleString('pt-BR')||0} paradas/setup · ${printingBase?.registros?.length?.toLocaleString('pt-BR')||0} itens de impressão · ${priceMappedRows.toLocaleString('pt-BR')} itens com Valor de Tabela · ${taxMappedRows.toLocaleString('pt-BR')} itens com imposto por UF · ${freightMappedRows.toLocaleString('pt-BR')} itens com frete por UF · ${leSourceRows.toLocaleString('pt-BR')} registros L.E diretos do 201 (col. P = Estoque)`;
   const moStatus=$('moIntegrationStatus');
   if(moStatus){
     moStatus.innerHTML=moByOp.size
@@ -1441,6 +1481,7 @@ async function handleImportFiles(event){
     const details=[
       `200 Faturamento: ${pkg.base.registros.length.toLocaleString('pt-BR')} linhas`,
       `201 Produção: ${pkg.production.registros.length.toLocaleString('pt-BR')} linhas`,
+      `L.E: ${pkg.production.registros.filter(row=>normalizeHeader(row.tipoProducao)==='estoque').length.toLocaleString('pt-BR')} registros com Descr.Tp.produção = Estoque (inclui com/sem OP e com/sem pedido)`,
       `202 Setup/Paradas: ${pkg.setup.registros.length.toLocaleString('pt-BR')} linhas`,
       `203 Impressão UV/Solvente: ${pkg.printing.registros.length.toLocaleString('pt-BR')} linhas`,
       `204 Tabelas de preço: ${pkg.prices.registros.length.toLocaleString('pt-BR')} combinações usadas`,
@@ -2005,9 +2046,57 @@ async function exportProductionDetail(triggerButton=$('exportDashboard')){
   }
 }
 
+function setupColumnHelpTooltip(){
+  const tip=$('columnHelpTooltip');
+  if(!tip || tip.dataset.ready==='1') return;
+  tip.dataset.ready='1';
+  let active=null;
+
+  const position=(target)=>{
+    const rect=target.getBoundingClientRect();
+    const margin=12;
+    const width=Math.min(360,Math.max(250,tip.offsetWidth||320));
+    let left=rect.left + rect.width/2 - width/2;
+    left=Math.max(margin,Math.min(left,window.innerWidth-width-margin));
+    let top=rect.bottom+9;
+    if(top + tip.offsetHeight > window.innerHeight-margin) top=Math.max(margin,rect.top-tip.offsetHeight-9);
+    tip.style.left=`${left}px`;
+    tip.style.top=`${top}px`;
+  };
+
+  const show=(target)=>{
+    const text=target?.dataset?.help;
+    if(!text) return;
+    active=target;
+    tip.textContent=text;
+    tip.hidden=false;
+    requestAnimationFrame(()=>position(target));
+  };
+  const hide=()=>{ active=null; tip.hidden=true; };
+
+  document.addEventListener('mouseover',event=>{
+    const target=event.target.closest('[data-help]');
+    if(target && target!==active) show(target);
+  });
+  document.addEventListener('mouseout',event=>{
+    const target=event.target.closest('[data-help]');
+    if(target && !target.contains(event.relatedTarget)) hide();
+  });
+  document.addEventListener('focusin',event=>{
+    const target=event.target.closest('[data-help]');
+    if(target) show(target);
+  });
+  document.addEventListener('focusout',event=>{
+    if(event.target.closest('[data-help]')) hide();
+  });
+  window.addEventListener('scroll',()=>{ if(active) position(active); },true);
+  window.addEventListener('resize',()=>{ if(active) position(active); });
+}
+
 function bindEvents(){
   if(eventsBound) return;
   eventsBound=true;
+  setupColumnHelpTooltip();
   ['companyFilter','startDate','endDate','invoiceFilter','orderFilter','opFilter'].forEach(id=>$(id).addEventListener('change',applyFilters));
   let timer; $('productSearch').addEventListener('input',()=>{clearTimeout(timer); timer=setTimeout(applyFilters,180)});
 
@@ -2083,7 +2172,7 @@ async function loadData(){
   freightBase=freightData || {meta:{fonte:'Tabela de fretes não encontrada'},registros:[]};
   freightRateByKey=buildFreightRateMap(freightBase?.registros||[]);
   const published={
-    version:19,
+    version:24,
     base:await baseResponse.json(),
     production:prodData || {meta:{fonte:'Produção não encontrada'},registros:[]},
     setup:setupData || {meta:{fonte:'Setup não encontrado'},registros:[]},

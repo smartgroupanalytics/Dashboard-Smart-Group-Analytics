@@ -213,3 +213,61 @@ tbody tr.row-loss td.material-cost-col{color:#ff8390!important;background:rgba(1
 .detail-linkage-table .table-price-col{background:rgba(255,255,255,.035)}
 .detail-linkage-table .material-cost-col{font-weight:900;color:#fff;background:rgba(255,255,255,.06)}
 @media(max-width:900px){.linkage-title{align-items:flex-start}.linkage-count{white-space:normal;text-align:right}}
+
+
+/* =====================================================
+   V24 - L.E (Linha Estoque) + ajuda contextual por hover
+   ===================================================== */
+.billing-heading{
+  display:grid;
+  grid-template-columns:minmax(220px,auto) minmax(180px,1fr) auto;
+  align-items:center;
+  gap:18px;
+}
+.billing-heading .panel-actions{justify-self:end}
+.le-card{
+  justify-self:center;
+  min-width:220px;
+  max-width:280px;
+  display:grid;
+  grid-template-columns:auto auto;
+  grid-template-areas:"label value" "sub sub";
+  align-items:center;
+  column-gap:12px;
+  row-gap:2px;
+  padding:9px 15px;
+  border:1px solid rgba(72,181,255,.48);
+  border-radius:11px;
+  background:linear-gradient(135deg,rgba(9,77,154,.60),rgba(5,43,92,.72));
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.025);
+  cursor:help;
+  outline:none;
+}
+.le-card:focus-visible{box-shadow:0 0 0 2px rgba(65,184,255,.45)}
+.le-card>span{grid-area:label;color:#d9efff;font-size:12px;font-weight:900;letter-spacing:1.3px}
+.le-card>strong{grid-area:value;justify-self:end;color:#55e8ff;font-size:20px;line-height:1;font-weight:900}
+.le-card>small{grid-area:sub;color:#9fc7ed;font-size:10px;text-align:right}
+.le-card.is-empty{opacity:.72}
+
+thead th[data-help]{cursor:help;text-decoration:underline dotted rgba(188,221,255,.42);text-underline-offset:3px}
+.column-help-tooltip{
+  position:fixed;
+  z-index:99999;
+  width:min(360px,calc(100vw - 24px));
+  padding:11px 13px;
+  border:1px solid rgba(91,167,239,.55);
+  border-radius:10px;
+  background:#061a3b;
+  color:#e8f4ff;
+  box-shadow:0 14px 35px rgba(0,0,0,.38);
+  font-size:11px;
+  line-height:1.45;
+  pointer-events:none;
+}
+.column-help-tooltip[hidden]{display:none!important}
+
+@media(max-width:900px){
+  .billing-heading{grid-template-columns:1fr;align-items:stretch}
+  .le-card{justify-self:stretch;max-width:none}
+  .billing-heading .panel-actions{justify-self:stretch}
+}

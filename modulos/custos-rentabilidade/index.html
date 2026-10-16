@@ -126,14 +126,17 @@
     </nav>
 
     <section id="billingView" class="view active">
-      <div class="panel-heading">
-        <div><h2>Faturamento por item</h2><p>Leitura direta das colunas definidas no relatório SIGER.</p></div>
+      <div class="panel-heading billing-heading">
+        <div class="panel-heading-copy"><h2>Faturamento por item</h2><p>Leitura direta das colunas definidas no relatório SIGER.</p></div>
+        <article id="leCard" class="le-card" tabindex="0" data-help="L.E = Linha Estoque. Fonte direta: relatório 201, coluna P (Descr.Tp.produção). Conta TODAS as linhas com valor Estoque, com ou sem OP e com ou sem pedido. Não depende do faturamento e não altera os cálculos de rentabilidade.">
+          <span>L.E</span><strong id="leCount">0</strong><small id="leSub">0 c/ OP · 0 s/ OP</small>
+        </article>
         <div class="panel-actions"><span id="billingCount">0 registros</span><button id="exportBilling" type="button"><i class="fa-solid fa-file-excel"></i> Exportar Excel (.xlsx)</button></div>
       </div>
       <div class="table-wrap">
         <table>
           <thead><tr>
-            <th>Dt. Fat.</th><th>Sigla</th><th>Produto</th><th>Descrição completa</th><th>Pedido</th><th>OP</th><th>Nota</th><th class="num">Qtd.</th><th class="num">Vlr Venda</th><th class="num">Vlr Metro</th><th class="num table-price-col">Valor de Tabela</th><th class="num material-cost-col">CST. MAT. PRIMA</th><th class="num">Cst MO</th><th class="num">Imposto</th><th class="num">Frete</th><th class="num">Comissão</th><th class="num">% Comis.</th><th class="num">Custo Total</th><th class="num">Lucro</th><th class="num">Margem Base</th><th class="num">% Margem</th><th></th>
+            <th data-help="Relatório 200 · coluna B: Dt.faturam. Data do faturamento da linha.">Dt. Fat.</th><th data-help="Relatório 200 · coluna W: Sig.emp. Empresa responsável pelo faturamento (SMT/SM3).">Sigla</th><th data-help="Relatório 200 · coluna E: Produto. Código do produto faturado.">Produto</th><th data-help="Relatório 200 · coluna F: Desc.completa. Descrição completa do produto.">Descrição completa</th><th data-help="Relatório 200 · coluna C: Pedido. Número do pedido vinculado ao faturamento.">Pedido</th><th data-help="Relatório 200 · coluna D: N°OP. Chave usada para ligar a linha aos relatórios 201 (produção), 202 (setup) e 203 (UV/Solvente).">OP</th><th data-help="Relatório 200 · coluna J: Nro.nota. Nota fiscal da linha faturada.">Nota</th><th class="num" data-help="Relatório 200 · coluna L: Qtd.item/Ft. Quantidade faturada.">Qtd.</th><th class="num" data-help="Relatório 200 · coluna O: Valor Fat+Valor IPI+Valor Frete. Valor total de venda da linha.">Vlr Venda</th><th class="num" data-help="Relatório 200 · coluna P: Vlr.unit.líq. Valor líquido por metro/unidade; também é a base do cálculo de Imposto e Frete.">Vlr Metro</th><th class="num table-price-col" data-help="Relatório 200 · coluna AL (Cód.lista preços) + Produto. Procura a combinação no relatório 204 e retorna Preço ven/Prç.ven. Se não localizar, fica em branco.">Valor de Tabela</th><th class="num material-cost-col" data-help="Custo de Matéria-Prima = relatório 200 coluna AG (Preço custo) + adicional unitário de IMPRESSAO UV/SOLVENTE do relatório 203, quando houver na mesma OP.">CST. MAT. PRIMA</th><th class="num" data-help="Custo de M.O. unitário = (Produção/máquina do relatório 201 + Setup do relatório 202) ÷ Qtd. aprovada da OP. IMPRESSAO DIGITAL permanece dentro da M.O.">Cst MO</th><th class="num" data-help="Imposto unitário = Vlr Metro × alíquota da UF. A UF vem do relatório 200 coluna V; a origem é definida pela empresa (SMT/SM3) e a alíquota vem da tabela de impostos.">Imposto</th><th class="num" data-help="Frete unitário = Vlr Metro × percentual da UF. A UF vem do relatório 200 coluna V e o percentual vem da tabela Frete dash.">Frete</th><th class="num" data-help="Relatório 200 · coluna AB: Comissão/Metros. Comissão unitária utilizada no custo.">Comissão</th><th class="num" data-help="Relatório 200 · coluna AJ: % comissão rep. Percentual de comissão do representante.">% Comis.</th><th class="num" data-help="Custo Total = Quantidade × Custo Matéria-Prima unitário. M.O., imposto, frete e comissão são abatidos separadamente na Margem Base.">Custo Total</th><th class="num" data-help="Lucro unitário = Margem Base total ÷ Quantidade faturada.">Lucro</th><th class="num" data-help="Margem Base = Vlr Venda − Custo Matéria-Prima total − M.O. total − Imposto total − Frete total − Comissão total.">Margem Base</th><th class="num" data-help="% Margem = Margem Base ÷ Vlr Venda × 100.">% Margem</th><th data-help="Abre o detalhamento contextual da linha, mantendo Nota, Pedido e OP selecionados."></th>
           </tr></thead>
           <tbody id="billingRows"></tbody>
         </table>
@@ -154,7 +157,7 @@
       </div>
       <div class="table-wrap compact-table">
         <table>
-          <thead><tr><th>Produto</th><th>Descrição completa</th><th class="num">Qtd.</th><th class="num">Faturamento</th><th class="num">Custo Total</th><th class="num">Comissão</th><th class="num">Impostos</th><th class="num">Frete</th><th class="num">Margem Base</th><th class="num">% Margem</th><th></th></tr></thead>
+          <thead><tr><th data-help="Agrupamento pelo código do Produto do relatório 200.">Produto</th><th data-help="Descrição completa do produto vinda do relatório 200.">Descrição completa</th><th class="num" data-help="Soma da quantidade faturada das linhas do produto dentro dos filtros atuais.">Qtd.</th><th class="num" data-help="Soma do Vlr Venda das linhas do produto dentro dos filtros atuais.">Faturamento</th><th class="num" data-help="Soma do custo total de matéria-prima das linhas agrupadas.">Custo Total</th><th class="num" data-help="Soma das comissões das linhas agrupadas.">Comissão</th><th class="num" data-help="Soma dos impostos calculados por UF das linhas agrupadas.">Impostos</th><th class="num" data-help="Soma dos fretes calculados por UF das linhas agrupadas.">Frete</th><th class="num" data-help="Soma da Margem Base das linhas do produto: venda menos matéria-prima, M.O., imposto, frete e comissão.">Margem Base</th><th class="num" data-help="Margem Base total do produto ÷ Faturamento total × 100.">% Margem</th><th data-help="Abre todas as Notas, Pedidos e OPs do produto dentro dos filtros atuais."></th></tr></thead>
           <tbody id="productRows"></tbody>
         </table>
       </div>
@@ -192,7 +195,7 @@
           </div>
           <div class="table-wrap detail-linkage-wrap">
             <table class="detail-linkage-table">
-              <thead><tr><th>Dt. Fat.</th><th>Nota</th><th>Pedido</th><th>OP</th><th>CFOP</th><th>UF</th><th class="num">Qtd.</th><th class="num">Vlr Venda</th><th class="num">Vlr Metro</th><th class="num">Valor Tabela</th><th class="num">Cst. Mat. Prima</th><th class="num">Cst MO</th><th class="num">Imposto</th><th class="num">Frete</th><th class="num">Lucro</th></tr></thead>
+              <thead><tr><th data-help="Relatório 200 · Dt.faturam.">Dt. Fat.</th><th data-help="Relatório 200 · Nro.nota.">Nota</th><th data-help="Relatório 200 · Pedido.">Pedido</th><th data-help="Relatório 200 · N°OP; chave para custos de produção.">OP</th><th data-help="Relatório 200 · coluna K Nat.oper.">CFOP</th><th data-help="Relatório 200 · coluna V UF; usada nos cálculos de imposto e frete.">UF</th><th class="num" data-help="Quantidade faturada da linha.">Qtd.</th><th class="num" data-help="Valor total de venda da linha.">Vlr Venda</th><th class="num" data-help="Valor líquido por metro/unidade do relatório 200.">Vlr Metro</th><th class="num" data-help="Tabela de preço localizada pelo Produto + Cód.lista preços no relatório 204.">Valor Tabela</th><th class="num" data-help="Preço custo do relatório 200 + UV/Solvente do relatório 203, quando houver.">Cst. Mat. Prima</th><th class="num" data-help="Produção do 201 + Setup do 202, rateados pela Qtd. aprovada da OP.">Cst MO</th><th class="num" data-help="Vlr Metro × alíquota da UF.">Imposto</th><th class="num" data-help="Vlr Metro × percentual de frete da UF.">Frete</th><th class="num" data-help="Margem Base da linha ÷ Quantidade faturada.">Lucro</th></tr></thead>
               <tbody id="detailLinkageRows"></tbody>
             </table>
           </div>
@@ -211,12 +214,14 @@
       </div>
     </section>
 
+    <div id="columnHelpTooltip" class="column-help-tooltip" role="tooltip" hidden></div>
+
     <footer class="module-footer">
       <span id="footerStatus">Base em carregamento…</span>
-      <details><summary>Mapeamento do Excel</summary><p>Faturamento: B Dt. faturamento · W Sigla · E Produto · F Desc. completa · C Pedido · D OP · J Nota · L Qtd · O Vlr Venda · P Vlr Metro · AG custo base de matéria-prima · AB Comissão · AJ % Comissão. Rel. 200: Faturamento · Rel. 201: Produção por OP · Rel. 202: Setup/Paradas · Rel. 203 Impressão: IMPRESSAO UV / IMPRESSAO SOLVENTE por OP, usando coluna F Preço ven e Qtd.aprovada. CFOP = coluna K (Nat.oper) do Rel. 200. Linhas técnicas de IMPRESSAO UV/SOLVENTE e INSUMOS ficam ocultas dos grids. M.O. = Produção/máquina + Setup (incluindo IMPRESSAO DIGITAL quando apontada na produção). UV/Solvente não entra na M.O.; é rateado por Qtd. Aprovada da OP e somado ao Cst. Mat. Prima. Imposto = Vlr Metro × alíquota por UF (coluna V) conforme tabela de impostos. Frete = Vlr Metro × percentual por UF (coluna V) conforme Frete dash.xlsx.</p></details>
+      <details><summary>Mapeamento do Excel</summary><p>Faturamento: B Dt. faturamento · W Sigla · E Produto · F Desc. completa · C Pedido · D OP · J Nota · L Qtd · O Vlr Venda · P Vlr Metro · AG custo base de matéria-prima · AB Comissão · AJ % Comissão. Rel. 200: Faturamento · Rel. 201: Produção por OP + coluna P Descr.Tp.produção para L.E · Rel. 202: Setup/Paradas · Rel. 203 Impressão: IMPRESSAO UV / IMPRESSAO SOLVENTE por OP, usando coluna F Preço ven e Qtd.aprovada. CFOP = coluna K (Nat.oper) do Rel. 200. Linhas técnicas de IMPRESSAO UV/SOLVENTE e INSUMOS ficam ocultas dos grids. M.O. = Produção/máquina + Setup (incluindo IMPRESSAO DIGITAL quando apontada na produção). UV/Solvente não entra na M.O.; é rateado por Qtd. Aprovada da OP e somado ao Cst. Mat. Prima. Imposto = Vlr Metro × alíquota por UF (coluna V) conforme tabela de impostos. Frete = Vlr Metro × percentual por UF (coluna V) conforme Frete dash.xlsx.</p></details>
     </footer>
   </main>
 
-  <script type="module" src="app.js?v=20261014-23-firestore-shared"></script>
+  <script type="module" src="app.js?v=20261016-24-le-tooltip"></script>
 </body>
 </html>

@@ -1,0 +1,18 @@
+SMART GROUP ANALYTICS — CUSTOS E RENTABILIDADE v25
+
+CORREÇÃO DO CARD L.E
+
+- Fonte: Relatório 201, coluna P — Descr.Tp.produção.
+- O card L.E conta TODAS as linhas em que o valor é "Estoque".
+- Inclui registros:
+  • com OP;
+  • sem OP;
+  • com pedido;
+  • sem pedido.
+- O indicador não depende de vínculo com o Relatório 200.
+- O cálculo de M.O. continua usando somente registros que tenham OP válida.
+- Nenhum cálculo existente de rentabilidade, imposto, frete, matéria-prima, comissão ou M.O. foi alterado.
+
+IMPORTANTE
+Após instalar a v25, importe novamente os 5 relatórios uma vez como administrador.
+Isso é necessário porque versões anteriores descartavam do pacote compartilhado as linhas do 201 sem OP.
