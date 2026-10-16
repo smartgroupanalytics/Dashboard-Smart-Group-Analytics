@@ -128,8 +128,8 @@
     "subgrupo": 41,
     "qtd_produzir": 336,
     "dt_saida": "2026-09-25",
-    "centro_custo": 1,
-    "abreviacao": "RECOB"
+    "centro_custo": 7,
+    "abreviacao": "ESTAM"
   },
   {
     "fonte_comercial": "STK",
@@ -140,8 +140,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-29",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 3,
+    "abreviacao": "GR 1"
   },
   {
     "fonte_comercial": "STK",
@@ -152,8 +152,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-09-30",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -164,8 +164,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-09-30",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -188,8 +188,8 @@
     "subgrupo": 41,
     "qtd_produzir": 240,
     "dt_saida": "2026-10-02",
-    "centro_custo": 3,
-    "abreviacao": "GR 1"
+    "centro_custo": 7,
+    "abreviacao": "ESTAM"
   },
   {
     "fonte_comercial": "STK",
@@ -224,8 +224,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-10-07",
-    "centro_custo": 30,
-    "abreviacao": "REC2"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -234,10 +234,10 @@
     "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
     "grupo": 39,
     "subgrupo": 41,
-    "qtd_produzir": 1000,
+    "qtd_produzir": 508,
     "dt_saida": "2026-10-08",
-    "centro_custo": 3,
-    "abreviacao": "GR 1"
+    "centro_custo": 10,
+    "abreviacao": "REV 1"
   },
   {
     "fonte_comercial": "STK",
@@ -260,18 +260,6 @@
     "subgrupo": 41,
     "qtd_produzir": 2000,
     "dt_saida": "2026-10-09",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8561",
-    "produto": "12560",
-    "desc_completa": "TWIST METAL OFF WHITE/PRATA",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 200,
-    "dt_saida": "2026-10-05",
     "centro_custo": 7,
     "abreviacao": "ESTAM"
   },
@@ -356,8 +344,8 @@
     "subgrupo": 41,
     "qtd_produzir": 100,
     "dt_saida": "2026-10-09",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -368,8 +356,8 @@
     "subgrupo": 41,
     "qtd_produzir": 100,
     "dt_saida": "2026-10-09",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -380,8 +368,8 @@
     "subgrupo": 41,
     "qtd_produzir": 100,
     "dt_saida": "2026-10-09",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -392,8 +380,8 @@
     "subgrupo": 41,
     "qtd_produzir": 100,
     "dt_saida": "2026-10-09",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -404,8 +392,8 @@
     "subgrupo": 41,
     "qtd_produzir": 100,
     "dt_saida": "2026-10-09",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -416,8 +404,8 @@
     "subgrupo": 41,
     "qtd_produzir": 100,
     "dt_saida": "2026-10-09",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -440,8 +428,8 @@
     "subgrupo": 41,
     "qtd_produzir": 100,
     "dt_saida": "2026-10-09",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -452,8 +440,8 @@
     "subgrupo": 41,
     "qtd_produzir": 100,
     "dt_saida": "2026-10-09",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -476,8 +464,8 @@
     "subgrupo": 41,
     "qtd_produzir": 40,
     "dt_saida": "2026-10-09",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -488,8 +476,8 @@
     "subgrupo": 41,
     "qtd_produzir": 40,
     "dt_saida": "2026-10-09",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -500,8 +488,8 @@
     "subgrupo": 41,
     "qtd_produzir": 100,
     "dt_saida": "2026-10-09",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 7,
+    "abreviacao": "ESTAM"
   },
   {
     "fonte_comercial": "STK",
@@ -512,8 +500,8 @@
     "subgrupo": 41,
     "qtd_produzir": 100,
     "dt_saida": "2026-10-12",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 7,
+    "abreviacao": "ESTAM"
   },
   {
     "fonte_comercial": "STK",
@@ -524,8 +512,8 @@
     "subgrupo": 41,
     "qtd_produzir": 40,
     "dt_saida": "2026-10-12",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -536,8 +524,8 @@
     "subgrupo": 41,
     "qtd_produzir": 528,
     "dt_saida": "2026-10-13",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 1,
+    "abreviacao": "RECOB"
   },
   {
     "fonte_comercial": "STK",
@@ -596,8 +584,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-10-14",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -620,8 +608,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-10-14",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -680,7 +668,7 @@
     "subgrupo": 41,
     "qtd_produzir": 40,
     "dt_saida": "2026-10-16",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   }
 ]
