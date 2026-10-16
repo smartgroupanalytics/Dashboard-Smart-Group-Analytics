@@ -1,0 +1,26 @@
+SMART GROUP ANALYTICS — CUSTOS E RENTABILIDADE v27
+
+L.E — PRODUÇÃO PARA ESTOQUE COM VISÃO DE RENTABILIDADE
+
+O que mudou:
+- O card L.E abre uma visão consolidada por OP/item, e não mais uma lista crua de operações.
+- Todos os apontamentos do Relatório 201 com Descr.Tp.produção = Estoque continuam sendo considerados.
+- Uma mesma OP é consolidada em uma linha; Produto/Pedido em branco em uma etapa são recuperados de outro apontamento da mesma OP.
+- O topo do L.E agora segue o padrão do painel principal:
+  Itens L.E, Qtd. Aprovada, Faturamento vinculado, Custo Matéria-Prima, Custo M.O., Impostos, Frete e Margem Base.
+- A tabela L.E segue a estrutura visual do Faturamento e possui botão DETALHAR.
+- Ao clicar em DETALHAR, abre o mesmo Detalhamento Produção/M.O. usado no restante do módulo.
+
+Regra importante:
+- M.O. é calculada normalmente pela OP: Produção do 201 + Setup do 202.
+- Venda, Vlr Metro, Valor de Tabela, Matéria-Prima comercial, Imposto, Frete, Comissão e Margem só aparecem quando existe vínculo REAL da OP/item com o Relatório 200.
+- Para L.E ainda não vendida, esses campos ficam em branco. O sistema não inventa UF, preço de venda, frete, imposto ou margem.
+
+Com o relatório 201 usado na validação desta versão:
+- 18.090 apontamentos com Descr.Tp.produção = Estoque;
+- 1.221 OPs distintas com Estoque;
+- 8 registros sem OP;
+- 582 códigos de produto distintos preenchidos.
+
+IMPORTANTE:
+Depois de instalar a v27, faça uma nova importação dos 5 relatórios como administrador se a base compartilhada atual ainda estiver mostrando somente 20 registros L.E.

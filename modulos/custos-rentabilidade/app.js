@@ -20,6 +20,8 @@ let billingPage = 1;
 let productsPage = 1;
 let lePage = 1;
 let leSearch = '';
+let leGroups = [];
+let selectedLEKey = null;
 let selectedProduct = null;
 let selectedDetailMode = 'product';
 let selectedBillingRowId = null;
@@ -43,7 +45,7 @@ const SHARED_POINTER_DOC = 'current';
 const SHARED_SLOT_A = 'slot-a';
 const SHARED_SLOT_B = 'slot-b';
 const SHARED_CHUNK_BYTES = 600000;
-const SHARED_PACKAGE_VERSION = 26;
+const SHARED_PACKAGE_VERSION = 27;
 
 const money = value => Number(value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 const number = value => Number(value || 0).toLocaleString('pt-BR', { maximumFractionDigits: 2 });
@@ -570,78 +572,300 @@ function renderKpis(){
   $('kpiMarginPct').textContent = `${percent(marginPct)} do faturamento`;
 }
 
+function getLESourceRows(){
+  return (productionBase?.registros||[])
+    .filter(row=>normalizeHeader(row.tipoProducao)==='estoque');
+}
+
+function firstMeaningful(values=[]){
+  return values.find(value=>meaningful(value)) ?? '';
+}
+
+function latestDate(values=[]){
+  return values.filter(Boolean).sort().at(-1) || '';
+}
+
+function weightedAverage(rows,valueField,weightField='quantidade',mappedField=null){
+  let weighted=0,weight=0;
+  (rows||[]).forEach(row=>{
+    if(mappedField && !row[mappedField]) return;
+    const w=Number(row[weightField]||0);
+    if(w<=0) return;
+    weighted += Number(row[valueField]||0)*w;
+    weight += w;
+  });
+  return weight>0 ? weighted/weight : 0;
+}
+
+function buildLEGroups(){
+  const source=getLESourceRows();
+  const groups=new Map();
+
+  source.forEach((row,index)=>{
+    const op=normalizeOp(row.op);
+    const product=normalizeRefKey(row.produto);
+    const desc=String(row.descricaoCompleta||'').trim();
+    const pedido=normalizeRefKey(row.pedido);
+    const key=op
+      ? `op:${op}`
+      : `semop:${product||normalizeHeader(desc)||'sem-produto'}:${pedido||'sem-pedido'}:${row.dataApontamento||''}:${index}`;
+
+    if(!groups.has(key)){
+      groups.set(key,{
+        key,
+        op,
+        pedido:'',
+        produto:'',
+        descricaoCompleta:'',
+        dataApontamento:'',
+        rows:[]
+      });
+    }
+    const g=groups.get(key);
+    g.rows.push(row);
+    if(!meaningful(g.pedido) && meaningful(row.pedido)) g.pedido=normalizeRefKey(row.pedido);
+    if(!meaningful(g.produto) && meaningful(row.produto)) g.produto=normalizeRefKey(row.produto);
+    if(!g.descricaoCompleta && row.descricaoCompleta) g.descricaoCompleta=String(row.descricaoCompleta).trim();
+    if(!g.dataApontamento || String(row.dataApontamento||'')>g.dataApontamento) g.dataApontamento=String(row.dataApontamento||'');
+  });
+
+  const billingRows=records.filter(row=>!isTechnicalGridRow(row));
+  const billingByOp=new Map();
+  const billingByPedidoProduto=new Map();
+
+  billingRows.forEach(row=>{
+    const op=normalizeOp(row.op);
+    if(op){
+      if(!billingByOp.has(op)) billingByOp.set(op,[]);
+      billingByOp.get(op).push(row);
+    }
+    const pedido=normalizeRefKey(row.pedido);
+    const produto=normalizeRefKey(row.produto);
+    if(pedido && produto){
+      const key=`${pedido}¦${produto}`;
+      if(!billingByPedidoProduto.has(key)) billingByPedidoProduto.set(key,[]);
+      billingByPedidoProduto.get(key).push(row);
+    }
+  });
+
+  leGroups=[...groups.values()].map(g=>{
+    const mo=g.op ? getMaoObraByOp(g.op) : null;
+
+    // Em algumas linhas do 201 o SIGER deixa Produto/Pedido em branco.
+    // Dentro da mesma OP, recuperamos esses dados de qualquer outro apontamento da OP.
+    if(g.op){
+      const allOpRows=(productionBase?.registros||[]).filter(row=>normalizeOp(row.op)===g.op);
+      if(!meaningful(g.produto)) g.produto=normalizeRefKey(firstMeaningful(allOpRows.map(row=>row.produto)));
+      if(!meaningful(g.pedido)) g.pedido=normalizeRefKey(firstMeaningful(allOpRows.map(row=>row.pedido)));
+      if(!g.descricaoCompleta) g.descricaoCompleta=String(firstMeaningful(allOpRows.map(row=>row.descricaoCompleta))||'').trim();
+      if(!g.dataApontamento) g.dataApontamento=latestDate(allOpRows.map(row=>row.dataApontamento));
+    }
+
+    let linkedBilling=[];
+    if(g.op){
+      linkedBilling=[...(billingByOp.get(g.op)||[])];
+      if(meaningful(g.produto)){
+        const sameProduct=linkedBilling.filter(row=>normalizeRefKey(row.produto)===normalizeRefKey(g.produto));
+        if(sameProduct.length) linkedBilling=sameProduct;
+      }
+    }else if(meaningful(g.pedido) && meaningful(g.produto)){
+      linkedBilling=[...(billingByPedidoProduto.get(`${normalizeRefKey(g.pedido)}¦${normalizeRefKey(g.produto)}`)||[])];
+    }
+
+    const qtdAprovada=Number(mo?.qtdAprovada||0) > 0
+      ? Number(mo.qtdAprovada)
+      : Math.max(0,...g.rows.map(row=>Number(row.qtdAprovada||0)));
+
+    let custoMaoObraTotal=Number(mo?.custoMaoObraTotal||0);
+    let custoMaoObraUnitario=Number(mo?.custoMaoObraUnitario||0);
+    let custoMaoObraMapeado=Boolean(mo && mo.completo && qtdAprovada>0);
+
+    // Registros sem OP não entram no mapa principal de M.O.; ainda assim,
+    // se houver tempo e custo/minuto na própria linha do 201, mostramos a M.O. disponível.
+    if(!g.op){
+      custoMaoObraTotal=g.rows.reduce((acc,row)=>{
+        const minutos=durationToMinutes(row.tempoProducao);
+        const custoMinuto=Number(row.custoMinuto||0)>0
+          ? Number(row.custoMinuto)
+          : (Number(row.vlrHoraHomem||0)>0 ? Number(row.vlrHoraHomem)/60 : 0);
+        return acc+(minutos*custoMinuto);
+      },0);
+      custoMaoObraUnitario=qtdAprovada>0 ? custoMaoObraTotal/qtdAprovada : 0;
+      custoMaoObraMapeado=custoMaoObraTotal>0 && qtdAprovada>0;
+    }
+
+    const comercialMapeado=linkedBilling.length>0;
+    const quantidadeFaturada=sum(linkedBilling,'quantidade');
+    const valorVenda=sum(linkedBilling,'valorVenda');
+    const valorMetro=comercialMapeado ? weightedAverage(linkedBilling,'valorMetro') : 0;
+    const valorTabelaRows=linkedBilling.filter(row=>row.valorTabelaMapeado);
+    const valorTabelaMapeado=valorTabelaRows.length>0;
+    const valorTabela=valorTabelaMapeado ? weightedAverage(valorTabelaRows,'valorTabela') : 0;
+    const custoMateriaPrimaMapeado=comercialMapeado;
+    const custoMateriaPrimaUnitario=custoMateriaPrimaMapeado ? weightedAverage(linkedBilling,'custoMateriaPrimaUnitario') : 0;
+    const custoMateriaPrimaTotal=sum(linkedBilling,'custoTotal');
+    const comissaoTotal=sum(linkedBilling,'comissaoTotal');
+    const comissaoUnitario=quantidadeFaturada>0 ? comissaoTotal/quantidadeFaturada : 0;
+    const percentualComissao=valorVenda>0 ? comissaoTotal/valorVenda*100 : 0;
+    const impostoMapeado=linkedBilling.some(row=>row.impostoMapeado);
+    const impostoTotal=sum(linkedBilling,'impostoTotal');
+    const impostoUnitario=quantidadeFaturada>0 ? impostoTotal/quantidadeFaturada : 0;
+    const freteMapeado=linkedBilling.some(row=>row.freteMapeado);
+    const freteTotal=sum(linkedBilling,'freteTotal');
+    const freteUnitario=quantidadeFaturada>0 ? freteTotal/quantidadeFaturada : 0;
+    const margemBase=sum(linkedBilling,'margemBase');
+    const margemBasePercentual=valorVenda>0 ? margemBase/valorVenda*100 : 0;
+    const lucroUnitario=quantidadeFaturada>0 ? margemBase/quantidadeFaturada : 0;
+
+    return {
+      ...g,
+      qtdAprovada,
+      apontamentos:g.rows.length,
+      mo,
+      custoMaoObraTotal,
+      custoMaoObraUnitario,
+      custoMaoObraMapeado,
+      linkedBilling,
+      comercialMapeado,
+      quantidadeFaturada,
+      sigla:unique(linkedBilling,'sigla').join(', '),
+      notas:unique(linkedBilling,'nota').filter(meaningful),
+      cfoPs:unique(linkedBilling,'cfop').filter(meaningful),
+      ufs:unique(linkedBilling,'uf').filter(meaningful),
+      valorVenda,
+      valorMetro,
+      valorTabela,
+      valorTabelaMapeado,
+      custoMateriaPrimaUnitario,
+      custoMateriaPrimaTotal,
+      custoMateriaPrimaMapeado,
+      comissaoUnitario,
+      comissaoTotal,
+      percentualComissao,
+      impostoUnitario,
+      impostoTotal,
+      impostoMapeado,
+      freteUnitario,
+      freteTotal,
+      freteMapeado,
+      margemBase,
+      margemBasePercentual,
+      lucroUnitario
+    };
+  }).sort((a,b)=>
+    String(b.dataApontamento||'').localeCompare(String(a.dataApontamento||''))
+    || String(b.op||'').localeCompare(String(a.op||''),undefined,{numeric:true})
+  );
+
+  return leGroups;
+}
+
+function getLEGroups(){
+  return buildLEGroups();
+}
+
+function filteredLEGroups(){
+  const rows=getLEGroups();
+  const q=String(leSearch||'').trim().toLocaleLowerCase('pt-BR');
+  if(!q) return rows;
+  return rows.filter(row=>[
+    row.op,row.pedido,row.produto,row.descricaoCompleta,row.sigla,
+    row.notas?.join(' '),row.cfoPs?.join(' '),row.ufs?.join(' ')
+  ].some(value=>String(value??'').toLocaleLowerCase('pt-BR').includes(q)));
+}
+
 function renderLECard(){
   const card=$('leCard');
   const countEl=$('leCount');
   const subEl=$('leSub');
   if(!card || !countEl || !subEl) return;
 
-  // L.E é um indicador DIRETO do relatório 201.
-  // Conta TODAS as linhas cuja coluna P (Descr.Tp.produção) = Estoque,
-  // independentemente de possuir OP, pedido ou vínculo com faturamento.
-  const rows=(productionBase?.registros||[])
-    .filter(row=>normalizeHeader(row.tipoProducao)==='estoque');
+  const source=getLESourceRows();
+  const groups=getLEGroups();
+  const products=new Set(groups.map(row=>normalizeRefKey(row.produto)).filter(meaningful));
 
-  const comOp=rows.filter(row=>meaningful(normalizeOp(row.op))).length;
-  const semOp=rows.length-comOp;
-  const comPedido=rows.filter(row=>meaningful(row.pedido)).length;
-  const semPedido=rows.length-comPedido;
-
-  countEl.textContent=rows.length.toLocaleString('pt-BR');
-  subEl.textContent=`${comOp.toLocaleString('pt-BR')} c/ OP · ${semOp.toLocaleString('pt-BR')} s/ OP`;
-  card.title=`Fonte: relatório 201, coluna P (Descr.Tp.produção = Estoque). Total ${rows.length.toLocaleString('pt-BR')} registros; ${comPedido.toLocaleString('pt-BR')} com pedido e ${semPedido.toLocaleString('pt-BR')} sem pedido.`;
-  card.classList.toggle('is-empty',rows.length===0);
+  countEl.textContent=groups.length.toLocaleString('pt-BR');
+  subEl.textContent=`${products.size.toLocaleString('pt-BR')} produtos · ${source.length.toLocaleString('pt-BR')} apont.`;
+  card.title=`L.E = Estoque do relatório 201 (coluna P). ${groups.length.toLocaleString('pt-BR')} itens/OPs consolidados, ${products.size.toLocaleString('pt-BR')} produtos e ${source.length.toLocaleString('pt-BR')} apontamentos.`;
+  card.classList.toggle('is-empty',groups.length===0);
 }
 
-function getLERows(){
-  return (productionBase?.registros||[])
-    .filter(row=>normalizeHeader(row.tipoProducao)==='estoque');
+function renderLEKpis(groups){
+  const qtd=sum(groups,'qtdAprovada');
+  const mo=sum(groups,'custoMaoObraTotal');
+  const linked=groups.filter(group=>group.comercialMapeado);
+  const revenue=sum(linked,'valorVenda');
+  const mp=sum(linked,'custoMateriaPrimaTotal');
+  const tax=sum(linked,'impostoTotal');
+  const freight=sum(linked,'freteTotal');
+  const margin=sum(linked,'margemBase');
+
+  $('leKpiItems').textContent=groups.length.toLocaleString('pt-BR');
+  $('leKpiQty').textContent=number(qtd);
+  $('leKpiRevenue').textContent=money(revenue);
+  $('leKpiMP').textContent=money(mp);
+  $('leKpiMO').textContent=money(mo);
+  $('leKpiTax').textContent=money(tax);
+  $('leKpiFreight').textContent=money(freight);
+  $('leKpiMargin').textContent=money(margin);
+  $('leKpiMargin').className=marginClass(margin);
+  $('leKpiLinked').textContent=`${linked.length.toLocaleString('pt-BR')} com vínculo no rel. 200`;
 }
 
-function filteredLERows(){
-  const rows=getLERows();
-  const q=String(leSearch||'').trim().toLocaleLowerCase('pt-BR');
-  if(!q) return rows;
-  return rows.filter(row=>[
-    row.op,row.pedido,row.produto,row.descricaoCompleta,row.centroCusto,row.recurso,
-    row.dataApontamento,row.qtdAprovada,row.qtdOP
-  ].some(value=>String(value??'').toLocaleLowerCase('pt-BR').includes(q)));
+function noteCell(group){
+  if(!group.notas?.length) return '—';
+  if(group.notas.length===1) return esc(group.notas[0]);
+  return `${group.notas.length} NFs`;
 }
 
 function renderLEView(){
   const body=$('leRows');
   if(!body) return;
 
-  const allRows=getLERows();
-  const rows=filteredLERows();
+  const source=getLESourceRows();
+  const allGroups=getLEGroups();
+  const rows=filteredLEGroups();
   const totalPages=Math.max(1,Math.ceil(rows.length/PAGE_SIZE));
   lePage=Math.min(lePage,totalPages);
   const start=(lePage-1)*PAGE_SIZE;
   const pageRows=rows.slice(start,start+PAGE_SIZE);
 
-  const uniqueProducts=new Set(allRows.map(row=>normalizeRefKey(row.produto)).filter(meaningful));
-  const uniqueDescriptions=new Set(allRows.map(row=>String(row.descricaoCompleta||'').trim()).filter(Boolean));
-  const withOp=allRows.filter(row=>meaningful(normalizeOp(row.op))).length;
-  const withoutOp=allRows.length-withOp;
+  const uniqueProducts=new Set(allGroups.map(row=>normalizeRefKey(row.produto)).filter(meaningful));
+  const withOp=allGroups.filter(row=>meaningful(normalizeOp(row.op))).length;
+  const withoutOp=allGroups.length-withOp;
 
-  $('leTotal') && ($('leTotal').textContent=allRows.length.toLocaleString('pt-BR'));
-  $('leProducts') && ($('leProducts').textContent=uniqueProducts.size.toLocaleString('pt-BR'));
-  $('leDescriptions') && ($('leDescriptions').textContent=uniqueDescriptions.size.toLocaleString('pt-BR'));
-  $('leOps') && ($('leOps').textContent=`${withOp.toLocaleString('pt-BR')} / ${withoutOp.toLocaleString('pt-BR')}`);
-  $('leViewCount') && ($('leViewCount').textContent=`${rows.length.toLocaleString('pt-BR')} registro${rows.length===1?'':'s'} L.E`);
+  $('leTotal').textContent=allGroups.length.toLocaleString('pt-BR');
+  $('leProducts').textContent=uniqueProducts.size.toLocaleString('pt-BR');
+  $('lePointings').textContent=source.length.toLocaleString('pt-BR');
+  $('leOps').textContent=`${withOp.toLocaleString('pt-BR')} / ${withoutOp.toLocaleString('pt-BR')}`;
+  $('leViewCount').textContent=`${rows.length.toLocaleString('pt-BR')} item${rows.length===1?'':'ns'} L.E · ${source.length.toLocaleString('pt-BR')} apontamentos`;
 
-  body.innerHTML=pageRows.length ? pageRows.map(row=>`<tr>
-    <td>${dateBR(row.dataApontamento)}</td>
-    <td>${displayRef(row.op)}</td>
-    <td>${displayRef(row.pedido)}</td>
-    <td><strong>${displayRef(row.produto)}</strong></td>
-    <td class="description-cell" title="${esc(row.descricaoCompleta)}">${esc(row.descricaoCompleta||'—')}</td>
-    <td>${displayRef(row.centroCusto)}</td>
-    <td>${esc(row.recurso||'—')}</td>
-    <td class="num">${number(row.qtdAprovada)}</td>
-    <td class="num">${number(row.qtdOP)}</td>
-    <td class="num">${esc(row.tempoProducao||'—')}</td>
-  </tr>`).join('') : '<tr class="empty-row"><td colspan="10">Nenhum registro L.E encontrado.</td></tr>';
+  renderLEKpis(allGroups);
+
+  body.innerHTML=pageRows.length ? pageRows.map(g=>`<tr>
+    <td>${dateBR(g.dataApontamento)}</td>
+    <td>${esc(g.sigla||'—')}</td>
+    <td><strong>${displayRef(g.produto)}</strong></td>
+    <td class="description-cell" title="${esc(g.descricaoCompleta)}">${esc(g.descricaoCompleta||'—')}</td>
+    <td>${displayRef(g.pedido)}</td>
+    <td>${displayRef(g.op)}</td>
+    <td title="${esc((g.notas||[]).join(', '))}">${noteCell(g)}</td>
+    <td class="num">${number(g.qtdAprovada)}</td>
+    <td class="num">${g.comercialMapeado ? money(g.valorVenda) : '—'}</td>
+    <td class="num">${g.comercialMapeado ? money(g.valorMetro) : '—'}</td>
+    <td class="num table-price-col">${g.valorTabelaMapeado ? money(g.valorTabela) : ''}</td>
+    <td class="num material-cost-col">${g.custoMateriaPrimaMapeado ? money(g.custoMateriaPrimaUnitario) : '—'}</td>
+    <td class="num">${g.custoMaoObraMapeado ? money(g.custoMaoObraUnitario) : '—'}</td>
+    <td class="num">${g.impostoMapeado ? money(g.impostoUnitario) : '—'}</td>
+    <td class="num">${g.freteMapeado ? money(g.freteUnitario) : '—'}</td>
+    <td class="num">${g.comercialMapeado ? money(g.comissaoUnitario) : '—'}</td>
+    <td class="num">${g.comercialMapeado ? percent(g.percentualComissao) : '—'}</td>
+    <td class="num">${g.custoMateriaPrimaMapeado ? money(g.custoMateriaPrimaTotal) : '—'}</td>
+    <td class="num ${g.comercialMapeado ? marginClass(g.lucroUnitario) : ''}">${g.comercialMapeado ? money(g.lucroUnitario) : '—'}</td>
+    <td class="num ${g.comercialMapeado ? marginClass(g.margemBase) : ''}">${g.comercialMapeado ? money(g.margemBase) : '—'}</td>
+    <td class="num ${g.comercialMapeado ? marginClass(g.margemBase) : ''}">${g.comercialMapeado ? percent(g.margemBasePercentual) : '—'}</td>
+    <td><button class="detail-button" type="button" data-le-detail="${esc(g.key)}"><i class="fa-solid fa-magnifying-glass-chart"></i> Detalhar</button></td>
+  </tr>`).join('') : '<tr class="empty-row"><td colspan="22">Nenhum item L.E encontrado.</td></tr>';
 
   $('lePage').textContent=`Página ${lePage} de ${totalPages}`;
   $('lePrev').disabled=lePage<=1;
@@ -657,6 +881,16 @@ function openLEView(){
   document.querySelector('.tabs')?.scrollIntoView({behavior:'smooth',block:'start'});
 }
 
+function selectLEDetail(key){
+  const group=getLEGroups().find(item=>item.key===key);
+  if(!group) return;
+  selectedLEKey=key;
+  selectedProduct=group.produto || group.descricaoCompleta || 'L.E';
+  selectedBillingRowId=null;
+  selectedDetailMode='le';
+  switchView('production');
+  document.querySelector('.tabs')?.scrollIntoView({behavior:'smooth',block:'start'});
+}
 function renderBilling(){
   const gridRows=getGridRows();
   const totalPages = Math.max(1, Math.ceil(gridRows.length/PAGE_SIZE));
@@ -771,6 +1005,10 @@ function renderProductionMO(rows){
 }
 
 function selectedDetailRows(){
+  if(selectedDetailMode==='le'){
+    const group=getLEGroups().find(item=>item.key===selectedLEKey);
+    return group?.linkedBilling || [];
+  }
   if(!selectedProduct) return [];
   if(selectedDetailMode==='billing' && selectedBillingRowId!==null){
     const row=records.find(r=>String(r._rowId)===String(selectedBillingRowId));
@@ -812,7 +1050,94 @@ function renderProductLinkage(rows){
   </tr>`).join('') : '<tr class="empty-row"><td colspan="15">Nenhum faturamento vinculado encontrado para os filtros atuais.</td></tr>';
 }
 
+function renderLEDetail(){
+  const group=getLEGroups().find(item=>item.key===selectedLEKey);
+  if(!group){
+    selectedLEKey=null;
+    selectedDetailMode='product';
+    selectedProduct=null;
+    $('detailEmpty').hidden=false;
+    $('detailContent').hidden=true;
+    $('detailTitle').textContent='Selecione um item L.E';
+    $('detailSubtitle').textContent='Volte ao card L.E e selecione “Detalhar”.';
+    return;
+  }
+
+  const linked=group.linkedBilling||[];
+  const revenue=Number(group.valorVenda||0);
+  const margin=Number(group.margemBase||0);
+  const qtySold=Number(group.quantidadeFaturada||0);
+  const mpTotal=Number(group.custoMateriaPrimaTotal||0);
+  const mpUnit=Number(group.custoMateriaPrimaUnitario||0);
+
+  $('detailEmpty').hidden=false;
+  $('detailContent').hidden=false;
+  $('detailEmpty').hidden=true;
+  $('detailTitle').textContent=`${meaningful(group.produto)?group.produto:'L.E'} · ${group.descricaoCompleta||'Estoque'}`;
+  $('detailSubtitle').textContent=`L.E · Estoque · OP ${meaningful(group.op)?group.op:'—'} · Pedido ${meaningful(group.pedido)?group.pedido:'—'} · ${group.apontamentos.toLocaleString('pt-BR')} apontamento${group.apontamentos===1?'':'s'}`;
+  $('backToBilling').innerHTML='<i class="fa-solid fa-arrow-left"></i> Voltar ao L.E';
+
+  $('detailProduct').textContent=meaningful(group.produto)?group.produto:'—';
+  $('detailDescription').textContent=group.descricaoCompleta||'—';
+
+  $('detailRevenue').textContent=group.comercialMapeado ? money(revenue) : '—';
+  $('detailQty').textContent=`${number(group.qtdAprovada)} de quantidade aprovada`;
+  $('detailCost').textContent=group.custoMateriaPrimaMapeado ? money(mpTotal) : '—';
+  $('detailUnitCost').textContent=group.custoMateriaPrimaMapeado ? `${money(mpUnit)} / un.` : 'Sem vínculo comercial no rel. 200';
+  $('detailCommission').textContent=group.comercialMapeado ? money(group.comissaoTotal) : '—';
+  $('detailCommissionPct').textContent=group.comercialMapeado ? `${percent(group.percentualComissao)} sobre o faturamento` : 'Sem venda vinculada';
+  $('detailTax').textContent=group.impostoMapeado ? money(group.impostoTotal) : '—';
+  $('detailTaxPct').textContent=group.impostoMapeado && revenue ? `${percent(group.impostoTotal/revenue*100)} sobre o faturamento` : 'Sem UF/venda vinculada';
+  $('detailFreight').textContent=group.freteMapeado ? money(group.freteTotal) : '—';
+  $('detailFreightPct').textContent=group.freteMapeado && revenue ? `${percent(group.freteTotal/revenue*100)} sobre o faturamento` : 'Sem UF/venda vinculada';
+  $('detailMargin').textContent=group.comercialMapeado ? money(margin) : '—';
+  $('detailMargin').className=group.comercialMapeado ? marginClass(margin) : '';
+  $('detailMarginPct').textContent=group.comercialMapeado && revenue ? percent(margin/revenue*100) : '—';
+
+  const refs=[
+    ['Tipo de produção','Estoque'],
+    ['Pedido',meaningful(group.pedido)?group.pedido:'—'],
+    ['OP',meaningful(group.op)?group.op:'—'],
+    ['Data do apontamento',dateBR(group.dataApontamento)],
+    ['Qtd. aprovada',number(group.qtdAprovada)],
+    ['Apontamentos L.E',group.apontamentos.toLocaleString('pt-BR')],
+    ['M.O. total',group.custoMaoObraMapeado?money(group.custoMaoObraTotal):'—'],
+    ['Cst M.O. unit.',group.custoMaoObraMapeado?money(group.custoMaoObraUnitario):'—'],
+    ['Notas vinculadas',group.notas?.length ? group.notas.join(', ') : '—'],
+    ['UFs vinculadas',group.ufs?.length ? group.ufs.join(', ') : '—'],
+    ['Vínculo comercial',linked.length ? `${linked.length} linha${linked.length===1?'':'s'} do relatório 200` : 'Nenhum — item ainda sem venda vinculada']
+  ];
+  $('detailReferences').innerHTML=refs.map(([label,value])=>`<div class="reference-group"><span>${label}</span><strong>${esc(value)}</strong></div>`).join('');
+
+  const panel=$('detailLinkagePanel');
+  const body=$('detailLinkageRows');
+  const count=$('detailLinkageCount');
+  if(linked.length){
+    panel.hidden=false;
+    count.textContent=`${linked.length.toLocaleString('pt-BR')} faturamento${linked.length===1?'':'s'} vinculado${linked.length===1?'':'s'}`;
+    body.innerHTML=linked.map(r=>`<tr class="${r.margemBase<=0?'row-loss':''}">
+      <td>${dateBR(r.dataFaturamento)}</td><td>${displayRef(r.nota)}</td><td>${displayRef(r.pedido)}</td><td>${displayRef(r.op)}</td><td>${displayRef(r.cfop)}</td><td>${esc(r.uf||'—')}</td>
+      <td class="num">${number(r.quantidade)}</td><td class="num">${money(r.valorVenda)}</td><td class="num">${money(r.valorMetro)}</td>
+      <td class="num table-price-col">${r.valorTabelaMapeado?money(r.valorTabela):''}</td><td class="num material-cost-col">${money(r.custoMateriaPrimaUnitario)}</td>
+      <td class="num">${optionalMoney(r.custoMaoObraUnitario,r.custoMaoObraMapeado)}</td><td class="num">${optionalMoney(r.impostoUnitario,r.impostoMapeado)}</td>
+      <td class="num">${optionalMoney(r.freteUnitario,r.freteMapeado)}</td><td class="num ${marginClass(r.lucroUnitario)}">${money(r.lucroUnitario)}</td>
+    </tr>`).join('');
+  }else{
+    panel.hidden=true;
+    body.innerHTML='';
+    count.textContent='';
+  }
+
+  // O detalhamento da M.O. é sempre carregado pela OP do relatório 201,
+  // mesmo que ainda não exista faturamento no relatório 200.
+  renderProductionMO([{op:group.op}]);
+}
+
 function renderDetail(){
+  if(selectedDetailMode==='le'){
+    renderLEDetail();
+    return;
+  }
   if(!selectedProduct){
     $('detailEmpty').hidden = false;
     $('detailContent').hidden = true;
@@ -878,6 +1203,7 @@ function switchView(view){
 }
 
 function selectDetail(product,source='product',rowId=null){
+  selectedLEKey=null;
   selectedProduct=product;
   selectedDetailMode=source==='billing'?'billing':'product';
   selectedBillingRowId=selectedDetailMode==='billing' ? rowId : null;
@@ -1255,7 +1581,7 @@ function buildImportedPackage(parsedByType){
   const usedPriceKeys=new Set(base.registros.map(row=>tablePriceKey(row.codigoListaPrecos,row.produto)));
   priceSource.registros=(priceSource.registros||[]).filter(row=>usedPriceKeys.has(tablePriceKey(row.codigoLista,row.produto)));
   return {
-    version:24,
+    version:27,
     importedAt:new Date().toISOString(),
     base,
     // Relatório 201 inteiro é preservado: o L.E precisa enxergar Estoque
@@ -2207,7 +2533,12 @@ function bindEvents(){
     applyFilters();
   });
   document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>switchView(btn.dataset.view)));
-  document.addEventListener('click',event=>{const btn=event.target.closest('[data-detail-product]'); if(btn) selectDetail(btn.dataset.detailProduct,btn.dataset.detailSource||'product',btn.dataset.detailRow||null);});
+  document.addEventListener('click',event=>{
+    const leBtn=event.target.closest('[data-le-detail]');
+    if(leBtn){ selectLEDetail(leBtn.dataset.leDetail); return; }
+    const btn=event.target.closest('[data-detail-product]');
+    if(btn) selectDetail(btn.dataset.detailProduct,btn.dataset.detailSource||'product',btn.dataset.detailRow||null);
+  });
   $('billingPrev').addEventListener('click',()=>{if(billingPage>1){billingPage--;renderBilling()}}); $('billingNext').addEventListener('click',()=>{if(billingPage*PAGE_SIZE<getGridRows().length){billingPage++;renderBilling()}});
   $('productsPrev').addEventListener('click',()=>{if(productsPage>1){productsPage--;renderProducts()}}); $('productsNext').addEventListener('click',()=>{if(productsPage*PAGE_SIZE<groupedProducts.length){productsPage++;renderProducts()}});
   $('leCard')?.addEventListener('click',openLEView);
@@ -2215,8 +2546,8 @@ function bindEvents(){
   $('backFromLE')?.addEventListener('click',()=>switchView('billing'));
   $('leSearch')?.addEventListener('input',event=>{leSearch=event.target.value||'';lePage=1;renderLEView();});
   $('lePrev')?.addEventListener('click',()=>{if(lePage>1){lePage--;renderLEView()}});
-  $('leNext')?.addEventListener('click',()=>{if(lePage*PAGE_SIZE<filteredLERows().length){lePage++;renderLEView()}});
-  $('backToBilling').addEventListener('click',()=>switchView(selectedDetailMode==='product'?'products':'billing'));
+  $('leNext')?.addEventListener('click',()=>{if(lePage*PAGE_SIZE<filteredLEGroups().length){lePage++;renderLEView()}});
+  $('backToBilling').addEventListener('click',()=>switchView(selectedDetailMode==='le'?'le':(selectedDetailMode==='product'?'products':'billing')));
   $('exportBilling').addEventListener('click',()=>exportBilling()); $('exportProducts').addEventListener('click',()=>exportProducts());
   $('printDashboard').addEventListener('click',printDashboard); $('exportDashboard').addEventListener('click',exportCurrentView);
   $('importReports').addEventListener('click',()=> $('importFiles').click());
@@ -2251,7 +2582,7 @@ async function loadData(){
   freightBase=freightData || {meta:{fonte:'Tabela de fretes não encontrada'},registros:[]};
   freightRateByKey=buildFreightRateMap(freightBase?.registros||[]);
   const published={
-    version:24,
+    version:27,
     base:await baseResponse.json(),
     production:prodData || {meta:{fonte:'Produção não encontrada'},registros:[]},
     setup:setupData || {meta:{fonte:'Setup não encontrado'},registros:[]},
