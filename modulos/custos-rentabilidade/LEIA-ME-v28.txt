@@ -1,0 +1,23 @@
+SMART GROUP ANALYTICS — CUSTOS E RENTABILIDADE v28
+
+CORREÇÃO DA PUBLICAÇÃO COMPARTILHADA NO FIRESTORE
+
+Problema corrigido:
+- Ao importar o relatório 201 completo, a base compartilhada ficou muito maior.
+- A versão anterior agrupava muitos documentos grandes no mesmo writeBatch do Firestore.
+- Isso ultrapassava o limite de tamanho da requisição e gerava: "datastore transaction or write too big".
+
+Correção:
+- Os blocos grandes da base agora são gravados individualmente no Firestore.
+- A troca do ponteiro da base oficial continua acontecendo somente ao final da carga.
+- Se uma gravação falhar no meio, os demais usuários continuam vendo a base anterior completa.
+- Nenhuma regra de cálculo de Rentabilidade, L.E, M.O., matéria-prima, imposto, frete, comissão ou margem foi alterada.
+
+COMO APLICAR
+1. Substitua somente modulos/custos-rentabilidade pela pasta desta versão.
+2. Commit e Push origin.
+3. Aguarde o GitHub Pages e use Ctrl+F5.
+4. Importe novamente os 5 relatórios como administrador.
+5. Aguarde a mensagem de publicação concluída; com o 201 completo a gravação pode levar alguns segundos a mais.
+
+Não é necessário alterar novamente as regras do Firestore.

@@ -45,7 +45,7 @@ const SHARED_POINTER_DOC = 'current';
 const SHARED_SLOT_A = 'slot-a';
 const SHARED_SLOT_B = 'slot-b';
 const SHARED_CHUNK_BYTES = 600000;
-const SHARED_PACKAGE_VERSION = 27;
+const SHARED_PACKAGE_VERSION = 28;
 
 const money = value => Number(value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 const number = value => Number(value || 0).toLocaleString('pt-BR', { maximumFractionDigits: 2 });
@@ -1581,7 +1581,7 @@ function buildImportedPackage(parsedByType){
   const usedPriceKeys=new Set(base.registros.map(row=>tablePriceKey(row.codigoListaPrecos,row.produto)));
   priceSource.registros=(priceSource.registros||[]).filter(row=>usedPriceKeys.has(tablePriceKey(row.codigoLista,row.produto)));
   return {
-    version:27,
+    version:28,
     importedAt:new Date().toISOString(),
     base,
     // Relatório 201 inteiro é preservado: o L.E precisa enxergar Estoque
@@ -1636,9 +1636,9 @@ function splitBytes(bytes,maxBytes=SHARED_CHUNK_BYTES){
 async function deleteSharedSlotChunks(slotId){
   const snap=await getDocs(collection(db,SHARED_COLLECTION,slotId,'chunks'));
   const refs=snap.docs.map(item=>item.ref);
-  for(let i=0;i<refs.length;i+=400){
+  for(let i=0;i<refs.length;i+=200){
     const batch=writeBatch(db);
-    refs.slice(i,i+400).forEach(ref=>batch.delete(ref));
+    refs.slice(i,i+200).forEach(ref=>batch.delete(ref));
     await batch.commit();
   }
 }
@@ -1665,17 +1665,19 @@ async function saveSharedImport(pkg){
     updatedAt:new Date().toISOString()
   });
 
-  for(let i=0;i<chunks.length;i+=400){
-    const batch=writeBatch(db);
-    chunks.slice(i,i+400).forEach((chunk,localIndex)=>{
-      const index=i+localIndex;
-      const chunkId=String(index).padStart(4,'0');
-      batch.set(
-        doc(db,SHARED_COLLECTION,targetSlot,'chunks',chunkId),
-        {index,payload:bytesToBase64(chunk)}
-      );
-    });
-    await batch.commit();
+  // IMPORTANTE: cada bloco fica perto do limite de tamanho de um documento do
+  // Firestore depois da conversão para Base64. Não podemos colocar centenas
+  // desses blocos no mesmo writeBatch porque a requisição ultrapassa o limite
+  // de tamanho do Firestore (erro: "datastore transaction or write too big").
+  // Gravamos os blocos individualmente. É um pouco mais conservador, mas
+  // mantém a publicação estável mesmo quando o relatório 201 vem completo.
+  for(let i=0;i<chunks.length;i++){
+    const chunk=chunks[i];
+    const chunkId=String(i).padStart(4,'0');
+    await setDoc(
+      doc(db,SHARED_COLLECTION,targetSlot,'chunks',chunkId),
+      {index:i,payload:bytesToBase64(chunk)}
+    );
   }
 
   await setDoc(slotRef,{
@@ -2582,7 +2584,7 @@ async function loadData(){
   freightBase=freightData || {meta:{fonte:'Tabela de fretes não encontrada'},registros:[]};
   freightRateByKey=buildFreightRateMap(freightBase?.registros||[]);
   const published={
-    version:27,
+    version:28,
     base:await baseResponse.json(),
     production:prodData || {meta:{fonte:'Produção não encontrada'},registros:[]},
     setup:setupData || {meta:{fonte:'Setup não encontrado'},registros:[]},
