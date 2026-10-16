@@ -1,6 +1,6 @@
 {
-  "atualizadoEm": "2026-10-16T11:37:56.296Z",
-  "ultimaAtualizacaoValida": "2026-10-16T11:37:56.296Z",
+  "atualizadoEm": "2026-10-16T11:41:26.017Z",
+  "ultimaAtualizacaoValida": "2026-10-16T11:41:26.017Z",
   "status": "OK",
   "mensagem": "9 de 9 relatórios atualizados com sucesso.",
   "modo": "PARCIAL_SEGURO",
@@ -54,7 +54,7 @@
     {
       "arquivo": "ESTOQUEBR.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-10-16T11:33:30.000Z",
+      "recebidoEm": "2026-10-16T11:40:22.000Z",
       "linhasValidas": 787,
       "mensagem": "Atualizado com sucesso."
     },
