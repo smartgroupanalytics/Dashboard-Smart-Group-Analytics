@@ -123,18 +123,23 @@ function countryLabel(country){return valueText(country)}
 function countryVisualHtml(country){const txt=valueText(country);if(txt==="—")return txt;return `<span class="country-visual">${countryFlagHtml(country)}<span>${escapeHtml(txt)}</span></span>`}
 function updateCountryPreview(){const input=$("[name=paisDestino]");const preview=$("#countryPreview");if(!preview)return;const value=input?.value?.trim()||"";preview.innerHTML=value?countryVisualHtml(value):'<span class="country-preview-placeholder">Bandeira automática</span>';preview.classList.toggle("active",!!value)}
 function displayFieldValue(field, raw){return field?.type==="date"?formatDate(raw):valueText(raw)}
-const REFACAO_SECTIONS = SECTIONS.slice(5);
+// A refação reinicia na CHINA/FORNECEDOR, mantendo intacto o ciclo original.
+const REFACAO_SECTIONS = SECTIONS.slice(5).map(section=>section.id==="china"
+  ? {...section, keys:["fornecedor",...section.keys.filter(k=>k!=="fornecedor")]}
+  : section);
 const REFACAO_KEYS = REFACAO_SECTIONS.flatMap(s=>s.keys);
 const EXCEL_LAYOUT = ["diasProcesso","dataRecebimentoMaterial","encaminhamentoEngenharia","vencimentoComercial","pj","paisDestino","dataCotacao","mesSolicitado","nomeMaterial","caracteristicaMaterial","cor","siglaCliente","encaminhamentoComex",null,"vencimentoEngenharia","aguardarEnvio","fedexAwbIda","dataEnvioDestino","dataRecebimentoDestino","fornecedor","somenteCotar","desenvolver","dataInicio","dataFim","fedexAwbVolta","dataEnvioBrasil","statusDestino","dataPrecoOrigem","dataRecebimentoBrasil","dataEncaminhamentoEngenhariaFinal","dataEntregueComercial","retornoComercial","observacoesComercial","statusFinal","refazerComercial"];
 function upper(v){return normalize(v).toUpperCase()}
 function validEnd(v){return ["APROVADO","ENCERRADO","REPROVADO"].includes(upper(v))}
 function shouldRefazer(obj){return (upper(obj.retornoComercial)==="REPROVADO" || upper(obj.statusFinal)==="REPROVADO") && upper(obj.refazerComercial)!=="NAO"}
 function activeCycle(r){return Array.isArray(r.refacoes)&&r.refacoes.length?r.refacoes[r.refacoes.length-1]:null}
+function currentSupplier(r){const cycle=activeCycle(r);return cycle?cycle.fornecedor||"—":r.fornecedor||"—"}
 function cycleEnd(c){return validEnd(c?.statusFinal) && !shouldRefazer(c)}
 function isCompleted(r){const c=activeCycle(r);if(c)return cycleEnd(c);if(shouldRefazer(r))return false;const s=normalize(r.statusFinal);return !!s && !["andamento","em andamento","aguardando","pendente"].includes(s)}
 function buildCycleTimeline(c){
  const start=c?.abertoEm||dateString(today());
  return [
+ {id:"ref-china-fornecedor",label:"China · Fornecedor",sector:"CHINA",complete:!!String(c.fornecedor||"").trim(),start,due:"",date:""},
  {id:"ref-china-arrival",label:"China · Recebimento",sector:"CHINA",complete:!!c.dataRecebimentoDestino,start,due:addDaysString(start,10),date:c.dataRecebimentoDestino},
  {id:"ref-china-development",label:"China · Desenvolvimento",sector:"CHINA",complete:!!c.dataFim||!!c.dataEnvioBrasil,start:c.dataInicio||c.dataRecebimentoDestino||start,due:addDaysString(c.dataInicio||c.dataRecebimentoDestino,15),date:c.dataFim||c.dataEnvioBrasil},
  {id:"ref-comex-return",label:"COMEX · Retorno",sector:"COMEX",complete:!!c.dataRecebimentoBrasil,start:c.dataEnvioBrasil,due:addDaysString(c.dataEnvioBrasil,10),date:c.dataRecebimentoBrasil},
@@ -205,10 +210,17 @@ function auditDiff(a,b){
 }
 function mergeUserEdits(latest,submitted,baseline){
  const merged={...latest,refacoes:(latest.refacoes||[]).map(c=>({...c}))};
- for(const f of FIELD_DEFS){if(f.readonly)continue;
-  if(!baseline || String(submitted[f.key]??"")!==String(baseline[f.key]??""))merged[f.key]=submitted[f.key]??"";
+ // Após abrir a primeira refação, os dados originais viram registro histórico imutável pela tela.
+ if(!(latest.refacoes||[]).length){
+  for(const f of FIELD_DEFS){if(f.readonly)continue;
+   if(!baseline || String(submitted[f.key]??"")!==String(baseline[f.key]??""))merged[f.key]=submitted[f.key]??"";
+  }
  }
+ // Um ciclo anterior nunca é atualizado ao abrir ou editar o ciclo seguinte.
+ const savedCycles=latest.refacoes||[];
+ const activeIndex=savedCycles.length-1;
  for(let i=0;i<(submitted.refacoes||[]).length;i++){
+  if(i<activeIndex)continue;
   const entry=submitted.refacoes[i],before=baseline?.refacoes?.[i]||{};
   if(!merged.refacoes[i])merged.refacoes[i]={...entry};
   else for(const key of REFACAO_KEYS){if(!baseline||String(entry[key]??"")!==String(before[key]??""))merged.refacoes[i][key]=entry[key]??"";}
@@ -218,6 +230,7 @@ function mergeUserEdits(latest,submitted,baseline){
 function finishEdit(latest,submitted,baseline){
  const next=mergeUserEdits(latest,submitted,baseline);
  const previousCount=next.refacoes.length;
+ const originalCount=(latest.refacoes||[]).length;
  if(upper(next.retornoComercial)==="REPROVADO"&&!next.statusFinal)next.statusFinal="REPROVADO";
  for(const cycle of next.refacoes)if(upper(cycle.retornoComercial)==="REPROVADO"&&!cycle.statusFinal)cycle.statusFinal="REPROVADO";
  const changes=auditDiff(latest,next);
@@ -228,12 +241,12 @@ function finishEdit(latest,submitted,baseline){
   const n=createRefacao(next,`Refação ${previousCount} · Comercial`);
   changes.push({campo:`Refação ${n}`,antes:"Não existia",depois:"Aberta automaticamente após reprovação"});
  }
- if(!changes.length)return {next,changes};
+ if(!changes.length)return {next,changes,newCycle:false};
  next.updatedBy=userLabel();
  const event={data:new Date().toISOString(),usuario:userLabel(),acao:latest.pj?"Desenvolvimento atualizado":"Desenvolvimento criado",alteracoes:changes};
  next.historico=[...(latest.historico||[]),event].slice(-300);
  next.diasProcesso=totalDays(next);
- return {next,changes};
+ return {next,changes,newCycle:next.refacoes.length>originalCount};
 }
 async function saveRecord(record){
  const baseline=state.editBaseline;
@@ -251,32 +264,38 @@ async function saveRecord(record){
   result=finishEdit(latest,record,baseline);
   if(result.changes.length){result.next.id=id;result.next.updatedAt=new Date().toISOString();const ix=state.records.findIndex(r=>r.id===id);if(ix>=0)state.records[ix]=normalizeRecord(result.next,id);else state.records.push(normalizeRecord(result.next,id));persistLocal();refresh();}
  }
- showToast(result.changes.length?"Desenvolvimento salvo e histórico atualizado.":"Nenhuma alteração identificada.");
+ showToast(result.newCycle?`Refação ${result.next.refacoes.length} aberta na China / Fornecedor.`:
+   result.changes.length?"Desenvolvimento salvo e histórico atualizado.":"Nenhuma alteração identificada.");
+ return {...result,id};
 }
 
 async function removeRecord(id){if(state.mode==="online")await deleteDoc(doc(db,COLLECTION,id));else{state.records=state.records.filter(r=>r.id!==id);persistLocal();refresh()}showToast("Desenvolvimento excluído.")}
 
-function cycleFormHtml(cycle,i){
- return `<section class="refacao-block"><div class="refacao-title"><strong>↻ REFAÇÃO ${i+1} — RETORNO À CHINA / FORNECEDOR</strong><span>Aberta em ${escapeHtml(formatDate(cycle.abertoEm))}. O ciclo anterior permanece preservado.</span></div>`+
- REFACAO_SECTIONS.map((section,j)=>`<section class="form-section"><div class="form-section-head"><h3>${j+8}. ${escapeHtml(section.title.replace(/^\d+\. /,""))} · Refação ${i+1}</h3><span>${escapeHtml(section.note)}</span></div><div class="fields">${section.keys.map(key=>fieldHtml(FIELD_DEFS.find(f=>f.key===key),`refacao_${i}__`)).join("")}</div></section>`).join("")+`</section>`;
+function cycleFormHtml(cycle,i,activeIndex){
+ const locked=i<activeIndex;
+ return `<section class="refacao-block ${locked?"refacao-bloqueada":"refacao-ativa"}" data-refacao="${i}" data-refacao-ativa="${locked?"0":"1"}"><div class="refacao-title"><strong>↻ REFAÇÃO ${i+1} — CHINA / FORNECEDOR</strong><span>${locked?"HISTÓRICO PRESERVADO · SOMENTE CONSULTA":"CICLO ATIVO · COMECE PELO FORNECEDOR"} · Aberta em ${escapeHtml(formatDate(cycle.abertoEm))}</span></div>`+
+ REFACAO_SECTIONS.map((section,j)=>`<section class="form-section"><div class="form-section-head"><h3>${j+8}. ${escapeHtml(section.title.replace(/^\d+\. /,""))} · Refação ${i+1}</h3><span>${escapeHtml(section.note)}</span></div><div class="fields">${section.keys.map(key=>fieldHtml(FIELD_DEFS.find(f=>f.key===key),`refacao_${i}__`,locked)).join("")}</div></section>`).join("")+`</section>`;
 }
 function renderForm(record=null){
  const byKey=Object.fromEntries(FIELD_DEFS.map(f=>[f.key,f]));
- $("#formSections").innerHTML=SECTIONS.map(section=>`<section class="form-section"><div class="form-section-head"><h3>${escapeHtml(section.title)}</h3><span>${escapeHtml(section.note)}</span></div><div class="fields">${section.keys.map(k=>fieldHtml(byKey[k])).join("")}</div></section>`).join("")+
- (record?.refacoes||[]).map(cycleFormHtml).join("");
+ const cycles=record?.refacoes||[];
+ const notice=cycles.length?`<div class="refacao-aviso" role="note"><strong>Histórico do PJ preservado.</strong> A primeira passagem e as refações anteriores estão bloqueadas para edição. Preencha somente a <b>Refação ${cycles.length}</b>, a partir do campo <b>Fornecedor</b>.</div>`:"";
+ $("#formSections").innerHTML=notice+
+ SECTIONS.map(section=>`<section class="form-section ${cycles.length?"secao-historica":""}"><div class="form-section-head"><h3>${escapeHtml(section.title)}</h3><span>${cycles.length?"HISTÓRICO ORIGINAL · SOMENTE CONSULTA":escapeHtml(section.note)}</span></div><div class="fields">${section.keys.map(k=>fieldHtml(byKey[k],"",cycles.length>0)).join("")}</div></section>`).join("")+
+ cycles.map((cycle,i)=>cycleFormHtml(cycle,i,cycles.length-1)).join("");
  const b=$("[name=dataRecebimentoMaterial]"),c=$("[name=encaminhamentoEngenharia]"),country=$("[name=paisDestino]");
  b?.addEventListener("change",()=>{const d=$("[name=vencimentoComercial]");if(d&&!d.value)d.value=addDaysString(b.value,1);const m=$("[name=mesSolicitado]");if(m&&!m.value&&b.value)m.value=String(dateObj(b.value).getMonth()+1);updateLiveDays()});
  c?.addEventListener("change",()=>{const d=$("[name=vencimentoEngenharia]");if(d&&!d.value)d.value=addDaysString(c.value,2);updateLiveDays()});
  country?.addEventListener("input",updateCountryPreview);updateCountryPreview();
 }
-function fieldHtml(f,prefix=""){
- const name=prefix+f.key,req=f.required&&!prefix?"required":"",ro=f.readonly?"readonly":"";
+function fieldHtml(f,prefix="",locked=false){
+ const name=prefix+f.key,req=f.required&&!prefix&&!locked?"required":"",ro=f.readonly?"readonly":"",disabled=locked?"disabled":"";
  let control;
- if(f.type==="select")control=`<select name="${name}">${f.options.map(o=>`<option value="${escapeHtml(o)}">${escapeHtml(o||"Selecione")}</option>`).join("")}</select>`;
- else if(f.type==="textarea")control=`<textarea name="${name}" rows="3" placeholder="Descreva os motivos técnicos e as observações…"></textarea>`;
- else control=`<input name="${name}" type="${f.type||"text"}" ${req} ${ro}>`;
+ if(f.type==="select")control=`<select name="${name}" ${disabled}>${f.options.map(o=>`<option value="${escapeHtml(o)}">${escapeHtml(o||"Selecione")}</option>`).join("")}</select>`;
+ else if(f.type==="textarea")control=`<textarea name="${name}" rows="3" ${disabled} placeholder="Descreva os motivos técnicos e as observações…"></textarea>`;
+ else control=`<input name="${name}" type="${f.type||"text"}" ${req} ${ro} ${disabled}>`;
  if(f.key==="paisDestino"&&!prefix)control=`<div class="country-field">${control}<div id="countryPreview" class="country-preview">Bandeira automática</div></div>`;
- return `<div class="field ${["nomeMaterial","caracteristicaMaterial","observacoesComercial"].includes(f.key)?"wide":""}"><label>${escapeHtml(f.label)}</label>${control}</div>`;
+ return `<div class="field ${["nomeMaterial","caracteristicaMaterial","observacoesComercial"].includes(f.key)?"wide":""} ${locked?"field-historico":""}"><label>${escapeHtml(f.label)}</label>${control}</div>`;
 }
 function updateLiveDays(){const start=$("[name=dataRecebimentoMaterial]")?.value;const el=$("[name=diasProcesso]");if(el)el.value=start?diffDays(start,dateString(today())):0}
 function openModal(record=null){
@@ -291,8 +310,8 @@ function closeModal(){$("#modal").classList.add("hidden");state.editBaseline=nul
 function formRecord(){
  const existing=state.editBaseline;
  const r=existing?structuredClone(existing):{historico:[],refacoes:[]};
- FIELD_DEFS.forEach(f=>{const el=$(`[name=${f.key}]`);if(el&&!f.readonly)r[f.key]=el.value.trim()});
- (r.refacoes||[]).forEach((cycle,i)=>REFACAO_KEYS.forEach(key=>{const el=$(`[name=refacao_${i}__${key}]`);if(el)cycle[key]=el.value.trim()}));
+ FIELD_DEFS.forEach(f=>{const el=$(`[name=${f.key}]`);if(el&&!f.readonly&&!el.disabled)r[f.key]=el.value.trim()});
+ (r.refacoes||[]).forEach((cycle,i)=>REFACAO_KEYS.forEach(key=>{const el=$(`[name=refacao_${i}__${key}]`);if(el&&!el.disabled)cycle[key]=el.value.trim()}));
  r.id=$("#recordId").value||"";r.diasProcesso=totalDays(r);return r;
 }
 
@@ -313,7 +332,7 @@ function renderDonut(donutSel,totalSel,legendSel,groups,countFn,total){let acc=0
 function renderStageDonut(items,total){const palette=["#0b76f0","#14a865","#eaa21a","#7257d9","#1d9db6","#e43d3d","#5a7da8","#42a5f5","#8bc34a"];let acc=0;const stops=[];items.forEach(([,n],i)=>{const pct=total?n/total*100:0;stops.push(`${palette[i%palette.length]} ${acc}% ${acc+pct}%`);acc+=pct});if(acc<100)stops.push(`#d8e2ee ${acc}% 100%`);$("#stageDonut").style.background=`conic-gradient(${stops.join(",")})`;$("#stageDonutTotal").textContent=total;$("#stageLegend").innerHTML=items.slice(0,7).map(([name,n],i)=>`<div class="legend-row"><span class="legend-dot" style="background:${palette[i%palette.length]}"></span><span>${escapeHtml(name)}</span><strong>${n}</strong></div>`).join("")}
 function countBy(rows,fn){const m=new Map();rows.forEach(r=>{const k=fn(r);m.set(k,(m.get(k)||0)+1)});return [...m.entries()].sort((a,b)=>b[1]-a[1])}
 function renderBars(sel,items,limit,type="default"){const el=$(sel);const top=items.slice(0,limit);const max=Math.max(1,...top.map(x=>x[1]));el.innerHTML=top.length?top.map(([name,n])=>{const labelHtml=type==="country"?countryVisualHtml(name):escapeHtml(name);return `<div class="bar-row"><span class="bar-label" title="${escapeHtml(name)}">${labelHtml}</span><div class="bar-track"><div class="bar-fill" style="width:${Math.max(5,n/max*100)}%"></div></div><strong>${n}</strong></div>`}).join(""):'<div class="empty-state show" style="padding:30px 10px"><p>Sem dados</p></div>'}
-function renderTable(){filterRecords();const body=$("#rows");$("#resultCount").textContent=`${state.filtered.length} registro(s)`;$("#emptyState").classList.toggle("show",state.filtered.length===0);body.innerHTML=state.filtered.map(r=>{const d=deadlineStatus(r),c=currentStage(r);return `<tr data-id="${escapeHtml(r.id)}"><td><span class="alert-icon ${d.css}"><i class="fa-solid ${d.css==='late'?'fa-exclamation':d.css==='risk'?'fa-clock':d.css==='done'?'fa-flag-checkered':'fa-check'}"></i></span></td><td><strong>${escapeHtml(r.pj||"—")}</strong></td><td>${escapeHtml(r.fornecedor||"—")}</td><td>${countryVisualHtml(r.paisDestino)}</td><td>${escapeHtml(r.nomeMaterial||"—")}</td><td>${escapeHtml(r.siglaCliente||"—")}</td><td><span class="status-pill ${d.css}">${d.label}</span></td><td><strong>${escapeHtml(c.sector)}</strong><br><span class="stage-label">${escapeHtml(c.label)}</span></td><td>${stageDays(r)}</td><td>${totalDays(r)}</td><td>${d.due?formatDate(d.due):"—"}</td><td>${updatedLabel(r)}</td><td><button class="action-btn edit-row" data-id="${escapeHtml(r.id)}" title="Editar"><i class="fa-solid fa-pen"></i></button><button class="action-btn view-row" data-id="${escapeHtml(r.id)}" title="Detalhar"><i class="fa-regular fa-eye"></i></button></td></tr>`}).join("");body.querySelectorAll("tr").forEach(tr=>tr.addEventListener("click",e=>{if(e.target.closest("button"))return;openDetail(tr.dataset.id)}));body.querySelectorAll(".edit-row").forEach(b=>b.addEventListener("click",()=>openModal(state.records.find(r=>r.id===b.dataset.id))));body.querySelectorAll(".view-row").forEach(b=>b.addEventListener("click",()=>openDetail(b.dataset.id)))}
+function renderTable(){filterRecords();const body=$("#rows");$("#resultCount").textContent=`${state.filtered.length} registro(s)`;$("#emptyState").classList.toggle("show",state.filtered.length===0);body.innerHTML=state.filtered.map(r=>{const d=deadlineStatus(r),c=currentStage(r);return `<tr data-id="${escapeHtml(r.id)}"><td><span class="alert-icon ${d.css}"><i class="fa-solid ${d.css==='late'?'fa-exclamation':d.css==='risk'?'fa-clock':d.css==='done'?'fa-flag-checkered':'fa-check'}"></i></span></td><td><strong>${escapeHtml(r.pj||"—")}</strong></td><td>${escapeHtml(currentSupplier(r))}</td><td>${countryVisualHtml(r.paisDestino)}</td><td>${escapeHtml(r.nomeMaterial||"—")}</td><td>${escapeHtml(r.siglaCliente||"—")}</td><td><span class="status-pill ${d.css}">${d.label}</span></td><td><strong>${escapeHtml(c.sector)}</strong><br><span class="stage-label">${escapeHtml(c.label)}</span></td><td>${stageDays(r)}</td><td>${totalDays(r)}</td><td>${d.due?formatDate(d.due):"—"}</td><td>${updatedLabel(r)}</td><td><button class="action-btn edit-row" data-id="${escapeHtml(r.id)}" title="Editar"><i class="fa-solid fa-pen"></i></button><button class="action-btn view-row" data-id="${escapeHtml(r.id)}" title="Detalhar"><i class="fa-regular fa-eye"></i></button></td></tr>`}).join("");body.querySelectorAll("tr").forEach(tr=>tr.addEventListener("click",e=>{if(e.target.closest("button"))return;openDetail(tr.dataset.id)}));body.querySelectorAll(".edit-row").forEach(b=>b.addEventListener("click",()=>openModal(state.records.find(r=>r.id===b.dataset.id))));body.querySelectorAll(".view-row").forEach(b=>b.addEventListener("click",()=>openDetail(b.dataset.id)))}
 
 function openDetail(id){const r=state.records.find(x=>x.id===id);if(!r)return;state.selected=r;renderDetail(r);$("#detailPanel").classList.remove("hidden");$("#detailPanel").scrollIntoView({behavior:"smooth",block:"start"})}
 function closeDetail(){state.selected=null;$("#detailPanel").classList.add("hidden")}
@@ -326,7 +345,7 @@ function renderDetail(r){
  $("#detailAlert").className=`alert-dot ${d.css}`;$("#detailStatus").className=`status-pill ${d.css}`;
  $("#detailStatus").textContent=d.label;$("#detailDays").textContent=`${totalDays(r)} dias em processo`;
  $("#detailDeadline").textContent=d.due?`Prazo ${formatDate(d.due)}`:`Etapa ${c.label}`;
- $("#generalInfo").innerHTML=infoDl([['País destino',{html:countryVisualHtml(r.paisDestino)}],['Mês solicitado',r.mesSolicitado],['Cliente',r.siglaCliente],['Cor',r.cor],['Característica',r.caracteristicaMaterial],['Fornecedor',r.fornecedor],['Setor atual',c.sector],['Atualizado por',r.updatedBy],['Ciclos de refação',r.refacoes?.length||0]]);
+ $("#generalInfo").innerHTML=infoDl([['País destino',{html:countryVisualHtml(r.paisDestino)}],['Mês solicitado',r.mesSolicitado],['Cliente',r.siglaCliente],['Cor',r.cor],['Característica',r.caracteristicaMaterial],[r.refacoes?.length?'Fornecedor original':'Fornecedor',r.fornecedor],...(r.refacoes?.length?[[`Fornecedor da refação ${r.refacoes.length}`,currentSupplier(r)]]:[]),['Setor atual',c.sector],['Atualizado por',r.updatedBy],['Ciclos de refação',r.refacoes?.length||0]]);
  renderTimeline(r,d,c);
  $("#processInfo").innerHTML=SECTIONS.filter(s=>s.id!=="geral").map(s=>processGroupHtml(s,r)).join("")+
  (r.refacoes||[]).map((cycle,i)=>`<div class="process-refacao-title">↻ Refação ${i+1} — aberta em ${escapeHtml(formatDate(cycle.abertoEm))}</div>`+REFACAO_SECTIONS.map((s,j)=>processGroupHtml({...s,title:`${j+8}. ${s.title.replace(/^\d+\. /,"")} · Refação ${i+1}`},cycle)).join("")).join("");
@@ -388,8 +407,14 @@ async function importExcel(file){
  const historySheet=wb.Sheets["Historico"];
  if(historySheet){const entries=XLSX.utils.sheet_to_json(historySheet,{defval:"",raw:false});for(const row of entries){const pj=String(row.PJ||"").trim();if(!pj)continue;let diffs=[];try{diffs=JSON.parse(row.Alteracoes||"[]")}catch{}const arr=historyByPj.get(pj)||[];arr.push({data:row.Data||"",usuario:row.Usuario||"",acao:row.Acao||"Importado",alteracoes:diffs});historyByPj.set(pj,arr);}}
  const eventDate=new Date().toISOString(),changed=[];
+ let protectedCount=0;
  for(const incoming of imported){
   const id=docIdFor(incoming),existing=state.records.find(r=>r.id===id)||{};
+  // Importação comum não pode sobrescrever um PJ já reprovado/refeito.
+  // Restauração de backup requer procedimento separado e conferência de ciclos.
+  if(existing.id && ((existing.refacoes||[]).length || upper(existing.retornoComercial)==="REPROVADO" || upper(existing.statusFinal)==="REPROVADO")){
+   protectedCount++;continue;
+  }
   const merged={...existing,...incoming,id};
   if(cycleByPj.has(incoming.pj))merged.refacoes=cycleByPj.get(incoming.pj).filter(Boolean);
   else merged.refacoes=existing.refacoes||[];
@@ -403,7 +428,7 @@ async function importExcel(file){
  if(state.mode==="online"){
   for(let i=0;i<changed.length;i+=400){const batch=writeBatch(db);changed.slice(i,i+400).forEach(r=>{const id=r.id;const data={...r,updatedAt:serverTimestamp()};delete data.id;batch.set(doc(db,COLLECTION,id),data,{merge:true})});await batch.commit();}
  }else{for(const r of changed){r.updatedAt=eventDate;const i=state.records.findIndex(x=>x.id===r.id);if(i>=0)state.records[i]=normalizeRecord(r,r.id);else state.records.push(normalizeRecord(r,r.id));}persistLocal();refresh();}
- showToast(`${imported.length} PJ(s) lidos, ${changed.length} atualizado(s).`);
+ showToast(`${imported.length} PJ(s) lidos; ${changed.length} atualizado(s); ${protectedCount} com histórico protegido.`);
 }
 function exportExcel(){
  if(!window.XLSX){showToast("Biblioteca Excel indisponível.");return;}
@@ -430,6 +455,18 @@ function exportExcel(){
 }
 
 
-$("#newButton").addEventListener("click",()=>openModal());$("#closeModal").addEventListener("click",closeModal);$("#cancelButton").addEventListener("click",closeModal);$("#modal").addEventListener("click",e=>{if(e.target.id==="modal")closeModal()});$("#pjForm").addEventListener("submit",async e=>{e.preventDefault();try{await saveRecord(formRecord());closeModal()}catch(err){console.error(err);showToast(`Erro ao salvar: ${err.message||err}`)}});$("#closeDetail").addEventListener("click",closeDetail);$("#editButton").addEventListener("click",()=>state.selected&&openModal(state.selected));$("#deleteButton").addEventListener("click",async()=>{if(!state.selected)return;if(!confirm(`Excluir o desenvolvimento ${state.selected.pj||"selecionado"}?`))return;try{await removeRecord(state.selected.id);closeDetail()}catch(err){showToast(`Erro ao excluir: ${err.message||err}`)}});$("#importButton").addEventListener("click",()=>$("#fileInput").click());$("#fileInput").addEventListener("change",async e=>{const f=e.target.files?.[0];if(!f)return;try{await importExcel(f)}catch(err){console.error(err);showToast(err.message||"Falha ao importar Excel.")}finally{e.target.value=""}});$("#exportButton").addEventListener("click",exportExcel);["#searchInput","#stageFilter","#deadlineFilter","#countryFilter"].forEach(sel=>$(sel).addEventListener(sel==="#searchInput"?"input":"change",()=>{filterRecords();renderTable()}));
+$("#newButton").addEventListener("click",()=>openModal());$("#closeModal").addEventListener("click",closeModal);$("#cancelButton").addEventListener("click",closeModal);$("#modal").addEventListener("click",e=>{if(e.target.id==="modal")closeModal()});$("#pjForm").addEventListener("submit",async e=>{
+ e.preventDefault();try{
+  const result=await saveRecord(formRecord());
+  if(result.newCycle){
+   // Abre imediatamente a nova passagem, sem reaproveitar dados do ciclo anterior.
+   openModal({...result.next,id:result.id});
+   const section=$("[data-refacao-ativa='1']");
+   const supplier=$("[name=refacao_"+(result.next.refacoes.length-1)+"__fornecedor]");
+   section?.scrollIntoView({block:"start",behavior:"smooth"});
+   supplier?.focus({preventScroll:true});
+  } else closeModal();
+ }catch(err){console.error(err);showToast(`Erro ao salvar: ${err.message||err}`)}
+});$("#closeDetail").addEventListener("click",closeDetail);$("#editButton").addEventListener("click",()=>state.selected&&openModal(state.selected));$("#deleteButton").addEventListener("click",async()=>{if(!state.selected)return;if(!confirm(`Excluir o desenvolvimento ${state.selected.pj||"selecionado"}?`))return;try{await removeRecord(state.selected.id);closeDetail()}catch(err){showToast(`Erro ao excluir: ${err.message||err}`)}});$("#importButton").addEventListener("click",()=>$("#fileInput").click());$("#fileInput").addEventListener("change",async e=>{const f=e.target.files?.[0];if(!f)return;try{await importExcel(f)}catch(err){console.error(err);showToast(err.message||"Falha ao importar Excel.")}finally{e.target.value=""}});$("#exportButton").addEventListener("click",exportExcel);["#searchInput","#stageFilter","#deadlineFilter","#countryFilter"].forEach(sel=>$(sel).addEventListener(sel==="#searchInput"?"input":"change",()=>{filterRecords();renderTable()}));
 
 renderForm();await connectData();

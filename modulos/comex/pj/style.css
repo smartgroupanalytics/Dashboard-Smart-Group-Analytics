@@ -203,3 +203,16 @@ td{font-size:9.5px;padding:7px}
 .timeline-cycle-heading{width:100%;flex-basis:100%;font-size:10px;color:#ffdaa0;font-weight:800;margin-bottom:10px}
 .timeline:has(.timeline-cycle-heading){flex-wrap:wrap}
 @media(max-width:900px){.audit-diff{grid-template-columns:1fr;gap:4px}.audit-arrow{display:none}}
+
+
+/* V8 — ciclos reprovados são histórico; a edição reabre apenas China/Fornecedor */
+.refacao-aviso{border:1px solid #5c9bdc;background:#0a2a57;color:#e7f2ff;padding:13px 15px;border-radius:9px;font-size:12px;line-height:1.5}
+.refacao-aviso strong,.refacao-aviso b{color:#fff;font-weight:800}
+.refacao-bloqueada{border-color:#5a6e8b;background:rgba(8,29,58,.6)}
+.refacao-bloqueada .refacao-title{background:#244263}
+.refacao-ativa{border-color:#37b2fa;box-shadow:0 0 0 1px rgba(55,178,250,.12)}
+.refacao-ativa .refacao-title{background:#125e8e}
+.secao-historica .form-section-head{background:#1a365c}
+.secao-historica .form-section-head span{color:#b8cce6}
+.field-historico input:disabled,.field-historico select:disabled,.field-historico textarea:disabled{opacity:1;background:#193555;color:#e6effa;border-color:#476280;cursor:not-allowed;-webkit-text-fill-color:#e6effa}
+@media(max-width:900px){.refacao-aviso{font-size:11px}}
