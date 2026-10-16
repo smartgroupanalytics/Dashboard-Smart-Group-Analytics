@@ -1,0 +1,19 @@
+SMART GROUP ANALYTICS — CUSTOS E RENTABILIDADE v26
+
+L.E CORRIGIDO
+
+1. O Relatório 201 NÃO é mais reduzido apenas às OPs do faturamento.
+2. Todas as linhas em que a coluna P (Descr.Tp.produção) = Estoque são preservadas.
+3. O card L.E passa a exibir o total real do relatório 201.
+4. Ao clicar no card L.E abre uma visão exclusiva com todos os registros, paginada e pesquisável.
+5. Inclui Estoque com OP, sem OP, com pedido ou sem pedido.
+6. A M.O. e os demais cálculos de rentabilidade continuam com a mesma regra existente.
+
+VALIDAÇÃO DO RELATÓRIO 201 ENVIADO EM 15/10/2026:
+- 18.090 registros com Descr.Tp.produção = Estoque.
+- 18.082 com OP e 8 sem OP.
+- 28 com pedido e 18.062 sem pedido.
+- 582 códigos de produto distintos preenchidos.
+- 579 descrições distintas.
+
+IMPORTANTE: após publicar a v26, importe novamente os 5 relatórios como administrador. A carga compartilhada anterior foi salva com o 201 reduzido às OPs do faturamento e não contém todos os L.E.

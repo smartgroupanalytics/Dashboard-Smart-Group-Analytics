@@ -128,7 +128,7 @@
     <section id="billingView" class="view active">
       <div class="panel-heading billing-heading">
         <div class="panel-heading-copy"><h2>Faturamento por item</h2><p>Leitura direta das colunas definidas no relatório SIGER.</p></div>
-        <article id="leCard" class="le-card" tabindex="0" data-help="L.E = Linha Estoque. Fonte direta: relatório 201, coluna P (Descr.Tp.produção). Conta TODAS as linhas com valor Estoque, com ou sem OP e com ou sem pedido. Não depende do faturamento e não altera os cálculos de rentabilidade.">
+        <article id="leCard" class="le-card" tabindex="0" role="button" aria-label="Abrir todos os registros L.E de Estoque" data-help="L.E = Linha Estoque. Fonte direta: relatório 201, coluna P (Descr.Tp.produção). Conta TODAS as linhas com valor Estoque, com ou sem OP e com ou sem pedido. Não depende do faturamento e não altera os cálculos de rentabilidade.">
           <span>L.E</span><strong id="leCount">0</strong><small id="leSub">0 c/ OP · 0 s/ OP</small>
         </article>
         <div class="panel-actions"><span id="billingCount">0 registros</span><button id="exportBilling" type="button"><i class="fa-solid fa-file-excel"></i> Exportar Excel (.xlsx)</button></div>
@@ -142,6 +142,42 @@
         </table>
       </div>
       <div class="pagination"><button id="billingPrev" type="button"><i class="fa-solid fa-chevron-left"></i></button><span id="billingPage">Página 1</span><button id="billingNext" type="button"><i class="fa-solid fa-chevron-right"></i></button></div>
+    </section>
+
+    <section id="leView" class="view">
+      <div class="le-view-head">
+        <button id="backFromLE" class="back-button le-back" type="button"><i class="fa-solid fa-arrow-left"></i> Voltar ao faturamento</button>
+        <div><span class="eyebrow">RELATÓRIO 201 · COLUNA P</span><h2>L.E · Estoques</h2><p>Todos os registros em que Descr.Tp.produção = Estoque, inclusive com ou sem OP e com ou sem pedido.</p></div>
+        <div class="le-search-wrap"><i class="fa-solid fa-magnifying-glass"></i><input id="leSearch" type="search" placeholder="Buscar produto, descrição, OP ou pedido..." autocomplete="off"></div>
+      </div>
+      <div class="le-summary-grid">
+        <article><span>Registros L.E</span><strong id="leTotal">0</strong></article>
+        <article><span>Códigos de produto</span><strong id="leProducts">0</strong></article>
+        <article><span>Descrições distintas</span><strong id="leDescriptions">0</strong></article>
+        <article><span>Com OP / Sem OP</span><strong id="leOps">0 / 0</strong></article>
+      </div>
+      <div class="panel-heading le-table-heading">
+        <div><h2>Produtos e apontamentos de Estoque</h2><p>Leitura direta do relatório 201, sem depender do faturamento.</p></div>
+        <div class="panel-actions"><span id="leViewCount">0 registros L.E</span></div>
+      </div>
+      <div class="table-wrap le-table-wrap">
+        <table class="le-table">
+          <thead><tr>
+            <th data-help="Relatório 201 · Dt.apont. Data do apontamento de produção.">Dt. Apont.</th>
+            <th data-help="Relatório 201 · Número da ordem de produção. Pode estar vazio no L.E.">OP</th>
+            <th data-help="Relatório 201 · Ped.vinc. Pode estar vazio no L.E.">Pedido</th>
+            <th data-help="Relatório 201 · Produto. Quando o SIGER não informa código, o registro ainda é mantido pela descrição.">Produto</th>
+            <th data-help="Relatório 201 · Desc.completa. Descrição do produto de Estoque.">Descrição completa</th>
+            <th data-help="Relatório 201 · C.custo.">Centro</th>
+            <th data-help="Relatório 201 · Descrição. Operação/recurso do apontamento.">Operação</th>
+            <th class="num" data-help="Relatório 201 · Qtd.aprovada.">Qtd. aprovada</th>
+            <th class="num" data-help="Relatório 201 · Qtd.OP.">Qtd. OP</th>
+            <th class="num" data-help="Relatório 201 · Tempo Produção.">Tempo Produção</th>
+          </tr></thead>
+          <tbody id="leRows"></tbody>
+        </table>
+      </div>
+      <div class="pagination"><button id="lePrev" type="button"><i class="fa-solid fa-chevron-left"></i></button><span id="lePage">Página 1</span><button id="leNext" type="button"><i class="fa-solid fa-chevron-right"></i></button></div>
     </section>
 
     <section id="productsView" class="view">
@@ -218,10 +254,10 @@
 
     <footer class="module-footer">
       <span id="footerStatus">Base em carregamento…</span>
-      <details><summary>Mapeamento do Excel</summary><p>Faturamento: B Dt. faturamento · W Sigla · E Produto · F Desc. completa · C Pedido · D OP · J Nota · L Qtd · O Vlr Venda · P Vlr Metro · AG custo base de matéria-prima · AB Comissão · AJ % Comissão. Rel. 200: Faturamento · Rel. 201: Produção por OP + coluna P Descr.Tp.produção para L.E · Rel. 202: Setup/Paradas · Rel. 203 Impressão: IMPRESSAO UV / IMPRESSAO SOLVENTE por OP, usando coluna F Preço ven e Qtd.aprovada. CFOP = coluna K (Nat.oper) do Rel. 200. Linhas técnicas de IMPRESSAO UV/SOLVENTE e INSUMOS ficam ocultas dos grids. M.O. = Produção/máquina + Setup (incluindo IMPRESSAO DIGITAL quando apontada na produção). UV/Solvente não entra na M.O.; é rateado por Qtd. Aprovada da OP e somado ao Cst. Mat. Prima. Imposto = Vlr Metro × alíquota por UF (coluna V) conforme tabela de impostos. Frete = Vlr Metro × percentual por UF (coluna V) conforme Frete dash.xlsx.</p></details>
+      <details><summary>Mapeamento do Excel</summary><p>Faturamento: B Dt. faturamento · W Sigla · E Produto · F Desc. completa · C Pedido · D OP · J Nota · L Qtd · O Vlr Venda · P Vlr Metro · AG custo base de matéria-prima · AB Comissão · AJ % Comissão. Rel. 200: Faturamento · Rel. 201: Produção completa + coluna P Descr.Tp.produção para L.E (todas as linhas Estoque, com/sem OP e pedido) · Rel. 202: Setup/Paradas · Rel. 203 Impressão: IMPRESSAO UV / IMPRESSAO SOLVENTE por OP, usando coluna F Preço ven e Qtd.aprovada. CFOP = coluna K (Nat.oper) do Rel. 200. Linhas técnicas de IMPRESSAO UV/SOLVENTE e INSUMOS ficam ocultas dos grids. M.O. = Produção/máquina + Setup (incluindo IMPRESSAO DIGITAL quando apontada na produção). UV/Solvente não entra na M.O.; é rateado por Qtd. Aprovada da OP e somado ao Cst. Mat. Prima. Imposto = Vlr Metro × alíquota por UF (coluna V) conforme tabela de impostos. Frete = Vlr Metro × percentual por UF (coluna V) conforme Frete dash.xlsx.</p></details>
     </footer>
   </main>
 
-  <script type="module" src="app.js?v=20261016-24-le-tooltip"></script>
+  <script type="module" src="app.js?v=20261016-26-le-completo"></script>
 </body>
 </html>

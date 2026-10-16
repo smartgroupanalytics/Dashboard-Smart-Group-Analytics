@@ -18,6 +18,8 @@ let filtered = [];
 let groupedProducts = [];
 let billingPage = 1;
 let productsPage = 1;
+let lePage = 1;
+let leSearch = '';
 let selectedProduct = null;
 let selectedDetailMode = 'product';
 let selectedBillingRowId = null;
@@ -41,7 +43,7 @@ const SHARED_POINTER_DOC = 'current';
 const SHARED_SLOT_A = 'slot-a';
 const SHARED_SLOT_B = 'slot-b';
 const SHARED_CHUNK_BYTES = 600000;
-const SHARED_PACKAGE_VERSION = 24;
+const SHARED_PACKAGE_VERSION = 26;
 
 const money = value => Number(value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 const number = value => Number(value || 0).toLocaleString('pt-BR', { maximumFractionDigits: 2 });
@@ -591,6 +593,70 @@ function renderLECard(){
   card.classList.toggle('is-empty',rows.length===0);
 }
 
+function getLERows(){
+  return (productionBase?.registros||[])
+    .filter(row=>normalizeHeader(row.tipoProducao)==='estoque');
+}
+
+function filteredLERows(){
+  const rows=getLERows();
+  const q=String(leSearch||'').trim().toLocaleLowerCase('pt-BR');
+  if(!q) return rows;
+  return rows.filter(row=>[
+    row.op,row.pedido,row.produto,row.descricaoCompleta,row.centroCusto,row.recurso,
+    row.dataApontamento,row.qtdAprovada,row.qtdOP
+  ].some(value=>String(value??'').toLocaleLowerCase('pt-BR').includes(q)));
+}
+
+function renderLEView(){
+  const body=$('leRows');
+  if(!body) return;
+
+  const allRows=getLERows();
+  const rows=filteredLERows();
+  const totalPages=Math.max(1,Math.ceil(rows.length/PAGE_SIZE));
+  lePage=Math.min(lePage,totalPages);
+  const start=(lePage-1)*PAGE_SIZE;
+  const pageRows=rows.slice(start,start+PAGE_SIZE);
+
+  const uniqueProducts=new Set(allRows.map(row=>normalizeRefKey(row.produto)).filter(meaningful));
+  const uniqueDescriptions=new Set(allRows.map(row=>String(row.descricaoCompleta||'').trim()).filter(Boolean));
+  const withOp=allRows.filter(row=>meaningful(normalizeOp(row.op))).length;
+  const withoutOp=allRows.length-withOp;
+
+  $('leTotal') && ($('leTotal').textContent=allRows.length.toLocaleString('pt-BR'));
+  $('leProducts') && ($('leProducts').textContent=uniqueProducts.size.toLocaleString('pt-BR'));
+  $('leDescriptions') && ($('leDescriptions').textContent=uniqueDescriptions.size.toLocaleString('pt-BR'));
+  $('leOps') && ($('leOps').textContent=`${withOp.toLocaleString('pt-BR')} / ${withoutOp.toLocaleString('pt-BR')}`);
+  $('leViewCount') && ($('leViewCount').textContent=`${rows.length.toLocaleString('pt-BR')} registro${rows.length===1?'':'s'} L.E`);
+
+  body.innerHTML=pageRows.length ? pageRows.map(row=>`<tr>
+    <td>${dateBR(row.dataApontamento)}</td>
+    <td>${displayRef(row.op)}</td>
+    <td>${displayRef(row.pedido)}</td>
+    <td><strong>${displayRef(row.produto)}</strong></td>
+    <td class="description-cell" title="${esc(row.descricaoCompleta)}">${esc(row.descricaoCompleta||'—')}</td>
+    <td>${displayRef(row.centroCusto)}</td>
+    <td>${esc(row.recurso||'—')}</td>
+    <td class="num">${number(row.qtdAprovada)}</td>
+    <td class="num">${number(row.qtdOP)}</td>
+    <td class="num">${esc(row.tempoProducao||'—')}</td>
+  </tr>`).join('') : '<tr class="empty-row"><td colspan="10">Nenhum registro L.E encontrado.</td></tr>';
+
+  $('lePage').textContent=`Página ${lePage} de ${totalPages}`;
+  $('lePrev').disabled=lePage<=1;
+  $('leNext').disabled=lePage>=totalPages;
+}
+
+function openLEView(){
+  lePage=1;
+  leSearch='';
+  if($('leSearch')) $('leSearch').value='';
+  switchView('le');
+  renderLEView();
+  document.querySelector('.tabs')?.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
 function renderBilling(){
   const gridRows=getGridRows();
   const totalPages = Math.max(1, Math.ceil(gridRows.length/PAGE_SIZE));
@@ -802,7 +868,7 @@ function renderDetail(){
   renderProductionMO(rows);
 }
 
-function renderAll(){ renderKpis(); renderLECard(); renderBilling(); renderProducts(); renderDetail(); }
+function renderAll(){ renderKpis(); renderLECard(); renderBilling(); renderProducts(); renderDetail(); renderLEView(); }
 
 function switchView(view){
   document.querySelectorAll('.tab').forEach(btn => btn.classList.toggle('active',btn.dataset.view===view));
@@ -1120,6 +1186,8 @@ function mapReport201(parsed){
     pedido:importRef(byHeaderAny(row,map,['Ped.vinc','Pedido'])),
     produto:importRef(byHeader(row,map,'Produto')),
     descricaoCompleta:importText(byHeader(row,map,'Desc.completa')),
+    dataApontamento:excelSourceDate(byHeader(row,map,'Dt.apont')),
+    qtdOP:importNumber(byHeader(row,map,'Qtd.OP')),
     centroCusto:importRef(byHeader(row,map,'C.custo')),
     recurso:importText(byHeader(row,map,'Descrição')),
     tipoProducao:importText(byHeader(row,map,'Descr.Tp.produção')),
@@ -1190,7 +1258,10 @@ function buildImportedPackage(parsedByType){
     version:24,
     importedAt:new Date().toISOString(),
     base,
-    production:keepLinked(mapReport201(parsedByType['201'])),
+    // Relatório 201 inteiro é preservado: o L.E precisa enxergar Estoque
+    // com/sem OP e com/sem pedido. A M.O. continua ligada às linhas faturadas
+    // somente quando a OP correspondente existir no relatório 200.
+    production:mapReport201(parsedByType['201']),
     setup:keepLinked(mapReport202(parsedByType['202'])),
     printing:keepLinked(mapReportImpressao(parsedByType['203'])),
     prices:priceSource
@@ -1388,7 +1459,7 @@ function updateImportStatus(validation=null){
   if(!wrap) return;
   const sources=[
     ['200','Faturamento',base?.registros?.length||0,base?.meta?.fonte],
-    ['201','Produção vinculada',productionBase?.registros?.length||0,productionBase?.meta?.fonte],
+    ['201','Produção completa / L.E',productionBase?.registros?.length||0,productionBase?.meta?.fonte],
     ['202','Setup vinculado',setupBase?.registros?.length||0,setupBase?.meta?.fonte],
     ['203','Impressão vinculada',printingBase?.registros?.length||0,printingBase?.meta?.fonte],
     ['204','Tabelas de preço',priceTableBase?.registros?.length||0,priceTableBase?.meta?.fonte]
@@ -1421,6 +1492,8 @@ function applyDataPackage(pkg,origin='published',validation=null){
   selectedBillingRowId=null;
   billingPage=1;
   productsPage=1;
+  lePage=1;
+  leSearch='';
   setupFilters();
 
   const linkedRows=records.filter(r=>r.custoMaoObraMapeado).length;
@@ -2137,6 +2210,12 @@ function bindEvents(){
   document.addEventListener('click',event=>{const btn=event.target.closest('[data-detail-product]'); if(btn) selectDetail(btn.dataset.detailProduct,btn.dataset.detailSource||'product',btn.dataset.detailRow||null);});
   $('billingPrev').addEventListener('click',()=>{if(billingPage>1){billingPage--;renderBilling()}}); $('billingNext').addEventListener('click',()=>{if(billingPage*PAGE_SIZE<getGridRows().length){billingPage++;renderBilling()}});
   $('productsPrev').addEventListener('click',()=>{if(productsPage>1){productsPage--;renderProducts()}}); $('productsNext').addEventListener('click',()=>{if(productsPage*PAGE_SIZE<groupedProducts.length){productsPage++;renderProducts()}});
+  $('leCard')?.addEventListener('click',openLEView);
+  $('leCard')?.addEventListener('keydown',event=>{if(event.key==='Enter' || event.key===' '){event.preventDefault();openLEView();}});
+  $('backFromLE')?.addEventListener('click',()=>switchView('billing'));
+  $('leSearch')?.addEventListener('input',event=>{leSearch=event.target.value||'';lePage=1;renderLEView();});
+  $('lePrev')?.addEventListener('click',()=>{if(lePage>1){lePage--;renderLEView()}});
+  $('leNext')?.addEventListener('click',()=>{if(lePage*PAGE_SIZE<filteredLERows().length){lePage++;renderLEView()}});
   $('backToBilling').addEventListener('click',()=>switchView(selectedDetailMode==='product'?'products':'billing'));
   $('exportBilling').addEventListener('click',()=>exportBilling()); $('exportProducts').addEventListener('click',()=>exportProducts());
   $('printDashboard').addEventListener('click',printDashboard); $('exportDashboard').addEventListener('click',exportCurrentView);
