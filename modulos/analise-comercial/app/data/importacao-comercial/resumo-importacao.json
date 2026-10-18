@@ -1,8 +1,8 @@
 {
-  "importadoEm": "2026-10-16T11:41:26.017Z",
+  "importadoEm": "2026-10-18T08:11:25.563Z",
   "pastaEntrada": "/home/runner/work/Dashboard-Smart-Group-Analytics/Dashboard-Smart-Group-Analytics/_automacao/entrada-relatorios",
   "modo": "ATUALIZACAO_PARCIAL_PROTEGIDA",
-  "status": "OK",
+  "status": "ATENCAO",
   "relatorios": {
     "ESTOQUE": {
       "arquivo": "ESTOQUE.xlsx",
