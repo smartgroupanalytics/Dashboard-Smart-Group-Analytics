@@ -1,5 +1,5 @@
 {
-  "importadoEm": "2026-10-18T11:42:04.800Z",
+  "importadoEm": "2026-10-19T08:11:44.743Z",
   "pastaEntrada": "/home/runner/work/Dashboard-Smart-Group-Analytics/Dashboard-Smart-Group-Analytics/_automacao/entrada-relatorios",
   "modo": "ATUALIZACAO_PARCIAL_PROTEGIDA",
   "status": "ATENCAO",
@@ -35,10 +35,10 @@
       "arquivo": "OP.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 56,
-      "linhasValidas": 56,
-      "produtosDistintos": 51,
-      "quantidade": 16050.5
+      "linhasOriginais": 57,
+      "linhasValidas": 57,
+      "produtosDistintos": 54,
+      "quantidade": 13702.5
     },
     "VENDAS": {
       "arquivo": "VENDAS.xlsx",
@@ -65,10 +65,10 @@
       "arquivo": "ESTOQUEBR.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 787,
-      "linhasValidas": 787,
-      "produtosDistintos": 574,
-      "quantidade": 38983.5
+      "linhasOriginais": 985,
+      "linhasValidas": 985,
+      "produtosDistintos": 575,
+      "quantidade": 44182.90000000001
     },
     "OPBR": {
       "arquivo": "OPBR.xlsx",
@@ -83,10 +83,10 @@
       "arquivo": "VENDASBR.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 1742,
-      "linhasValidas": 1742,
+      "linhasOriginais": 1747,
+      "linhasValidas": 1747,
       "produtosDistintos": 360,
-      "quantidade": 608984.4699999999
+      "quantidade": 610753.9699999999
     }
   },
   "totais": {
