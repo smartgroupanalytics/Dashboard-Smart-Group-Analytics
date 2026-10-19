@@ -170,3 +170,78 @@
 }
 
 
+
+} /* fecha o @media CELULAR original, aberto na linha 28 */
+
+/* Menu mobile: painel que pode ser rolado até Administração > Usuários. */
+@media (max-width: 768px) {
+    .sidebar {
+        box-sizing: border-box;
+        width: min(286px, 88vw) !important;
+        left: 0 !important;
+        right: auto !important;
+        top: 0 !important;
+        bottom: 0 !important;
+        height: 100vh;
+        height: 100dvh;
+        transform: translateX(-105%) !important;
+        padding: 18px 14px 12px !important;
+        z-index: 10002;
+        transition: transform .25s ease;
+        box-shadow: none;
+    }
+    .sidebar.aberto {
+        left: 0 !important;
+        transform: translateX(0) !important;
+        box-shadow: 12px 0 36px rgba(0,0,0,.45);
+    }
+    .sidebar .logo-box {
+        margin-bottom: 14px;
+        padding-right: 32px;
+    }
+    .sidebar-scroll {
+        padding-right: 5px;
+        scrollbar-width: thin;
+        touch-action: pan-y;
+    }
+    .sidebar .versao { margin-top: 8px; padding-top: 8px; }
+    .sidebar-close {
+        position: absolute;
+        z-index: 1;
+        right: 9px;
+        top: 14px;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255,255,255,.10);
+        border: 1px solid rgba(255,255,255,.15);
+        border-radius: 9px;
+        color: #fff;
+        font-size: 20px;
+        cursor: pointer;
+    }
+    .sidebar-backdrop {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,10,32,.60);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity .25s ease, visibility .25s ease;
+        z-index: 10001;
+    }
+    body.menu-aberto-mobile .sidebar-backdrop {
+        visibility: visible;
+        opacity: 1;
+        pointer-events: auto;
+    }
+    body.menu-aberto-mobile { overflow: hidden !important; }
+    .modo-fullscreen .sidebar-backdrop { display: none !important; }
+    .modo-fullscreen .sidebar { display: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .sidebar, .sidebar-backdrop { transition: none !important; }
+}

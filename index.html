@@ -14,12 +14,12 @@
 
     <link
         rel="stylesheet"
-        href="style.css?v=10"
+        href="style.css?v=20261019-menu-scroll-v1"
     >
 
     <link
         rel="stylesheet"
-        href="responsive.css?v=10"
+        href="responsive.css?v=20261019-menu-scroll-v1"
     >
 
     <link
@@ -43,7 +43,7 @@
          MENU LATERAL
     ================================================== -->
 
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebarPrincipal" aria-label="Menu principal">
 
         <div class="logo-box">
 
@@ -66,6 +66,9 @@
 
         </div>
 
+
+        <!-- Rolagem independente dos módulos; logo e rodapé ficam fora desta área -->
+        <div class="sidebar-scroll" id="sidebarScroll" tabindex="0" aria-label="Módulos e administração">
 
         <!-- MENU PRINCIPAL -->
 
@@ -286,6 +289,8 @@
         </nav>
 
 
+        </div><!-- /sidebar-scroll -->
+
         <!-- VERSÃO -->
 
         <div class="versao">
@@ -300,7 +305,14 @@
 
         </div>
 
+        <button type="button" class="sidebar-close" id="sidebarClose" aria-label="Fechar menu lateral" title="Fechar menu">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
     </aside>
+
+    <!-- Fundo clicável para fechar o menu no celular -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop" aria-hidden="true"></div>
 
 
     <!-- =================================================
@@ -885,7 +897,7 @@
          SCRIPTS
     ================================================== -->
 
-    <script src="app.js?v=20261019-comex-pj-permissoes"></script>
+    <script src="app.js?v=20261019-menu-scroll-v1"></script>
 
     <script
         type="module"

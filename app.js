@@ -612,10 +612,44 @@ function voltarPortal(){
         ?.classList.add("active");
 }
 
-document.querySelector(".menu-btn")?.addEventListener("click", () => {
-    document.querySelector(".sidebar").classList.toggle("aberto");
-    document.body.classList.toggle("menu-aberto-mobile");
+// MENU LATERAL: abrir e fechar no celular sem interferir nas permissões dos módulos.
+const sidebarPrincipal = document.getElementById("sidebarPrincipal");
+const botaoMenuPrincipal = document.querySelector(".menu-btn");
+const fecharMenuPrincipal = document.getElementById("sidebarClose");
+const fundoMenuPrincipal = document.getElementById("sidebarBackdrop");
+const mediaMenuMobile = window.matchMedia("(max-width: 768px)");
+
+function alterarMenuMobile(abrir) {
+    const deveAbrir = Boolean(abrir) && mediaMenuMobile.matches;
+    sidebarPrincipal?.classList.toggle("aberto", deveAbrir);
+    document.body.classList.toggle("menu-aberto-mobile", deveAbrir);
+    botaoMenuPrincipal?.setAttribute("aria-expanded", String(deveAbrir));
+    botaoMenuPrincipal?.setAttribute("aria-label", deveAbrir ? "Fechar menu lateral" : "Abrir menu lateral");
+    // Evita manter itens focáveis de um painel fechado para leitores de tela.
+    if (sidebarPrincipal && mediaMenuMobile.matches) {
+        sidebarPrincipal.inert = !deveAbrir;
+    } else if (sidebarPrincipal) {
+        sidebarPrincipal.inert = false;
+    }
+}
+
+botaoMenuPrincipal?.setAttribute("aria-controls", "sidebarPrincipal");
+botaoMenuPrincipal?.addEventListener("click", () => {
+    alterarMenuMobile(!sidebarPrincipal?.classList.contains("aberto"));
 });
+fecharMenuPrincipal?.addEventListener("click", () => alterarMenuMobile(false));
+fundoMenuPrincipal?.addEventListener("click", () => alterarMenuMobile(false));
+sidebarPrincipal?.querySelectorAll(".menu a").forEach(link => {
+    link.addEventListener("click", () => alterarMenuMobile(false));
+});
+document.addEventListener("keydown", evento => {
+    if (evento.key === "Escape" && sidebarPrincipal?.classList.contains("aberto")) {
+        alterarMenuMobile(false);
+        botaoMenuPrincipal?.focus();
+    }
+});
+mediaMenuMobile.addEventListener("change", () => alterarMenuMobile(false));
+alterarMenuMobile(false);
 
 // =====================================
 // BUSCA DE DASHBOARDS

@@ -653,3 +653,55 @@ body {
     background:#5c1d1d;
 
 }
+
+
+/* =============================================================
+   SMART GROUP — MENU COM ROLAGEM INDEPENDENTE (19/10/2026)
+   Mantém o logo acima e a versão abaixo da lista de módulos.
+   Não altera o conteúdo dos módulos nem as permissões de acesso.
+   ============================================================= */
+.sidebar {
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: 0;
+    isolation: isolate;
+}
+.sidebar .logo-box {
+    flex: 0 0 auto;
+    margin-bottom: 20px;
+}
+.sidebar-scroll {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+    padding-right: 6px;
+    padding-bottom: 12px;
+    scrollbar-width: thin;
+    scrollbar-color: #387bc2 transparent;
+}
+.sidebar-scroll::-webkit-scrollbar { width: 7px; }
+.sidebar-scroll::-webkit-scrollbar-thumb {
+    background: #387bc2;
+    border-radius: 99px;
+}
+.sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
+.sidebar-scroll .menu a {
+    min-height: 42px;
+    flex-shrink: 0;
+    overflow-wrap: anywhere;
+}
+.sidebar .versao {
+    position: static;
+    flex: 0 0 auto;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(139,177,235,.20);
+}
+.sidebar-close,
+.sidebar-backdrop { display: none; }
