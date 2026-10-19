@@ -16004,6 +16004,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 360,
+    "dt_movto": "2026-10-16"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20035",
+    "produto": "20035",
+    "desc_completa": "NAPA BARI OFF WHITE - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 412,
     "dt_movto": "2026-10-08"
   },
@@ -16714,6 +16726,42 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 2000,
     "dt_movto": "2026-08-31"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20084",
+    "produto": "20084",
+    "desc_completa": "SEVILLA PRETO - 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 3,
+    "dt_movto": "2026-10-16"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20084",
+    "produto": "20084",
+    "desc_completa": "SEVILLA PRETO - 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 279,
+    "dt_movto": "2026-10-16"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20084",
+    "produto": "20084",
+    "desc_completa": "SEVILLA PRETO - 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 318,
+    "dt_movto": "2026-10-16"
   },
   {
     "fonte_comercial": "STK",
