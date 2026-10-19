@@ -18,6 +18,7 @@ const mapaPermissoes = {
     "analise-comercial": "analise-comercial",
     colecoes: "colecoes",
     comex: "comex",
+    comexPJ: "comexPJ",
     rh: "rh",
     assinaturas: "assinaturas",
     usuarios: "usuarios",
@@ -227,6 +228,22 @@ case "comex":
             src="modulos/comex/index.html?v=1"
             class="iframe-modulo"
             title="Módulo COMEX"
+            frameborder="0">
+        </iframe>
+    `;
+
+break;
+
+case "comexPJ":
+
+    titulo.innerText = "COMEX PJ";
+    subtitulo.innerText = "Desenvolvimentos de importação por setores.";
+
+    conteudo.innerHTML = `
+        <iframe
+            src="modulos/comex/pj/index.html?v=9"
+            class="iframe-modulo"
+            title="COMEX PJ — Desenvolvimentos"
             frameborder="0">
         </iframe>
     `;

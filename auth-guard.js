@@ -205,7 +205,8 @@ function aplicarPermissoes(dadosUsuario) {
 
       const permitido =
         administrador ||
-        modulos[nomeModulo] === true;
+        modulos[nomeModulo] === true ||
+        (nomeModulo === "comexPJ" && modulos.comex === true);
 
       if (permitido) {
         elemento.style.display = "";
@@ -286,7 +287,8 @@ window.usuarioPodeAcessar = function (modulo) {
     return true;
   }
 
-  return usuario.modulos?.[modulo] === true;
+  return usuario.modulos?.[modulo] === true ||
+    (modulo === "comexPJ" && usuario.modulos?.comex === true);
 };
 
 

@@ -100,7 +100,8 @@ export function protegerModulo(moduloNecessario) {
 
           const possuiPermissao =
             administrador ||
-            modulos[moduloNecessario] === true;
+            modulos[moduloNecessario] === true ||
+            (moduloNecessario === "comexPJ" && modulos.comex === true);
 
           if (!possuiPermissao) {
 
@@ -248,6 +249,10 @@ function caminhoPortal() {
   const caminho =
     window.location.pathname;
 
+  if (caminho.includes("/modulos/comex/pj/")) {
+    return "../../../index.html";
+  }
+
   if (caminho.includes("/modulos/")) {
     return "../../index.html";
   }
@@ -264,6 +269,10 @@ function caminhoLogin() {
 
   const caminho =
     window.location.pathname;
+
+  if (caminho.includes("/modulos/comex/pj/")) {
+    return "../../../login.html";
+  }
 
   if (caminho.includes("/modulos/")) {
     return "../../login.html";

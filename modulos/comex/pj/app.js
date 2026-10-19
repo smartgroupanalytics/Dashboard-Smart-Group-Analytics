@@ -1,11 +1,11 @@
-import { protegerModulo } from "../../../module-guard.js";
+import { protegerModulo } from "../../../module-guard.js?v=20261019-comex-pj";
 import { auth, db } from "../../../firebase-config.js";
 import {
   collection, doc, getDocs, deleteDoc, onSnapshot, runTransaction,
   serverTimestamp, writeBatch
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
-await protegerModulo("comex");
+await protegerModulo("comexPJ");
 
 const COLLECTION = "comex_pj_desenvolvimentos";
 const LOCAL_KEY = "smart_comex_pj_local_v1";

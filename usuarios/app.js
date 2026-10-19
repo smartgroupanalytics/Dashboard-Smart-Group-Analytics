@@ -382,7 +382,8 @@ if(
     return;
   }
 
-  const modulos = {};
+  // Preserva permissões de outros módulos não exibidos neste formulário.
+  const modulos = { ...(usuarioEmEdicao?.modulos || {}) };
   document.querySelectorAll("[data-modulo]").forEach(campo => {
     modulos[campo.dataset.modulo] = campo.checked;
   });

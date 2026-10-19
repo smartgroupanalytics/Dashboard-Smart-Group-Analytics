@@ -166,6 +166,7 @@
             <label><input type="checkbox" data-modulo="analise-comercial"> Análise Integrada Comercial</label>
             <label><input type="checkbox" data-modulo="colecoes"> Desempenho de Coleções</label>
             <label><input type="checkbox" data-modulo="comex"> COMEX</label>
+             <label><input type="checkbox" data-modulo="comexPJ"> COMEX PJ — Desenvolvimentos</label>
             <label><input type="checkbox" data-modulo="rh"> Recursos Humanos</label>
             <label><input type="checkbox" data-modulo="rhGeral"> RH — Acesso geral de consulta</label>
             <label><input type="checkbox" data-modulo="usuarios"> Usuários</label>
@@ -194,7 +195,7 @@ try {
 
     await protegerModulo("usuarios");
 
-    await import("./app.js?v=13");
+    await import("./app.js?v=14");
 
 } catch (erro) {
 
