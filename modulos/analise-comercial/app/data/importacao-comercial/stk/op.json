@@ -104,8 +104,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-08-24",
-    "centro_custo": 7,
-    "abreviacao": "ESTAM"
+    "centro_custo": 3,
+    "abreviacao": "GR 1"
   },
   {
     "fonte_comercial": "STK",
@@ -121,30 +121,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8335",
-    "produto": "11845",
-    "desc_completa": "BORGONHA OURO LIGHT",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 336,
-    "dt_saida": "2026-10-20",
-    "centro_custo": 7,
-    "abreviacao": "ESTAM"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8367",
-    "produto": "18016",
-    "desc_completa": "DELHI GLAM OURO LIGHT",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 200,
-    "dt_saida": "2026-10-19",
-    "centro_custo": 7,
-    "abreviacao": "ESTAM"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8383",
     "produto": "17425",
     "desc_completa": "DENVER PRETO",
@@ -157,18 +133,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8387",
-    "produto": "16466",
-    "desc_completa": "SAVOY GLAM OURO LIGHT",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 400,
-    "dt_saida": "2026-09-30",
-    "centro_custo": 3,
-    "abreviacao": "GR 1"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8388",
     "produto": "16571",
     "desc_completa": "SAVOY LUX BRANCO",
@@ -178,18 +142,6 @@
     "dt_saida": "2026-10-19",
     "centro_custo": 2,
     "abreviacao": "GRAV"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8395",
-    "produto": "11845",
-    "desc_completa": "BORGONHA OURO LIGHT",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 240,
-    "dt_saida": "2026-10-20",
-    "centro_custo": 7,
-    "abreviacao": "ESTAM"
   },
   {
     "fonte_comercial": "STK",
@@ -223,7 +175,7 @@
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 201,
-    "dt_saida": "2026-10-08",
+    "dt_saida": "2026-10-23",
     "centro_custo": 10,
     "abreviacao": "REV 1"
   },
@@ -234,10 +186,10 @@
     "desc_completa": "NAPA LINHO DAKAR NATURAL",
     "grupo": 39,
     "subgrupo": 41,
-    "qtd_produzir": 2000,
+    "qtd_produzir": 1668,
     "dt_saida": "2026-10-09",
-    "centro_custo": 7,
-    "abreviacao": "ESTAM"
+    "centro_custo": 10,
+    "abreviacao": "REV 1"
   },
   {
     "fonte_comercial": "STK",
@@ -247,7 +199,7 @@
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 100,
-    "dt_saida": "2026-10-09",
+    "dt_saida": "2026-10-23",
     "centro_custo": 2,
     "abreviacao": "GRAV"
   },
@@ -259,7 +211,7 @@
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 100,
-    "dt_saida": "2026-10-09",
+    "dt_saida": "2026-10-23",
     "centro_custo": 2,
     "abreviacao": "GRAV"
   },
@@ -271,7 +223,7 @@
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 100,
-    "dt_saida": "2026-10-09",
+    "dt_saida": "2026-10-23",
     "centro_custo": 2,
     "abreviacao": "GRAV"
   },
@@ -295,7 +247,7 @@
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 100,
-    "dt_saida": "2026-10-09",
+    "dt_saida": "2026-10-23",
     "centro_custo": 2,
     "abreviacao": "GRAV"
   },
@@ -307,7 +259,7 @@
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 100,
-    "dt_saida": "2026-10-09",
+    "dt_saida": "2026-10-23",
     "centro_custo": 2,
     "abreviacao": "GRAV"
   },
@@ -319,7 +271,7 @@
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 100,
-    "dt_saida": "2026-10-09",
+    "dt_saida": "2026-10-21",
     "centro_custo": 2,
     "abreviacao": "GRAV"
   },
@@ -331,7 +283,7 @@
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 100,
-    "dt_saida": "2026-10-09",
+    "dt_saida": "2026-10-21",
     "centro_custo": 2,
     "abreviacao": "GRAV"
   },
@@ -343,7 +295,7 @@
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 100,
-    "dt_saida": "2026-10-09",
+    "dt_saida": "2026-10-21",
     "centro_custo": 2,
     "abreviacao": "GRAV"
   },
@@ -355,7 +307,7 @@
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 100,
-    "dt_saida": "2026-10-09",
+    "dt_saida": "2026-10-21",
     "centro_custo": 2,
     "abreviacao": "GRAV"
   },
@@ -367,7 +319,7 @@
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 100,
-    "dt_saida": "2026-10-09",
+    "dt_saida": "2026-10-21",
     "centro_custo": 2,
     "abreviacao": "GRAV"
   },
@@ -379,7 +331,7 @@
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 100,
-    "dt_saida": "2026-10-09",
+    "dt_saida": "2026-10-21",
     "centro_custo": 2,
     "abreviacao": "GRAV"
   },
@@ -403,7 +355,7 @@
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 100,
-    "dt_saida": "2026-10-09",
+    "dt_saida": "2026-10-22",
     "centro_custo": 13,
     "abreviacao": "JUMBO 1"
   },
@@ -415,7 +367,7 @@
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 100,
-    "dt_saida": "2026-10-09",
+    "dt_saida": "2026-10-22",
     "centro_custo": 13,
     "abreviacao": "JUMBO 1"
   },
@@ -499,9 +451,9 @@
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 528,
-    "dt_saida": "2026-10-13",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "dt_saida": "2026-10-29",
+    "centro_custo": 30,
+    "abreviacao": "REC2"
   },
   {
     "fonte_comercial": "STK",
@@ -511,9 +463,9 @@
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 1000,
-    "dt_saida": "2026-10-13",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "dt_saida": "2026-10-29",
+    "centro_custo": 30,
+    "abreviacao": "REC2"
   },
   {
     "fonte_comercial": "STK",
@@ -524,8 +476,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-10-21",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -535,9 +487,9 @@
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 400,
-    "dt_saida": "2026-10-14",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "dt_saida": "2026-10-29",
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -547,7 +499,7 @@
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 1000,
-    "dt_saida": "2026-10-14",
+    "dt_saida": "2026-10-23",
     "centro_custo": 6,
     "abreviacao": "EST1"
   },
@@ -565,27 +517,15 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8644",
-    "produto": "16650",
-    "desc_completa": "NAPA BARI FOSCO CAFE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 1000,
-    "dt_saida": "2026-10-14",
-    "centro_custo": 23,
-    "abreviacao": "RAMA"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8702",
     "produto": "18230",
     "desc_completa": "OREGON OFF WHITE",
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 40,
-    "dt_saida": "2026-10-16",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "dt_saida": "2026-10-22",
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -595,9 +535,9 @@
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 40,
-    "dt_saida": "2026-10-16",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "dt_saida": "2026-10-22",
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -607,9 +547,9 @@
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 40,
-    "dt_saida": "2026-10-16",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "dt_saida": "2026-10-22",
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -619,9 +559,9 @@
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 40,
-    "dt_saida": "2026-10-16",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "dt_saida": "2026-10-22",
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -632,8 +572,8 @@
     "subgrupo": 41,
     "qtd_produzir": 40,
     "dt_saida": "2026-10-16",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -643,9 +583,9 @@
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 40,
-    "dt_saida": "2026-10-26",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "dt_saida": "2026-10-23",
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -655,9 +595,9 @@
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 40,
-    "dt_saida": "2026-10-26",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "dt_saida": "2026-10-23",
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -667,9 +607,9 @@
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 40,
-    "dt_saida": "2026-10-26",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "dt_saida": "2026-10-23",
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -679,6 +619,18 @@
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 40,
+    "dt_saida": "2026-10-23",
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8780",
+    "produto": "17615",
+    "desc_completa": "DOHA OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 120,
     "dt_saida": "2026-10-26",
     "centro_custo": 0,
     "abreviacao": ""
