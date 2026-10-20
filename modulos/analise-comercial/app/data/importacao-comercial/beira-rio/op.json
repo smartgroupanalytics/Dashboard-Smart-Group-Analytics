@@ -105,7 +105,7 @@
     "produto": "18056",
     "desc_completa": "NAPA MAXXI POA CAMEL 1165 BRANCO OFF 526",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 305.5,
+    "qtd_produzir": 217.5,
     "dt_saida": "2026-09-29",
     "abreviacao": ""
   },
@@ -136,7 +136,7 @@
     "desc_completa": "NAPA MAXXI POA CHOCOLATE 1271 JEANS 1123",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 500,
-    "dt_saida": "2026-09-29",
+    "dt_saida": "2026-10-21",
     "abreviacao": ""
   },
   {
@@ -155,28 +155,8 @@
     "produto": "17889",
     "desc_completa": "METALIZADO TRAMADO BERLIM OURO ROSADO",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 95.5,
+    "qtd_produzir": 0,
     "dt_saida": "2026-10-05",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8557",
-    "produto": "17376",
-    "desc_completa": "NAPA MARSELHA ROSA 1541",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 220,
-    "dt_saida": "2026-10-09",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8593",
-    "produto": "18148",
-    "desc_completa": "NAPA MAXXI POA PRETO 01  BRANCO 99",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 194,
-    "dt_saida": "2026-10-09",
     "abreviacao": ""
   },
   {
@@ -186,7 +166,7 @@
     "desc_completa": "NAPA LISTRAS MADRI BRANCO OFF 526/MARINHO 1071",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 197,
-    "dt_saida": "2026-10-09",
+    "dt_saida": "2026-10-26",
     "abreviacao": ""
   },
   {
@@ -196,7 +176,7 @@
     "desc_completa": "NAPA LISTRAS MADRI BRANCO OFF 526 VERMELHO 1025",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 199,
-    "dt_saida": "2026-10-09",
+    "dt_saida": "2026-10-22",
     "abreviacao": ""
   },
   {
@@ -206,7 +186,7 @@
     "desc_completa": "NAPA LISTRAS MADRI BRANCO OFF 526/ROSA 1541",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 197,
-    "dt_saida": "2026-10-09",
+    "dt_saida": "2026-10-26",
     "abreviacao": ""
   },
   {
@@ -226,7 +206,7 @@
     "desc_completa": "NAPA LISTRAS MADRI BRANCO OFF 526/ PRETO 01",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 197,
-    "dt_saida": "2026-10-14",
+    "dt_saida": "2026-10-27",
     "abreviacao": ""
   },
   {
@@ -236,7 +216,7 @@
     "desc_completa": "NAPA LISTRAS MADRI BRANCO OFF 526/ CHOCOLATE 1271",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 197,
-    "dt_saida": "2026-10-14",
+    "dt_saida": "2026-10-27",
     "abreviacao": ""
   },
   {
@@ -281,32 +261,12 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8658",
-    "produto": "16509",
-    "desc_completa": "NAPA SEVILLE BRANCO OFF 526",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 600,
-    "dt_saida": "2026-10-20",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8659",
-    "produto": "16703",
-    "desc_completa": "NAPA SEVILLE CAMEL 1165",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 14.5,
-    "dt_saida": "2026-10-13",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8667",
     "produto": "16707",
     "desc_completa": "NAPA SEVILLE  PRETO",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 600,
-    "dt_saida": "2026-10-13",
+    "dt_saida": "2026-10-22",
     "abreviacao": ""
   },
   {
@@ -316,7 +276,7 @@
     "desc_completa": "METALIZADO PREMIUM PU 0.9 GRAFITE 914 (VENDA BEIRA RIO)",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 300,
-    "dt_saida": "2026-10-16",
+    "dt_saida": "2026-10-21",
     "abreviacao": ""
   },
   {
@@ -326,7 +286,7 @@
     "desc_completa": "NAPA ZEBRA SAVANA BRANCO 99/VERMELHO 1025",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 197,
-    "dt_saida": "2026-10-16",
+    "dt_saida": "2026-10-23",
     "abreviacao": ""
   },
   {
@@ -356,7 +316,7 @@
     "desc_completa": "VERNIZ LONDON 1.0 ROSA 942",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 200,
-    "dt_saida": "2026-10-21",
+    "dt_saida": "2026-10-22",
     "abreviacao": ""
   },
   {
@@ -366,7 +326,7 @@
     "desc_completa": "NAPA MARSELHA PRETO",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 1000,
-    "dt_saida": "2026-10-23",
+    "dt_saida": "2026-10-21",
     "abreviacao": ""
   },
   {
@@ -407,6 +367,26 @@
     "grupo": "BEIRA RIO",
     "qtd_produzir": 1050,
     "dt_saida": "2026-10-23",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8777",
+    "produto": "20123",
+    "desc_completa": "NAPA MADAGASCAR BRANCO OFF 526",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 200,
+    "dt_saida": "2026-10-26",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8779",
+    "produto": "17444",
+    "desc_completa": "BRILHO ITALIA BROWN 1570",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 1040,
+    "dt_saida": "2026-10-28",
     "abreviacao": ""
   }
 ]
