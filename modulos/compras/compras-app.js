@@ -1,10 +1,12 @@
 // SMART GROUP ANALYTICS — PREVISAO DE COMPRAS (FIRESTORE)
 // Reutiliza a autenticacao existente; NAO contem fornecedores ou valores em codigo-fonte.
-// Consulta: usuarios ativos com modulos.compras. Importacao: Andrei (UID definido
-// em compras_config/permissoes) ou administrador principal. Regras Firestore obrigatorias.
+// Consulta: usuarios ativos com modulos.compras. Importacao: Andrei e David
+// (UIDs definidos em compras_config/permissoes) ou administrador principal.
+// Os dados confidenciais sao lidos diretamente do Firestore; sem dados fixos no codigo.
 
 import { protegerModulo } from "../../module-guard.js?v=3";
 import { db, auth } from "../../firebase-config.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
 import {
   collection, doc, getDoc, getDocs, setDoc, onSnapshot, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
@@ -15,6 +17,7 @@ const REFERENCE_DOC = doc(db, "compras_previsoes", "atual");
 const EDITOR_CONFIG = doc(db, "compras_config", "permissoes");
 const MAX_FILE_MB = 15;
 const MAX_RECORDS_PER_CHUNK = 180;
+const MAX_PARTS = 1000;
 const MAX_CHUNK_BYTES = 220_000;
 
 let acesso;
@@ -33,10 +36,49 @@ let importando = false;
 let carregamentoAtual = 0;
 let ultimaVersao = null;
 
+// Revogacao de login: remove os dados ja exibidos, nao apenas o botao de upload.
+onAuthStateChanged(auth, usuario => {
+  if (!usuario || usuario.uid !== usuarioAtual?.uid) {
+    ++carregamentoAtual;
+    permissaoEditor = false;
+    ultimaVersao = null;
+    atualizarTela([]);
+    document.documentElement.style.visibility = 'hidden';
+    window.location.replace('../../login.html');
+  }
+});
+
+function uidsEditores(config) {
+  const lista = config?.editorUids;
+  return Array.isArray(lista) && lista.length === 2
+    ? lista.filter(v => typeof v === 'string' && v.length > 5)
+    : [];
+}
+
 function status(mensagem, erro=false) {
   const el = document.getElementById('uploadStatus');
   el.textContent = mensagem;
   el.className = 'upload-status' + (erro ? ' error' : '');
+}
+
+// Área SEPARADA da sincronização da planilha: erros de permissão não podem
+// ser apagados quando outra consulta do Firestore termina com sucesso.
+function detalharPermissao(mensagem, alerta = false) {
+  const el = document.getElementById('permissionDetail');
+  el.textContent = mensagem;
+  el.style.color = alerta ? '#ffd18a' : '#9bb2d2';
+}
+
+function diagnosticoUid(cadastrados, uid) {
+  const valores = cadastrados.filter(v => typeof v === 'string');
+  if (valores.some(v => v.trim() === uid)) {
+    return 'O UID corresponde a um cadastro, mas há espaços extras no editorUids. Corrija o campo no Firestore (não apenas no JavaScript).';
+  }
+  if (valores.some(v => v.trim().toLowerCase() === uid.toLowerCase())) {
+    return 'Há diferença entre letras maiúsculas/minúsculas no UID do Firestore e o UID autenticado. Copie o UID de Authentication > Usuários exatamente como aparece.';
+  }
+  const resumoUid = uid ? uid.slice(0, 6) + '…' + uid.slice(-6) : '(não identificado)';
+  return 'Esta conta não corresponde aos UIDs cadastrados para importar. UID da sessão: ' + resumoUid + '. Confira em Authentication > Usuários.';
 }
 
 function atualizarControles() {
@@ -93,6 +135,9 @@ function separarPartes(registros) {
     }
   }
   if (atual.length) partes.push(atual);
+  if (partes.length > MAX_PARTS) {
+    throw new Error('Planilha muito grande para esta importação (limite de 1.000 partes).');
+  }
   return partes;
 }
 
@@ -136,17 +181,71 @@ async function lerBaseCompartilhada(info, token) {
   if (!importando) status('Dados sincronizados do Firebase.');
 }
 
+// Acompanha alteracoes do perfil e esconde os dados se o acesso for revogado.
+if (usuarioAtual) {
+  onSnapshot(doc(db, 'usuarios', usuarioAtual.uid), perfilSnap => {
+    const perfil = perfilSnap.data() || {};
+    const admin = String(perfil.perfil || '').trim().toLowerCase() === 'administrador';
+    const autorizado = perfilSnap.exists() && perfil.ativo === true &&
+      (admin || perfil.modulos?.compras === true);
+    if (!autorizado) {
+      ++carregamentoAtual;
+      ultimaVersao = null;
+      permissaoEditor = false;
+      atualizarTela([]);
+      document.documentElement.style.visibility = 'hidden';
+      window.location.replace('../../index.html');
+    }
+  }, error => {
+    ++carregamentoAtual;
+    ultimaVersao = null;
+    permissaoEditor = false;
+    atualizarTela([]);
+    document.documentElement.style.visibility = 'hidden';
+    console.warn('Não foi possível manter a autorização de Compras:', error);
+    window.location.replace('../../index.html');
+  });
+}
+
 // Controle também na interface; a verdadeira autorização está nas regras do Firestore.
-onSnapshot(EDITOR_CONFIG, snap => {
-  const editorUid = snap.exists() ? String(snap.data().editorUid || '') : '';
-  permissaoEditor = Boolean(usuarioAtual && (
-    usuarioAtual.uid === ADMIN_PRINCIPAL_UID || usuarioAtual.uid === editorUid
-  ));
+onSnapshot(EDITOR_CONFIG, { includeMetadataChanges: true }, snap => {
+  const uid = usuarioAtual?.uid || '';
+  const ehAdminPrincipal = uid === ADMIN_PRINCIPAL_UID;
+  const editores = snap.exists() ? uidsEditores(snap.data()) : [];
+
+  // Nunca liberar uma importação de não administradores usando só dados em cache.
+  // Um evento posterior confirma a configuração diretamente com o Firestore.
+  const confirmadoNoServidor = !snap.metadata.fromCache;
+  permissaoEditor = Boolean(ehAdminPrincipal || (confirmadoNoServidor && editores.includes(uid)));
   atualizarControles();
+
+  if (ehAdminPrincipal) {
+    detalharPermissao('Permissão de importação: administrador principal.', false);
+    return;
+  }
+  if (!confirmadoNoServidor) {
+    detalharPermissao('Aguardando validação da lista de importadores pelo servidor Firebase. Se persistir, confira a conexão.', true);
+    return;
+  }
+  if (!snap.exists()) {
+    detalharPermissao('O documento compras_config/permissoes não existe. Um administrador deve criá-lo no Firestore.', true);
+    return;
+  }
+  if (!Array.isArray(snap.data()?.editorUids) || snap.data().editorUids.length !== 2) {
+    detalharPermissao('O campo editorUids precisa ser um array com exatamente dois UIDs (Andrei e David).', true);
+    return;
+  }
+  if (permissaoEditor) {
+    detalharPermissao('Permissão de importação validada com o servidor Firebase.', false);
+    return;
+  }
+  detalharPermissao(diagnosticoUid(snap.data().editorUids, uid), true);
 }, err => {
   permissaoEditor = Boolean(usuarioAtual && usuarioAtual.uid === ADMIN_PRINCIPAL_UID);
   atualizarControles();
-  status('Não foi possível consultar a configuração do responsável: ' + err.message, true);
+  detalharPermissao('Falha ao ler compras_config/permissoes: ' + (err.code || err.message) +
+    '. Confira as regras de leitura do Firestore e a autenticação.', true);
+  console.warn('Falha ao carregar permissão de importadores do módulo Compras:', err);
 });
 
 // Recebe eventos de atualização em tempo real, inclusive de outros computadores.
@@ -161,7 +260,7 @@ onSnapshot(REFERENCE_DOC, { includeMetadataChanges: true }, async snap => {
     atualizarTela([]);
     document.getElementById('uploadName').textContent = 'Nenhuma planilha foi publicada no Firebase.';
     document.getElementById('syncMeta').textContent = 'Aguardando a primeira importação do setor de Compras.';
-    if (!importando) status('Base ainda não cadastrada. O Andrei poderá realizar a primeira importação.');
+    if (!importando) status('Base ainda não cadastrada. Os responsáveis por Compras poderão realizar a primeira importação.');
     return;
   }
   const info = snap.data();
@@ -183,6 +282,12 @@ onSnapshot(REFERENCE_DOC, { includeMetadataChanges: true }, async snap => {
     status('Erro ao ler a base compartilhada: ' + error.message, true);
   }
 }, error => {
+  // Falha de autorizacao/conexao: nao manter os valores anteriormente mostrados na tela.
+  ++carregamentoAtual;
+  ultimaVersao = null;
+  atualizarTela([]);
+  document.getElementById('uploadName').textContent = 'Base de compras indisponível';
+  document.getElementById('syncMeta').textContent = 'Verifique sua autorização ou a conexão.';
   status('Sem acesso aos dados de compras no Firestore. Verifique as regras: ' + error.message, true);
 });
 
@@ -248,7 +353,7 @@ function numVal(v){if(typeof v==='number')return v;let s=String(v??'').trim().re
 function parseWorkbookRows(rows){if(!rows.length)throw Error('A planilha está vazia.');const headers=rows[0].map(normKey);const find=(...names)=>headers.findIndex(h=>names.some(n=>h===normKey(n)||h.includes(normKey(n))));const idxOC=find('Núm.OC','Numero OC','OC','Ordem de compra');const idxFornecedor=find('Razão social do fornecedor','Fornecedor');const idxValor=find('Valor total','Valor');const idxObs=find('Obs.ordem com','Observação','Obs ordem');const idxOrigem=find('Emissão Prevista','Emissao Prevista','Emissão prevista da NF','Emissao prevista da NF','Data prevista de emissão da NF','Data prevista emissão da NF','Data prevista de emissao da NF','Previsão de emissão da NF','Previsao de emissao da NF','Data da OC','Data de emissão','Data emissão','Data da compra','Data de compra','Data de lançamento','Data lançamento');const dateIdx=[];for(let i=1;i<=6;i++){let j=find('Data de Pagamento '+i);if(j>=0)dateIdx.push(j)}if(idxOC<0||idxFornecedor<0||idxValor<0||!dateIdx.length)throw Error('Não encontrei as colunas necessárias. A planilha precisa ter Núm.OC, Fornecedor/Razão social, Valor total e Data de Pagamento 1 a 6.');const result=[];for(const row of rows.slice(1)){if(!row||row.every(v=>v==null||v===''))continue;const oc=row[idxOC]??'',fornecedor=String(row[idxFornecedor]??'').trim(),total=numVal(row[idxValor]),obs=idxObs>=0?String(row[idxObs]??''):'',dates=dateIdx.map(j=>cellDate(row[j])).filter(Boolean);if(!dates.length||(!fornecedor&&!oc))continue;const amounts=[...obs.matchAll(/R\$\s*([\d.]+(?:,\d{2})?)/gi)].map(m=>numVal(m[1])),dataOrigem=idxOrigem>=0?cellDate(row[idxOrigem]):'';if(dates.length>1&&amounts.length>=dates.length){dates.forEach((d,i)=>result.push({oc:String(oc),fornecedor,data:d,dataOrigem,valor:amounts[i],descricao:'OC '+oc,situacao:'Previsto'}))}else if(dates.length>1){let remaining=Math.round(total*100);const base=Math.floor(remaining/dates.length);dates.forEach((d,i)=>{const cents=i===dates.length-1?remaining:base;remaining-=cents;result.push({oc:String(oc),fornecedor,data:d,dataOrigem,valor:cents/100,descricao:'OC '+oc,situacao:'Previsto'})})}else result.push({oc:String(oc),fornecedor,data:dates[0],dataOrigem,valor:total,descricao:'OC '+oc,situacao:'Previsto'})}if(!result.length)throw Error('Nenhum pagamento com data válida foi encontrado. Confira as colunas de datas.');return result}
 
 
-// Importação somente para Andrei (identificado por UID) ou administrador principal.
+// Importação somente para Andrei, David (por UID) ou administrador principal.
 const uploadInput = document.getElementById('xlsxUpload');
 uploadInput.addEventListener('change', async event => {
   const file = event.target.files?.[0];
@@ -288,9 +393,10 @@ uploadInput.addEventListener('change', async event => {
     const parsed = validarPagamentos(parseWorkbookRows(linhas));
     const partes = separarPartes(parsed);
     const versao = 'v_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2,12);
+    // Verifica novamente junto ao servidor antes da publicação (regras confirmam no backend).
     const configAtual = await getDoc(EDITOR_CONFIG);
-    const editorUid = configAtual.exists() ? String(configAtual.data().editorUid || '') : '';
-    if (!(usuarioAtual?.uid === ADMIN_PRINCIPAL_UID || usuarioAtual?.uid === editorUid)) {
+    const editores = configAtual.exists() ? uidsEditores(configAtual.data()) : [];
+    if (!(usuarioAtual?.uid === ADMIN_PRINCIPAL_UID || editores.includes(usuarioAtual?.uid))) {
       throw new Error('Sua autorização de importação foi alterada.');
     }
 
@@ -311,7 +417,7 @@ uploadInput.addEventListener('change', async event => {
       arquivo: file.name.slice(0,150),
       atualizadoEm: serverTimestamp(),
       atualizadoPorUid: usuarioAtual.uid,
-      atualizadoPorNome: String(acesso?.nome || acesso?.email || usuarioAtual.email || 'Andrei').slice(0,120)
+      atualizadoPorNome: String(acesso?.nome || acesso?.email || usuarioAtual.email || 'Usuário autorizado').slice(0,120)
     });
     status(`Planilha publicada com sucesso: ${parsed.length} pagamentos. Atualização enviada aos usuários autorizados.`);
   } catch (error) {
