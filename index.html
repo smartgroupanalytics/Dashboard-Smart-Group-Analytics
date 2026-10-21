@@ -97,6 +97,21 @@
 
             </a>
 
+            <!-- SG-IA-INICIO: item isolado; visibilidade liberada somente pelo Worker. -->
+            <a
+                id="smartIaMenuLink"
+                href="#smart-ia"
+                style="display: none"
+                hidden
+                aria-hidden="true"
+                tabindex="-1"
+                onclick="event.preventDefault(); abrirModulo('smart-ia', this)"
+            >
+                <i class="fa-solid fa-brain" aria-hidden="true"></i>
+                Smart Group IA
+            </a>
+            <!-- SG-IA-FIM -->
+
             <a
                 data-modulo="vendas"
                 onclick="abrirModulo('vendas', this)"
@@ -897,7 +912,7 @@
          SCRIPTS
     ================================================== -->
 
-    <script src="app.js?v=20261019-menu-scroll-v1"></script>
+    <script src="app.js?v=20261021-smart-ia-v1"></script>
 
     <script
         type="module"
@@ -908,6 +923,9 @@
         type="module"
         src="user-menu.js?v=3"
     ></script>
+
+    <!-- SG-IA: autorização e visibilidade próprias; sem alterar auth-guard.js -->
+    <script type="module" src="modulos/smart-ia/menu-acesso.js?v=1"></script>
 
 </body>
 

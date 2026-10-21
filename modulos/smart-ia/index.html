@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Smart Group IA — Estoques</title>
+  <link rel="stylesheet" href="./style.css?v=1">
+</head>
+<body>
+  <main class="shell" id="appShell">
+    <section id="statusAcesso" class="access-card" role="status" aria-live="polite">
+      <div class="access-spinner" aria-hidden="true"></div>
+      <h1>Smart Group IA</h1>
+      <p id="textoAcesso">Validando seu acesso seguro…</p>
+      <button id="btnRevalidar" type="button" hidden>Tentar novamente</button>
+    </section>
+
+    <section class="chat" id="chat" hidden aria-label="Conversa com o Smart Group IA">
+      <header class="chat-header">
+        <div class="identidade">
+          <div class="icone-cerebro" aria-hidden="true">✦</div>
+          <div>
+            <div class="titulo-chat">Smart Group <span>IA</span></div>
+            <div class="subtitulo">Assistente de estoques e histórico</div>
+          </div>
+        </div>
+        <div class="acoes-header">
+          <span class="conexao" id="estadoConexao"><span class="bolinha"></span> Conectado ao D1</span>
+          <button class="btn-limpar" id="btnLimpar" type="button" title="Limpar a conversa">Limpar conversa</button>
+        </div>
+      </header>
+
+      <section id="mensagens" class="mensagens" role="log" aria-live="polite" aria-relevant="additions" aria-label="Mensagens da conversa">
+        <div class="bemvindo" id="bemvindo">
+          <div class="simbolo" aria-hidden="true">✦</div>
+          <h1>O que você gostaria de analisar?</h1>
+          <p>Faça perguntas naturalmente sobre os saldos reais e o histórico disponível. Para consultas frequentes, o sistema economiza processamento utilizando SQL direto.</p>
+          <div class="sugestoes" aria-label="Exemplos de perguntas">
+            <button type="button" class="sugestao" data-pergunta="Quais são os 5 produtos com maior estoque?">Maiores estoques <span>↗</span></button>
+            <button type="button" class="sugestao" data-pergunta="Qual o saldo do produto 20000?">Saldo do produto 20000 <span>↗</span></button>
+            <button type="button" class="sugestao" data-pergunta="Gostaria de entender o histórico registrado do produto 20000, com as datas e alterações de saldo disponíveis.">Histórico do produto 20000 <span>↗</span></button>
+            <button type="button" class="sugestao" data-pergunta="Compare os saldos totais das empresas SMT e SM3.">Comparar SMT e SM3 <span>↗</span></button>
+          </div>
+        </div>
+      </section>
+
+      <footer class="rodape">
+        <form id="formPergunta" class="campo-pergunta">
+          <label for="pergunta" class="sr-only">Digite sua pergunta sobre o estoque</label>
+          <textarea id="pergunta" name="pergunta" rows="1" maxlength="400" placeholder="Pergunte sobre produtos, saldos, empresas ou histórico..." aria-describedby="orientacao"></textarea>
+          <button id="enviar" class="btn-enviar" type="submit" aria-label="Enviar pergunta" title="Enviar pergunta">➤</button>
+        </form>
+        <div class="rodape-info" id="orientacao">
+          <span>Enter envia · Shift+Enter pula linha</span>
+          <span>Dados do D1 · Somente leitura · Histórico disponível a partir de 21/10/2026</span>
+        </div>
+      </footer>
+    </section>
+  </main>
+  <script type="module" src="./app.js?v=1"></script>
+</body>
+</html>

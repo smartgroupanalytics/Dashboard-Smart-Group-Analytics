@@ -40,6 +40,13 @@ const mapaPermissoes = {
         return;
     }
 
+    // SG-IA: esta liberação NÃO herda o perfil administrador.
+    // O Worker confirma a lista exata de UIDs + modulo estoqueIA.
+    if (modulo === "smart-ia" && window.smartGroupIaAutorizado !== true) {
+        alert("O Smart Group IA está disponível somente para usuários autorizados.");
+        return;
+    }
+
     // Remove o menu ativo
     document.querySelectorAll(".menu a").forEach(item=>{
         item.classList.remove("active");
@@ -84,6 +91,20 @@ case "estoque":
     `;
 
 break;
+
+    // SG-IA: rota isolada, sem modificar os módulos existentes.
+    case "smart-ia":
+        titulo.innerText = "Smart Group IA";
+        subtitulo.innerText = "Perguntas inteligentes sobre estoques e histórico.";
+        conteudo.innerHTML = `
+            <iframe
+                src="modulos/smart-ia/index.html?v=1"
+                class="iframe-modulo"
+                title="Assistente Smart Group IA"
+                referrerpolicy="strict-origin-when-cross-origin">
+            </iframe>
+        `;
+        break;
 
      case "vendas":
 
