@@ -980,6 +980,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 79,
+    "dt_movto": "2026-10-20"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11897",
+    "produto": "11897",
+    "desc_completa": "NAPA LINHO DAKAR OFF WHITE - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 100,
     "dt_movto": "2026-06-10"
   },
