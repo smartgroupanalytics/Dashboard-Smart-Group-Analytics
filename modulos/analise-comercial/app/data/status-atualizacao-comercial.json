@@ -1,13 +1,13 @@
 {
-  "atualizadoEm": "2026-10-21T19:41:58.497Z",
-  "ultimaAtualizacaoValida": "2026-10-21T19:41:58.497Z",
-  "status": "ATENCAO",
-  "mensagem": "8 de 9 relatórios atualizados com sucesso. 1 mantido(s) na base anterior: OPBR.xlsx.",
+  "atualizadoEm": "2026-10-21T19:56:45.317Z",
+  "ultimaAtualizacaoValida": "2026-10-21T19:56:45.317Z",
+  "status": "OK",
+  "mensagem": "9 de 9 relatórios atualizados com sucesso.",
   "modo": "PARCIAL_SEGURO",
   "totalEsperado": 9,
-  "totalRecebido": 8,
-  "totalAtualizado": 8,
-  "totalMantido": 1,
+  "totalRecebido": 9,
+  "totalAtualizado": 9,
+  "totalMantido": 0,
   "relatorios": [
     {
       "arquivo": "ESTOQUE.xlsx",
@@ -60,10 +60,10 @@
     },
     {
       "arquivo": "OPBR.xlsx",
-      "status": "MANTIDO — Gmail API retornou HTTP 500: { \"error\": { \"code\": 500, \"message\": \"Internal error encountered.\", \"errors\": [ { \"message\": \"Internal error encountered.\", \"domain\": \"global\", \"reason\": \"backendError",
-      "recebidoEm": null,
-      "mensagem": "Gmail API retornou HTTP 500: { \"error\": { \"code\": 500, \"message\": \"Internal error encountered.\", \"errors\": [ { \"message\": \"Internal error encountered.\", \"domain\": \"global\", \"reason\": \"backendError",
-      "baseAnteriorMantida": true
+      "status": "OK",
+      "recebidoEm": "2026-10-21T08:25:10.000Z",
+      "linhasValidas": 38,
+      "mensagem": "Atualizado com sucesso."
     },
     {
       "arquivo": "VENDASBR.xlsx",
