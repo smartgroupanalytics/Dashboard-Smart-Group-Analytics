@@ -121,16 +121,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8421",
-    "produto": "17968",
-    "desc_completa": "NAPA MAXXI POA BRANCO OFF 526/ PRETO 01",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 230,
-    "dt_saida": "2026-10-20",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8422",
     "produto": "17962",
     "desc_completa": "NAPA MAXXI POA CHOCOLATE 1271 JEANS 1123",
@@ -147,16 +137,6 @@
     "grupo": "BEIRA RIO",
     "qtd_produzir": 10,
     "dt_saida": "2026-10-02",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8539",
-    "produto": "17889",
-    "desc_completa": "METALIZADO TRAMADO BERLIM OURO ROSADO",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 0,
-    "dt_saida": "2026-10-05",
     "abreviacao": ""
   },
   {
@@ -195,7 +175,7 @@
     "produto": "17851",
     "desc_completa": "TELA SHINE PARIS DOURADO",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 2495.5,
+    "qtd_produzir": 1876.4,
     "dt_saida": "2026-10-13",
     "abreviacao": ""
   },
@@ -225,18 +205,8 @@
     "produto": "2382",
     "desc_completa": "METALIZADO PREMIUM PU 0.9 DOURADO",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 2500,
+    "qtd_produzir": 2300,
     "dt_saida": "2026-10-20",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8646",
-    "produto": "2382",
-    "desc_completa": "METALIZADO PREMIUM PU 0.9 DOURADO",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 2550,
-    "dt_saida": "2026-10-21",
     "abreviacao": ""
   },
   {
@@ -257,16 +227,6 @@
     "grupo": "BEIRA RIO",
     "qtd_produzir": 300,
     "dt_saida": "2026-10-21",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8667",
-    "produto": "16707",
-    "desc_completa": "NAPA SEVILLE  PRETO",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 600,
-    "dt_saida": "2026-10-22",
     "abreviacao": ""
   },
   {
@@ -295,7 +255,7 @@
     "produto": "900097",
     "desc_completa": "NAPA MAXXI POA BEGE 435/CHOCOLATE 1271",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 200,
+    "qtd_produzir": 197,
     "dt_saida": "2026-10-20",
     "abreviacao": ""
   },
@@ -331,32 +291,12 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8748",
-    "produto": "30084",
-    "desc_completa": "NAPA MARSELHA CAMEL 1165",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 400,
-    "dt_saida": "2026-10-23",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8749",
     "produto": "9100112",
     "desc_completa": "NAPA MARSELHA OSTRA",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 1000,
     "dt_saida": "2026-10-23",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8750",
-    "produto": "14921",
-    "desc_completa": "NAPA LEZARD EVORA CHERRY 1335",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 220,
-    "dt_saida": "2026-10-21",
     "abreviacao": ""
   },
   {
@@ -387,6 +327,56 @@
     "grupo": "BEIRA RIO",
     "qtd_produzir": 1040,
     "dt_saida": "2026-10-28",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8792",
+    "produto": "16878",
+    "desc_completa": "NAPA SEVILLE AVELA 1248",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 1000,
+    "dt_saida": "2026-10-23",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8793",
+    "produto": "16732",
+    "desc_completa": "NAPA SEVILLE CACAU 1277",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 400,
+    "dt_saida": "2026-10-23",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8794",
+    "produto": "9902",
+    "desc_completa": "METALIZADO NANCY PU 1.0 PRATA",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 1000,
+    "dt_saida": "2026-10-23",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8795",
+    "produto": "17001",
+    "desc_completa": "NAPA MARSELHA PRETO",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 1000,
+    "dt_saida": "2026-10-30",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8796",
+    "produto": "9100112",
+    "desc_completa": "NAPA MARSELHA OSTRA",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 1020,
+    "dt_saida": "2026-10-30",
     "abreviacao": ""
   }
 ]
