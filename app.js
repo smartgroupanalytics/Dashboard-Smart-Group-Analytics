@@ -101,6 +101,7 @@ break;
                 src="modulos/smart-ia/index.html?v=1"
                 class="iframe-modulo"
                 title="Assistente Smart Group IA"
+                allow="microphone"
                 referrerpolicy="strict-origin-when-cross-origin">
             </iframe>
         `;

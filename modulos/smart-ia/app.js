@@ -15,14 +15,71 @@ const refs = {
   form: document.getElementById('formPergunta'),
   pergunta: document.getElementById('pergunta'),
   enviar: document.getElementById('enviar'),
-  limpar: document.getElementById('btnLimpar')
+  limpar: document.getElementById('btnLimpar'),
+  microfone: document.getElementById('btnMicrofone'),
+  vozStatus: document.getElementById('vozStatus')
 };
 let usuarioAtivo = null;
 let autorizado = false;
 let enviando = false;
 let versaoAcesso = 0;
+// Reconhecimento de voz apenas mediante clique; nunca transmite áudio ao Worker.
+const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
+let reconhecimento = null;
+let ouvindo = false;
+function vozMensagem(texto) {
+  refs.vozStatus.textContent = texto;
+  refs.vozStatus.hidden = !texto;
+}
+function pararVoz() {
+  if (reconhecimento && ouvindo) { try { reconhecimento.stop(); } catch {} }
+}
+if (!SpeechRecognitionAPI) {
+  refs.microfone.hidden = true;
+  vozMensagem('Reconhecimento de voz indisponível neste navegador. Você pode digitar normalmente.');
+} else {
+  refs.microfone.addEventListener('click', () => {
+    if (!autorizado || enviando) return;
+    if (ouvindo) { pararVoz(); return; }
+    reconhecimento = new SpeechRecognitionAPI();
+    reconhecimento.lang = 'pt-BR';
+    reconhecimento.continuous = false;
+    reconhecimento.interimResults = false;
+    reconhecimento.maxAlternatives = 1;
+    reconhecimento.onstart = () => {
+      ouvindo = true;
+      refs.microfone.classList.add('gravando');
+      refs.microfone.setAttribute('aria-label', 'Parar gravação');
+      vozMensagem('Ouvindo… fale sua pergunta.');
+    };
+    reconhecimento.onresult = (evento) => {
+      const fala = Array.from(evento.results).map(r => r[0]?.transcript || '').join(' ').trim();
+      if (fala) {
+        refs.pergunta.value = [refs.pergunta.value.trim(), fala].filter(Boolean).join(' ').slice(0, 400);
+        ajustarAltura();
+        vozMensagem('Pergunta transcrita. Confira o texto e clique em enviar.');
+      }
+    };
+    reconhecimento.onerror = (evento) => {
+      const erro = evento.error;
+      vozMensagem(erro === 'not-allowed' || erro === 'service-not-allowed'
+        ? 'Permita o acesso ao microfone nas configurações do navegador.'
+        : erro === 'no-speech' ? 'Não detectei fala. Tente novamente.'
+        : 'Não foi possível reconhecer a fala. Digite sua pergunta ou tente novamente.');
+    };
+    reconhecimento.onend = () => {
+      ouvindo = false;
+      refs.microfone.classList.remove('gravando');
+      refs.microfone.setAttribute('aria-label', 'Ditar pergunta por voz');
+      refs.pergunta.focus();
+    };
+    try { reconhecimento.start(); }
+    catch { vozMensagem('Não foi possível iniciar o microfone. Verifique a permissão do navegador.'); }
+  });
+}
 
 function modoAcesso(mensagem, podeRepetir = false) {
+  pararVoz();
   autorizado = false;
   refs.chat.hidden = true;
   refs.acesso.hidden = false;
@@ -167,10 +224,12 @@ function metadados(bolha, dados) {
 async function enviarPergunta(pergunta) {
   const texto = String(pergunta || '').trim();
   if (!autorizado || enviando || texto.length < 3 || texto.length > 400) return;
+  pararVoz();
   enviando = true;
   refs.enviar.disabled = true;
   refs.pergunta.disabled = true;
   refs.limpar.disabled = true;
+  refs.microfone.disabled = true;
   adicionarMensagem(texto, 'usuario');
   const retorno = adicionarMensagem('Consultando os dados com segurança…', 'assistente', true);
   try {
@@ -200,6 +259,7 @@ async function enviarPergunta(pergunta) {
     refs.enviar.disabled = false;
     refs.pergunta.disabled = false;
     refs.limpar.disabled = false;
+    refs.microfone.disabled = false;
     refs.pergunta.focus();
     rolarFim();
   }
