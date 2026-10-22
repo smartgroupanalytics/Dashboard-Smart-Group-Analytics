@@ -95,59 +95,93 @@ if (!SpeechRecognitionAPI) {
 }
 
 
-// Leitura falada OPT-IN: nunca grava nem envia áudio ao Worker.
-// Vozes TTS não apresentam metadados de gênero padronizados. Para respeitar
-// a preferência da empresa, só usamos nomes explicitamente identificados como femininos.
+// Leitura falada OPT-IN com a voz escolhida no testador pelo usuario.
+// A voz "Google portugues do Brasil" e oferecida pelo proprio navegador.
+// Nunca usar uma voz diferente como fallback (evita retorno robotizado).
+// Nenhuma gravacao de video ou imitacao de personagem e utilizada.
 const leitorVoz = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window
   ? window.speechSynthesis : null;
 let leituraLigada = false;
-const nomesVozFeminina = /francisca|luciana|camila|maria|vitoria|vitória|helena|fernanda|joana|beatriz|mariana|leticia|letícia|sabrina|isabela|female|feminina/i;
-function escolherVozFeminina() {
+const NOME_VOZ_ESCOLHIDA = 'Google português do Brasil';
+function normalizarNomeVoz(valor) {
+  return String(valor || '')
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase().replace(/\s+/g, ' ').trim();
+}
+function escolherVozGoogleBrasil() {
   if (!leitorVoz) return null;
-  const vozes = leitorVoz.getVoices();
-  // Privilegia pt-BR e, em seguida, pt-PT somente quando a voz tem nome feminino reconhecido.
-  return vozes.find(v => /^pt[-_]BR$/i.test(v.lang) && nomesVozFeminina.test(v.name)) ||
-    vozes.find(v => /^pt[-_]PT$/i.test(v.lang) && nomesVozFeminina.test(v.name)) || null;
+  const desejada = normalizarNomeVoz(NOME_VOZ_ESCOLHIDA);
+  return leitorVoz.getVoices().find(voz =>
+    /^pt[-_]BR$/i.test(voz.lang) && normalizarNomeVoz(voz.name) === desejada
+  ) || null;
 }
 function interromperLeitura() { if (leitorVoz) leitorVoz.cancel(); }
 function falarResposta(texto) {
   if (!leituraLigada || !leitorVoz || !autorizado) return;
-  const voz = escolherVozFeminina();
+  const voz = escolherVozGoogleBrasil();
   if (!voz) {
     leituraLigada = false;
     atualizarBotaoVoz();
-    vozMensagem('Não encontrei uma voz feminina em português neste dispositivo. A leitura foi desativada.');
+    vozMensagem('A voz Google português do Brasil não está disponível neste navegador. A leitura foi desligada; nenhuma voz robótica será utilizada.');
     return;
   }
   interromperLeitura();
   const fala = new SpeechSynthesisUtterance(String(texto || '').slice(0, 3500));
   fala.voice = voz;
-  fala.lang = voz.lang;
-  fala.rate = 0.98;
-  fala.pitch = 1.03;
+  fala.lang = 'pt-BR';
+  // Mesmos ajustes do arquivo de teste em que a voz foi aprovada.
+  fala.rate = 0.96;
+  fala.pitch = 1;
   fala.volume = 1;
+  fala.onerror = evento => {
+    if (evento.error !== 'canceled' && evento.error !== 'interrupted') {
+      vozMensagem('Não foi possível reproduzir a resposta com a voz Google. Confira o áudio e a conexão do navegador.');
+    }
+  };
   leitorVoz.speak(fala);
 }
 function atualizarBotaoVoz() {
   if (!refs.btnVozResposta) return;
-  refs.btnVozResposta.textContent = leituraLigada ? '🔊 Voz ligada' : '🔇 Voz desligada';
+  refs.btnVozResposta.textContent = leituraLigada ? '🔊 Voz Google ligada' : '🔇 Voz desligada';
   refs.btnVozResposta.setAttribute('aria-pressed', String(leituraLigada));
-  refs.btnVozResposta.title = leituraLigada ? 'Desativar a leitura das respostas' : 'Ativar leitura das respostas com voz feminina';
+  refs.btnVozResposta.title = leituraLigada
+    ? 'Desativar leitura das respostas com Google português do Brasil'
+    : 'Ativar leitura das respostas com Google português do Brasil';
 }
 if (!leitorVoz) {
   refs.btnVozResposta.hidden = true;
 } else {
+  // Alguns navegadores carregam as vozes apos abrir a pagina.
+  leitorVoz.addEventListener?.('voiceschanged', () => {
+    if (leituraLigada && !escolherVozGoogleBrasil()) {
+      interromperLeitura();
+      leituraLigada = false;
+      atualizarBotaoVoz();
+      vozMensagem('A voz Google português do Brasil deixou de estar disponível. Leitura desligada.');
+    }
+  });
   refs.btnVozResposta.addEventListener('click', () => {
-    if (leituraLigada) { leituraLigada = false; interromperLeitura(); atualizarBotaoVoz(); return; }
-    const voz = escolherVozFeminina();
-    if (!voz) {
-      vozMensagem('Nenhuma voz feminina em português identificada neste navegador. Instale uma voz feminina no sistema e tente novamente.');
+    if (leituraLigada) {
+      leituraLigada = false;
+      interromperLeitura();
+      atualizarBotaoVoz();
       return;
     }
+    const voz = escolherVozGoogleBrasil();
+    if (!voz) {
+      vozMensagem('Voz Google português do Brasil não encontrada. Abra no navegador em que ela apareceu no testador, aguarde o carregamento das vozes e tente novamente.');
+      return;
+    }
+    // Uma voz online pode processar fora do dispositivo os textos lidos.
+    // A ativacao exige confirmacao, especialmente para respostas empresariais.
+    if (voz.localService === false && !window.confirm(
+      'Esta voz Google utiliza um serviço online do navegador e o texto das respostas pode ser processado fora do dispositivo. Use apenas com dados que sua empresa permita compartilhar com esse serviço. Ativar leitura por voz?'
+    )) return;
     leituraLigada = true;
     atualizarBotaoVoz();
-    // A ativação por clique respeita restrições de reprodução do navegador.
-    falarResposta('Leitura de respostas ativada.');
+    vozMensagem('Voz Google português do Brasil ativada.');
+    // Ativado por clique para cumprir politicas de reproducao de audio.
+    falarResposta('Olá. Sou a assistente da Smart Group. A leitura de respostas está ativada.');
   });
 }
 
