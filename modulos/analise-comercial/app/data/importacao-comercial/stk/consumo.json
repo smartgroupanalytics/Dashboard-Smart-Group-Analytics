@@ -7316,8 +7316,32 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 48,
+    "dt_movto": "2026-10-21"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11917",
+    "produto": "11917",
+    "desc_completa": "VERNIZ MONACO BRANCO - PU 0.8MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 80,
     "dt_movto": "2026-01-14"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11917",
+    "produto": "11917",
+    "desc_completa": "VERNIZ MONACO BRANCO - PU 0.8MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 133,
+    "dt_movto": "2026-10-21"
   },
   {
     "fonte_comercial": "STK",
@@ -16210,6 +16234,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 200,
     "dt_movto": "2026-07-06"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20036",
+    "produto": "20036",
+    "desc_completa": "NAPA METAL LYON BRONZE - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 200,
+    "dt_movto": "2026-10-21"
   },
   {
     "fonte_comercial": "STK",
