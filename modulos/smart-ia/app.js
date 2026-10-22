@@ -60,7 +60,9 @@ if (!SpeechRecognitionAPI) {
         falaReconhecida = true;
         refs.pergunta.value = [refs.pergunta.value.trim(), fala].filter(Boolean).join(' ').slice(0, 400);
         ajustarAltura();
-        vozMensagem('Pergunta reconhecida. Enviando automaticamente ao finalizar a fala…');
+        vozMensagem('Pergunta reconhecida. Iniciando a pesquisa…');
+        // A API pode continuar ouvindo após a transcricao; solicite o fim para disparar onend.
+        try { reconhecimento.stop(); } catch {}
       }
     };
     reconhecimento.onerror = (evento) => {
