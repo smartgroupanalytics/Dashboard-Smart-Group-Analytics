@@ -56,7 +56,7 @@ if (!SpeechRecognitionAPI) {
       vozMensagem('Ouvindo… fale sua pergunta.');
     };
     reconhecimento.onresult = (evento) => {
-      const fala = Array.from(evento.results).map(r => r[0]?.transcript || '').join(' ').trim();
+      const fala = normalizarCodigoDitado(Array.from(evento.results).map(r => r[0]?.transcript || '').join(' ').trim());
       if (fala) {
         falaReconhecida = true;
         refs.pergunta.value = [refs.pergunta.value.trim(), fala].filter(Boolean).join(' ').slice(0, 400);
@@ -116,7 +116,31 @@ function escolherVozGoogleBrasil() {
   ) || null;
 }
 function interromperLeitura() { if (leitorVoz) leitorVoz.cancel(); }
-function falarResposta(texto) {
+// Ditar "produto onze mil novecentos e dezessete" pode ser transcrito
+// como "produto 11.917". Padronizar SOMENTE codigos explicitamente marcados.
+function normalizarCodigoDitado(texto) {
+  return String(texto || '').replace(
+    /(\b(?:produto|c[oó]digo|sku|item|material)\s*(?:(?:n[úu]mero|n[º°.]|de n[úu]mero)\s*)?[:#-]?\s*)(\d{1,3}(?:\.\d{3}){1,2})(?=\b|$)/gi,
+    (_, prefixo, codigo) => prefixo + codigo.replace(/\./g, '')
+  );
+}
+
+const DIGITOS_PRONUNCIA = ['zero', 'um', 'dois', 'três', 'quatro', 'cinco', 'seis', 'sete', 'oito', 'nove'];
+function falaParaCodigos(texto, registros) {
+  let s = String(texto || '');
+  const codigos = [...new Set((Array.isArray(registros) ? registros : [])
+    .map(r => String(r?.produto ?? '').trim())
+    .filter(codigo => /^\d{4,8}$/.test(codigo)))];
+  // A alteracao ocorre apenas na string transmitida ao sintetizador.
+  // O codigo que aparece no painel e os dados retornados pelo D1 permanecem intactos.
+  for (const codigo of codigos) {
+    const falado = codigo.split('').map(d => DIGITOS_PRONUNCIA[Number(d)]).join(', ');
+    s = s.replace(new RegExp(`(^|[^0-9])${codigo}(?=$|[^0-9])`, 'g'), (_, antes) => antes + falado);
+  }
+  return s;
+}
+
+function falarResposta(texto, registros = []) {
   if (!leituraLigada || !leitorVoz || !autorizado) return;
   const voz = escolherVozGoogleBrasil();
   if (!voz) {
@@ -126,7 +150,7 @@ function falarResposta(texto) {
     return;
   }
   interromperLeitura();
-  const fala = new SpeechSynthesisUtterance(String(texto || '').slice(0, 3500));
+  const fala = new SpeechSynthesisUtterance(falaParaCodigos(texto, registros).slice(0, 3500));
   fala.voice = voz;
   fala.lang = 'pt-BR';
   // Mesmos ajustes do arquivo de teste em que a voz foi aprovada.
@@ -355,7 +379,7 @@ async function enviarPergunta(pergunta) {
     retorno.corpo.textContent = dados.resposta || dados.erro || 'O serviço não conseguiu retornar uma resposta.';
     if (resposta.ok && dados.sucesso === true) {
       metadados(retorno.bolha, dados);
-      falarResposta(dados.resposta || '');
+      falarResposta(dados.resposta || '', dados.dados || []);
     }
     if (resposta.status === 401 || resposta.status === 403) {
       // Não expor a conversa se a permissão for revogada durante o uso.
