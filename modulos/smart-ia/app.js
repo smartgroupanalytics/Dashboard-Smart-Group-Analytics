@@ -42,6 +42,8 @@ if (!SpeechRecognitionAPI) {
     if (!autorizado || enviando) return;
     if (ouvindo) { pararVoz(); return; }
     reconhecimento = new SpeechRecognitionAPI();
+    let falaReconhecida = false;
+    let falhaReconhecimento = false;
     reconhecimento.lang = 'pt-BR';
     reconhecimento.continuous = false;
     reconhecimento.interimResults = false;
@@ -55,12 +57,14 @@ if (!SpeechRecognitionAPI) {
     reconhecimento.onresult = (evento) => {
       const fala = Array.from(evento.results).map(r => r[0]?.transcript || '').join(' ').trim();
       if (fala) {
+        falaReconhecida = true;
         refs.pergunta.value = [refs.pergunta.value.trim(), fala].filter(Boolean).join(' ').slice(0, 400);
         ajustarAltura();
-        vozMensagem('Pergunta transcrita. Confira o texto e clique em enviar.');
+        vozMensagem('Pergunta reconhecida. Enviando automaticamente ao finalizar a fala…');
       }
     };
     reconhecimento.onerror = (evento) => {
+      falhaReconhecimento = true;
       const erro = evento.error;
       vozMensagem(erro === 'not-allowed' || erro === 'service-not-allowed'
         ? 'Permita o acesso ao microfone nas configurações do navegador.'
@@ -71,7 +75,16 @@ if (!SpeechRecognitionAPI) {
       ouvindo = false;
       refs.microfone.classList.remove('gravando');
       refs.microfone.setAttribute('aria-label', 'Ditar pergunta por voz');
-      refs.pergunta.focus();
+      if (falaReconhecida && !falhaReconhecimento && autorizado && !enviando) {
+        if (refs.pergunta.value.trim().length >= 3) {
+          vozMensagem('Pergunta enviada automaticamente.');
+          refs.form.requestSubmit();
+        } else {
+          vozMensagem('A pergunta ficou muito curta. Tente falar novamente.');
+        }
+      } else if (!falhaReconhecimento && autorizado) {
+        refs.pergunta.focus();
+      }
     };
     try { reconhecimento.start(); }
     catch { vozMensagem('Não foi possível iniciar o microfone. Verifique a permissão do navegador.'); }
