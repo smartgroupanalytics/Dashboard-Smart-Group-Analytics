@@ -18,23 +18,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_oc": "94",
-    "fornecedor": "162",
-    "razao_social": "AMERICA-ASIA TRADING COMPANY LIM",
-    "dt_emissao": "2026-07-29",
-    "produto": "20082",
-    "grupo": 39,
-    "subgrupo": 40,
-    "desc_completa": "NAPA BARI CAFE - PU 0.7MM",
-    "qtde": 6000,
-    "qtd_aberto": 6000,
-    "vlr_un": 1.35,
-    "dt_orig_ent": "2026-10-29",
-    "dt_prazo_ent": "2026-10-29",
-    "sig_emp": "SM3"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_oc": "101",
     "fornecedor": "162",
     "razao_social": "AMERICA-ASIA TRADING COMPANY LIM",
