@@ -1,0 +1,101 @@
+SMART GROUP ANALYTICS — PCP • PROGRAMAÇÃO DE PRODUÇÃO
+======================================================
+
+IMPORTANTE: antes de usar o novo módulo, abra Firebase Console →
+Firestore Database → Regras. Acrescente SOMENTE o bloco abaixo dentro do
+match /databases/{database}/documents { ... } existente e publique.
+
+NÃO substitua as regras atuais dos outros módulos.
+
+// INÍCIO REGRAS PCP PROGRAMAÇÃO
+function pcpProgramacaoPerfilAtivo() {
+  return request.auth != null
+    && exists(/databases/$(database)/documents/usuarios/$(request.auth.uid))
+    && get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.ativo == true;
+}
+
+function pcpProgramacaoAdministrador() {
+  return pcpProgramacaoPerfilAtivo()
+    && get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.perfil == "administrador";
+}
+
+function pcpProgramacaoPodeLer() {
+  return pcpProgramacaoPerfilAtivo() && (
+    pcpProgramacaoAdministrador()
+    || get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.get("modulos", {}).get("pcp-programacao", false) == true
+  );
+}
+
+function pcpProgramacaoPodeCarregar() {
+  return pcpProgramacaoPerfilAtivo() && (
+    pcpProgramacaoAdministrador()
+    || (
+      get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.get("modulos", {}).get("pcp-programacao", false) == true
+      && get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.get("modulos", {}).get("pcpCarga", false) == true
+    )
+  );
+}
+
+match /pcp_programacao/{documento} {
+  allow get: if documento == "atual" && pcpProgramacaoPodeLer();
+  allow list: if false;
+  allow create, update: if documento == "atual" && pcpProgramacaoPodeCarregar()
+    && request.resource.data.keys().hasOnly([
+      "versao", "cargaId", "partes", "formato", "total", "arquivo",
+      "atualizadoPor", "atualizadoPorUID", "atualizadoEm"
+    ])
+    && request.resource.data.versao == 1
+    && request.resource.data.cargaId is string
+    && request.resource.data.cargaId.size() <= 100
+    && request.resource.data.partes is int
+    && request.resource.data.partes > 0
+    && request.resource.data.partes <= 200
+    && request.resource.data.total is int
+    && request.resource.data.total > 0
+    && request.resource.data.total <= 200000
+    && request.resource.data.atualizadoPorUID == request.auth.uid;
+  allow delete: if false;
+}
+
+match /pcp_programacao_cargas/{cargaId}/partes/{parteId} {
+  allow get: if pcpProgramacaoPodeLer();
+  allow list: if false;
+  allow create: if pcpProgramacaoPodeCarregar()
+    && request.resource.data.keys().hasOnly(["conteudo", "indice", "enviadoPor", "criadoEm"])
+    && request.resource.data.enviadoPor == request.auth.uid
+    && request.resource.data.indice is int
+    && request.resource.data.indice >= 0
+    && request.resource.data.indice < 200
+    && request.resource.data.conteudo is string
+    && request.resource.data.conteudo.size() <= 145000;
+  allow update, delete: if false;
+}
+// FIM REGRAS PCP PROGRAMAÇÃO
+
+COMO USAR
+1) Salve os arquivos do ZIP no repositório e faça commit no GitHub.
+2) No Firebase Console, publique SOMENTE o bloco adicional acima.
+3) No painel → Administração → Usuários, configure:
+   • PCP — Programação: permite consultar, filtrar, imprimir e exportar.
+   • PCP — Carregar planilha: permite importar e substituir a programação
+     compartilhada. Essa opção é independente e requer a permissão anterior.
+   • Administrador: acesso e importação, como os demais módulos.
+4) A primeira importação salva automaticamente os dados no Firestore.
+   As próximas visitas recuperam a última programação publicada, inclusive
+   de outro computador, e atualizações são recebidas em tempo real.
+5) A mensagem verde “Programação salva no Firestore” confirma o envio.
+   Se aparecer mensagem vermelha, a planilha só estará aberta naquela aba.
+
+DETALHES TÉCNICOS
+• O arquivo Excel NÃO é salvo como binário no banco: ficam registrados os dados
+  de programação, datas, estilos e colunas extras reconhecidos pela interface.
+• A carga é dividida em partes pequenas e publicada apenas após a gravação
+  completa. A programação anterior permanece consultável se o envio falhar.
+• Cada carga antiga e incompleta poderá permanecer no Firestore até uma
+  rotina administrativa de retenção/limpeza ser definida, pois a exclusão
+  automática não foi habilitada para não arriscar apagar dados em uso.
+• Não depende de browser localStorage e não usa GitHub para persistir dados.
+• Não alteramos as regras dos módulos Produção, Estoque, COMEX, Financeiro etc.
+• ATENÇÃO: regras já existentes muito amplas (ex.: allow read, write: if true)
+  podem conceder acesso por outra via: revise a segurança geral do Firestore.
+• O ZIP NÃO modifica o Firebase automaticamente, nem realiza commit no GitHub.

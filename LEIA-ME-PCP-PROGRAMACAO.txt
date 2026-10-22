@@ -1,0 +1,32 @@
+ENTREGA SMART GROUP ANALYTICS — PCP / PROGRAMAÇÃO
+
+Módulo independente em /modulos/pcp-programacao/
+Origem: programacao-producao.html enviada pelo usuário (preservação do layout).
+
+Arquivos principais atualizados:
+- index.html: item no menu e card PCP.
+- app.js: rota PCP e card gerado pelo sistema.
+- usuarios/index.html: caixas de acesso PCP e de importação PCP.
+- usuarios/app.js: ao liberar importação, libera também a consulta.
+- modulos/pcp-programacao/index.html: programação original adaptada.
+- modulos/pcp-programacao/cloud.js: autenticação, salvamento, leitura e tempo real.
+- modulos/pcp-programacao/xlsx.full.min.js: biblioteca Excel usada localmente.
+- modulos/pcp-programacao/jszip.min.js: leitura/geração Excel com estilos; usada localmente.
+- ADICIONAR-NAS-REGRAS-FIRESTORE-PCP-PROGRAMACAO.txt: REGRAS A PUBLICAR.
+
+IMPORTANTE: O banco só funcionará quando publicar as regras indicadas.
+A permissão está separada da tela de Produção já existente. Sem acesso a
+PCP, não é permitido abrir o módulo por URL direta.
+
+Recursos da programação original preservados: formato A4, folha por máquina,
+seleção de folha, período, exportação Excel com dados e estilos, importação de
+Excel exportado pelo painel, pesquisa por setor/máquina e ordenação original.
+
+Teste recomendado (após publicar regras):
+1. Entrar com conta admin, importar xlsx e verificar status verde.
+2. Atualizar a tela: a programação deve reaparecer sem importar.
+3. Abrir outro navegador com usuário autorizado apenas para consulta e
+   confirmar leitura, filtros, impressão e botão de importação ausente.
+4. Alterar a programação pelo admin e verificar atualização na tela de consulta.
+5. Entrar sem permissão PCP e testar acesso direto ao URL: deve bloquear.
+6. Conferir a pré-visualização A4 e a exportação, inclusive cores da planilha.

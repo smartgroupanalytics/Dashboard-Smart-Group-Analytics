@@ -163,6 +163,8 @@
             <label><input type="checkbox" data-modulo="financeiro"> Financeiro</label>
             <label><input type="checkbox" data-modulo="compras"> Compras</label>
             <label><input type="checkbox" data-modulo="producao"> Produção</label>
+            <label><input type="checkbox" data-modulo="pcp-programacao"> PCP — Programação (consultar/imprimir)</label>
+            <label><input type="checkbox" data-modulo="pcpCarga"> PCP — Carregar planilha (somente responsáveis)</label>
             <label><input type="checkbox" data-modulo="analise-comercial"> Análise Integrada Comercial</label>
             <label><input type="checkbox" data-modulo="colecoes"> Desempenho de Coleções</label>
             <label><input type="checkbox" data-modulo="comex"> COMEX</label>
@@ -195,7 +197,7 @@ try {
 
     await protegerModulo("usuarios");
 
-    await import("./app.js?v=14");
+    await import("./app.js?v=15-pcp");
 
 } catch (erro) {
 

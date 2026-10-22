@@ -172,6 +172,15 @@
 
             </a>
 
+            <!-- PCP: módulo independente de Produção. -->
+            <a
+                data-modulo="pcp-programacao"
+                onclick="abrirModulo('pcp-programacao', this)"
+            >
+                <i class="fa-solid fa-calendar-days"></i>
+                PCP — Programação
+            </a>
+
             <a
                 data-modulo="analise-comercial"
                 onclick="abrirModulo('analise-comercial', this)"
@@ -763,6 +772,18 @@
 
                     <div
                         class="card-home"
+                        data-modulo="pcp-programacao"
+                        role="button"
+                        tabindex="0"
+                        onclick="abrirModulo('pcp-programacao', document.querySelector('.menu a[data-modulo=&quot;pcp-programacao&quot;]'))"
+                    >
+                        <i class="fa-solid fa-calendar-days"></i>
+                        <h3>PCP — Programação</h3>
+                        <p>Programação de OPs por máquina e impressão para a produção.</p>
+                    </div>
+
+                    <div
+                        class="card-home"
                         data-modulo="analise-comercial"
                         role="button"
                         tabindex="0"
@@ -912,7 +933,7 @@
          SCRIPTS
     ================================================== -->
 
-    <script src="app.js?v=20261021-smart-ia-v1"></script>
+    <script src="app.js?v=20261022-pcp-v1"></script>
 
     <script
         type="module"

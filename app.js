@@ -15,6 +15,7 @@ const mapaPermissoes = {
     "custos-rentabilidade": "custos-rentabilidade",
     compras: "compras",
     producao: "producao",
+    "pcp-programacao": "pcp-programacao",
     "analise-comercial": "analise-comercial",
     colecoes: "colecoes",
     comex: "comex",
@@ -201,6 +202,16 @@ case "producao":
     `;
 
 break;
+
+case "pcp-programacao":
+    titulo.innerText = "PCP — Programação";
+    subtitulo.innerText = "Programação de OPs por setor e máquina, compartilhada no Firebase.";
+    conteudo.innerHTML = `<iframe
+        src="modulos/pcp-programacao/index.html?v=1"
+        class="iframe-modulo"
+        title="Módulo PCP — Programação"
+        frameborder="0"></iframe>`;
+    break;
 
 case "analise-comercial":
 
@@ -536,6 +547,12 @@ function gerarCardsDashboardPermitidos() {
             titulo: "Produção",
             descricao:
                 "Acompanhe revisão, eficiência, produtividade, máquinas e indicadores industriais."
+        },
+        {
+            modulo: "pcp-programacao",
+            icone: "fa-solid fa-calendar-days",
+            titulo: "PCP — Programação",
+            descricao: "Programe OPs por máquina, compartilhe e imprima a programação de produção."
         },
         {
             modulo: "analise-comercial",

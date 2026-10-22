@@ -393,6 +393,11 @@ if(
     modulos.rh = true;
   }
 
+  // Carregar planilhas do PCP pressupõe poder acessar o PCP.
+  if (modulos.pcpCarga === true) {
+    modulos["pcp-programacao"] = true;
+  }
+
   const setor = String(campoSetor.value || "").trim();
 
   const dados = {
