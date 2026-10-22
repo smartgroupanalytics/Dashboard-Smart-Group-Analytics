@@ -17,7 +17,8 @@ const refs = {
   enviar: document.getElementById('enviar'),
   limpar: document.getElementById('btnLimpar'),
   microfone: document.getElementById('btnMicrofone'),
-  vozStatus: document.getElementById('vozStatus')
+  vozStatus: document.getElementById('vozStatus'),
+  btnVozResposta: document.getElementById('btnVozResposta')
 };
 let usuarioAtivo = null;
 let autorizado = false;
@@ -93,8 +94,66 @@ if (!SpeechRecognitionAPI) {
   });
 }
 
+
+// Leitura falada OPT-IN: nunca grava nem envia áudio ao Worker.
+// Vozes TTS não apresentam metadados de gênero padronizados. Para respeitar
+// a preferência da empresa, só usamos nomes explicitamente identificados como femininos.
+const leitorVoz = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window
+  ? window.speechSynthesis : null;
+let leituraLigada = false;
+const nomesVozFeminina = /francisca|luciana|camila|maria|vitoria|vitória|helena|fernanda|joana|beatriz|mariana|leticia|letícia|sabrina|isabela|female|feminina/i;
+function escolherVozFeminina() {
+  if (!leitorVoz) return null;
+  const vozes = leitorVoz.getVoices();
+  // Privilegia pt-BR e, em seguida, pt-PT somente quando a voz tem nome feminino reconhecido.
+  return vozes.find(v => /^pt[-_]BR$/i.test(v.lang) && nomesVozFeminina.test(v.name)) ||
+    vozes.find(v => /^pt[-_]PT$/i.test(v.lang) && nomesVozFeminina.test(v.name)) || null;
+}
+function interromperLeitura() { if (leitorVoz) leitorVoz.cancel(); }
+function falarResposta(texto) {
+  if (!leituraLigada || !leitorVoz || !autorizado) return;
+  const voz = escolherVozFeminina();
+  if (!voz) {
+    leituraLigada = false;
+    atualizarBotaoVoz();
+    vozMensagem('Não encontrei uma voz feminina em português neste dispositivo. A leitura foi desativada.');
+    return;
+  }
+  interromperLeitura();
+  const fala = new SpeechSynthesisUtterance(String(texto || '').slice(0, 3500));
+  fala.voice = voz;
+  fala.lang = voz.lang;
+  fala.rate = 0.98;
+  fala.pitch = 1.03;
+  fala.volume = 1;
+  leitorVoz.speak(fala);
+}
+function atualizarBotaoVoz() {
+  if (!refs.btnVozResposta) return;
+  refs.btnVozResposta.textContent = leituraLigada ? '🔊 Voz ligada' : '🔇 Voz desligada';
+  refs.btnVozResposta.setAttribute('aria-pressed', String(leituraLigada));
+  refs.btnVozResposta.title = leituraLigada ? 'Desativar a leitura das respostas' : 'Ativar leitura das respostas com voz feminina';
+}
+if (!leitorVoz) {
+  refs.btnVozResposta.hidden = true;
+} else {
+  refs.btnVozResposta.addEventListener('click', () => {
+    if (leituraLigada) { leituraLigada = false; interromperLeitura(); atualizarBotaoVoz(); return; }
+    const voz = escolherVozFeminina();
+    if (!voz) {
+      vozMensagem('Nenhuma voz feminina em português identificada neste navegador. Instale uma voz feminina no sistema e tente novamente.');
+      return;
+    }
+    leituraLigada = true;
+    atualizarBotaoVoz();
+    // A ativação por clique respeita restrições de reprodução do navegador.
+    falarResposta('Leitura de respostas ativada.');
+  });
+}
+
 function modoAcesso(mensagem, podeRepetir = false) {
   pararVoz();
+  interromperLeitura();
   autorizado = false;
   refs.chat.hidden = true;
   refs.acesso.hidden = false;
@@ -139,7 +198,7 @@ async function validarAcesso(usuario) {
 
 onAuthStateChanged(auth, usuario => {
   // Esvazia qualquer conversa anterior caso a identidade seja trocada.
-  if (usuarioAtivo?.uid !== usuario?.uid) limparConversa();
+  if (usuarioAtivo?.uid !== usuario?.uid) { interromperLeitura(); leituraLigada = false; atualizarBotaoVoz(); limparConversa(); }
   usuarioAtivo = usuario;
   validarAcesso(usuario);
 });
@@ -156,7 +215,7 @@ function limparConversa() {
   [...refs.mensagens.children].forEach(n => { if (n !== refs.boasVindas) n.remove(); });
   refs.boasVindas.hidden = false;
 }
-refs.limpar.addEventListener('click', () => { if (!enviando) { limparConversa(); refs.pergunta.focus(); } });
+refs.limpar.addEventListener('click', () => { if (!enviando) { interromperLeitura(); limparConversa(); refs.pergunta.focus(); } });
 
 function adicionarMensagem(texto, tipo, pendente = false) {
   refs.boasVindas.hidden = true;
@@ -240,6 +299,7 @@ async function enviarPergunta(pergunta) {
   const texto = String(pergunta || '').trim();
   if (!autorizado || enviando || texto.length < 3 || texto.length > 400) return;
   pararVoz();
+  interromperLeitura();
   enviando = true;
   refs.enviar.disabled = true;
   refs.pergunta.disabled = true;
@@ -259,7 +319,10 @@ async function enviarPergunta(pergunta) {
     const dados = await resposta.json().catch(() => ({ erro: 'Resposta inválida do serviço.' }));
     retorno.corpo.classList.remove('pendente');
     retorno.corpo.textContent = dados.resposta || dados.erro || 'O serviço não conseguiu retornar uma resposta.';
-    if (resposta.ok && dados.sucesso === true) metadados(retorno.bolha, dados);
+    if (resposta.ok && dados.sucesso === true) {
+      metadados(retorno.bolha, dados);
+      falarResposta(dados.resposta || '');
+    }
     if (resposta.status === 401 || resposta.status === 403) {
       // Não expor a conversa se a permissão for revogada durante o uso.
       autorizado = false;

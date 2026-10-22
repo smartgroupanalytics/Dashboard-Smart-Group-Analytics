@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
   <title>Smart Group IA — Estoques</title>
-  <link rel="stylesheet" href="./style.css?v=2">
+  <link rel="stylesheet" href="./style.css?v=4">
 </head>
 <body>
   <main class="shell" id="appShell">
@@ -27,6 +27,7 @@
         </div>
         <div class="acoes-header">
           <span class="conexao" id="estadoConexao"><span class="bolinha"></span> Conectado ao D1</span>
+          <button class="btn-voz-resposta" id="btnVozResposta" type="button" aria-pressed="false" title="Ativar leitura das respostas" aria-label="Ativar voz feminina para respostas">🔇 Voz desligada</button>
           <button class="btn-limpar" id="btnLimpar" type="button" title="Limpar a conversa">Limpar conversa</button>
         </div>
       </header>
@@ -56,12 +57,12 @@
         </form>
         <div class="voz-status" id="vozStatus" role="status" aria-live="polite" hidden></div>
         <div class="rodape-info" id="orientacao">
-          <span>Microfone envia automaticamente · Enter envia · Shift+Enter pula linha</span>
+          <span>Microfone envia automaticamente · Voz feminina opcional · Enter envia · Shift+Enter pula linha</span>
           <span>Dados do D1 · Somente leitura · Histórico disponível a partir de 21/10/2026</span>
         </div>
       </footer>
     </section>
   </main>
-  <script type="module" src="./app.js?v=3"></script>
+  <script type="module" src="./app.js?v=5"></script>
 </body>
 </html>

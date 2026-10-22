@@ -16,7 +16,8 @@ button,textarea{font:inherit}button{cursor:pointer}button:disabled{cursor:not-al
 @media(max-width:720px){.shell{padding:0;min-height:0}.chat{border-radius:0;border:0;height:100dvh}.chat-header{min-height:74px;padding:10px 14px}.titulo-chat{font-size:17px}.subtitulo{font-size:11px}.icone-cerebro{width:42px;height:42px}.acoes-header{gap:7px}.conexao{display:none}.btn-limpar{padding:9px;font-size:11px}.mensagens{padding:19px 14px}.bemvindo{margin:3vh auto 16px}.bemvindo p{font-size:13px}.sugestoes{grid-template-columns:1fr;gap:9px}.sugestao{min-height:49px;padding:12px}.rodape{padding:11px 11px 13px}.rodape-info{flex-direction:column;gap:2px}.mensagem.usuario .bolha{max-width:90%}.mensagem.assistente .bolha{max-width:100%;padding:12px}.access-card{margin:auto 14px}.mensagem{gap:8px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;scroll-behavior:auto!important}}
 
-/* SG-IA: microfone restrito ao chat, sem alterar estilos globais. */
-.btn-microfone{border:1px solid #456a9c;background:#193c69;color:#e3f1ff;border-radius:12px;width:42px;height:42px;flex:0 0 42px;display:grid;place-items:center;padding:0}
-.btn-microfone:hover{background:#27548b}.btn-microfone.gravando{background:#a82341;color:#fff;border-color:#ff6984;box-shadow:0 0 0 4px #f03c6633;animation:pulsar 1s ease-in-out infinite alternate}
-.voz-status{margin-top:8px;color:#c5ddff;font-size:12px;line-height:1.45}
+/* Smart IA: reprodução opcional de resposta, sem afetar o microfone */
+.btn-voz-resposta{border:1px solid #46638b;background:#142e53;color:#dceaff;border-radius:10px;padding:10px 12px;font:inherit;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap}
+.btn-voz-resposta:hover,.btn-voz-resposta[aria-pressed="true"]{background:#204f86;border-color:#60a5fa}
+.btn-voz-resposta:focus-visible{outline:2px solid #93c5fd;outline-offset:2px}
+@media(max-width:720px){.btn-voz-resposta{padding:9px 8px;font-size:11px;white-space:normal;text-align:center}}
