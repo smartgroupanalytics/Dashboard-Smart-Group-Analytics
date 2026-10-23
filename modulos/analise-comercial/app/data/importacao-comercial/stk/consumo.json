@@ -15956,8 +15956,32 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 61.2,
+    "dt_movto": "2026-10-22"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20034",
+    "produto": "20034",
+    "desc_completa": "NAPA BARI PRETO - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 198,
     "dt_movto": "2026-10-13"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20034",
+    "produto": "20034",
+    "desc_completa": "NAPA BARI PRETO - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 438.8,
+    "dt_movto": "2026-10-22"
   },
   {
     "fonte_comercial": "STK",
@@ -15982,6 +16006,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 479.8,
     "dt_movto": "2026-10-02"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20034",
+    "produto": "20034",
+    "desc_completa": "NAPA BARI PRETO - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 500,
+    "dt_movto": "2026-10-22"
   },
   {
     "fonte_comercial": "STK",
@@ -16580,6 +16616,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 400,
+    "dt_movto": "2026-10-22"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20082",
+    "produto": "20082",
+    "desc_completa": "NAPA BARI CAFE - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 478,
     "dt_movto": "2026-07-17"
   },
@@ -17096,6 +17144,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 480,
+    "dt_movto": "2026-10-22"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20104",
+    "produto": "20104",
+    "desc_completa": "NAPA BARI BEGE - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 498,
     "dt_movto": "2026-09-15"
   },
@@ -17122,6 +17182,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 512,
     "dt_movto": "2026-10-05"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20104",
+    "produto": "20104",
+    "desc_completa": "NAPA BARI BEGE - PU 0.7MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 518.6,
+    "dt_movto": "2026-10-22"
   },
   {
     "fonte_comercial": "STK",
