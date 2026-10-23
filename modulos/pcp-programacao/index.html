@@ -88,6 +88,10 @@ tr:nth-child(even) td{background:#F3F5F6}
  <button class="btn" id="prt">Imprimir</button>
  <button class="btn alt" id="exp">Exportar Excel</button>
  <div id="msg">Importe uma planilha para atualizar a programação compartilhada no Analytics. A carga será confirmada no Firestore. Para imprimir, use A4, escala 100% e margens “Nenhuma”.</div>
+ <div id="syncBox" role="status" aria-live="polite" data-tipo="aguardando">
+   <strong id="syncTitulo">Verificando acesso ao PCP...</strong>
+   <span id="syncDetalhe">A programação compartilhada será carregada do Firebase.</span>
+ </div>
 </div>
 <div id="pages"><div class="hint">Selecione a planilha do Excel para gerar a programação. Colunas lidas da planilha original: A (ProductionOrderName), B (ProductName), D (Quantity), N (ResourceGroupName), P (Start) e Q (End). Você também pode importar de volta a planilha exportada por aqui, com colunas extras e cores que acrescentou.</div></div>
 <script>
@@ -285,6 +289,6 @@ $('prt').onclick=()=>{if(!rows.length){$('msg').className='w';$('msg').textConte
 addEventListener('dragover',e=>e.preventDefault());
 addEventListener('drop',e=>{e.preventDefault();if(window.PCP_podeImportar===true&&e.dataTransfer?.files[0])load(e.dataTransfer.files[0])});
 </script>
-<script type="module" src="./cloud.js?v=1"></script>
+<script type="module" src="./cloud.js?v=2"></script>
 </body>
 </html>

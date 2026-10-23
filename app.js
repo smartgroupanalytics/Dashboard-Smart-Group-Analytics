@@ -207,7 +207,7 @@ case "pcp-programacao":
     titulo.innerText = "PCP — Programação";
     subtitulo.innerText = "Programação de OPs por setor e máquina, compartilhada no Firebase.";
     conteudo.innerHTML = `<iframe
-        src="modulos/pcp-programacao/index.html?v=1"
+        src="modulos/pcp-programacao/index.html?v=2"
         class="iframe-modulo"
         title="Módulo PCP — Programação"
         frameborder="0"></iframe>`;

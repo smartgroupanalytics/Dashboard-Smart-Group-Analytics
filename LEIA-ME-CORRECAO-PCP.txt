@@ -1,0 +1,60 @@
+SMART GROUP ANALYTICS — CORREÇÃO DO PCP — 23/10/2026
+
+PROBLEMA ENCONTRADO
+O módulo enviado anteriormente chamava a função status() em cloud.js, que exigia
+3 elementos HTML inexistentes (#syncBox, #syncTitulo, #syncDetalhe). A chamada
+lançava um erro JavaScript e podia interromper a gravação antes de escrever
+no Cloud Firestore. Por isso a programação podia aparecer no navegador, mas
+sumir ao pressionar F5.
+
+O QUE FOI CORRIGIDO
+1. modulos/pcp-programacao/index.html: criou indicador de sincronização.
+2. modulos/pcp-programacao/cloud.js: função de status resiliente e observador
+   de sincronização iniciado antes da consulta ao servidor.
+3. app.js: alterado somente o parâmetro de versão da rota PCP para ?v=2.
+4. index.html: alterado somente o parâmetro de versão de app.js.
+
+COMO INSTALAR
+- Substituir esses QUATRO arquivos em seus mesmos caminhos do repositório GitHub.
+- Fazer o commit para o GitHub Pages publicar.
+- Usar Ctrl + Shift + R no navegador após publicar.
+- NÃO precisa apagar dados ou recriar a coleção Firestore.
+- NÃO precisa modificar outras telas ou módulos.
+
+PERMISSÃO DO USUÁRIO COMUM QUE IMPORTARÁ O EXCEL
+Painel > Administração > Usuários > editar o responsável:
+- Perfil = usuário comum (não é necessário torná-lo administrador).
+- Ativo = SIM.
+- PCP — Programação (consultar/imprimir) = marcado.
+- PCP — Carregar planilha (somente responsáveis) = marcado.
+
+PARA OUTROS USUÁRIOS (SOMENTE CONSULTA)
+- Ativo = SIM.
+- PCP — Programação (consultar/imprimir) = marcado.
+- PCP — Carregar planilha = desmarcado.
+
+IMPORTANTE SOBRE AS REGRAS DO FIRESTORE
+As regras PCP que você já adicionou atendem ao cadastro dos dois campos
+modulos['pcp-programacao'] e modulos.pcpCarga. Se as regras foram publicadas,
+não é necessário alterá-las novamente para permitir carga por usuário comum.
+Caso o indicador mostre 'Permissão negada', confirme o cadastro e a publicação.
+
+VERIFICAÇÃO
+1. Faça login com o usuário COMUM autorizado a carregar.
+2. Abra PCP — Programação e selecione um Excel.
+3. Observe o indicador até mostrar 'Programação salva no Firestore'.
+   IMPORTANTE: a planilha renderizada na tela NÃO confirma que foi salva.
+4. Pressione F5. Aguarde 'Programação sincronizada' e confirme as OPs.
+5. Faça login com outro usuário autorizado apenas a consultar. Confirme a
+   leitura e que o campo de importação está oculto.
+6. No Firebase > Firestore > Dados, confirme o documento
+   pcp_programacao/atual e a subcoleção de partes na coleção
+   pcp_programacao_cargas (a carga ativa é identificada pelo campo cargaId).
+
+TESTES REALIZADOS ANTES DA ENTREGA
+- Sintaxe JavaScript verificada com Node.
+- Verificação da existência dos campos de sincronização no HTML.
+- Teste simulado de salvamento/restauração com usuário comum e consulta por
+  segundo usuário comum, sem acesso à conta real do Firebase.
+- A execução no ambiente real do usuário depende de publicar os arquivos e
+  testar com os usuários cadastrados no Firestore.

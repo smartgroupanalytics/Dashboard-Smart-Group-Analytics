@@ -21,9 +21,16 @@ let versaoVisualizada = 0;
 let envioAtual = 0;
 
 function status(titulo, detalhe = '', tipo = '') {
-  $('syncBox').dataset.tipo = tipo || 'aguardando';
-  $('syncTitulo').textContent = titulo;
-  $('syncDetalhe').textContent = detalhe;
+  // A ausência de um elemento visual não pode interromper a gravação no Firestore.
+  const box = $('syncBox');
+  const tituloEl = $('syncTitulo');
+  const detalheEl = $('syncDetalhe');
+  if (box) box.dataset.tipo = tipo || 'aguardando';
+  if (tituloEl) tituloEl.textContent = titulo;
+  if (detalheEl) detalheEl.textContent = detalhe;
+  if (!box || !tituloEl || !detalheEl) {
+    console.warn('PCP: indicador de sincronização incompleto:', titulo, detalhe);
+  }
 }
 function mensagemErro(err) {
   const code = String(err?.code || '');
@@ -174,19 +181,26 @@ async function iniciar() {
     if (!podeCarregar) {
       $('msg').textContent = 'Consulta autorizada. A importação de planilhas está reservada aos responsáveis pelo PCP; é possível filtrar, imprimir e exportar.';
     }
-    const atual = await getDocFromServer(CAMINHO_ATUAL);
-    if (atual.exists()) await restaurar(atual.data());
-    else status('PCP pronto', 'Nenhuma programação compartilhada no Firestore ainda.','');
+    // Observador inicia antes da primeira leitura: garante atualização no F5
+    // e mostra eventuais falhas de permissão mesmo para quem só consulta.
     onSnapshot(CAMINHO_ATUAL, snapshot => {
-      if (!snapshot.exists() || salvando) return;
+      if (!snapshot.exists()) {
+        if (!salvando && !ultimoId) status('PCP pronto', 'Nenhuma programação publicada no Firestore.','');
+        return;
+      }
+      if (salvando) return;
       const meta = snapshot.data();
       if (meta.cargaId && meta.cargaId !== ultimoId) {
         restaurar(meta).catch(err => {
-          console.error('PCP: falha na atualização em tempo real',err);
+          console.error('PCP: falha na atualização em tempo real', err);
           status('Erro ao atualizar programação', mensagemErro(err), 'erro');
         });
       }
     }, err => status('Sincronização interrompida', mensagemErro(err), 'erro'));
+    // Confere o estado no servidor mesmo se o navegador tiver cache local.
+    const atual = await getDocFromServer(CAMINHO_ATUAL);
+    if (atual.exists()) await restaurar(atual.data());
+    else if (!ultimoId) status('PCP pronto', 'Nenhuma programação compartilhada no Firestore ainda.','');
   } catch (err) {
     // protegerModulo redireciona acessos indevidos; para erros de leitura
     // mantenha a tela aberta SOMENTE quando a autenticação já foi validada.
