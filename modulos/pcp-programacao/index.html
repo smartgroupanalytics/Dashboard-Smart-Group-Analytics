@@ -43,6 +43,8 @@ body{margin:0;background:var(--bg);font-family:Inter,"Segoe UI",Arial,sans-serif
 .btn:disabled{background:#2B4A8C;color:#8FA3CC;cursor:not-allowed}
 #msg{flex-basis:100%;font-size:13px;color:var(--mu)}
 #msg.w{color:#FFC470}
+#filtroAviso{flex-basis:100%;font-size:12px;color:#cbd7f5;line-height:1.5}
+#filtroAviso[data-tipo="erro"]{color:#ffc470}
 #pages{display:flex;flex-direction:column;align-items:center;gap:24px;padding:24px}
 .hint{max-width:560px;background:var(--card);border:1px solid var(--line);padding:28px;border-radius:14px;line-height:1.6;font-size:15px;color:var(--mu)}
 .pg{width:210mm;height:297mm;padding:48px;background:#fff;color:#1B1F24;display:flex;flex-direction:column;gap:14px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.18)}
@@ -81,13 +83,14 @@ tr:nth-child(even) td{background:#F3F5F6}
 <div id="ttl"><div class="lg"><img id="lg2" alt="Smart Group"></div><h1>Programação de Produção</h1></div>
 <div id="bar">
  <label id="fileWrap">Planilha do Excel<input id="file" type="file" accept=".xlsx,.xls,.csv"></label>
- <label>Período<input id="per" type="text" placeholder="dd/mm a dd/mm"></label>
+ <label>Período / data da OP<input id="per" type="text" placeholder="23/10/2026 ou 23/10/2026 a 25/10/2026" title="Digite uma data (dd/mm/aaaa) ou um intervalo (dd/mm/aaaa a dd/mm/aaaa)" style="min-width:260px" autocomplete="off"></label>
  <label>Setor / máquina<select id="set"><option value="">Todos</option></select></label>
  <label class="chk"><input id="sheet" type="checkbox"> Uma folha por setor</label>
  <label>Folha a imprimir<select id="sel"><option value="">Todas as folhas</option></select></label>
  <button class="btn" id="prt">Imprimir</button>
  <button class="btn alt" id="exp">Exportar Excel</button>
  <div id="msg">Importe uma planilha para atualizar a programação compartilhada no Analytics. A carga será confirmada no Firestore. Para imprimir, use A4, escala 100% e margens “Nenhuma”.</div>
+ <div id="filtroAviso" role="status" aria-live="polite">Digite uma data no campo Período para filtrar as OPs na visualização e no PDF. Intervalos também são aceitos.</div>
  <div id="syncBox" role="status" aria-live="polite" data-tipo="aguardando">
    <strong id="syncTitulo">Verificando acesso ao PCP...</strong>
    <span id="syncDetalhe">A programação compartilhada será carregada do Firebase.</span>
@@ -239,10 +242,74 @@ async function exportX(){
  $('msg').className='';$('msg').textContent='Planilha exportada: programacao-producao.xlsx. Você pode acrescentar colunas (com título na primeira linha), preencher à mão e mudar cores; depois importe este arquivo de novo.';
 }
 
+// Filtro apenas visual: não altera nem reenvia a carga salva no Firestore.
+// A seleção considera também OPs que atravessam a meia-noite e continuam em produção.
+const PCP_EPOCA=Date.UTC(1899,11,30);
+function pcpDataExcelTexto(texto){
+ const m=/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.exec(texto.trim());
+ if(!m)return null;
+ const dia=Number(m[1]),mes=Number(m[2]),ano=Number(m[3]);
+ if(ano<1900||ano>9999)return null;
+ const t=Date.UTC(ano,mes-1,dia),d=new Date(t);
+ if(d.getUTCDate()!==dia||d.getUTCMonth()!==mes-1||d.getUTCFullYear()!==ano)return null;
+ return (t-PCP_EPOCA)/86400000;
+}
+function pcpPeriodo(texto){
+ const original=String(texto||'').trim();
+ if(!original)return {ok:true,ativo:false,inicio:-Infinity,fim:Infinity,unico:false};
+ const partes=original.split(/\s+a\s+/i);
+ if(partes.length<1||partes.length>2)return {ok:false,erro:'Use dd/mm/aaaa ou dd/mm/aaaa a dd/mm/aaaa.'};
+ const inicio=pcpDataExcelTexto(partes[0]);
+ const fim=partes.length===2?pcpDataExcelTexto(partes[1]):inicio;
+ if(inicio===null||fim===null)return {ok:false,erro:'Data inválida. Use dd/mm/aaaa ou dd/mm/aaaa a dd/mm/aaaa.'};
+ if(fim<inicio)return {ok:false,erro:'A data final não pode ser anterior à inicial.'};
+ // fim é exclusivo: o último dia informado deve ser incluído por inteiro.
+ return {ok:true,ativo:true,inicio:inicio,fim:fim+1,unico:partes.length===1};
+}
+function pcpNumeroExcel(v){
+ if(typeof v==='number')return Number.isFinite(v)?v:null;
+ if(v instanceof Date && !isNaN(v.getTime()))return (Date.UTC(v.getUTCFullYear(),v.getUTCMonth(),v.getUTCDate(),v.getUTCHours(),v.getUTCMinutes(),v.getUTCSeconds())-PCP_EPOCA)/86400000;
+ if(typeof v!=='string')return null;
+ const s=v.trim();
+ const br=/^(\d{1,2}\/\d{1,2}\/\d{4})(?:\s+(\d{1,2}):(\d{2}))?/.exec(s);
+ if(br){const d=pcpDataExcelTexto(br[1]);return d===null?null:d+(Number(br[2]||0)*60+Number(br[3]||0))/1440;}
+ const iso=/^(\d{4})-(\d{2})-(\d{2})(?:[T\s](\d{2}):(\d{2}))?/.exec(s);
+ if(iso){const d=pcpDataExcelTexto(iso[3]+'/'+iso[2]+'/'+iso[1]);return d===null?null:d+(Number(iso[4]||0)*60+Number(iso[5]||0))/1440;}
+ return null;
+}
+function pcpOPnoPeriodo(x,periodo){
+ if(!periodo.ativo)return true;
+ const inicio=pcpNumeroExcel(x.ini),fim=pcpNumeroExcel(x.fim);
+ if(inicio===null&&fim===null)return false;
+ const a=inicio===null?fim:inicio,b=fim===null?inicio:fim;
+ return Math.min(a,b)<periodo.fim && Math.max(a,b)>=periodo.inicio;
+}
+function pcpSelecionar(){
+ const periodo=pcpPeriodo($('per').value),setor=$('set').value;
+ if(!periodo.ok)return {ok:false,erro:periodo.erro,lista:[]};
+ return {ok:true,periodo,lista:rows.filter(x=>(!setor||x.setor===setor)&&pcpOPnoPeriodo(x,periodo))};
+}
 function render(){
  if(!rows.length)return;
- const fs=$('set').value,per=$('sheet').checked;
- const GR=groups(rows.filter(x=>!fs||x.setor===fs));
+ const resultado=pcpSelecionar(),aviso=$('filtroAviso');
+ if(!resultado.ok){
+  aviso.dataset.tipo='erro';aviso.textContent=resultado.erro;
+  $('sel').innerHTML='<option value="">Todas as folhas</option>';
+  $('pages').innerHTML='<div class="hint">'+esc(resultado.erro)+' A programação salva no Firebase não foi alterada.</div>';
+  return;
+ }
+ const fs=$('set').value,per=$('sheet').checked,filtradas=resultado.lista;
+ const qtdSetores=new Set(filtradas.map(x=>x.setor)).size;
+ aviso.dataset.tipo=filtradas.length?'ok':'erro';
+ aviso.textContent=filtradas.length
+  ? 'Exibindo '+filtradas.length+' de '+rows.length+' OPs em '+qtdSetores+' setor(es). '+(resultado.periodo.ativo?'Filtro aplicado à impressão/PDF.':'Sem filtro de data.')
+  : 'Nenhuma OP encontrada para a data/período e setor escolhidos. Confira o filtro. A programação salva não foi alterada.';
+ if(!filtradas.length){
+  $('sel').innerHTML='<option value="">Todas as folhas</option>';
+  $('pages').innerHTML='<div class="hint">Nenhuma OP programada para o filtro informado. Ajuste a data ou selecione outro setor/máquina.</div>';
+  return;
+ }
+ const GR=groups(filtradas);
  const pages=[];let cur=null,used=0;
  const np=()=>{cur=[];pages.push(cur);used=0};
  GR.forEach(({n,L})=>{
@@ -261,9 +328,9 @@ function render(){
  const cv=$('sel').value,sv=(cv!==''&&+cv<pages.length)?+cv:-1,f0=sv<0?0:sv;
  $('sel').innerHTML='<option value="">Todas as folhas</option>'+pages.map((pg,k)=>'<option value="'+k+'">Folha '+(k+1)+' · '+esc([...new Set(pg.map(b=>b.n))].join(' / '))+'</option>').join('');
  $('sel').value=sv<0?'':String(sv);
- const pr=esc($('per').value),now=new Date().toLocaleString('pt-BR');
+ const pr=esc($('per').value),rotulo=resultado.periodo.unico?'Data: ':'Período: ',now=new Date().toLocaleString('pt-BR');
  $('pages').innerHTML=pages.map((pg,k)=>
-  '<div class="pg'+(sv>=0&&sv!==k?' off':'')+(k>f0&&(sv<0||sv===k)?' nb':'')+'"><div class="hd"><div class="bn"><img class="lgo" src="'+LOGO+'" alt="Smart Group"><h1>Programação de Produção</h1></div><div class="rt">'+(pr?'Período: '+pr:'')+'</div></div><div class="bd">'+
+  '<div class="pg'+(sv>=0&&sv!==k?' off':'')+(k>f0&&(sv<0||sv===k)?' nb':'')+'"><div class="hd"><div class="bn"><img class="lgo" src="'+LOGO+'" alt="Smart Group"><h1>Programação de Produção</h1></div><div class="rt">'+(pr?rotulo+pr:'')+'</div></div><div class="bd">'+
   pg.map(b=>'<div class="blk"><div class="grp"><span>SETOR / MÁQUINA'+(b.c?' (continuação)':'')+'</span><b>'+esc(b.n)+'</b></div>'+tbl(b.r)+'</div>').join('')+
   '</div><div class="ft"><span>Gerado em '+now+'</span><span>Página '+(k+1)+' de '+pages.length+'</span></div></div>').join('');
 }
@@ -283,9 +350,9 @@ window.PCP_restaurar=function(snapshot){
   if(rows.length){render();$('msg').className='';$('msg').textContent=rows.length+' OPs restauradas da programação compartilhada. Use os filtros, impressão ou exportação normalmente.'}
 };
 $('file').onchange=e=>e.target.files[0]&&load(e.target.files[0]);
-['per','set','sheet','sel'].forEach(id=>$(id).addEventListener('input',render));
+['per','set','sheet','sel'].forEach(id=>$(id).addEventListener('input',()=>{if(id!=='sel')$('sel').value='';render()}));
 $('exp').onclick=exportX;
-$('prt').onclick=()=>{if(!rows.length){$('msg').className='w';$('msg').textContent='Importe a planilha do Excel antes de imprimir.';return}window.print()};
+$('prt').onclick=()=>{if(!rows.length){warn('Ainda não há programação carregada.');return}const filtro=pcpSelecionar();if(!filtro.ok){warn(filtro.erro);return}if(!filtro.lista.length){warn('Nenhuma OP encontrada para este filtro; ajuste a data ou setor antes de imprimir.');return}window.print()};
 addEventListener('dragover',e=>e.preventDefault());
 addEventListener('drop',e=>{e.preventDefault();if(window.PCP_podeImportar===true&&e.dataTransfer?.files[0])load(e.dataTransfer.files[0])});
 </script>
