@@ -28,7 +28,10 @@ export const sgfBridge = {
     for (const listener of this._listeners) listener(state);
   },
   _announcePermissions() {
-    this.canEdit = Boolean(this._editorAllowed && this._baseLoaded);
+    // Mostrar o botao aos editores autenticados, mesmo quando a base ainda
+    // nao foi lida. Ler a base e publicar sao autorizacoes diferentes.
+    // As regras Firestore continuam sendo a autoridade final de escrita.
+    this.canEdit = Boolean(this._editorAllowed);
     for (const listener of this._permissionListeners) listener(this.canEdit);
   },
 
@@ -129,6 +132,10 @@ export const sgfBridge = {
   },
   async publish(patch,arquivo) {
     if(!this.canEdit) throw new Error('Usuário sem permissão para importar.');
+    // Nunca sobrescreva uma base já publicada quando sua leitura falhou.
+    if(!this._baseLoaded) throw new Error(
+      'A leitura da base do Radar ainda não foi validada no Firebase. Confira se as regras da coleção compras_radar foram publicadas e recarregue a página.'
+    );
     const {doc,setDoc,serverTimestamp,getDoc}=this._sdk;
     // Confere novamente no servidor; as regras também exigem cpPodePublicar.
     if (this._uid!=='IYjFcuc0PXYvkq7vt97NtkUknQD3') {
