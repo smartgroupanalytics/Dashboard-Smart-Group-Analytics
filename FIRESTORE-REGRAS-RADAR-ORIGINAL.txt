@@ -1,0 +1,55 @@
+// SMART GROUP — RADAR ORIGINAL DE COMPRAS (PRODUTOS + FORNECEDORES)
+// Cole DENTRO de: match /databases/{database}/documents {
+// DEPOIS das funcoes cpPodeLer / cpPodePublicar e ANTES do bloqueio final.
+// Cole uma unica vez. NAO substitua as regras anteriores de Compras ou PCP.
+// Colecao NOVA; NAO reutiliza compras_fornecedores (projeto antigo).
+
+match /compras_radar/{baseId} {
+  allow get: if baseId == 'atual' && cpPodeLer();
+  allow list: if false;
+  allow create, update: if baseId == 'atual' && cpPodePublicar()
+    && request.resource.data.keys().hasOnly([
+      'versaoAtiva','partes','totalProdutos','totalFornecedores','arquivo',
+      'atualizadoEm','atualizadoPorUid','atualizadoPorNome'
+    ])
+    && request.resource.data.keys().hasAll([
+      'versaoAtiva','partes','totalProdutos','totalFornecedores','arquivo',
+      'atualizadoEm','atualizadoPorUid','atualizadoPorNome'
+    ])
+    && request.resource.data.versaoAtiva is string
+    && request.resource.data.versaoAtiva.matches('^v_[a-z0-9]+_[a-z0-9]+$')
+    && request.resource.data.versaoAtiva.size() <= 50
+    && request.resource.data.partes is int
+    && request.resource.data.partes > 0 && request.resource.data.partes <= 1000
+    && request.resource.data.totalProdutos is int
+    && request.resource.data.totalProdutos >= 0 && request.resource.data.totalProdutos <= 100000
+    && request.resource.data.totalFornecedores is int
+    && request.resource.data.totalFornecedores >= 0 && request.resource.data.totalFornecedores <= 100000
+    && request.resource.data.arquivo is string && request.resource.data.arquivo.size() <= 150
+    && request.resource.data.atualizadoEm == request.time
+    && request.resource.data.atualizadoPorUid == request.auth.uid
+    && request.resource.data.atualizadoPorNome is string
+    && request.resource.data.atualizadoPorNome.size() <= 120;
+  allow delete: if false;
+
+  match /versoes/{versaoId} {
+    allow read, write: if false;
+    match /partes/{parteId} {
+      allow get, list: if cpPodeLer();
+      allow create: if baseId == 'atual' && cpPodePublicar()
+        && versaoId.matches('^v_[a-z0-9]+_[a-z0-9]+$')
+        && parteId.matches('^[0-9]{5}$')
+        && (!exists(/databases/$(database)/documents/compras_radar/atual)
+            || get(/databases/$(database)/documents/compras_radar/atual).data.versaoAtiva != versaoId)
+        && request.resource.data.keys().hasOnly(['tipo','registros','indice'])
+        && request.resource.data.keys().hasAll(['tipo','registros','indice'])
+        && request.resource.data.tipo in ['produtos','fornecedores']
+        && request.resource.data.indice is int
+        && request.resource.data.indice >= 0 && request.resource.data.indice < 1000
+        && request.resource.data.registros is list
+        && request.resource.data.registros.size() > 0
+        && request.resource.data.registros.size() <= 120;
+      allow update, delete: if false;
+    }
+  }
+}

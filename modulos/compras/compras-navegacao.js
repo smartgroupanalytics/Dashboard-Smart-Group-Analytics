@@ -28,7 +28,7 @@
     if (event.origin !== window.location.origin || event.source !== iframe.contentWindow) return;
     if (event.data?.type !== 'sgf:height') return;
     const height = Number(event.data.height);
-    if (Number.isFinite(height) && height > 0) iframe.style.height = `${Math.min(5000,Math.max(700,height + 10))}px`;
+    if (Number.isFinite(height) && height > 0) iframe.style.height = `${Math.min(20000,Math.max(700,height))}px`;
   });
   activate('previsao');
 })();

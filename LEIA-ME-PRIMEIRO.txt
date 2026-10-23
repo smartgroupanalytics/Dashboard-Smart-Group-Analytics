@@ -1,0 +1,55 @@
+INTEGRAÇÃO DO RADAR ORIGINAL (Gestao-de-Suprimentos-main.zip)
+=========================================================
+
+IMPORTANTE:
+- NÃO é o dashboard simplificado que havia sido entregue anteriormente.
+- O original em React/Vite está na pasta modulos/compras/fornecedores-fonte.
+- src/styles.css foi COPIADO INTACTO do seu projeto original.
+- src/App.jsx mantém todas as seções, gráficos, tabs, filtros, ranking e tabelas.
+  Somente o carregamento/salvamento dos dados e a visibilidade do botão Importar foram integrados.
+- A Previsão de Compras (compras-app.js) NÃO foi alterada.
+
+INSTALAÇÃO NO SEU PC WINDOWS
+1. Faça BACKUP de modulos/compras, principalmente os arquivos atuais.
+2. Extraia este ZIP e copie a pasta 'modulos' PARA A RAIZ do seu repositório,
+   mesclando somente as pastas. Deixe o compras-app.js atual como está.
+3. Se você já tem o index.html / compras-navegacao.js com os dois cards,
+   eles são compatíveis; o pacote contém a mesma navegação.
+4. Copie o arquivo GERAR-RADAR-ORIGINAL.ps1 para A RAIZ do repositório.
+5. Em PowerShell, NA RAIZ do repositório, rode:
+      powershell -NoProfile -ExecutionPolicy Bypass -File .\GERAR-RADAR-ORIGINAL.ps1
+   Requer Node.js LTS instalado (node e npm).
+6. O comando compila o React original e substitui os arquivos do ANTIGO
+   dashboard simplificado em modulos/compras/fornecedores pelo Radar original.
+7. Confirme que existe modulos/compras/fornecedores/index.html e assets/.
+8. No Firebase > Firestore > Regras, cole o conteúdo de
+   FIRESTORE-REGRAS-RADAR-ORIGINAL.txt dentro do match /databases/.../documents.
+   Não apague as regras atuais. Publique após validar no editor.
+9. Commit e Push origin no GitHub dos arquivos dentro de modulos/compras.
+   Atenção: NÃO inclua node_modules no commit (o .gitignore os ignora).
+10. Acesse o card 'Análise de Fornecedores' e importe seu Excel
+    ABC PRODUTOS.xlsx (Planilha2 ou Plan1) com usuário autorizado.
+    IMPORTANTE: para restaurar a classificação de origem do projeto ORIGINAL,
+    importe TAMBÉM o arquivo src/suppliers.json que já está dentro do seu
+    Gestao-de-Suprimentos-main.zip. O botão Importar Excel aceita esse JSON,
+    sem publicá-lo no GitHub. Faça ambas as importações uma vez.
+    Se quiser importar uma planilha Excel de fornecedores, use o mesmo botão.
+
+PROTEÇÃO DE DADOS
+- O arquivo products.json original (554 registros) NÃO está publicado no GitHub.
+- O suppliers.json original foi retirado da versão distribuída para o repositório.
+- O Excel original ABC PRODUTOS.xlsx NÃO está no ZIP de integração.
+- A base é importada UMA VEZ por usuário autorizado e compartilhada via Firestore.
+- Seus dados continuam no Firebase após atualizar/recarregar a página.
+- Permissões: cpPodeLer() consulta, cpPodePublicar() importação.
+- Esta versão usa a NOVA coleção compras_radar, independente das antigas.
+- O Plano de Ação segue o comportamento do projeto original: armazenamento
+  LOCAL no navegador. Não é compartilhado via Firebase nesta integração.
+
+LIMITAÇÕES / TESTE
+- A construção do bundle requer npm ci/npm run build em ambiente com internet.
+- Não foi possível executar o build aqui porque as dependências npm não estavam
+  acessíveis na rede do ambiente. Não publique sem conferir o build no seu PC.
+- O teste real de Firestore deve ser feito após aplicar as regras.
+- Se havia informação inserida apenas no módulo simplificado anterior,
+  ela não é migrada automaticamente; reimporte a planilha original no Radar.
