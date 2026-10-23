@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="pt-BR" style="visibility:hidden">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Análise de Fornecedores | Smart Group Analytics</title>
+  <link rel="stylesheet" href="./styles.css?v=1">
+</head>
+<body>
+<main class="sgf-wrap">
+  <header class="sgf-header">
+    <div><div class="sgf-eyebrow">COMPRAS E SUPRIMENTOS / INTELIGÊNCIA DE FORNECEDORES</div>
+      <h1>Análise de Fornecedores</h1>
+      <p>Compras por fornecedor, evolução semestral, concentração e curva ABC.</p></div>
+    <div class="sgf-actions">
+      <label id="sgf-import-label" class="sgf-btn primary" hidden>↑ Importar planilha
+        <input id="sgf-upload" type="file" accept=".xlsx,.xls,.json" hidden disabled>
+      </label>
+      <button id="sgf-export" class="sgf-btn outline" type="button">↓ Exportar ranking CSV</button>
+    </div>
+  </header>
+  <div id="sgf-state" class="sgf-state" role="status" aria-live="polite">Validando permissões e consultando o Firebase...</div>
+  <div id="sgf-meta" class="sgf-meta">Base compartilhada no Firebase · aguardando carregamento</div>
+  <section class="sgf-filters">
+    <div class="sgf-filter-title">▤ FILTROS</div>
+    <label>Período<select id="sgf-period"><option value="Todos">Todos</option></select></label>
+    <label>Origem<select id="sgf-origin"><option>Todas</option><option>Nacional</option><option>Importado</option><option>Não informado</option></select></label>
+    <label class="sgf-search">Fornecedor<input id="sgf-search" placeholder="Pesquisar fornecedor..." autocomplete="off"></label>
+    <button id="sgf-reset" type="button" class="sgf-btn link">Limpar filtros</button>
+  </section>
+  <section class="sgf-kpis">
+    <div class="sgf-card"><div class="sgf-kpi-icon">R$</div><div class="sgf-muted">VALOR TOTAL COMPRADO</div><strong id="sgf-total">R$ 0,00</strong><small>Soma dos valores no filtro</small></div>
+    <div class="sgf-card"><div class="sgf-kpi-icon green">◫</div><div class="sgf-muted">QUANTIDADE COMPRADA</div><strong id="sgf-qty">0</strong><small>Unidade conforme origem</small></div>
+    <div class="sgf-card"><div class="sgf-kpi-icon orange">♙</div><div class="sgf-muted">FORNECEDORES</div><strong id="sgf-count">0</strong><small>Fornecedores filtrados</small></div>
+    <div class="sgf-card"><div class="sgf-kpi-icon purple">%</div><div class="sgf-muted">CONCENTRAÇÃO TOP 5</div><strong id="sgf-top5">0%</strong><small>Participação dos cinco maiores</small></div>
+  </section>
+  <section class="sgf-insights">
+    <div class="sgf-panel"><div class="sgf-muted">MAIOR FORNECEDOR POR VALOR</div><h3 id="sgf-largest">—</h3><p id="sgf-largest-detail">Nenhuma base carregada</p></div>
+    <div class="sgf-panel"><div class="sgf-muted">CRITÉRIO ABC</div><h3>A até 80% · B até 95% · C restante</h3><p>Classificação recalculada para cada seleção de filtros.</p></div>
+  </section>
+  <section class="sgf-charts">
+    <div class="sgf-panel"><h2>Maiores fornecedores por valor</h2><p>Ranking financeiro · 8 maiores</p><div class="sgf-canvas"><canvas id="sgf-bar" aria-label="Gráfico de valores comprados por fornecedor" role="img"></canvas></div></div>
+    <div class="sgf-panel"><h2>Distribuição por classe ABC</h2><p>Participação financeira no recorte</p><div class="sgf-canvas"><canvas id="sgf-pie" aria-label="Gráfico de valores por curva ABC" role="img"></canvas></div><div class="sgf-abc-summary" id="sgf-abc-summary"></div></div>
+  </section>
+  <section class="sgf-panel sgf-spaced"><h2>Comparativo entre semestres</h2><p>Top fornecedores por valor · base completa</p><div class="sgf-canvas compare"><canvas id="sgf-compare" aria-label="Comparativo entre semestres" role="img"></canvas></div></section>
+  <section class="sgf-panel sgf-table-panel">
+    <div class="sgf-table-title"><div><h2>Ranking detalhado de fornecedores</h2><p id="sgf-table-info">Nenhum dado</p></div><label>Ordenar por <select id="sgf-sort"><option value="value">Valor</option><option value="quantity">Quantidade</option><option value="share">Participação</option></select></label></div>
+    <div class="sgf-table-scroll"><table><thead><tr><th>#</th><th>Fornecedor</th><th>Origem</th><th class="numeric">Quantidade</th><th class="numeric">Valor comprado</th><th class="numeric">% do total</th><th>ABC</th></tr></thead><tbody id="sgf-tbody"><tr><td colspan="7" class="sgf-empty">Aguardando base de fornecedores...</td></tr></tbody></table></div>
+  </section>
+  <footer>Fonte: planilha autorizada no Firebase · Não há informações de compras incluídas nos arquivos públicos do site.</footer>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" defer></script>
+<script src="./app.js?v=1" type="module"></script>
+</body>
+</html>
