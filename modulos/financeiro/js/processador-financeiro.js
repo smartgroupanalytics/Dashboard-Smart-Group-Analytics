@@ -21,6 +21,7 @@ function padronizarLocalCobranca(valorOriginal) {
     }
 
     if (
+        nome === "sicoob" ||
         nome.includes("sicoob vale sul") ||
         nome.includes("vale sul") ||
         nome.includes("vale do sul")
@@ -96,6 +97,7 @@ function identificarLocalCobranca(nomeOriginal) {
     }
 
     if (
+        nome === "sicoob" ||
         nome.includes("sicoob vale sul") ||
         nome.includes("vale sul") ||
         nome.includes("vale do sul")

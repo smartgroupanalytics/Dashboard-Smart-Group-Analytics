@@ -36,17 +36,16 @@ const BANCO_SALDO_CAIXA_MANUAL = Object.freeze({
 /* Contas sempre disponíveis, inclusive sem movimento no relatório. */
 const CONTAS_FINANCEIRAS_FIXAS = Object.freeze([
     "Banco do Brasil",
-    "Sicoob",
+    "Sicoob Vale Sul",
     "Sicoob MaxiCrédito",
     "Itaú",
-    "Bradesco",
-    "Sicoob Vale Sul"
+    "Bradesco"
 ]);
 
 /* Ordem da abertura: só os cinco bancos solicitados; demais via filtro. */
 const BANCOS_EXIBICAO_PADRAO = Object.freeze([
     "banco-do-brasil",
-    "sicoob",
+    "sicoob-vale-sul",
     "sicoob-maxicredito",
     "itau",
     "bradesco"
@@ -59,11 +58,18 @@ function completarBancosComContasManuais(bancos = []) {
     // Consolidar pelo ID estável evita repetir o saldo manual quando o
     // relatório usa grafias distintas para o mesmo banco.
     (Array.isArray(bancos) ? bancos : []).forEach((banco) => {
-        const id = obterChaveBancoSaldo(banco);
+        const idOriginal = obterChaveBancoSaldo(banco);
+        // No cadastro da Smart Group, o local de cobrança "SICOOB" é o
+        // Sicoob Vale Sul. Não usar o ID genérico "sicoob" para buscar
+        // saldos no Firebase: o histórico correto é "sicoob-vale-sul".
+        const id = idOriginal === "sicoob" ? "sicoob-vale-sul" : idOriginal;
         if (!id) return;
+        const bancoCanonico = id !== idOriginal
+            ? { ...banco, ...identificarLocalCobranca("Sicoob Vale Sul"), id, nome: "Sicoob Vale Sul" }
+            : banco;
         const existente = mapa.get(id);
         if (!existente) {
-            mapa.set(id, { ...banco });
+            mapa.set(id, { ...bancoCanonico });
             return;
         }
         ["totalRecebido", "totalPago", "emAberto", "emAtraso"].forEach((chave) => {
