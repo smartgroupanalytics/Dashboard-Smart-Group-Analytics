@@ -208,6 +208,46 @@ function localizarColunasCompletas(cabecalho) {
     return colunas;
 }
 
+/*
+ * Regra financeira compartilhada com Contas a Receber e Contas a Pagar.
+ * O valor líquido da coluna AD NÃO comprova quitação: somente uma data
+ * válida na coluna O (Dt.pgto) separa realizado de previsto.
+ * Os valores devem reproduzir os KPIs das duas abas de contas.
+ */
+function financeiroEstaPago(item) {
+    return item?.dataPagamento instanceof Date &&
+        !Number.isNaN(item.dataPagamento.getTime()) &&
+        item.dataPagamentoEmAberto !== true;
+}
+
+function financeiroEhAdiantamentoCliente(item) {
+    const classificacao = normalizarTexto([
+        item?.planoFinanceiro,
+        item?.tipoDocumento,
+        item?.descricaoTipoDocumento
+    ].join(" "));
+    return classificacao.includes("adiantamento");
+}
+
+function financeiroValorRecebidoCliente(item) {
+    if (!financeiroEstaPago(item)) return 0;
+
+    // Exatamente o mesmo cálculo do KPI "Recebido" de Contas a Receber.
+    const documento = Number(item.valorDocumento || 0);
+    const juros = Number(item.juros || 0);
+    const descontos = Number(item.descontos || 0);
+    if (documento > 0 || juros > 0 || descontos > 0) {
+        return Math.max(0, documento + juros - descontos);
+    }
+    return Math.max(0, Number(item.valorLiquidoPago || 0));
+}
+
+function financeiroValorPagoFornecedor(item) {
+    if (!financeiroEstaPago(item)) return 0;
+    // Exatamente o mesmo cálculo do KPI "Pago" de Contas a Pagar.
+    return Number(item.valorLiquidoPago || 0);
+}
+
 function criarLancamento(linha, colunas, numeroLinha) {
     const valor = (chave) =>
         colunas[chave] >= 0 ? linha[colunas[chave]] : "";
@@ -233,7 +273,7 @@ function criarLancamento(linha, colunas, numeroLinha) {
     const juros = Math.abs(converterNumeroFinanceiro(valor("juros")));
     const descontos = Math.abs(converterNumeroFinanceiro(valor("descontos")));
 
-    const pago = Boolean(dataPagamento) || valorLiquidoPago > 0;
+    const pago = financeiroEstaPago({ dataPagamento, dataPagamentoEmAberto });
     const hoje = inicioDoDia(new Date());
     const atrasado = !pago && vencimento && inicioDoDia(vencimento) < hoje;
 
@@ -254,7 +294,7 @@ function criarLancamento(linha, colunas, numeroLinha) {
         vencimento,
         dataPagamento,
         /*
-         * Regra específica do Fluxo de Caixa:
+         * Regra de todo o Financeiro:
          * Dt.pgto vazio ou 00/00/0000 significa título em aberto, mesmo que
          * Vlr.líq.pago tenha algum valor no relatório.
          */
@@ -340,12 +380,17 @@ function agruparBancosDosLancamentos(lancamentos) {
 
         const banco = mapa.get(chave);
 
-        if (item.tipoCadastro === "cliente") {
-            if (item.pago) banco.totalRecebido += item.valorLiquidoPago;
-            if (!item.pago) banco.emAberto += item.valorDocumento;
-            if (item.atrasado) banco.emAtraso += item.valorDocumento;
-        } else if (item.tipoCadastro === "fornecedor" && item.pago) {
-            banco.totalPago += item.valorLiquidoPago;
+        if (item.tipoCadastro === "cliente" && !financeiroEhAdiantamentoCliente(item)) {
+            // A mesma regra/valor da aba Contas a Receber.
+            if (financeiroEstaPago(item)) {
+                banco.totalRecebido += financeiroValorRecebidoCliente(item);
+            } else {
+                banco.emAberto += Number(item.valorDocumento || 0);
+                if (item.atrasado) banco.emAtraso += Number(item.valorDocumento || 0);
+            }
+        } else if (item.tipoCadastro === "fornecedor" && financeiroEstaPago(item)) {
+            // A mesma regra/valor da aba Contas a Pagar.
+            banco.totalPago += financeiroValorPagoFornecedor(item);
         }
 
         banco.saldo = banco.totalRecebido - banco.totalPago;

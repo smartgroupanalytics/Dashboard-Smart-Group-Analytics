@@ -102,59 +102,34 @@ function criarMovimentacoesFluxo(item) {
         return [];
     }
 
+    // Contas a Receber não soma adiantamentos de clientes em seus KPIs.
+    // Excluir também dos movimentos do Fluxo mantém tabela, gráficos e
+    // totais conciliáveis com a carteira (fornecedores não são excluídos).
+    if (tipo === "entrada" && financeiroEhAdiantamentoCliente(item)) {
+        return [];
+    }
+
     const valorDocumento =
         Math.max(
             0,
             Number(item.valorDocumento || 0)
         );
 
-    const valorPagoInformado =
-        Math.max(
-            0,
-            Number(item.valorLiquidoPago || 0)
-        );
-
     /*
-     * REGRA OFICIAL DO FLUXO DE CAIXA:
+     * Dt.pgto (coluna O) é a fonte única do status. Um valor na coluna AD
+     * sem data não torna o lançamento realizado.
      *
-     * Dt.pgto preenchida  -> REALIZADO
-     * Dt.pgto vazio ou 00/00/0000 -> PREVISTO
-     *
-     * A classificação do cenário NÃO depende mais de `pago` nem de
-     * Vlr.líq.pago. Assim, todo título de CLIENTE com Dt.pgto vazio/00/00/0000 alimenta
-     * "Entradas previstas" e todo título de FORNECEDOR com Dt.pgto vazio/00/00/0000
-     * alimenta "Saídas previstas".
+     * Recebimentos (clientes): Vlr.docto + Juros - Descontos, como na aba
+     * Contas a Receber. Pagamentos (fornecedores): Vlr.líq.pago, como
+     * na aba Contas a Pagar. Sem Dt.pgto: previsto = Vlr.docto integral.
      */
-    const pagamentoEmAbertoPorDtPgto =
-        item.dataPagamentoEmAberto === true ||
-        !(item.dataPagamento instanceof Date) ||
-        dataFinanceiraSemData(item.dataPagamento);
-
-    const temDataPagamento =
-        !pagamentoEmAbertoPorDtPgto &&
-        item.dataPagamento instanceof Date;
-
-    /*
-     * O valor realizado prioriza Vlr.líq.pago. Se o relatório tiver a
-     * Dt.pgto preenchida mas não trouxer o líquido, usa Vlr.docto.
-     */
-    const valorRealizado =
-        temDataPagamento
-            ? Number(
-                valorPagoInformado ||
-                valorDocumento
-            )
-            : 0;
-
-    /*
-     * Para títulos em aberto (Dt.pgto vazio/00/00/0000), o previsto é o valor
-     * integral do documento. Isso segue exatamente a regra solicitada:
-     * a ausência da data de pagamento é o que define o título em aberto.
-     */
-    const valorPrevisto =
-        !temDataPagamento
-            ? valorDocumento
-            : 0;
+    const temDataPagamento = financeiroEstaPago(item);
+    const valorRealizado = temDataPagamento
+        ? tipo === "entrada"
+            ? financeiroValorRecebidoCliente(item)
+            : financeiroValorPagoFornecedor(item)
+        : 0;
+    const valorPrevisto = !temDataPagamento ? valorDocumento : 0;
 
     /*
      * REGRA DO PERÍODO PARA PREVISÃO:
@@ -188,8 +163,7 @@ function criarMovimentacoesFluxo(item) {
 
     if (
         temDataPagamento &&
-        dataPeriodo instanceof Date &&
-        valorRealizado > 0
+        dataPeriodo instanceof Date
     ) {
         movimentos.push(
             montarMovimentacaoFluxo(
@@ -205,8 +179,7 @@ function criarMovimentacoesFluxo(item) {
 
     if (
         !temDataPagamento &&
-        dataPrevista instanceof Date &&
-        valorPrevisto > 0
+        dataPrevista instanceof Date
     ) {
         movimentos.push(
             montarMovimentacaoFluxo(
