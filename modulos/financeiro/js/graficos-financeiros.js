@@ -1504,8 +1504,193 @@ function configurarModalRoscaTopClientes() {
     });
 }
 
+
+
+/* ======================================================
+   MODAL TOP CLIENTES — BARRAS AMPLIADAS
+   Mesma base de dados do card, com nomes completos e lista auxiliar.
+   ====================================================== */
+function criarTooltipTopClientes(metricas) {
+    return {
+        mode: "nearest",
+        intersect: true,
+        padding: 12,
+        backgroundColor: "rgba(3, 18, 37, 0.97)",
+        borderColor: "rgba(39, 209, 127, 0.35)",
+        borderWidth: 1,
+        titleColor: "#ffffff",
+        bodyColor: "#dbeafe",
+        callbacks: {
+            title: (itens) => {
+                const indice = itens[0]?.dataIndex;
+                return metricas[indice]?.cliente || "Cliente";
+            },
+            label: () => "",
+            afterBody: (itens) => {
+                const indice = itens[0]?.dataIndex;
+                const dados = metricas[indice];
+                if (!dados) return [];
+                return [
+                    `Total no cenário: ${formatarMoeda(dados.totalPago)}`,
+                    `Quantidade de títulos: ${dados.quantidadePagamentos}`,
+                    `Participação no Top: ${(Number(dados.participacao) || 0).toLocaleString("pt-BR", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%`
+                ];
+            }
+        }
+    };
+}
+
+function atualizarDetalheBarrasTopClientes() {
+    const graficoOriginal = graficosFinanceiros.topClientes;
+    if (!graficoOriginal) return;
+
+    const datasetOriginal = graficoOriginal.data?.datasets?.[0];
+    const metricas = Array.isArray(datasetOriginal?.metricas) ? datasetOriginal.metricas.map((item) => ({ ...item })) : [];
+    if (!metricas.length) return;
+
+    const tituloOriginal = document.getElementById("tituloTopClientes")?.textContent?.trim() || "Top Clientes";
+    const descricaoOriginal = document.getElementById("descricaoTopClientes")?.textContent?.trim() || "Clientes com maiores valores no cenário selecionado.";
+    const quantidade = document.getElementById("limiteTopClientes")?.value || String(metricas.length);
+    const totalTop = metricas.reduce((soma, item) => soma + Number(item.totalPago || 0), 0);
+
+    preencherTexto("modalTopClientesBarrasTitulo", tituloOriginal);
+    preencherTexto("modalTopClientesBarrasDescricao", descricaoOriginal);
+    preencherTexto("modalTopClientesBarrasQuantidade", `Top ${quantidade}`);
+    preencherTexto("modalTopClientesBarrasTotal", formatarMoeda(totalTop));
+    preencherTexto("modalTopClientesBarrasNota", "Esta visão ampliada utiliza exatamente os mesmos dados exibidos no card Top Clientes.");
+
+    const lista = document.getElementById("modalListaTopClientesBarras");
+    if (lista) {
+        lista.replaceChildren();
+        const fragmento = document.createDocumentFragment();
+        metricas.forEach((cliente, indice) => {
+            const linha = document.createElement("div");
+            linha.className = "top-clientes-rosca-item";
+            linha.setAttribute("role", "listitem");
+            const cor = document.createElement("span");
+            cor.className = "top-clientes-rosca-cor";
+            cor.style.background = Array.isArray(datasetOriginal.backgroundColor)
+                ? (datasetOriginal.backgroundColor[indice] || "#27d17f")
+                : "#27d17f";
+            const nome = document.createElement("span");
+            nome.className = "top-clientes-rosca-cliente";
+            nome.textContent = cliente.cliente || "Não informado";
+            const metrica = document.createElement("span");
+            metrica.className = "top-clientes-rosca-metrica";
+            const valor = document.createElement("strong");
+            valor.textContent = formatarMoeda(cliente.totalPago || 0);
+            const percentual = document.createElement("small");
+            percentual.textContent = `${(Number(cliente.participacao) || 0).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%`;
+            metrica.append(valor, percentual);
+            linha.append(cor, nome, metrica);
+            fragmento.appendChild(linha);
+        });
+        lista.appendChild(fragmento);
+    }
+
+    const container = document.getElementById("graficoTopClientesModal")?.closest(".top-clientes-barras-modal-grafico");
+    if (container) {
+        container.style.height = `${Math.max(340, Math.min(760, 150 + metricas.length * 26))}px`;
+    }
+
+    const opcoes = opcoesGraficoHorizontal();
+    opcoes.animation = false;
+    opcoes.interaction = { mode: "nearest", intersect: true, axis: "xy" };
+    opcoes.hover = { mode: "nearest", intersect: true, axis: "xy" };
+    opcoes.layout = { padding: { right: 16 } };
+    opcoes.scales.y.ticks.font = { size: 11, weight: "700" };
+    opcoes.scales.x.ticks.font = { size: 10, weight: "600" };
+    opcoes.plugins.tooltip = criarTooltipTopClientes(metricas);
+
+    criarOuAtualizarGrafico("topClientesModal", "graficoTopClientesModal", {
+        type: "bar",
+        data: {
+            labels: metricas.map((item) => item.cliente || "Não informado"),
+            datasets: [{
+                label: datasetOriginal.label || "Valor total",
+                data: metricas.map((item) => Number(item.totalPago) || 0),
+                metricas,
+                backgroundColor: "#27d17f",
+                hoverBackgroundColor: "#52e59e",
+                borderRadius: 7,
+                borderSkipped: false,
+                maxBarThickness: 26
+            }]
+        },
+        options: opcoes
+    });
+}
+
+function configurarModalBarrasTopClientes() {
+    const card = document.querySelector(".card-top-clientes-expansivel");
+    const overlay = document.getElementById("modalTopClientesBarrasOverlay");
+    const modal = document.getElementById("modalTopClientesBarras");
+    const botaoFechar = document.getElementById("btnFecharModalTopClientesBarras");
+    if (!card || !overlay || !modal || !botaoFechar) return;
+    if (card.dataset.modalBarrasConfigurado === "true") return;
+    card.dataset.modalBarrasConfigurado = "true";
+
+    let focoAnterior = null;
+    let overflowAnterior = "";
+
+    const abrir = () => {
+        if (overlay.classList.contains("ativo")) return;
+        focoAnterior = document.activeElement;
+        overflowAnterior = document.body.style.overflow;
+        overlay.classList.add("ativo");
+        overlay.setAttribute("aria-hidden", "false");
+        card.setAttribute("aria-expanded", "true");
+        document.body.style.overflow = "hidden";
+        botaoFechar.focus();
+        requestAnimationFrame(() => {
+            if (overlay.classList.contains("ativo")) atualizarDetalheBarrasTopClientes();
+        });
+    };
+
+    const fechar = () => {
+        if (!overlay.classList.contains("ativo")) return;
+        overlay.classList.remove("ativo");
+        overlay.setAttribute("aria-hidden", "true");
+        card.setAttribute("aria-expanded", "false");
+        document.body.style.overflow = overflowAnterior;
+        if (focoAnterior && typeof focoAnterior.focus === "function") focoAnterior.focus();
+    };
+
+    card.addEventListener("click", (evento) => {
+        if (evento.target.closest("#limiteTopClientes") || evento.target.closest(".controle-ranking")) return;
+        abrir();
+    });
+    card.addEventListener("keydown", (evento) => {
+        const alvo = evento.target;
+        const tag = alvo?.tagName?.toLowerCase();
+        if (tag === "select" || tag === "option") return;
+        if (evento.key === "Enter" || evento.key === " ") {
+            evento.preventDefault();
+            abrir();
+        }
+    });
+    botaoFechar.addEventListener("click", fechar);
+    overlay.addEventListener("click", (evento) => {
+        if (evento.target === overlay) fechar();
+    });
+    document.addEventListener("keydown", (evento) => {
+        if (!overlay.classList.contains("ativo")) return;
+        if (evento.key === "Escape") {
+            evento.preventDefault();
+            fechar();
+        } else if (evento.key === "Tab") {
+            evento.preventDefault();
+            botaoFechar.focus();
+        }
+    });
+}
+
 if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", configurarModalRoscaTopClientes, { once: true });
+    document.addEventListener("DOMContentLoaded", () => {
+        configurarModalRoscaTopClientes();
+        configurarModalBarrasTopClientes();
+    }, { once: true });
 } else {
     configurarModalRoscaTopClientes();
+    configurarModalBarrasTopClientes();
 }

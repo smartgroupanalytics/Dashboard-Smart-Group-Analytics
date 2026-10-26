@@ -19,7 +19,7 @@
         rel="stylesheet"
         href="financeiro.css?v=31"
     >
-    <link rel="stylesheet" href="css/graficos-financeiros.css?v=20261026-top-rosca-modal-3">
+    <link rel="stylesheet" href="css/graficos-financeiros.css?v=20261026-top-clientes-modal-barras-1">
     <link rel="stylesheet" href="css/bancos-financeiros.css?v=14">
     <link rel="stylesheet" href="css/tabelas-financeiras.css?v=13">
     <link rel="stylesheet" href="css/contas-receber.css?v=20">
@@ -365,7 +365,12 @@
                 </section>
 
                 <section class="grade-graficos grade-graficos-secundaria">
-                    <article class="card-grafico card-top-clientes">
+                    <article class="card-grafico card-top-clientes card-top-clientes-expansivel"
+                        tabindex="0"
+                        aria-haspopup="dialog"
+                        aria-expanded="false"
+                        aria-controls="modalTopClientesBarras"
+                        aria-label="Ampliar gráfico Top Clientes e detalhamento dos clientes selecionados">
                         <div class="card-grafico-header">
                             <div>
                                 <h3 id="tituloTopClientes">Top 10 Clientes por Pagamentos</h3>
@@ -990,6 +995,50 @@
 
     </div>
 
+
+    <!-- Visão ampliada do Top Clientes em barras, preservando a mesma seleção e os mesmos valores. -->
+    <div class="top-clientes-modal-overlay" id="modalTopClientesBarrasOverlay" aria-hidden="true">
+        <section class="top-clientes-modal top-clientes-barras-modal" id="modalTopClientesBarras"
+            role="dialog" aria-modal="true"
+            aria-labelledby="modalTopClientesBarrasTitulo"
+            aria-describedby="modalTopClientesBarrasDescricao" tabindex="-1">
+            <header class="top-clientes-modal-header">
+                <div class="top-clientes-modal-titulo">
+                    <span class="top-clientes-modal-icone"><i class="fa-solid fa-chart-bar" aria-hidden="true"></i></span>
+                    <div>
+                        <h2 id="modalTopClientesBarrasTitulo">Top Clientes</h2>
+                        <p id="modalTopClientesBarrasDescricao">Visual ampliado do ranking de clientes com maiores valores no cenário selecionado.</p>
+                    </div>
+                </div>
+                <button type="button" class="top-clientes-modal-fechar"
+                    id="btnFecharModalTopClientesBarras" aria-label="Fechar Top Clientes ampliado">
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                </button>
+            </header>
+            <div class="top-clientes-modal-resumo">
+                <span class="top-clientes-modal-top" id="modalTopClientesBarrasQuantidade">Top 10</span>
+                <div class="top-clientes-modal-total">
+                    <span>Total dos clientes selecionados</span>
+                    <strong id="modalTopClientesBarrasTotal">R$ 0,00</strong>
+                </div>
+            </div>
+            <div class="top-clientes-barras-modal-conteudo">
+                <div class="top-clientes-barras-modal-grafico">
+                    <canvas id="graficoTopClientesModal" role="img"
+                        aria-label="Gráfico ampliado do Top Clientes"></canvas>
+                </div>
+                <div class="top-clientes-barras-modal-listagem">
+                    <h3>Clientes, valores e participação no Top</h3>
+                    <div id="modalListaTopClientesBarras" class="top-clientes-rosca-legenda top-clientes-barras-legenda"
+                        role="list" aria-label="Valores e participações dos clientes do Top selecionado"></div>
+                </div>
+            </div>
+            <p class="top-clientes-modal-observacao" id="modalTopClientesBarrasNota">
+                Esta visão ampliada utiliza exatamente os mesmos dados exibidos no card Top Clientes.
+            </p>
+        </section>
+    </div>
+
     <!-- Visão ampliada do mesmo Top Clientes, sem duplicar cálculos nem dados. -->
     <div class="top-clientes-modal-overlay" id="modalTopClientesRoscaOverlay" aria-hidden="true">
         <section class="top-clientes-modal" id="modalTopClientesRosca"
@@ -1517,7 +1566,7 @@
     <script src="js/utilitarios-financeiros.js?v=8"></script>
     <script src="js/processador-financeiro.js?v=20261026-conciliacao-1"></script>
     <script src="js/indicadores-financeiros.js?v=20260924-carteira-14"></script>
-    <script src="js/graficos-financeiros.js?v=20261026-top-clientes-hover-1"></script>
+    <script src="js/graficos-financeiros.js?v=20261026-top-clientes-modal-barras-1"></script>
     <script src="js/bancos-financeiros.js?v=19"></script>
     <script src="js/filtros-financeiro.js?v=20261026-situacao-1"></script>
     <script src="js/importacao-planilha.js?v=9"></script>
