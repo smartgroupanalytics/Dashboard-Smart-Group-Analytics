@@ -19,7 +19,7 @@
         rel="stylesheet"
         href="financeiro.css?v=31"
     >
-    <link rel="stylesheet" href="css/graficos-financeiros.css?v=20261026-top-rosca-card-2">
+    <link rel="stylesheet" href="css/graficos-financeiros.css?v=20261026-top-rosca-modal-3">
     <link rel="stylesheet" href="css/bancos-financeiros.css?v=14">
     <link rel="stylesheet" href="css/tabelas-financeiras.css?v=13">
     <link rel="stylesheet" href="css/contas-receber.css?v=20">
@@ -386,7 +386,13 @@
                     </article>
 
                     <!-- Exclusivamente a composicao dos mesmos clientes do ranking da esquerda. -->
-                    <article class="card-grafico card-top-clientes-rosca" aria-label="Composicao de valores dos clientes no Top selecionado">
+                    <article class="card-grafico card-top-clientes-rosca"
+                        role="button"
+                        tabindex="0"
+                        aria-haspopup="dialog"
+                        aria-expanded="false"
+                        aria-controls="modalTopClientesRosca"
+                        aria-label="Ampliar gráfico de rosca e detalhamento da distribuição dos clientes selecionados">
                         <div class="card-grafico-header">
                             <div>
                                 <h3>Distribuição do Top Clientes</h3>
@@ -992,6 +998,54 @@
 
     </div>
 
+    <!-- Visão ampliada do mesmo Top Clientes, sem duplicar cálculos nem dados. -->
+    <div class="top-clientes-modal-overlay" id="modalTopClientesRoscaOverlay" aria-hidden="true">
+        <section class="top-clientes-modal" id="modalTopClientesRosca"
+            role="dialog" aria-modal="true"
+            aria-labelledby="modalTopClientesRoscaTitulo"
+            aria-describedby="modalTopClientesRoscaDescricao" tabindex="-1">
+            <header class="top-clientes-modal-header">
+                <div class="top-clientes-modal-titulo">
+                    <span class="top-clientes-modal-icone"><i class="fa-solid fa-chart-pie" aria-hidden="true"></i></span>
+                    <div>
+                        <h2 id="modalTopClientesRoscaTitulo">Distribuição do Top Clientes</h2>
+                        <p id="modalTopClientesRoscaDescricao">Participação de cada cliente sobre o total do grupo selecionado.</p>
+                    </div>
+                </div>
+                <button type="button" class="top-clientes-modal-fechar"
+                    id="btnFecharModalTopClientesRosca" aria-label="Fechar distribuição do Top Clientes">
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                </button>
+            </header>
+            <div class="top-clientes-modal-resumo">
+                <span class="top-clientes-modal-top" id="modalTopClientesRoscaQuantidade">Top 10</span>
+                <div class="top-clientes-modal-total">
+                    <span>Total dos clientes selecionados</span>
+                    <strong id="modalTopClientesRoscaTotal">R$ 0,00</strong>
+                </div>
+            </div>
+            <div class="top-clientes-modal-conteudo">
+                <div class="top-clientes-modal-grafico">
+                    <canvas id="graficoTopClientesRoscaModal" role="img"
+                        aria-label="Gráfico ampliado da participação percentual de cada cliente"></canvas>
+                    <div class="top-clientes-rosca-centro" aria-hidden="true">
+                        <span id="modalTopClientesRoscaPercentual">100%</span>
+                        <strong id="modalTopClientesRoscaTotalCentro">R$ 0,00</strong>
+                        <small>Total do Top</small>
+                    </div>
+                </div>
+                <div class="top-clientes-modal-listagem">
+                    <h3>Clientes, valores e percentuais</h3>
+                    <div id="modalLegendaTopClientesRosca" class="top-clientes-rosca-legenda"
+                        role="list" aria-label="Valores e porcentagens dos clientes do Top selecionado"></div>
+                </div>
+            </div>
+            <p class="top-clientes-modal-observacao" id="modalTopClientesRoscaNota">
+                As porcentagens consideram somente a soma dos clientes deste Top.
+            </p>
+        </section>
+    </div>
+
     <div
         class="saldo-caixa-modal-overlay"
         id="modalSaldoCaixaOverlay"
@@ -1471,7 +1525,7 @@
     <script src="js/utilitarios-financeiros.js?v=8"></script>
     <script src="js/processador-financeiro.js?v=22"></script>
     <script src="js/indicadores-financeiros.js?v=20260924-carteira-14"></script>
-    <script src="js/graficos-financeiros.js?v=20261026-top-rosca-card-2"></script>
+    <script src="js/graficos-financeiros.js?v=20261026-top-rosca-modal-3"></script>
     <script src="js/bancos-financeiros.js?v=19"></script>
     <script src="js/filtros-financeiro.js?v=20260928-filtro-periodo-16"></script>
     <script src="js/importacao-planilha.js?v=9"></script>

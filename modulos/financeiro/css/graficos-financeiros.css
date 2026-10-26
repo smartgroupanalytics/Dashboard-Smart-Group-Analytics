@@ -462,3 +462,175 @@ Gráficos Financeiros
         font-size: 12px;
     }
 }
+
+
+/* ===========================================================
+   MODAL TOP CLIENTES — ampliacao igual ao card Saldo Caixa.
+   Compatível com celular, sem alterar os demais cards.
+   =========================================================== */
+.card-top-clientes-rosca[role="button"] {
+    cursor: pointer;
+    transition: border-color .18s ease, box-shadow .18s ease;
+}
+.card-top-clientes-rosca[role="button"]:hover,
+.card-top-clientes-rosca[role="button"]:focus-visible {
+    border-color: rgba(67, 151, 255, .65);
+    box-shadow: 0 0 0 2px rgba(67, 151, 255, .12), 0 14px 30px rgba(0, 0, 0, .15);
+}
+.card-top-clientes-rosca[role="button"]:focus-visible { outline: 2px solid #459bff; outline-offset: 3px; }
+.top-clientes-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1300;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 22px;
+    background: rgba(1, 10, 24, .80);
+    backdrop-filter: blur(5px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .2s ease, visibility .2s ease;
+}
+.top-clientes-modal-overlay.ativo { opacity: 1; visibility: visible; pointer-events: auto; }
+.top-clientes-modal {
+    box-sizing: border-box;
+    width: min(960px, 100%);
+    max-height: min(90vh, 850px);
+    max-height: min(90dvh, 850px);
+    overflow-y: auto;
+    padding: 26px;
+    border: 1px solid rgba(82, 163, 255, .55);
+    border-radius: 18px;
+    background: linear-gradient(145deg, #102d50 0%, #06162d 100%);
+    color: #f4f8ff;
+    box-shadow: 0 26px 70px rgba(0, 0, 0, .55);
+    transform: translateY(12px) scale(.98);
+    transition: transform .2s ease;
+}
+.top-clientes-modal-overlay.ativo .top-clientes-modal { transform: translateY(0) scale(1); }
+.top-clientes-modal-header,
+.top-clientes-modal-titulo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+.top-clientes-modal-header { justify-content: space-between; }
+.top-clientes-modal-titulo { min-width: 0; }
+.top-clientes-modal-icone {
+    display: inline-flex;
+    flex: 0 0 46px;
+    align-items: center;
+    justify-content: center;
+    height: 46px;
+    color: #fff;
+    background: linear-gradient(135deg, #278bff, #1156ac);
+    border-radius: 13px;
+    font-size: 19px;
+}
+.top-clientes-modal-header h2 { font-size: 20px; margin: 0; }
+.top-clientes-modal-header p { font-size: 12px; margin: 5px 0 0; color: #a4b9d4; }
+.top-clientes-modal-fechar {
+    flex: 0 0 40px;
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #e1edff;
+    background: rgba(255, 255, 255, .07);
+    border: 1px solid rgba(255, 255, 255, .16);
+    border-radius: 10px;
+    font-size: 17px;
+}
+.top-clientes-modal-fechar:hover,
+.top-clientes-modal-fechar:focus-visible { background: rgba(82, 163, 255, .25); outline: 2px solid #459bff; }
+.top-clientes-modal-resumo {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    margin: 22px 0 14px;
+    padding: 14px 17px;
+    background: rgba(39, 139, 255, .10);
+    border: 1px solid rgba(82, 163, 255, .23);
+    border-radius: 12px;
+}
+.top-clientes-modal-top {
+    white-space: nowrap;
+    padding: 9px 13px;
+    border-radius: 9px;
+    background: rgba(39, 139, 255, .2);
+    color: #9eceff;
+    font-weight: 800;
+    font-size: 13px;
+}
+.top-clientes-modal-total {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px 15px;
+}
+.top-clientes-modal-total span { color: #b5c8df; font-size: 12px; }
+.top-clientes-modal-total strong { font-size: clamp(17px, 2.3vw, 26px); font-variant-numeric: tabular-nums; }
+.top-clientes-modal-conteudo {
+    display: grid;
+    grid-template-columns: minmax(280px, 1fr) minmax(300px, 1.15fr);
+    gap: 25px;
+    align-items: center;
+    min-width: 0;
+}
+.top-clientes-modal-grafico {
+    position: relative;
+    width: 100%;
+    height: 355px;
+    min-width: 0;
+}
+.top-clientes-modal-grafico canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+}
+.top-clientes-modal-grafico .top-clientes-rosca-centro strong { font-size: clamp(14px, 1.6vw, 19px); }
+.top-clientes-modal-grafico .top-clientes-rosca-centro span { font-size: 26px; }
+.top-clientes-modal-listagem { min-width: 0; }
+.top-clientes-modal-listagem h3 { color: #dceaff; margin: 0 0 14px; font-size: 14px; }
+.top-clientes-modal-listagem .top-clientes-rosca-legenda {
+    max-height: 355px;
+    gap: 12px;
+    padding-right: 9px;
+}
+.top-clientes-modal-listagem .top-clientes-rosca-item {
+    grid-template-columns: 12px minmax(0, 1fr) auto;
+    gap: 11px;
+    font-size: 12px;
+}
+.top-clientes-modal-listagem .top-clientes-rosca-cliente {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    line-height: 1.4;
+}
+.top-clientes-modal-listagem .top-clientes-rosca-metrica strong,
+.top-clientes-modal-listagem .top-clientes-rosca-metrica small { font-size: 12px; }
+.top-clientes-modal-observacao { text-align: center; color: #93aecb; margin: 15px 0 0; font-size: 11px; }
+@media (max-width: 760px) {
+    .top-clientes-modal-overlay { padding: 12px; }
+    .top-clientes-modal { padding: 18px; max-height: 94vh; max-height: 94dvh; }
+    .top-clientes-modal-header h2 { font-size: 17px; }
+    .top-clientes-modal-header p { font-size: 11px; }
+    .top-clientes-modal-conteudo { grid-template-columns: 1fr; gap: 15px; }
+    .top-clientes-modal-grafico { max-width: 390px; height: 280px; margin: 0 auto; }
+    .top-clientes-modal-listagem .top-clientes-rosca-legenda { max-height: 300px; }
+    .top-clientes-modal-resumo { flex-wrap: wrap; }
+}
+@media (max-width: 380px) {
+    .top-clientes-modal-icone { display: none; }
+    .top-clientes-modal-grafico { height: 235px; }
+    .top-clientes-modal-grafico .top-clientes-rosca-centro strong { font-size: 13px; }
+    .top-clientes-modal-listagem .top-clientes-rosca-item { font-size: 11px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .top-clientes-modal-overlay,
+    .top-clientes-modal { transition: none; }
+}

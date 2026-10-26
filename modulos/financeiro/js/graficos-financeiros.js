@@ -561,6 +561,11 @@ function renderizarRoscaTopClientes(clientesTop, limite) {
             }
         }
     });
+
+    // Sincroniza a janela ampliada se um filtro mudar enquanto ela estiver aberta.
+    if (document.getElementById("modalTopClientesRoscaOverlay")?.classList.contains("ativo")) {
+        atualizarDetalheRoscaTopClientes();
+    }
 }
 
 
@@ -1352,4 +1357,126 @@ function nomeBancoAmigavel(nomeOriginal) {
         nomeOriginal ||
         "Não informado"
     ).trim();
+}
+
+
+/* ======================================================
+   MODAL DE DISTRIBUICAO DO TOP CLIENTES
+   Reutiliza EXATAMENTE o Chart.js e os valores do card.
+   Sem alterar calculos, filtros ou dados de outros modulos.
+   ====================================================== */
+function atualizarDetalheRoscaTopClientes() {
+    const graficoOriginal = graficosFinanceiros.topClientesRosca;
+    if (!graficoOriginal) return;
+
+    const copiarTexto = (origemId, destinoId) => {
+        const origem = document.getElementById(origemId);
+        const destino = document.getElementById(destinoId);
+        if (origem && destino) destino.textContent = origem.textContent;
+    };
+    copiarTexto("topClientesRoscaQuantidade", "modalTopClientesRoscaQuantidade");
+    copiarTexto("topClientesRoscaTotal", "modalTopClientesRoscaTotal");
+    copiarTexto("topClientesRoscaTotal", "modalTopClientesRoscaTotalCentro");
+    copiarTexto("topClientesRoscaPercentual", "modalTopClientesRoscaPercentual");
+    copiarTexto("topClientesRoscaNota", "modalTopClientesRoscaNota");
+
+    const legendaOriginal = document.getElementById("legendaTopClientesRosca");
+    const legendaModal = document.getElementById("modalLegendaTopClientesRosca");
+    if (legendaOriginal && legendaModal) {
+        legendaModal.replaceChildren(...Array.from(legendaOriginal.children, (item) => item.cloneNode(true)));
+    }
+
+    // A segunda renderizacao usa os mesmos labels, valores, cores e tooltip
+    // do grafico original. Nao recalcula percentuais ou faz consultas extras.
+    const dataset = graficoOriginal.data.datasets[0];
+    const tooltip = graficoOriginal.config.options?.plugins?.tooltip;
+    criarOuAtualizarGrafico("topClientesRoscaModal", "graficoTopClientesRoscaModal", {
+        type: "doughnut",
+        data: {
+            labels: [...graficoOriginal.data.labels],
+            datasets: [{
+                ...dataset,
+                data: [...dataset.data],
+                backgroundColor: Array.isArray(dataset.backgroundColor)
+                    ? [...dataset.backgroundColor] : dataset.backgroundColor,
+                hoverBackgroundColor: Array.isArray(dataset.hoverBackgroundColor)
+                    ? [...dataset.hoverBackgroundColor] : dataset.hoverBackgroundColor
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: "72%",
+            plugins: {
+                legend: { display: false },
+                tooltip: tooltip ? { ...tooltip } : { enabled: true }
+            }
+        }
+    });
+}
+
+function configurarModalRoscaTopClientes() {
+    const card = document.querySelector(".card-top-clientes-rosca");
+    const overlay = document.getElementById("modalTopClientesRoscaOverlay");
+    const modal = document.getElementById("modalTopClientesRosca");
+    const botaoFechar = document.getElementById("btnFecharModalTopClientesRosca");
+    if (!card || !overlay || !modal || !botaoFechar) return;
+    if (card.dataset.modalRoscaConfigurado === "true") return;
+    card.dataset.modalRoscaConfigurado = "true";
+
+    let focoAnterior = null;
+    let overflowAnterior = "";
+
+    const abrir = () => {
+        if (overlay.classList.contains("ativo")) return;
+        focoAnterior = document.activeElement;
+        overflowAnterior = document.body.style.overflow;
+        overlay.classList.add("ativo");
+        overlay.setAttribute("aria-hidden", "false");
+        card.setAttribute("aria-expanded", "true");
+        document.body.style.overflow = "hidden";
+        botaoFechar.focus();
+        // Renderizar apos tornar o canvas visivel evita a rosca com tamanho zero.
+        requestAnimationFrame(() => {
+            if (overlay.classList.contains("ativo")) atualizarDetalheRoscaTopClientes();
+        });
+    };
+
+    const fechar = () => {
+        if (!overlay.classList.contains("ativo")) return;
+        overlay.classList.remove("ativo");
+        overlay.setAttribute("aria-hidden", "true");
+        card.setAttribute("aria-expanded", "false");
+        document.body.style.overflow = overflowAnterior;
+        if (focoAnterior && typeof focoAnterior.focus === "function") focoAnterior.focus();
+    };
+
+    card.addEventListener("click", abrir);
+    card.addEventListener("keydown", (evento) => {
+        if (evento.key === "Enter" || evento.key === " ") {
+            evento.preventDefault();
+            abrir();
+        }
+    });
+    botaoFechar.addEventListener("click", fechar);
+    overlay.addEventListener("click", (evento) => {
+        if (evento.target === overlay) fechar();
+    });
+    document.addEventListener("keydown", (evento) => {
+        if (!overlay.classList.contains("ativo")) return;
+        if (evento.key === "Escape") {
+            evento.preventDefault();
+            fechar();
+        } else if (evento.key === "Tab") {
+            // A janela possui um único controle, mantém o foco dentro dela.
+            evento.preventDefault();
+            botaoFechar.focus();
+        }
+    });
+}
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", configurarModalRoscaTopClientes, { once: true });
+} else {
+    configurarModalRoscaTopClientes();
 }
