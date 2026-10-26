@@ -194,3 +194,15 @@
 .saldo-disponivel-card[hidden] {
     display: none !important;
 }
+
+/* O investimento cadastrado fica visível mesmo quando não há movimentações. */
+.card-banco .banco-rodape-investimento {
+    display: block;
+    margin-top: 7px;
+    color: #b8cdf4;
+}
+.card-banco .banco-rodape-investimento i { color: #a78bfa; }
+.card-banco .banco-rodape-investimento strong {
+    color: #e9dcff;
+    font-weight: 750;
+}

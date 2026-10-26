@@ -538,7 +538,8 @@ function atualizarTextoPeriodo(inicio, fim) {
 }
 
 function preencherFiltroBancos(limparAntes = false) {
-    filtroBancos.opcoes = bancosFinanceiros.map((banco) => ({ id: banco.id, nome: banco.nome }));
+    filtroBancos.opcoes = completarBancosComContasManuais(bancosFinanceiros)
+        .map((banco) => ({ id: banco.id, nome: banco.nome }));
     if (limparAntes || !filtroBancos.selecionadas.size) marcarTodosBancos(false);
     else filtroBancos.selecionadas = new Set([...filtroBancos.selecionadas].filter((id) => filtroBancos.opcoes.some((b) => b.id === id)));
     renderizarListaBancosFiltro();

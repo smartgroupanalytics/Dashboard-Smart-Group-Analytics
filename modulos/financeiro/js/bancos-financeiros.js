@@ -26,6 +26,70 @@ const BANCO_SALDO_CAIXA_MANUAL = Object.freeze({
     emAtraso: 0
 });
 
+/*
+ * Contas patrimoniais que podem ter saldos manuais e investimentos mesmo
+ * sem lançamentos no relatório do período. Os IDs abaixo são os IDs antigos
+ * usados pelo Firestore/localStorage — NÃO mudar ou recriar históricos.
+ * Bradesco mantém seu saldo manual original; o painel de investimento separado
+ * do projeto original existe apenas para os dois Sicoob.
+ */
+const CONTAS_FINANCEIRAS_FIXAS = Object.freeze([
+    "Sicoob MaxiCrédito",
+    "Sicoob Vale Sul",
+    "Bradesco"
+]);
+
+let bancosUltimaGrade = null;
+
+function completarBancosComContasManuais(bancos = []) {
+    const mapa = new Map();
+    // Consolidar pelo ID estável evita repetir o saldo manual quando o
+    // relatório usa grafias distintas para o mesmo banco.
+    (Array.isArray(bancos) ? bancos : []).forEach((banco) => {
+        const id = obterChaveBancoSaldo(banco);
+        if (!id) return;
+        const existente = mapa.get(id);
+        if (!existente) {
+            mapa.set(id, { ...banco });
+            return;
+        }
+        ["totalRecebido", "totalPago", "emAberto", "emAtraso"].forEach((chave) => {
+            existente[chave] = Number(existente[chave] || 0) + Number(banco[chave] || 0);
+        });
+        existente.saldo = Number(existente.totalRecebido || 0) - Number(existente.totalPago || 0);
+    });
+
+    CONTAS_FINANCEIRAS_FIXAS.forEach((nome) => {
+        const identidade = identificarLocalCobranca(nome);
+        if (mapa.has(identidade.id)) return;
+        mapa.set(identidade.id, {
+            id: identidade.id,
+            nome,
+            logo: identidade.logo,
+            sigla: identidade.sigla,
+            cor: identidade.cor,
+            saldo: 0,
+            totalRecebido: 0,
+            totalPago: 0,
+            emAberto: 0,
+            emAtraso: 0
+        });
+    });
+
+    return [...mapa.values()];
+}
+
+/* Respeitar bancos desmarcados explicitamente no filtro geral. */
+function bancosVisiveisComContasManuais(bancos = []) {
+    const completos = completarBancosComContasManuais(bancos);
+    if (typeof filtroBancos === "undefined" || !filtroBancos.opcoes?.length) {
+        return completos;
+    }
+    const selecionados = filtroBancos.selecionadas;
+    const todos = filtroBancos.opcoes.every((banco) => selecionados.has(banco.id));
+    return todos ? completos : completos.filter((banco) => selecionados.has(banco.id));
+}
+
 function configurarPainelBanco() {
     configurarModalSaldoCaixa();
 
@@ -233,6 +297,8 @@ function abrirDetalhesBanco(banco) {
 }
 
 function renderizarBancos(listaBancos = bancosFinanceiros) {
+    const bancosExibidos = bancosVisiveisComContasManuais(listaBancos);
+    bancosUltimaGrade = bancosExibidos;
     const grade =
         document.getElementById("gradeBancos");
 
@@ -248,7 +314,7 @@ function renderizarBancos(listaBancos = bancosFinanceiros) {
 
     grade.innerHTML = "";
 
-    listaBancos.forEach((banco) => {
+    bancosExibidos.forEach((banco) => {
         const card =
             document.createElement("button");
 
@@ -282,6 +348,11 @@ function renderizarBancos(listaBancos = bancosFinanceiros) {
                     <i class="fa-solid fa-arrow-trend-up"></i>
                     Recebido: ${formatarMoeda(banco.totalRecebido)}
                 </span>
+                ${bancoPossuiInvestimento(banco) ? `
+                <span class="banco-rodape-investimento">
+                    <i class="fa-solid fa-chart-line"></i>
+                    Investimento: <strong data-investimento-banco="${escaparHtml(obterChaveBancoSaldo(banco))}">${formatarMoeda(saldosInvestimentosAtuais.get(obterChaveBancoSaldo(banco)) || 0)}</strong>
+                </span>` : ""}
             </div>
         `;
 
@@ -297,7 +368,7 @@ function renderizarBancos(listaBancos = bancosFinanceiros) {
     );
 
     const soma =
-        listaBancos.reduce(
+        bancosExibidos.reduce(
             (total, banco) => {
                 const chave = obterChaveBancoSaldo(banco);
                 const saldoCaixa = Number(
@@ -319,10 +390,10 @@ function renderizarBancos(listaBancos = bancosFinanceiros) {
 
     if (quantidade) {
         quantidade.textContent =
-            `${listaBancos.length} bancos selecionados`;
+            `${bancosExibidos.length} bancos selecionados`;
     }
 
-    carregarSaldosDisponiveisGerais(listaBancos);
+    carregarSaldosDisponiveisGerais(bancosExibidos);
 }
 
 async function carregarSaldosDisponiveisGerais(listaBancos = bancosFinanceiros) {
@@ -386,6 +457,16 @@ async function carregarSaldosDisponiveisGerais(listaBancos = bancosFinanceiros) 
                 saldosDisponiveisAtuais.get(
                     obterChaveBancoSaldo(banco)
                 ) || 0
+            );
+        });
+    });
+
+    bancosParaCarregar.forEach((banco) => {
+        document.querySelectorAll(
+            `[data-investimento-banco="${obterChaveBancoSaldo(banco)}"]`
+        ).forEach((el) => {
+            el.textContent = formatarMoeda(
+                saldosInvestimentosAtuais.get(obterChaveBancoSaldo(banco)) || 0
             );
         });
     });
@@ -637,7 +718,7 @@ async function salvarSaldoDisponivelAtual() {
         });
 
         await atualizarPainelSaldoDisponivel(bancoDetalheAtual);
-        await carregarSaldosDisponiveisGerais(bancosFinanceiros);
+        await carregarSaldosDisponiveisGerais(bancosUltimaGrade ?? bancosVisiveisComContasManuais(bancosFinanceiros));
         return;
     }
 
@@ -648,7 +729,7 @@ async function salvarSaldoDisponivelAtual() {
     );
 
     await atualizarPainelSaldoDisponivel(bancoDetalheAtual);
-    await carregarSaldosDisponiveisGerais(bancosFinanceiros);
+    await carregarSaldosDisponiveisGerais(bancosUltimaGrade ?? bancosVisiveisComContasManuais(bancosFinanceiros));
 }
 
 async function limparSaldoDisponivelAtual() {
@@ -682,7 +763,7 @@ async function limparSaldoDisponivelAtual() {
         }
 
         await atualizarPainelSaldoDisponivel(bancoDetalheAtual);
-        await carregarSaldosDisponiveisGerais(bancosFinanceiros);
+        await carregarSaldosDisponiveisGerais(bancosUltimaGrade ?? bancosVisiveisComContasManuais(bancosFinanceiros));
     } catch (erro) {
         const comparativo =
             document.getElementById("saldoDisponivelComparativo");
@@ -898,7 +979,7 @@ async function salvarSaldoInvestimentoAtual() {
         await window.financeiroSaldosFirestore.salvarSaldoDisponivel({ bancoId: virtual.id, bancoNome: virtual.nome, semana: semana.chave, rotuloSemana: semana.rotulo, valor });
     } else salvarSaldoDisponivelLocal(virtual.id, semana, valor);
     await atualizarPainelSaldoInvestimento(bancoDetalheAtual);
-    await carregarSaldosDisponiveisGerais(bancosFinanceiros);
+    await carregarSaldosDisponiveisGerais(bancosUltimaGrade ?? bancosVisiveisComContasManuais(bancosFinanceiros));
 }
 
 async function limparSaldoInvestimentoAtual() {
@@ -909,7 +990,7 @@ async function limparSaldoInvestimentoAtual() {
     if (window.financeiroSaldosFirestore?.excluirSaldoDisponivel) await window.financeiroSaldosFirestore.excluirSaldoDisponivel(virtual.id, semana.chave);
     else excluirSaldoDisponivelLocal(virtual.id, semana.chave);
     await atualizarPainelSaldoInvestimento(bancoDetalheAtual);
-    await carregarSaldosDisponiveisGerais(bancosFinanceiros);
+    await carregarSaldosDisponiveisGerais(bancosUltimaGrade ?? bancosVisiveisComContasManuais(bancosFinanceiros));
 }
 
 function formatarDataSaldo(registro) {
