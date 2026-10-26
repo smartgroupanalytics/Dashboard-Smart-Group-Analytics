@@ -19,7 +19,7 @@
         rel="stylesheet"
         href="financeiro.css?v=31"
     >
-    <link rel="stylesheet" href="css/graficos-financeiros.css?v=13">
+    <link rel="stylesheet" href="css/graficos-financeiros.css?v=20261026-top-rosca-1">
     <link rel="stylesheet" href="css/bancos-financeiros.css?v=14">
     <link rel="stylesheet" href="css/tabelas-financeiras.css?v=13">
     <link rel="stylesheet" href="css/contas-receber.css?v=20">
@@ -380,8 +380,26 @@
                                 </select>
                             </label>
                         </div>
-                        <div class="grafico-container">
-                            <canvas id="graficoTopClientes"></canvas>
+                        <div class="top-clientes-conteudo">
+                            <div class="grafico-container top-clientes-barras">
+                                <canvas id="graficoTopClientes"></canvas>
+                            </div>
+                            <div class="top-clientes-rosca-bloco" aria-label="Distribuição de valores entre os clientes do Top selecionado">
+                                <div class="top-clientes-rosca-titulo">
+                                    <strong>Composição do Top</strong>
+                                    <span id="topClientesRoscaQuantidade">Top 10</span>
+                                </div>
+                                <div class="top-clientes-rosca-area">
+                                    <canvas id="graficoTopClientesRosca" role="img" aria-label="Porcentagens dos clientes no total do Top selecionado"></canvas>
+                                    <div class="top-clientes-rosca-centro" aria-hidden="true">
+                                        <span id="topClientesRoscaPercentual">100%</span>
+                                        <strong id="topClientesRoscaTotal">R$ 0,00</strong>
+                                        <small>Total do Top</small>
+                                    </div>
+                                </div>
+                                <div id="legendaTopClientesRosca" class="top-clientes-rosca-legenda" role="list" aria-label="Valores e porcentagens de cada cliente"></div>
+                                <p id="topClientesRoscaNota" class="top-clientes-rosca-nota">Participação relativa apenas aos clientes exibidos.</p>
+                            </div>
                         </div>
                     </article>
 
@@ -1460,7 +1478,7 @@
     <script src="js/utilitarios-financeiros.js?v=8"></script>
     <script src="js/processador-financeiro.js?v=22"></script>
     <script src="js/indicadores-financeiros.js?v=20260924-carteira-14"></script>
-    <script src="js/graficos-financeiros.js?v=20260924-carteira-14"></script>
+    <script src="js/graficos-financeiros.js?v=20261026-top-rosca-1"></script>
     <script src="js/bancos-financeiros.js?v=19"></script>
     <script src="js/filtros-financeiro.js?v=20260928-filtro-periodo-16"></script>
     <script src="js/importacao-planilha.js?v=9"></script>

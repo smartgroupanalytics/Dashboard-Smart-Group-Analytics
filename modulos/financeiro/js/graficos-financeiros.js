@@ -424,6 +424,143 @@ function renderizarTopClientes(clientesPagos) {
             options: opcoes
         }
     );
+
+    // A rosca recebe o mesmo Top mostrado nas barras, sem outro cálculo/filtro.
+    renderizarRoscaTopClientes([...ranking].reverse(), limite);
+}
+
+
+/* ======================================================
+   ROSCA DO TOP CLIENTES
+   Base percentual: soma APENAS dos clientes visíveis no Top.
+   5, 10, 15 e 20 sempre representam 100% do grupo escolhido.
+   ====================================================== */
+
+function calcularPorcentagensRoscaTopClientes(valores) {
+    const positivos = valores.map((valor) => Math.max(0, Number(valor) || 0));
+    const total = positivos.reduce((soma, valor) => soma + valor, 0);
+    if (total <= 0) return positivos.map(() => 0);
+
+    // Distribuição em centésimos para que as porcentagens exibidas,
+    // inclusive depois do arredondamento, somem exatamente 100,00%.
+    const parcelas = positivos.map((valor, indice) => {
+        const exato = valor / total * 10000;
+        const unidades = Math.floor(exato);
+        return { indice, unidades, sobra: exato - unidades };
+    });
+    const falta = 10000 - parcelas.reduce((soma, p) => soma + p.unidades, 0);
+    const ordem = [...parcelas].sort(
+        (a, b) => b.sobra - a.sobra || a.indice - b.indice
+    );
+    for (let i = 0; i < falta; i++) {
+        ordem[i % ordem.length].unidades += 1;
+    }
+    return parcelas.map((p) => p.unidades / 100);
+}
+
+function renderizarRoscaTopClientes(clientesTop, limite) {
+    const valores = clientesTop.map((item) => Number(item.totalPago) || 0);
+    const totalTop = valores.reduce((soma, valor) => soma + valor, 0);
+    const temNegativos = valores.some((valor) => valor < 0);
+    const porcentagens = calcularPorcentagensRoscaTopClientes(valores);
+    const cores = [
+        "#278bff", "#27d17f", "#faad38", "#b789fa", "#fa6689",
+        "#2ed1ce", "#f4843c", "#7d9cff", "#a6da40", "#e476d7",
+        "#16aacd", "#d8ba50", "#d76d57", "#6bd79f", "#9b82e9",
+        "#f1a6c7", "#75b6e8", "#bace76", "#c49467", "#dc8bf5"
+    ];
+    const percentualFormatado = (valor) => `${valor.toLocaleString("pt-BR", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    })}%`;
+
+    preencherTexto("topClientesRoscaQuantidade", `Top ${limite}`);
+    preencherTexto("topClientesRoscaTotal", formatarMoeda(totalTop));
+    preencherTexto("topClientesRoscaPercentual", totalTop > 0 && !temNegativos ? "100%" : "0%");
+    preencherTexto("topClientesRoscaNota", temNegativos
+        ? "Há valores negativos; o gráfico não representa participações negativas."
+        : "Cada porcentagem considera somente a soma dos clientes deste Top.");
+
+    const legenda = document.getElementById("legendaTopClientesRosca");
+    if (legenda) {
+        legenda.replaceChildren();
+        const fragmento = document.createDocumentFragment();
+        clientesTop.forEach((cliente, indice) => {
+            const linha = document.createElement("div");
+            linha.className = "top-clientes-rosca-item";
+            linha.setAttribute("role", "listitem");
+            linha.title = cliente.cliente;
+
+            const cor = document.createElement("span");
+            cor.className = "top-clientes-rosca-cor";
+            cor.style.backgroundColor = cores[indice % cores.length];
+
+            const nome = document.createElement("span");
+            nome.className = "top-clientes-rosca-cliente";
+            nome.textContent = cliente.cliente;
+
+            const metricas = document.createElement("span");
+            metricas.className = "top-clientes-rosca-metrica";
+            const valor = document.createElement("strong");
+            valor.textContent = formatarMoeda(cliente.totalPago);
+            const percentual = document.createElement("small");
+            percentual.textContent = temNegativos ? "Participação indisponível" : percentualFormatado(porcentagens[indice]);
+            metricas.append(valor, percentual);
+
+            linha.append(cor, nome, metricas);
+            fragmento.append(linha);
+        });
+        if (!clientesTop.length) {
+            const vazio = document.createElement("span");
+            vazio.className = "top-clientes-rosca-nota";
+            vazio.textContent = "Nenhum cliente encontrado para os filtros atuais.";
+            fragmento.append(vazio);
+        }
+        legenda.append(fragmento);
+    }
+
+    // Chart.js não admite fatias negativas. Para preservar a consistência,
+    // não desenha uma distribuição percentual enganosa neste caso raro.
+    criarOuAtualizarGrafico("topClientesRosca", "graficoTopClientesRosca", {
+        type: "doughnut",
+        data: {
+            labels: clientesTop.map((item) => item.cliente),
+            datasets: [{
+                label: "Participação no Top",
+                data: temNegativos ? valores.map(() => 0) : valores,
+                backgroundColor: cores.slice(0, clientesTop.length),
+                hoverBackgroundColor: cores.slice(0, clientesTop.length),
+                borderColor: "#0a2340",
+                borderWidth: 2,
+                hoverOffset: 5,
+                spacing: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: "72%",
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    padding: 12,
+                    backgroundColor: "rgba(3, 18, 37, 0.97)",
+                    titleColor: "#fff",
+                    bodyColor: "#dbeafe",
+                    borderColor: "rgba(82, 163, 255, 0.35)",
+                    borderWidth: 1,
+                    callbacks: {
+                        label: (contexto) => {
+                            const indice = contexto.dataIndex;
+                            return temNegativos
+                                ? `${formatarMoeda(valores[indice])} — percentual indisponível`
+                                : `${formatarMoeda(valores[indice])} — ${percentualFormatado(porcentagens[indice])} do Top ${limite}`;
+                        }
+                    }
+                }
+            }
+        }
+    });
 }
 
 

@@ -286,3 +286,173 @@ Gráficos Financeiros
         flex-direction: column;
     }
 }
+
+
+/* ======================================================
+   TOP CLIENTES — Barras + rosca com a mesma seleção
+   Escopo isolado para não alterar os outros gráficos.
+   ====================================================== */
+
+.top-clientes-conteudo {
+    display: grid;
+    grid-template-columns: minmax(0, 1.75fr) minmax(220px, 1fr);
+    align-items: start;
+    gap: 12px;
+}
+
+.top-clientes-barras {
+    min-width: 0;
+}
+
+.top-clientes-rosca-bloco {
+    min-width: 0;
+    padding: 9px 9px 10px;
+    background: rgba(5, 22, 45, 0.5);
+    border: 1px solid rgba(82, 163, 255, 0.17);
+    border-radius: 11px;
+}
+
+.top-clientes-rosca-titulo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    color: #dfebff;
+    font-size: 11px;
+}
+
+.top-clientes-rosca-titulo > span {
+    flex-shrink: 0;
+    color: #8dbbff;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.top-clientes-rosca-area {
+    position: relative;
+    width: 100%;
+    max-width: 190px;
+    height: 154px;
+    margin: 8px auto 5px;
+}
+
+.top-clientes-rosca-area canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.top-clientes-rosca-centro {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 64%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    pointer-events: none;
+    text-align: center;
+}
+
+.top-clientes-rosca-centro span {
+    color: #36d79a;
+    font-size: 16px;
+    line-height: 1;
+    font-weight: 800;
+}
+
+.top-clientes-rosca-centro strong {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    color: #f2f7ff;
+    font-size: 10px;
+    line-height: 1.2;
+    font-variant-numeric: tabular-nums;
+}
+
+.top-clientes-rosca-centro small {
+    color: #94abc8;
+    font-size: 9px;
+}
+
+.top-clientes-rosca-legenda {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-height: 133px;
+    overflow-y: auto;
+    padding-right: 3px;
+    scrollbar-width: thin;
+    scrollbar-color: #376b9c transparent;
+}
+
+.top-clientes-rosca-item {
+    display: grid;
+    grid-template-columns: 9px minmax(0, 1fr) auto;
+    gap: 6px;
+    align-items: center;
+    font-size: 9px;
+    color: #dbeafe;
+}
+
+.top-clientes-rosca-cor {
+    display: block;
+    width: 9px;
+    height: 9px;
+    border-radius: 3px;
+}
+
+.top-clientes-rosca-cliente {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.top-clientes-rosca-metrica {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1px;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.top-clientes-rosca-metrica strong {
+    color: #ffffff;
+    font-size: 9px;
+}
+
+.top-clientes-rosca-metrica small {
+    color: #95b3d9;
+    font-size: 9px;
+}
+
+.top-clientes-rosca-nota {
+    margin: 7px 0 0;
+    color: #8ea5c5;
+    font-size: 9px;
+    line-height: 1.3;
+}
+
+/* Em telas mais estreitas os dois gráficos se empilham,
+   evitando rótulos cortados no gráfico de barras. */
+@media (max-width: 1500px) {
+    .top-clientes-conteudo {
+        grid-template-columns: 1fr;
+    }
+
+    .top-clientes-rosca-bloco {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .top-clientes-rosca-area {
+        height: 174px;
+    }
+
+    .top-clientes-rosca-legenda {
+        max-height: 180px;
+    }
+}
