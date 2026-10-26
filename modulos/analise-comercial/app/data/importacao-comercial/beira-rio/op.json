@@ -71,16 +71,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8347",
-    "produto": "17851",
-    "desc_completa": "TELA SHINE PARIS DOURADO",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 154.8,
-    "dt_saida": "2026-09-23",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8418",
     "produto": "17966",
     "desc_completa": "NAPA ONCA SAVANA MULTI ROSA 1541",
@@ -125,7 +115,7 @@
     "produto": "17851",
     "desc_completa": "TELA SHINE PARIS DOURADO",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 1876.4,
+    "qtd_produzir": 590.5,
     "dt_saida": "2026-10-13",
     "abreviacao": ""
   },
@@ -151,26 +141,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8698",
-    "produto": "17917",
-    "desc_completa": "NAPA ZEBRA SAVANA BRANCO 99/VERMELHO 1025",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 119,
-    "dt_saida": "2026-10-23",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8721",
-    "produto": "900097",
-    "desc_completa": "NAPA MAXXI POA BEGE 435/CHOCOLATE 1271",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 197,
-    "dt_saida": "2026-10-20",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8746",
     "produto": "9516",
     "desc_completa": "VERNIZ LONDON 1.0 ROSA 942",
@@ -181,22 +151,22 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8777",
-    "produto": "20123",
-    "desc_completa": "NAPA MADAGASCAR BRANCO OFF 526",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 200,
-    "dt_saida": "2026-10-26",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8779",
     "produto": "17444",
     "desc_completa": "BRILHO ITALIA BROWN 1570",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 1040,
     "dt_saida": "2026-10-28",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8791",
+    "produto": "16509",
+    "desc_completa": "NAPA SEVILLE BRANCO OFF 526",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 400,
+    "dt_saida": "2026-10-23",
     "abreviacao": ""
   },
   {
@@ -317,6 +287,86 @@
     "grupo": "BEIRA RIO",
     "qtd_produzir": 200,
     "dt_saida": "2026-10-30",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8826",
+    "produto": "18333",
+    "desc_completa": "VERNIZ NANCY VINHO 1592",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 200,
+    "dt_saida": "2026-10-27",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8827",
+    "produto": "18332",
+    "desc_completa": "VERNIZ NANCY CAMEL 1165",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 200,
+    "dt_saida": "2026-10-27",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8828",
+    "produto": "18330",
+    "desc_completa": "VERNIZ NANCY CHERRY 1590",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 200,
+    "dt_saida": "2026-10-27",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8829",
+    "produto": "18327",
+    "desc_completa": "VERNIZ NANCY CHOCOLATE 1271",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 200,
+    "dt_saida": "2026-10-27",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8830",
+    "produto": "18325",
+    "desc_completa": "NAPA NEW NANCY AVELA 1248",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 200,
+    "dt_saida": "2026-10-27",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8831",
+    "produto": "18322",
+    "desc_completa": "NAPA TRAMADO CASABLANCA CAMEL 1165",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 200,
+    "dt_saida": "2026-10-27",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8832",
+    "produto": "18289",
+    "desc_completa": "NAPA TRAMADO CASABLANCA AVELA 1248",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 200,
+    "dt_saida": "2026-10-27",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8833",
+    "produto": "18320",
+    "desc_completa": "NAPA TRAMADO CASABLANCA VINHO 1592",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 200,
+    "dt_saida": "2026-10-27",
     "abreviacao": ""
   }
 ]
