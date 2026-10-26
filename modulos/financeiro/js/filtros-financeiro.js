@@ -7,7 +7,9 @@ const filtroPessoas = {
 
 const filtroBancos = {
     opcoes: [],
-    selecionadas: new Set()
+    selecionadas: new Set(),
+    // Só libera os demais cards depois que o usuário mexer no filtro.
+    exibicaoPersonalizada: false
 };
 
 /* Filtros da Visão Geral. */
@@ -48,7 +50,8 @@ function configurarPainelFiltros() {
         btnLimpar.addEventListener("click", () => {
             formulario.reset();
             marcarTodasPessoas(false);
-            marcarTodosBancos(false);
+            filtroBancos.exibicaoPersonalizada = false;
+            selecionarBancosPadrao();
             aplicarFiltrosDashboard();
         });
     }
@@ -119,9 +122,15 @@ function configurarMultiselectBancos() {
         painel.hidden = !abrir;
         botao.setAttribute("aria-expanded", String(abrir));
     });
-    document.getElementById("btnMarcarTodosBancos")?.addEventListener("click", () => marcarTodosBancos());
+    document.getElementById("btnMarcarTodosBancos")?.addEventListener("click", () => {
+        filtroBancos.exibicaoPersonalizada = true;
+        marcarTodosBancos();
+    });
     document.getElementById("btnDesmarcarTodosBancos")?.addEventListener("click", desmarcarTodosBancos);
-    todos?.addEventListener("change", () => todos.checked ? marcarTodosBancos() : desmarcarTodosBancos());
+    todos?.addEventListener("change", () => {
+        filtroBancos.exibicaoPersonalizada = true;
+        todos.checked ? marcarTodosBancos() : desmarcarTodosBancos();
+    });
     document.addEventListener("click", (evento) => {
         const componente = document.getElementById("multiselectBancos");
         if (componente && !componente.contains(evento.target)) {
@@ -143,6 +152,7 @@ function renderizarListaBancosFiltro() {
         checkbox.id = `bancoFiltro_${indice}`;
         checkbox.checked = filtroBancos.selecionadas.has(banco.id);
         checkbox.addEventListener("change", () => {
+            filtroBancos.exibicaoPersonalizada = true;
             checkbox.checked ? filtroBancos.selecionadas.add(banco.id) : filtroBancos.selecionadas.delete(banco.id);
             atualizarResumoBancos();
         });
@@ -153,6 +163,13 @@ function renderizarListaBancosFiltro() {
     });
 }
 
+function selecionarBancosPadrao(renderizar = true) {
+    const disponiveis = new Set(filtroBancos.opcoes.map((banco) => banco.id));
+    filtroBancos.selecionadas = new Set(BANCOS_EXIBICAO_PADRAO.filter((id) => disponiveis.has(id)));
+    if (renderizar) renderizarListaBancosFiltro();
+    atualizarResumoBancos();
+}
+
 function marcarTodosBancos(renderizar = true) {
     filtroBancos.selecionadas = new Set(filtroBancos.opcoes.map((banco) => banco.id));
     if (renderizar) renderizarListaBancosFiltro();
@@ -160,6 +177,7 @@ function marcarTodosBancos(renderizar = true) {
 }
 
 function desmarcarTodosBancos() {
+    filtroBancos.exibicaoPersonalizada = true;
     filtroBancos.selecionadas.clear();
     renderizarListaBancosFiltro();
     atualizarResumoBancos();
@@ -448,7 +466,8 @@ function aplicarFiltrosDashboard() {
     const idsBancosDisponiveis = new Set(
         filtroBancos.opcoes.map((banco) => banco.id)
     );
-    const todosBancosSelecionados = idsBancosDisponiveis.size === 0 ||
+    const todosBancosSelecionados = !filtroBancos.exibicaoPersonalizada ||
+        idsBancosDisponiveis.size === 0 ||
         [...idsBancosDisponiveis].every((id) => bancosSelecionados.has(id));
     const plano = document.getElementById("planoFinanceiro")?.value || "";
     const situacao = document.getElementById("situacao")?.value || "";
@@ -538,10 +557,16 @@ function atualizarTextoPeriodo(inicio, fim) {
 }
 
 function preencherFiltroBancos(limparAntes = false) {
+    if (limparAntes) filtroBancos.exibicaoPersonalizada = false;
     filtroBancos.opcoes = completarBancosComContasManuais(bancosFinanceiros)
         .map((banco) => ({ id: banco.id, nome: banco.nome }));
-    if (limparAntes || !filtroBancos.selecionadas.size) marcarTodosBancos(false);
-    else filtroBancos.selecionadas = new Set([...filtroBancos.selecionadas].filter((id) => filtroBancos.opcoes.some((b) => b.id === id)));
+    if (limparAntes || (!filtroBancos.exibicaoPersonalizada && !filtroBancos.selecionadas.size)) {
+        selecionarBancosPadrao(false);
+    } else {
+        filtroBancos.selecionadas = new Set(
+            [...filtroBancos.selecionadas].filter((id) => filtroBancos.opcoes.some((b) => b.id === id))
+        );
+    }
     renderizarListaBancosFiltro();
     atualizarResumoBancos();
 }

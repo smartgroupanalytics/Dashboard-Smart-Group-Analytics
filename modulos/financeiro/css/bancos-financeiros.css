@@ -206,3 +206,10 @@
     color: #e9dcff;
     font-weight: 750;
 }
+
+/* Orientação discreta sobre as cinco contas exibidas por padrão. */
+.descricao-bancos-exibicao {
+    color: #9bc3e9;
+    font-size: 11px;
+    margin-top: 6px;
+}

@@ -33,10 +33,23 @@ const BANCO_SALDO_CAIXA_MANUAL = Object.freeze({
  * Bradesco mantém seu saldo manual original; o painel de investimento separado
  * do projeto original existe apenas para os dois Sicoob.
  */
+/* Contas sempre disponíveis, inclusive sem movimento no relatório. */
 const CONTAS_FINANCEIRAS_FIXAS = Object.freeze([
+    "Banco do Brasil",
+    "Sicoob",
     "Sicoob MaxiCrédito",
-    "Sicoob Vale Sul",
-    "Bradesco"
+    "Itaú",
+    "Bradesco",
+    "Sicoob Vale Sul"
+]);
+
+/* Ordem da abertura: só os cinco bancos solicitados; demais via filtro. */
+const BANCOS_EXIBICAO_PADRAO = Object.freeze([
+    "banco-do-brasil",
+    "sicoob",
+    "sicoob-maxicredito",
+    "itau",
+    "bradesco"
 ]);
 
 let bancosUltimaGrade = null;
@@ -79,15 +92,28 @@ function completarBancosComContasManuais(bancos = []) {
     return [...mapa.values()];
 }
 
-/* Respeitar bancos desmarcados explicitamente no filtro geral. */
+/*
+ * A aba Bancos possui sua própria exibição padrão. O filtro Banco / Conta
+ * continua selecionando todos os lançamentos até que o usuário o altere;
+ * isso preserva os KPIs e as demais abas do Financeiro.
+ * Os cinco bancos principais permanecem visíveis; outros são adicionados
+ * apenas quando o usuário marca opções no filtro de bancos.
+ */
 function bancosVisiveisComContasManuais(bancos = []) {
     const completos = completarBancosComContasManuais(bancos);
-    if (typeof filtroBancos === "undefined" || !filtroBancos.opcoes?.length) {
-        return completos;
+    const porId = new Map(completos.map((banco) => [obterChaveBancoSaldo(banco), banco]));
+    const principais = BANCOS_EXIBICAO_PADRAO.map((id) => porId.get(id)).filter(Boolean);
+
+    if (typeof filtroBancos === "undefined" || !filtroBancos.exibicaoPersonalizada) {
+        return principais;
     }
+
     const selecionados = filtroBancos.selecionadas;
-    const todos = filtroBancos.opcoes.every((banco) => selecionados.has(banco.id));
-    return todos ? completos : completos.filter((banco) => selecionados.has(banco.id));
+    const extras = completos.filter((banco) => {
+        const id = obterChaveBancoSaldo(banco);
+        return !BANCOS_EXIBICAO_PADRAO.includes(id) && selecionados.has(id);
+    });
+    return [...principais, ...extras];
 }
 
 function configurarPainelBanco() {
@@ -308,6 +334,13 @@ function renderizarBancos(listaBancos = bancosFinanceiros) {
     const quantidade =
         document.getElementById("quantidadeContas");
 
+    preencherTexto(
+        "descricaoBancosExibicao",
+        bancosExibidos.length === BANCOS_EXIBICAO_PADRAO.length
+            ? "Exibindo os 5 bancos principais. Para incluir outros, use Filtros → Banco / Conta."
+            : `Exibindo ${bancosExibidos.length} bancos. Para alterar os adicionais, use Filtros → Banco / Conta.`
+    );
+
     if (!grade) {
         return;
     }
@@ -390,7 +423,7 @@ function renderizarBancos(listaBancos = bancosFinanceiros) {
 
     if (quantidade) {
         quantidade.textContent =
-            `${bancosExibidos.length} bancos selecionados`;
+            `${bancosExibidos.length} bancos exibidos`;
     }
 
     carregarSaldosDisponiveisGerais(bancosExibidos);
@@ -585,7 +618,7 @@ function atualizarSaldoDisponivelGeral(listaBancos) {
 
     preencherTexto(
         "quantidadeContas",
-        `${base.length} banco${base.length === 1 ? "" : "s"} selecionado${base.length === 1 ? "" : "s"}${totalInvestimentos > 0 ? " + investimentos" : ""}`
+        `${base.length} banco${base.length === 1 ? "" : "s"} exibido${base.length === 1 ? "" : "s"}${totalInvestimentos > 0 ? " + investimentos" : ""}`
     );
 
     preencherTexto(
