@@ -145,42 +145,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8530",
-    "produto": "13144",
-    "desc_completa": "NAPA LINHO DAKAR NATURAL",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 1668,
-    "dt_saida": "2026-10-09",
-    "centro_custo": 10,
-    "abreviacao": "REV 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8575",
-    "produto": "18175",
-    "desc_completa": "ARUBA ESPRESSO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 100,
-    "dt_saida": "2026-10-23",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8576",
-    "produto": "18163",
-    "desc_completa": "ARUBA PRETO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 100,
-    "dt_saida": "2026-10-23",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8577",
     "produto": "18157",
     "desc_completa": "JACARTA PRATA",
@@ -258,22 +222,10 @@
     "desc_completa": "LILLY CAMOMILA",
     "grupo": 39,
     "subgrupo": 41,
-    "qtd_produzir": 100,
+    "qtd_produzir": 14.5,
     "dt_saida": "2026-10-22",
-    "centro_custo": 3,
-    "abreviacao": "GR 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8585",
-    "produto": "18041",
-    "desc_completa": "LILLY GUAVA",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 100,
-    "dt_saida": "2026-10-22",
-    "centro_custo": 3,
-    "abreviacao": "GR 1"
+    "centro_custo": 10,
+    "abreviacao": "REV 1"
   },
   {
     "fonte_comercial": "STK",
@@ -301,18 +253,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8599",
-    "produto": "18012",
-    "desc_completa": "NAPA MADRID NEVOA",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 100,
-    "dt_saida": "2026-10-09",
-    "centro_custo": 7,
-    "abreviacao": "ESTAM"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8601",
     "produto": "18214",
     "desc_completa": "NAPA MADRID SALVIA",
@@ -332,30 +272,6 @@
     "subgrupo": 41,
     "qtd_produzir": 40,
     "dt_saida": "2026-10-12",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8633",
-    "produto": "15212",
-    "desc_completa": "BORGONHA TITANIO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 528,
-    "dt_saida": "2026-10-29",
-    "centro_custo": 3,
-    "abreviacao": "GR 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8634",
-    "produto": "11845",
-    "desc_completa": "BORGONHA OURO LIGHT",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 1000,
-    "dt_saida": "2026-10-29",
     "centro_custo": 6,
     "abreviacao": "EST1"
   },
@@ -397,60 +313,12 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8703",
-    "produto": "18232",
-    "desc_completa": "OREGON BEGE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 40,
-    "dt_saida": "2026-10-22",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8704",
-    "produto": "18228",
-    "desc_completa": "OREGON CONHAQUE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 40,
-    "dt_saida": "2026-10-22",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8705",
-    "produto": "18226",
-    "desc_completa": "OREGON CAFE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 40,
-    "dt_saida": "2026-10-22",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8707",
-    "produto": "18233",
-    "desc_completa": "OREGON PRETO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 40,
-    "dt_saida": "2026-10-16",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8762",
     "produto": "18258",
     "desc_completa": "CANYON CAMOMILA",
     "grupo": 39,
     "subgrupo": 41,
-    "qtd_produzir": 40,
+    "qtd_produzir": 6,
     "dt_saida": "2026-10-23",
     "centro_custo": 6,
     "abreviacao": "EST1"
@@ -460,18 +328,6 @@
     "nro_op": "8763",
     "produto": "18252",
     "desc_completa": "CANYON SALVIA",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 40,
-    "dt_saida": "2026-10-23",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8764",
-    "produto": "18254",
-    "desc_completa": "CANYON GUAVA",
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 40,
@@ -500,8 +356,8 @@
     "subgrupo": 41,
     "qtd_produzir": 120,
     "dt_saida": "2026-10-27",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -512,30 +368,6 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-10-27",
-    "centro_custo": 1,
-    "abreviacao": "RECOB"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8782",
-    "produto": "16503",
-    "desc_completa": "CANYON CANELA",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 52,
-    "dt_saida": "2026-10-27",
-    "centro_custo": 3,
-    "abreviacao": "GR 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8783",
-    "produto": "12397",
-    "desc_completa": "LILLY BRANCO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 181,
-    "dt_saida": "2026-10-23",
     "centro_custo": 3,
     "abreviacao": "GR 1"
   },
@@ -548,8 +380,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-10-30",
-    "centro_custo": 39,
-    "abreviacao": "MISTURA 1"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -572,6 +404,18 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-10-29",
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8787",
+    "produto": "15656",
+    "desc_completa": "STELLAR ROSE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-10-27",
     "centro_custo": 0,
     "abreviacao": ""
   },
@@ -584,8 +428,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-10-29",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 1,
+    "abreviacao": "RECOB"
   },
   {
     "fonte_comercial": "STK",
@@ -606,9 +450,21 @@
     "desc_completa": "CANYON ESPRESSO",
     "grupo": 39,
     "subgrupo": 41,
-    "qtd_produzir": 40,
+    "qtd_produzir": 6.6,
     "dt_saida": "2026-10-27",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "centro_custo": 10,
+    "abreviacao": "REV 1"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8841",
+    "produto": "18336",
+    "desc_completa": "ASPEN PRETO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 40,
+    "dt_saida": "2026-10-30",
+    "centro_custo": 0,
+    "abreviacao": ""
   }
 ]
