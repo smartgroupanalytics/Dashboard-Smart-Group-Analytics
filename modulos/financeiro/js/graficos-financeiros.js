@@ -33,7 +33,6 @@ function renderizarGraficos(dados) {
     renderizarFluxoCaixa(clientesVisao, fornecedoresVisao);
     renderizarRecebimentosDia(clientesVisao);
     renderizarTopClientes(clientesVisao);
-    renderizarRecebimentosBanco(clientesVisao);
 }
 
 function prepararMovimentoVisao(item) {
@@ -425,7 +424,8 @@ function renderizarTopClientes(clientesPagos) {
         }
     );
 
-    // A rosca recebe o mesmo Top mostrado nas barras, sem outro cálculo/filtro.
+    // A rosca fica no card direito, usando o mesmo Top mostrado nas barras,
+    // sem outra fonte de dados ou seleção.
     renderizarRoscaTopClientes([...ranking].reverse(), limite);
 }
 
@@ -561,69 +561,6 @@ function renderizarRoscaTopClientes(clientesTop, limite) {
             }
         }
     });
-}
-
-
-/* ======================================================
-   RECEBIMENTOS POR BANCO
-   ====================================================== */
-
-function renderizarRecebimentosBanco(recebimentos) {
-    const validos = recebimentos;
-
-    const mapa = agruparPor(
-        validos,
-        (item) => normalizarTexto(item.banco) === "nao informado" || !String(item.banco || "").trim()
-            ? "Não informado"
-            : nomeBancoAmigavel(item.banco),
-        "valorLiquidoPago"
-    );
-
-    const ranking = ordenarMapa(mapa).slice(0, 8);
-
-    criarOuAtualizarGrafico(
-        "recebimentosBanco",
-        "graficoRecebimentosBanco",
-        {
-            type: "doughnut",
-
-            data: {
-                labels: ranking.map(([nome]) => nome),
-
-                datasets: [
-                    {
-                        data: ranking.map(
-                            ([, valor]) => valor
-                        ),
-
-                        backgroundColor: [
-                            "#1683ff",
-                            "#27d17f",
-                            "#ff9f43",
-                            "#8f61e8",
-                            "#31c6d4",
-                            "#f15bb5",
-                            "#a0aec0",
-                            "#f6d000"
-                        ],
-
-                        borderWidth: 0,
-                        hoverOffset: 7
-                    }
-                ]
-            },
-
-            options: opcoesGraficoRosca(
-                "Recebimentos"
-            ),
-
-            plugins: [
-                pluginTextoCentralRosca(
-                    "Total recebido"
-                )
-            ]
-        }
-    );
 }
 
 

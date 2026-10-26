@@ -289,51 +289,47 @@ Gráficos Financeiros
 
 
 /* ======================================================
-   TOP CLIENTES — Barras + rosca com a mesma seleção
-   Escopo isolado para não alterar os outros gráficos.
+   TOP CLIENTES — cards separados, uma selecao compartilhada
+   A rosca substitui "Entradas por Banco" na Visao Geral.
    ====================================================== */
 
-.top-clientes-conteudo {
-    display: grid;
-    grid-template-columns: minmax(0, 1.75fr) minmax(220px, 1fr);
-    align-items: start;
-    gap: 12px;
-}
-
-.top-clientes-barras {
+.card-top-clientes .top-clientes-barras {
     min-width: 0;
+    width: 100%;
 }
 
-.top-clientes-rosca-bloco {
-    min-width: 0;
-    padding: 9px 9px 10px;
-    background: rgba(5, 22, 45, 0.5);
-    border: 1px solid rgba(82, 163, 255, 0.17);
-    border-radius: 11px;
-}
-
-.top-clientes-rosca-titulo {
+.card-top-clientes-rosca {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 8px;
-    color: #dfebff;
-    font-size: 11px;
+    flex-direction: column;
 }
 
-.top-clientes-rosca-titulo > span {
+.top-clientes-rosca-filtro {
     flex-shrink: 0;
-    color: #8dbbff;
-    font-size: 10px;
-    font-weight: 700;
+    padding: 7px 11px;
+    border: 1px solid rgba(82, 163, 255, 0.30);
+    border-radius: 8px;
+    background: rgba(17, 86, 156, 0.17);
+    color: #9dc9ff;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.top-clientes-rosca-conteudo {
+    display: grid;
+    grid-template-columns: minmax(180px, 0.95fr) minmax(0, 1.2fr);
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+    min-width: 0;
 }
 
 .top-clientes-rosca-area {
     position: relative;
     width: 100%;
-    max-width: 190px;
-    height: 154px;
-    margin: 8px auto 5px;
+    max-width: 280px;
+    height: 250px;
+    margin: 0 auto;
+    min-width: 0;
 }
 
 .top-clientes-rosca-area canvas {
@@ -346,18 +342,18 @@ Gráficos Financeiros
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 64%;
+    width: 63%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3px;
+    gap: 4px;
     pointer-events: none;
     text-align: center;
 }
 
 .top-clientes-rosca-centro span {
     color: #36d79a;
-    font-size: 16px;
+    font-size: 20px;
     line-height: 1;
     font-weight: 800;
 }
@@ -366,40 +362,42 @@ Gráficos Financeiros
     max-width: 100%;
     overflow-wrap: anywhere;
     color: #f2f7ff;
-    font-size: 10px;
-    line-height: 1.2;
+    font-size: clamp(11px, 1vw, 15px);
+    line-height: 1.25;
     font-variant-numeric: tabular-nums;
 }
 
 .top-clientes-rosca-centro small {
     color: #94abc8;
-    font-size: 9px;
+    font-size: 10px;
 }
 
 .top-clientes-rosca-legenda {
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    max-height: 133px;
+    gap: 7px;
+    min-width: 0;
+    max-height: 268px;
     overflow-y: auto;
-    padding-right: 3px;
+    padding-right: 7px;
     scrollbar-width: thin;
     scrollbar-color: #376b9c transparent;
 }
 
 .top-clientes-rosca-item {
     display: grid;
-    grid-template-columns: 9px minmax(0, 1fr) auto;
-    gap: 6px;
+    grid-template-columns: 10px minmax(0, 1fr) auto;
+    gap: 7px;
     align-items: center;
-    font-size: 9px;
+    font-size: 10px;
     color: #dbeafe;
+    min-width: 0;
 }
 
 .top-clientes-rosca-cor {
     display: block;
-    width: 9px;
-    height: 9px;
+    width: 10px;
+    height: 10px;
     border-radius: 3px;
 }
 
@@ -413,46 +411,54 @@ Gráficos Financeiros
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 1px;
+    gap: 2px;
     white-space: nowrap;
     font-variant-numeric: tabular-nums;
 }
 
 .top-clientes-rosca-metrica strong {
-    color: #ffffff;
-    font-size: 9px;
+    color: #fff;
+    font-size: 10px;
 }
 
 .top-clientes-rosca-metrica small {
     color: #95b3d9;
-    font-size: 9px;
+    font-size: 10px;
 }
 
 .top-clientes-rosca-nota {
-    margin: 7px 0 0;
+    margin: 8px 0 0;
     color: #8ea5c5;
-    font-size: 9px;
+    font-size: 10px;
     line-height: 1.3;
 }
 
-/* Em telas mais estreitas os dois gráficos se empilham,
-   evitando rótulos cortados no gráfico de barras. */
-@media (max-width: 1500px) {
-    .top-clientes-conteudo {
+@media (max-width: 1370px) and (min-width: 901px) {
+    .top-clientes-rosca-conteudo {
         grid-template-columns: 1fr;
+        gap: 7px;
     }
-
-    .top-clientes-rosca-bloco {
-        max-width: 100%;
+    .top-clientes-rosca-area {
+        height: 210px;
+        max-width: 260px;
+    }
+    .top-clientes-rosca-legenda {
+        max-height: 160px;
     }
 }
 
 @media (max-width: 600px) {
-    .top-clientes-rosca-area {
-        height: 174px;
+    .top-clientes-rosca-conteudo {
+        grid-template-columns: 1fr;
+        gap: 12px;
     }
-
+    .top-clientes-rosca-area {
+        height: 225px;
+    }
     .top-clientes-rosca-legenda {
-        max-height: 180px;
+        max-height: 250px;
+    }
+    .top-clientes-rosca-centro strong {
+        font-size: 12px;
     }
 }
