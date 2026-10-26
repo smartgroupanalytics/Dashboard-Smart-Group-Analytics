@@ -319,7 +319,36 @@ function renderizarTopClientes(clientesPagos) {
     const opcoes =
         opcoesGraficoHorizontal();
 
+    // Apenas no Top Clientes: a dica aparece somente ao passar sobre a
+    // barra correta. O modo anterior (index + intersect:false) podia manter
+    // o tooltip de outro cliente mesmo depois de o cursor mudar de linha.
+    opcoes.interaction = {
+        mode: "nearest",
+        intersect: true,
+        axis: "xy"
+    };
+    opcoes.hover = {
+        mode: "nearest",
+        intersect: true,
+        axis: "xy"
+    };
+    // Evita que uma animacao atrasada deixe uma informacao antiga em tela.
+    opcoes.animation = false;
+
+    // Ancorar a dica na posicao REAL do mouse, nao no centro da barra.
+    // Barras muito longas podiam mostrar a dica longe do cursor.
+    const posicionadores = Chart.Tooltip?.positioners;
+    if (posicionadores && !posicionadores.cursorTopClientes) {
+        posicionadores.cursorTopClientes = (_elementos, posicaoMouse) => ({
+            x: posicaoMouse.x,
+            y: posicaoMouse.y
+        });
+    }
+
     opcoes.plugins.tooltip = {
+        mode: "nearest",
+        intersect: true,
+        position: posicionadores?.cursorTopClientes ? "cursorTopClientes" : "nearest",
         padding: 12,
 
         backgroundColor:
