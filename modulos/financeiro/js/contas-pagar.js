@@ -55,8 +55,7 @@ function saldoPagar(item) {
 
 function inicializarContasPagar() {
     [
-        "pagarBusca", "pagarStatus", "pagarTipoDocumento",
-        "pagarFornecedor", "pagarLocal", "pagarPlano",
+        "pagarBusca", "pagarTipoDocumento", "pagarPlano",
         "pagarInicio", "pagarFim", "pagarPorPagina"
     ].forEach((id) => {
         const el = document.getElementById(id);
@@ -69,6 +68,12 @@ function inicializarContasPagar() {
             }
         );
     });
+
+    const aoAlterarMultiPagar = () => {
+        pagarPaginaAtual = 1;
+        aplicarFiltrosContasPagar();
+    };
+    iniciarMultiselectContas("pagarStatus", ["aberto", "atrasado", "pago"], aoAlterarMultiPagar);
 
     document.getElementById("btnLimparPagar")
         ?.addEventListener("click", limparFiltrosPagar);
@@ -95,8 +100,10 @@ function atualizarContasPagar(lancamentos) {
         .filter((item) => item.tipoCadastro === "fornecedor");
 
     preencherSelectPagar("pagarTipoDocumento", pagarTodos.map(tipoDoc));
-    preencherSelectPagar("pagarFornecedor", pagarTodos.map((x) => x.razaoSocial));
-    preencherSelectPagar("pagarLocal", pagarTodos.map(localPagar));
+    iniciarMultiselectContas("pagarFornecedor", pagarTodos.map((x) => x.razaoSocial),
+        () => { pagarPaginaAtual = 1; aplicarFiltrosContasPagar(); });
+    iniciarMultiselectContas("pagarLocal", pagarTodos.map(localPagar),
+        () => { pagarPaginaAtual = 1; aplicarFiltrosContasPagar(); });
     preencherSelectPagar("pagarPlano", pagarTodos.map((x) => x.planoFinanceiro));
 
     pagarPaginaAtual = 1;
@@ -129,10 +136,7 @@ function aplicarFiltrosContasPagar() {
      * formam o período-base; Status e os demais campos apenas refinam esse período.
      */
     const busca = normalizarTexto(valorCampo("pagarBusca"));
-    const status = valorCampo("pagarStatus");
     const documento = valorCampo("pagarTipoDocumento");
-    const fornecedor = valorCampo("pagarFornecedor");
-    const local = valorCampo("pagarLocal");
     const plano = valorCampo("pagarPlano");
     const inicio = lerDataInput("pagarInicio");
     const fim = lerDataInput("pagarFim");
@@ -144,10 +148,12 @@ function aplicarFiltrosContasPagar() {
         ].join(" "));
 
         if (busca && !texto.includes(busca)) return false;
-        if (!correspondeStatusContasPagar(item, status)) return false;
+        const statusSelecionados = obterSelecaoContas("pagarStatus");
+        if (statusSelecionados && ![...statusSelecionados].some((status) =>
+            correspondeStatusContasPagar(item, status))) return false;
         if (documento && tipoDoc(item) !== documento) return false;
-        if (fornecedor && item.razaoSocial !== fornecedor) return false;
-        if (local && localPagar(item) !== local) return false;
+        if (!correspondeMultiselectContas("pagarFornecedor", item.razaoSocial)) return false;
+        if (!correspondeMultiselectContas("pagarLocal", localPagar(item))) return false;
         if (plano && item.planoFinanceiro !== plano) return false;
         if (inicio && (!item.vencimento || inicioDoDia(item.vencimento) < inicio)) return false;
         if (fim && (!item.vencimento || inicioDoDia(item.vencimento) > fim)) return false;
@@ -257,13 +263,14 @@ function renderizarPagar() {
 
 function limparFiltrosPagar() {
     [
-        "pagarBusca", "pagarStatus", "pagarTipoDocumento",
-        "pagarFornecedor", "pagarLocal", "pagarPlano",
+        "pagarBusca", "pagarTipoDocumento", "pagarPlano",
         "pagarInicio", "pagarFim"
     ].forEach((id) => {
         const el = document.getElementById(id);
         if (el) el.value = "";
     });
+    ["pagarStatus", "pagarFornecedor", "pagarLocal"].forEach((id) =>
+        definirSelecaoContas(id, true, false));
     pagarPaginaAtual = 1;
     aplicarFiltrosContasPagar();
 }

@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="css/tabelas-financeiras.css?v=13">
     <link rel="stylesheet" href="css/contas-receber.css?v=20">
     <link rel="stylesheet" href="css/contas-pagar.css?v=21">
+    <link rel="stylesheet" href="css/multiselect-contas.css?v=20261026-1">
     <link rel="stylesheet" href="css/fluxo-caixa.css?v=23">
     <link rel="stylesheet" href="css/saldo-frete.css?v=2">
 </head>
@@ -542,29 +543,20 @@
                             </div>
                         </label>
 
-                        <label>
-                            <span>Status</span>
-                            <select id="receberStatus">
-                                <option value="">Todos</option>
-                                <option value="aberto">Em aberto</option>
-                                <option value="atrasado">Em atraso</option>
-                                <option value="pago">Pago</option>
-                            </select>
-                        </label>
+                        <div class="fin-multi-campo">
+                            <span class="fin-multi-titulo">Status</span>
+                            <div class="fin-multi" id="receberStatus"></div>
+                        </div>
 
-                        <label>
-                            <span>Cliente</span>
-                            <select id="receberCliente">
-                                <option value="">Todos</option>
-                            </select>
-                        </label>
+                        <div class="fin-multi-campo">
+                            <span class="fin-multi-titulo">Cliente</span>
+                            <div class="fin-multi" id="receberCliente"></div>
+                        </div>
 
-                        <label>
-                            <span>Local de cobrança</span>
-                            <select id="receberBanco">
-                                <option value="">Todos</option>
-                            </select>
-                        </label>
+                        <div class="fin-multi-campo">
+                            <span class="fin-multi-titulo">Local de cobrança</span>
+                            <div class="fin-multi" id="receberBanco"></div>
+                        </div>
 
                         <label>
                             <span>Representante</span>
@@ -672,10 +664,10 @@
                 <section class="pagar-painel">
                     <div class="pagar-filtros">
                         <label class="pagar-busca"><span>Pesquisar</span><input type="search" id="pagarBusca" placeholder="Fornecedor ou documento"></label>
-                        <label><span>Status</span><select id="pagarStatus"><option value="">Todos</option><option value="aberto">Em aberto</option><option value="atrasado">Em atraso</option><option value="pago">Pago</option></select></label>
+                        <div class="fin-multi-campo"><span class="fin-multi-titulo">Status</span><div class="fin-multi" id="pagarStatus"></div></div>
                         <label><span>Descr.Tp.doc</span><select id="pagarTipoDocumento"><option value="">Todos</option></select></label>
-                        <label><span>Fornecedor</span><select id="pagarFornecedor"><option value="">Todos</option></select></label>
-                        <label><span>Local de cobrança</span><select id="pagarLocal"><option value="">Todos</option></select></label>
+                        <div class="fin-multi-campo"><span class="fin-multi-titulo">Fornecedor</span><div class="fin-multi" id="pagarFornecedor"></div></div>
+                        <div class="fin-multi-campo"><span class="fin-multi-titulo">Local de cobrança</span><div class="fin-multi" id="pagarLocal"></div></div>
                         <label><span>Plano financeiro</span><select id="pagarPlano"><option value="">Todos</option></select></label>
                         <label><span>Vencimento inicial</span><input type="date" id="pagarInicio"></label>
                         <label><span>Vencimento final</span><input type="date" id="pagarFim"></label>
@@ -1527,11 +1519,12 @@
     <script src="js/indicadores-financeiros.js?v=20260924-carteira-14"></script>
     <script src="js/graficos-financeiros.js?v=20261026-top-rosca-modal-3"></script>
     <script src="js/bancos-financeiros.js?v=19"></script>
-    <script src="js/filtros-financeiro.js?v=20260928-filtro-periodo-16"></script>
+    <script src="js/filtros-financeiro.js?v=20261026-situacao-1"></script>
     <script src="js/importacao-planilha.js?v=9"></script>
-    <script src="js/contas-receber.js?v=25"></script>
-    <script src="js/contas-pagar.js?v=23"></script>
-    <script src="js/fluxo-caixa.js?v=34"></script>
+    <script src="js/multiselect-contas.js?v=20261026-1"></script>
+    <script src="js/contas-receber.js?v=20261026-multi-1"></script>
+    <script src="js/contas-pagar.js?v=20261026-multi-1"></script>
+    <script src="js/fluxo-caixa.js?v=20261026-situacao-1"></script>
     <script src="js/saldo-frete.js?v=3"></script>
     <script src="js/automacao-financeiro.js?v=1"></script>
     <script src="financeiro.js?v=20260924-carteira-14"></script>

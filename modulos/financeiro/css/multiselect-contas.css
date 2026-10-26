@@ -1,0 +1,33 @@
+/* Seleções múltiplas: apenas Contas a Receber e Contas a Pagar. */
+.receber-painel, .pagar-painel { overflow: visible; }
+.receber-filtros, .pagar-filtros { position: relative; z-index: 5; }
+.fin-multi-campo { min-width: 0; display: grid; gap: 6px; position: relative; }
+.fin-multi-titulo { font-size: 9px; font-weight: 700; text-transform: uppercase; color: #92abc7; }
+.fin-multi { min-width: 0; position: relative; font-family: inherit; }
+.fin-multi-botao {
+    width: 100%; height: 36px; background: #09294f; color: #e9f3ff;
+    border: 1px solid rgba(111,171,230,.23); border-radius: 8px;
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    padding: 0 10px; text-align: left; font: inherit; font-size: 10px;
+}
+.fin-multi-botao span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 10px; color: #e9f3ff; text-transform: none; }
+.fin-multi-botao i { flex: none; color: #91b3d6; }
+.fin-multi-painel {
+    position: absolute; left: 0; top: calc(100% + 5px); width: max(100%, 265px);
+    max-width: min(350px, 85vw); max-height: 355px; z-index: 120;
+    overflow: hidden; padding: 9px;
+    border: 1px solid #326398; border-radius: 10px; background: #092748;
+    box-shadow: 0 18px 35px rgba(0,0,0,.45);
+}
+.fin-multi-painel[hidden] { display: none !important; }
+.fin-multi-busca { width: 100%; height: 32px !important; padding: 0 9px !important; margin-bottom: 8px; border-radius: 6px; font-size: 11px !important; }
+.fin-multi-acoes { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+.fin-multi-acoes button { border: 0; background: transparent; color: #76bdff; padding: 5px 3px; font-size: 10px; }
+.fin-multi-item { display: flex !important; align-items: center; gap: 9px !important; padding: 7px 4px; cursor: pointer; color: #edf6ff; font-size: 11px; text-transform: none; }
+.fin-multi-item:hover { background: rgba(55,124,201,.17); border-radius: 5px; }
+.fin-multi-item input[type="checkbox"] { flex: none; width: 15px !important; height: 15px !important; margin: 0; padding: 0; accent-color: #1683ff; }
+.fin-multi-item span { color: #edf6ff !important; font-size: 11px !important; font-weight: normal !important; text-transform: none !important; overflow-wrap: anywhere; }
+.fin-multi-item-todos { border-bottom: 1px solid rgba(111,171,230,.2); font-weight: 700; }
+.fin-multi-lista { max-height: 190px; overflow-y: auto; overscroll-behavior: contain; }
+.fin-multi-vazio, .fin-multi-contador { padding: 8px 4px 3px; color: #94afce; font-size: 10px; }
+@media(max-width: 800px) { .fin-multi-painel { max-width: min(320px, 80vw); } }

@@ -6,8 +6,7 @@ let receberPagina = 1;
 
 function inicializarContasReceber() {
     const ids = [
-        "receberBusca", "receberStatus", "receberCliente",
-        "receberBanco", "receberRepresentante",
+        "receberBusca", "receberRepresentante",
         "receberDataInicio", "receberDataFim",
         "receberPorPagina"
     ];
@@ -26,6 +25,14 @@ function inicializarContasReceber() {
             aplicarFiltrosContasReceber();
         });
     });
+
+    const aoAlterarMultiReceber = () => {
+        receberPagina = 1;
+        aplicarFiltrosContasReceber();
+    };
+    iniciarMultiselectContas("receberStatus", ["aberto", "atrasado", "pago"], aoAlterarMultiReceber);
+    // Os nomes completos dos status ficam visíveis na lista.
+    // Os valores são os mesmos usados nas funções originais.
 
     document.getElementById("btnLimparReceber")
         ?.addEventListener("click", limparFiltrosContasReceber);
@@ -55,18 +62,20 @@ function atualizarContasReceber(lancamentos) {
     receberTodos = (Array.isArray(lancamentos) ? lancamentos : [])
         .filter((item) => item.tipoCadastro === "cliente");
 
-    preencherSelectReceber(
+    iniciarMultiselectContas(
         "receberCliente",
-        receberTodos.map((item) => item.razaoSocial)
+        receberTodos.map((item) => item.razaoSocial),
+        () => { receberPagina = 1; aplicarFiltrosContasReceber(); }
     );
 
-    preencherSelectReceber(
+    iniciarMultiselectContas(
         "receberBanco",
         receberTodos.map((item) =>
             item.localCobranca ||
             item.banco ||
             "Não informado"
-        )
+        ),
+        () => { receberPagina = 1; aplicarFiltrosContasReceber(); }
     );
 
     preencherSelectReceber(
@@ -155,14 +164,6 @@ function aplicarFiltrosContasReceber() {
         document.getElementById("receberBusca")?.value || ""
     );
 
-    const status =
-        document.getElementById("receberStatus")?.value || "";
-
-    const cliente =
-        document.getElementById("receberCliente")?.value || "";
-
-    const banco =
-        document.getElementById("receberBanco")?.value || "";
 
     const representante =
         document.getElementById("receberRepresentante")?.value || "";
@@ -199,9 +200,11 @@ function aplicarFiltrosContasReceber() {
             "Não informado";
 
         if (busca && !texto.includes(busca)) return false;
-        if (!correspondeStatusContasReceber(item, status)) return false;
-        if (cliente && item.razaoSocial !== cliente) return false;
-        if (banco && local !== banco) return false;
+        const statusSelecionados = obterSelecaoContas("receberStatus");
+        if (statusSelecionados && ![...statusSelecionados].some((status) =>
+            correspondeStatusContasReceber(item, status))) return false;
+        if (!correspondeMultiselectContas("receberCliente", item.razaoSocial)) return false;
+        if (!correspondeMultiselectContas("receberBanco", local)) return false;
         if (
             representante &&
             item.representante !== representante
@@ -461,14 +464,15 @@ function renderizarTabelaContasReceber() {
 
 function limparFiltrosContasReceber() {
     [
-        "receberBusca", "receberStatus", "receberCliente",
-        "receberBanco", "receberRepresentante",
+        "receberBusca", "receberRepresentante",
         "receberDataInicio", "receberDataFim"
     ].forEach((id) => {
         const elemento = document.getElementById(id);
         if (elemento) elemento.value = "";
     });
 
+    ["receberStatus", "receberCliente", "receberBanco"].forEach((id) =>
+        definirSelecaoContas(id, true, false));
     receberPagina = 1;
     aplicarFiltrosContasReceber();
 }

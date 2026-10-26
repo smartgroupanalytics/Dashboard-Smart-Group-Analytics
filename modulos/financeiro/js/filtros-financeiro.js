@@ -384,6 +384,21 @@ function preencherSelectUnico(id, valores) {
         });
 }
 
+/* Situação contábil uniforme: a Dt.pgto é a fonte da quitação.
+ * Um vencido sem Dt.pgto também integra Em aberto. */
+function documentoFinanceiroCorrespondeSituacao(item, situacao) {
+    if (!situacao) return true;
+    const pago = item?.dataPagamento instanceof Date &&
+        !Number.isNaN(item.dataPagamento.getTime()) &&
+        item.dataPagamentoEmAberto !== true;
+    if (situacao === "pago") return pago;
+    if (situacao === "aberto") return !pago;
+    if (situacao === "atrasado") return !pago && item?.vencimento instanceof Date &&
+        !Number.isNaN(item.vencimento.getTime()) &&
+        inicioDoDia(item.vencimento) < inicioDoDia(new Date());
+    return true;
+}
+
 function obterLancamentosBaseFluxoCaixa() {
     /*
      * O Fluxo de Caixa possui filtros próprios que são soberanos:
@@ -393,9 +408,11 @@ function obterLancamentosBaseFluxoCaixa() {
      *   - Local -> Local de cobrança
      *
      * A base precisa ser sempre a planilha completa. Nenhum filtro da Visão
-     * Geral (período, situação, pessoa, representante, banco, plano ou tipo de
+     * Geral (período, pessoa, representante, banco, plano ou tipo de
      * documento) pode eliminar títulos antes de o Fluxo aplicar seus próprios
-     * controles. Isso garante que todo Cliente e Fornecedor com Dt.pgto
+     * controles. Apenas o filtro explícito Situação também é aplicado no Fluxo,
+     * depois da construção dos movimentos, respeitando a Dt.pgto.
+     * Isso garante que todo Cliente e Fornecedor com Dt.pgto
      * 00/00/0000 seja considerado como previsto no Vencimento selecionado.
      */
     return Array.isArray(lancamentosFinanceiros)
@@ -461,7 +478,7 @@ function aplicarFiltrosDashboard() {
 
         if (representante && item.representante !== representante) return false;
         if (plano && item.planoFinanceiro !== plano) return false;
-        if (situacao && item.situacao !== situacao) return false;
+        if (!documentoFinanceiroCorrespondeSituacao(item, situacao)) return false;
         if (tipoDocumento && item.tipoDocumento !== tipoDocumento) return false;
 
         if (!todosBancosSelecionados) {

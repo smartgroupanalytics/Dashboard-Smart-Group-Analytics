@@ -265,9 +265,11 @@ function montarMovimentacaoFluxo(
             item.descricaoTipoDocumento ||
             "",
         situacao:
-            cenario === "previsto"
-                ? (item.atrasado ? "atrasado" : "aberto")
-                : item.situacao
+            cenario === "realizado"
+                ? "pago"
+                : item.vencimento instanceof Date &&
+                    inicioDoDia(item.vencimento) < inicioDoDia(new Date())
+                    ? "atrasado" : "aberto"
     };
 }
 
@@ -381,6 +383,7 @@ function movimentacaoPassaNosFiltrosFluxo(
     item,
     {
         cenario = "consolidado",
+        situacao = "",
         tipo = "",
         local = "",
         inicio = null,
@@ -393,6 +396,14 @@ function movimentacaoPassaNosFiltrosFluxo(
     ) {
         return false;
     }
+
+    // A Situação do painel lateral também vale aqui. Pago = realizado;
+    // Em aberto = qualquer previsto (inclusive vencido); Em atraso = previsto vencido.
+    if (situacao === "pago" && item.cenario !== "realizado") return false;
+    if (situacao === "aberto" && item.cenario !== "previsto") return false;
+    if (situacao === "atrasado" &&
+        (item.cenario !== "previsto" || !(item.data instanceof Date) ||
+            inicioDoDia(item.data) >= inicioDoDia(new Date()))) return false;
 
     if (tipo && item.tipo !== tipo) {
         return false;
@@ -434,6 +445,10 @@ function aplicarFiltrosFluxoCaixa() {
         )?.value ||
         "consolidado";
 
+    // Filtro geral Situação é uma restrição complementar, nunca substitui
+    // o cenário ou o período escolhido dentro do próprio Fluxo de Caixa.
+    const situacao = document.getElementById("situacao")?.value || "";
+
     const tipo =
         document.getElementById(
             "fluxoTipo"
@@ -460,6 +475,7 @@ function aplicarFiltrosFluxoCaixa() {
                 item,
                 {
                     cenario,
+                    situacao,
                     tipo,
                     local,
                     inicio,
