@@ -9,7 +9,10 @@ const filtroBancos = {
     opcoes: [],
     selecionadas: new Set(),
     // Só libera os demais cards depois que o usuário mexer no filtro.
-    exibicaoPersonalizada: false
+    exibicaoPersonalizada: false,
+    // SALDO CAIXA não é um local de cobrança. Marcá-lo para exibição
+    // não pode filtrar títulos financeiros dos demais painéis.
+    filtroMovimentosPersonalizado: false
 };
 
 /* Filtros da Visão Geral. */
@@ -124,11 +127,13 @@ function configurarMultiselectBancos() {
     });
     document.getElementById("btnMarcarTodosBancos")?.addEventListener("click", () => {
         filtroBancos.exibicaoPersonalizada = true;
+        filtroBancos.filtroMovimentosPersonalizado = true;
         marcarTodosBancos();
     });
     document.getElementById("btnDesmarcarTodosBancos")?.addEventListener("click", desmarcarTodosBancos);
     todos?.addEventListener("change", () => {
         filtroBancos.exibicaoPersonalizada = true;
+        filtroBancos.filtroMovimentosPersonalizado = true;
         todos.checked ? marcarTodosBancos() : desmarcarTodosBancos();
     });
     document.addEventListener("click", (evento) => {
@@ -153,6 +158,9 @@ function renderizarListaBancosFiltro() {
         checkbox.checked = filtroBancos.selecionadas.has(banco.id);
         checkbox.addEventListener("change", () => {
             filtroBancos.exibicaoPersonalizada = true;
+            if (banco.id !== BANCO_SALDO_CAIXA_MANUAL.id) {
+                filtroBancos.filtroMovimentosPersonalizado = true;
+            }
             checkbox.checked ? filtroBancos.selecionadas.add(banco.id) : filtroBancos.selecionadas.delete(banco.id);
             atualizarResumoBancos();
         });
@@ -164,6 +172,7 @@ function renderizarListaBancosFiltro() {
 }
 
 function selecionarBancosPadrao(renderizar = true) {
+    filtroBancos.filtroMovimentosPersonalizado = false;
     const disponiveis = new Set(filtroBancos.opcoes.map((banco) => banco.id));
     filtroBancos.selecionadas = new Set(BANCOS_EXIBICAO_PADRAO.filter((id) => disponiveis.has(id)));
     if (renderizar) renderizarListaBancosFiltro();
@@ -178,6 +187,7 @@ function marcarTodosBancos(renderizar = true) {
 
 function desmarcarTodosBancos() {
     filtroBancos.exibicaoPersonalizada = true;
+    filtroBancos.filtroMovimentosPersonalizado = true;
     filtroBancos.selecionadas.clear();
     renderizarListaBancosFiltro();
     atualizarResumoBancos();
@@ -464,9 +474,11 @@ function aplicarFiltrosDashboard() {
      * eliminados e o card A Pagar ficava zerado após aplicar o período.
      */
     const idsBancosDisponiveis = new Set(
-        filtroBancos.opcoes.map((banco) => banco.id)
+        filtroBancos.opcoes
+            .filter((banco) => banco.id !== BANCO_SALDO_CAIXA_MANUAL.id)
+            .map((banco) => banco.id)
     );
-    const todosBancosSelecionados = !filtroBancos.exibicaoPersonalizada ||
+    const todosBancosSelecionados = !filtroBancos.filtroMovimentosPersonalizado ||
         idsBancosDisponiveis.size === 0 ||
         [...idsBancosDisponiveis].every((id) => bancosSelecionados.has(id));
     const plano = document.getElementById("planoFinanceiro")?.value || "";
@@ -557,9 +569,16 @@ function atualizarTextoPeriodo(inicio, fim) {
 }
 
 function preencherFiltroBancos(limparAntes = false) {
-    if (limparAntes) filtroBancos.exibicaoPersonalizada = false;
-    filtroBancos.opcoes = completarBancosComContasManuais(bancosFinanceiros)
-        .map((banco) => ({ id: banco.id, nome: banco.nome }));
+    if (limparAntes) {
+        filtroBancos.exibicaoPersonalizada = false;
+        filtroBancos.filtroMovimentosPersonalizado = false;
+    }
+    filtroBancos.opcoes = [
+        ...completarBancosComContasManuais(bancosFinanceiros)
+            .map((banco) => ({ id: banco.id, nome: banco.nome })),
+        // Valor manual fora das movimentações, mas acessível no filtro.
+        { id: BANCO_SALDO_CAIXA_MANUAL.id, nome: BANCO_SALDO_CAIXA_MANUAL.nome }
+    ];
     if (limparAntes || (!filtroBancos.exibicaoPersonalizada && !filtroBancos.selecionadas.size)) {
         selecionarBancosPadrao(false);
     } else {

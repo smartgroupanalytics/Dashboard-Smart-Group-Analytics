@@ -42,13 +42,13 @@ const CONTAS_FINANCEIRAS_FIXAS = Object.freeze([
     "Bradesco"
 ]);
 
-/* Ordem da abertura: só os cinco bancos solicitados; demais via filtro. */
+/* Quatro bancos exibidos automaticamente. Bradesco e saldo caixa
+ * permanecem cadastrados e são opcionais pelo filtro Banco / Conta. */
 const BANCOS_EXIBICAO_PADRAO = Object.freeze([
     "banco-do-brasil",
     "sicoob-vale-sul",
     "sicoob-maxicredito",
-    "itau",
-    "bradesco"
+    "itau"
 ]);
 
 let bancosUltimaGrade = null;
@@ -102,8 +102,8 @@ function completarBancosComContasManuais(bancos = []) {
  * A aba Bancos possui sua própria exibição padrão. O filtro Banco / Conta
  * continua selecionando todos os lançamentos até que o usuário o altere;
  * isso preserva os KPIs e as demais abas do Financeiro.
- * Os cinco bancos principais permanecem visíveis; outros são adicionados
- * apenas quando o usuário marca opções no filtro de bancos.
+ * Os quatro bancos principais permanecem visíveis; outros, incluindo
+ * Bradesco e Saldo Caixa, só aparecem após a seleção no filtro.
  */
 function bancosVisiveisComContasManuais(bancos = []) {
     const completos = completarBancosComContasManuais(bancos);
@@ -328,6 +328,12 @@ function abrirDetalhesBanco(banco) {
     document.body.style.overflow = "hidden";
 }
 
+function saldoCaixaManualExibidoNoFiltro() {
+    return typeof filtroBancos !== "undefined" &&
+        filtroBancos.exibicaoPersonalizada === true &&
+        filtroBancos.selecionadas.has(BANCO_SALDO_CAIXA_MANUAL.id);
+}
+
 function renderizarBancos(listaBancos = bancosFinanceiros) {
     const bancosExibidos = bancosVisiveisComContasManuais(listaBancos);
     bancosUltimaGrade = bancosExibidos;
@@ -342,9 +348,9 @@ function renderizarBancos(listaBancos = bancosFinanceiros) {
 
     preencherTexto(
         "descricaoBancosExibicao",
-        bancosExibidos.length === BANCOS_EXIBICAO_PADRAO.length
-            ? "Exibindo os 5 bancos principais. Para incluir outros, use Filtros → Banco / Conta."
-            : `Exibindo ${bancosExibidos.length} bancos. Para alterar os adicionais, use Filtros → Banco / Conta.`
+        bancosExibidos.length === BANCOS_EXIBICAO_PADRAO.length && !saldoCaixaManualExibidoNoFiltro()
+            ? "Exibindo os 4 bancos principais. Para incluir Bradesco, Saldo Caixa ou outros, use Filtros → Banco / Conta."
+            : `Exibindo ${bancosExibidos.length} bancos${saldoCaixaManualExibidoNoFiltro() ? " + Saldo Caixa" : ""}. Para alterar os adicionais, use Filtros → Banco / Conta.`
     );
 
     if (!grade) {
@@ -402,9 +408,11 @@ function renderizarBancos(listaBancos = bancosFinanceiros) {
         grade.appendChild(card);
     });
 
-    grade.appendChild(
-        criarCardSaldoCaixaManual()
-    );
+    // Conta de caixa permanece disponível, mas não aparece na abertura.
+    // O saldo histórico continua salvo no mesmo ID no Firebase.
+    if (saldoCaixaManualExibidoNoFiltro()) {
+        grade.appendChild(criarCardSaldoCaixaManual());
+    }
 
     const soma =
         bancosExibidos.reduce(
