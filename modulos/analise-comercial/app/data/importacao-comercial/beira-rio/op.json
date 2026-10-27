@@ -105,7 +105,7 @@
     "produto": "17962",
     "desc_completa": "NAPA MAXXI POA CHOCOLATE 1271 JEANS 1123",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 500,
+    "qtd_produzir": 335,
     "dt_saida": "2026-10-26",
     "abreviacao": ""
   },
@@ -137,26 +137,6 @@
     "grupo": "BEIRA RIO",
     "qtd_produzir": 760,
     "dt_saida": "2026-10-16",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8746",
-    "produto": "9516",
-    "desc_completa": "VERNIZ LONDON 1.0 ROSA 942",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 200,
-    "dt_saida": "2026-10-22",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8779",
-    "produto": "17444",
-    "desc_completa": "BRILHO ITALIA BROWN 1570",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 1040,
-    "dt_saida": "2026-10-28",
     "abreviacao": ""
   },
   {
@@ -201,21 +181,11 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8795",
-    "produto": "17001",
-    "desc_completa": "NAPA MARSELHA PRETO",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 1000,
-    "dt_saida": "2026-10-28",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8796",
     "produto": "9100112",
     "desc_completa": "NAPA MARSELHA OSTRA",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 1020,
+    "qtd_produzir": 783.5,
     "dt_saida": "2026-10-28",
     "abreviacao": ""
   },
@@ -261,16 +231,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8802",
-    "produto": "17913",
-    "desc_completa": "NAPA MALAGA PISTACHE 1008",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 200,
-    "dt_saida": "2026-10-27",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8809",
     "produto": "17660",
     "desc_completa": "NAPA DALLAS CAMEL 1165",
@@ -281,12 +241,12 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8822",
-    "produto": "18127",
-    "desc_completa": "NAPA MARSELHA CHERRY 1590",
+    "nro_op": "8824",
+    "produto": "12655",
+    "desc_completa": "VERNIZ NANCY 1.0 PU BRANCO OFF 526",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 200,
-    "dt_saida": "2026-10-30",
+    "dt_saida": "2026-10-27",
     "abreviacao": ""
   },
   {
@@ -367,6 +327,36 @@
     "grupo": "BEIRA RIO",
     "qtd_produzir": 200,
     "dt_saida": "2026-10-27",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8843",
+    "produto": "10898",
+    "desc_completa": "NAPA TRESSE VALENCIA PU 1.0 CREME 985 VENDA BR",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 220,
+    "dt_saida": "2026-10-30",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8849",
+    "produto": "30084",
+    "desc_completa": "NAPA MARSELHA CAMEL 1165",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 600,
+    "dt_saida": "2026-10-29",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8850",
+    "produto": "30087",
+    "desc_completa": "NAPA MARSELHA CHOCOLATE 1271",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 400,
+    "dt_saida": "2026-10-29",
     "abreviacao": ""
   }
 ]
