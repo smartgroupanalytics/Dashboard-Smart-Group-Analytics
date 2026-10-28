@@ -35,6 +35,8 @@ function inicializarFluxoCaixa() {
             exportarFluxoCaixa
         );
 
+    configurarExplicacaoSaldoProjetado();
+
     document.getElementById("fluxoPaginaAnterior")
         ?.addEventListener("click", () => {
             if (fluxoPaginaAtual > 1) {
@@ -592,6 +594,13 @@ function atualizarKpisFluxo() {
         )
     );
 
+    atualizarExplicacaoSaldoProjetado(
+        saldoRealizado,
+        entradaPrevista,
+        saidaPrevista,
+        saldoProjetado
+    );
+
     preencherTexto(
         "fluxoQtdEntradasRealizadas",
         `${realizadasEntradas.length} movimentações`
@@ -626,6 +635,60 @@ function atualizarKpisFluxo() {
         "fluxoResumoTabela",
         `${fluxoFiltrado.length} movimentações no período selecionado`
     );
+}
+
+
+/*
+ * Exibe a memória de cálculo com os MESMOS números que já alimentam os KPIs.
+ * Não lê valores formatados da tela nem refaz somas a partir de outra base.
+ */
+function atualizarExplicacaoSaldoProjetado(saldoRealizado, entradasPrevistas, saidasPrevistas, saldoProjetado) {
+    const formato = new Intl.NumberFormat("pt-BR", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+    const absoluto = (n) => formato.format(Math.abs(Number(n) || 0));
+    const comSinal = (n) => `${n < -0.000001 ? "−" : ""}${absoluto(n)}`;
+    const parcela = (n) => `${n < -0.000001 ? "−" : "+"} ${absoluto(n)}`;
+
+    preencherTexto("fluxoCalculoSaldoRealizado", formatarMoeda(saldoRealizado));
+    preencherTexto("fluxoCalculoEntradasPrevistas", formatarMoeda(entradasPrevistas));
+    preencherTexto("fluxoCalculoSaidasPrevistas", formatarMoeda(saidasPrevistas));
+
+    preencherTexto(
+        "fluxoCalculoExpressao",
+        `${comSinal(saldoRealizado)} ${parcela(entradasPrevistas)} ${saidasPrevistas < -0.000001 ? "+" : "−"} ${absoluto(saidasPrevistas)}`
+    );
+    preencherTexto("fluxoCalculoResultado", `= ${comSinal(saldoProjetado)}`);
+}
+
+function configurarExplicacaoSaldoProjetado() {
+    const card = document.getElementById("fluxoCardSaldoProjetado");
+    if (!card || card.dataset.explicacaoConfigurada === "true") return;
+    card.dataset.explicacaoConfigurada = "true";
+
+    const alternar = () => {
+        const aberto = card.classList.toggle("detalhe-aberto");
+        card.setAttribute("aria-expanded", String(aberto));
+    };
+    const fechar = () => {
+        card.classList.remove("detalhe-aberto");
+        card.setAttribute("aria-expanded", "false");
+    };
+
+    card.addEventListener("click", alternar);
+    card.addEventListener("keydown", (evento) => {
+        if (evento.key === "Enter" || evento.key === " ") {
+            evento.preventDefault();
+            alternar();
+        } else if (evento.key === "Escape") {
+            fechar();
+        }
+    });
+    document.addEventListener("pointerdown", (evento) => {
+        if (!card.contains(evento.target)) fechar();
+    });
+    card.addEventListener("blur", fechar);
 }
 
 function atualizarClasseSaldo(

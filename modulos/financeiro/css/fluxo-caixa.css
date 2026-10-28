@@ -347,3 +347,114 @@ SMART GROUP ANALYTICS — FLUXO DE CAIXA
         grid-template-columns: 1fr;
     }
 }
+
+
+/* Detalhamento do saldo projetado — sem alterar cálculos ou filtros. */
+.fluxo-kpis article.fluxo-card-saldo-projetado {
+    position: relative;
+    cursor: help;
+    isolation: auto;
+}
+.fluxo-kpis article.fluxo-card-saldo-projetado:hover,
+.fluxo-kpis article.fluxo-card-saldo-projetado:focus-visible,
+.fluxo-kpis article.fluxo-card-saldo-projetado.detalhe-aberto {
+    z-index: 50;
+    border-color: rgba(82, 163, 255, .65);
+}
+.fluxo-kpis article.fluxo-card-saldo-projetado:focus-visible {
+    outline: 2px solid #52a3ff;
+    outline-offset: 3px;
+}
+.fluxo-card-saldo-projetado .fa-circle-info {
+    margin-left: 4px;
+    color: #80beff;
+    font-size: 12px;
+}
+.fluxo-projecao-tooltip {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 51;
+    width: min(370px, 88vw);
+    box-sizing: border-box;
+    padding: 17px;
+    border-radius: 12px;
+    border: 1px solid rgba(83, 169, 255, .54);
+    background: #081f3c;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, .48);
+    color: #e6f1ff;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(5px);
+    transition: opacity .14s ease, transform .14s ease, visibility .14s ease;
+    font-variant-numeric: tabular-nums;
+}
+.fluxo-card-saldo-projetado:hover .fluxo-projecao-tooltip,
+.fluxo-card-saldo-projetado:focus-visible .fluxo-projecao-tooltip,
+.fluxo-card-saldo-projetado.detalhe-aberto .fluxo-projecao-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+.fluxo-projecao-tooltip-titulo {
+    font-size: 13px;
+    font-weight: 800;
+    margin-bottom: 13px;
+    color: #ffffff;
+}
+.fluxo-projecao-tooltip .fluxo-projecao-tooltip-linha {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+    align-items: baseline;
+}
+.fluxo-projecao-tooltip .fluxo-projecao-tooltip-linha span {
+    color: #c5d9ef;
+    font-size: 11px;
+}
+.fluxo-projecao-tooltip .fluxo-projecao-tooltip-linha b {
+    white-space: nowrap;
+    text-align: right;
+    color: #f6faff;
+    font-size: 12px;
+}
+.fluxo-projecao-tooltip-formula {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(82, 163, 255, .22);
+    background: rgba(27, 71, 125, .38);
+    text-align: center;
+}
+.fluxo-projecao-tooltip-formula span {
+    overflow-wrap: anywhere;
+    color: #c8ddf4;
+    font-size: 13px;
+}
+.fluxo-projecao-tooltip-formula strong {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.35;
+    color: #ffffff;
+}
+.fluxo-projecao-tooltip p {
+    margin: 11px 0 0;
+    font-size: 10px;
+    line-height: 1.45;
+    color: #9db8d7;
+}
+@media (max-width: 520px) {
+    .fluxo-projecao-tooltip {
+        left: 0;
+        right: auto;
+        width: min(370px, calc(100vw - 46px));
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .fluxo-projecao-tooltip { transition: none; }
+}

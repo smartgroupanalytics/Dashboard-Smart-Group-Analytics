@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="css/contas-receber.css?v=20">
     <link rel="stylesheet" href="css/contas-pagar.css?v=21">
     <link rel="stylesheet" href="css/multiselect-contas.css?v=20261026-1">
-    <link rel="stylesheet" href="css/fluxo-caixa.css?v=23">
+    <link rel="stylesheet" href="css/fluxo-caixa.css?v=20261027-explicacao-saldo-1">
     <link rel="stylesheet" href="css/saldo-frete.css?v=2">
 </head>
 
@@ -807,10 +807,33 @@
                         <small id="fluxoQtdSaidasPrevistas">0 títulos</small>
                     </article>
 
-                    <article>
-                        <span>Saldo projetado</span>
+                    <article class="fluxo-card-saldo-projetado"
+                        id="fluxoCardSaldoProjetado" role="button" tabindex="0"
+                        aria-expanded="false" aria-controls="fluxoDetalheSaldoProjetado"
+                        aria-label="Ver cálculo detalhado do saldo projetado">
+                        <span>Saldo projetado <i class="fa-solid fa-circle-info" aria-hidden="true"></i></span>
                         <strong id="fluxoSaldoProjetado">R$ 0,00</strong>
-                        <small>Realizado + previsão líquida</small>
+                        <small>Realizado + previsão líquida · Passe o mouse para ver a conta</small>
+                        <div class="fluxo-projecao-tooltip" id="fluxoDetalheSaldoProjetado" role="tooltip">
+                            <div class="fluxo-projecao-tooltip-titulo">Como chegamos ao saldo projetado</div>
+                            <div class="fluxo-projecao-tooltip-linha">
+                                <span>Saldo realizado</span>
+                                <b id="fluxoCalculoSaldoRealizado">R$ 0,00</b>
+                            </div>
+                            <div class="fluxo-projecao-tooltip-linha">
+                                <span>(+) Entradas previstas</span>
+                                <b id="fluxoCalculoEntradasPrevistas">R$ 0,00</b>
+                            </div>
+                            <div class="fluxo-projecao-tooltip-linha">
+                                <span>(−) Saídas previstas</span>
+                                <b id="fluxoCalculoSaidasPrevistas">R$ 0,00</b>
+                            </div>
+                            <div class="fluxo-projecao-tooltip-formula" aria-label="Expressão do cálculo">
+                                <span id="fluxoCalculoExpressao">0,00 + 0,00 − 0,00</span>
+                                <strong id="fluxoCalculoResultado">= 0,00</strong>
+                            </div>
+                            <p>Os valores são atualizados automaticamente conforme os filtros do Fluxo de Caixa.</p>
+                        </div>
                     </article>
                 </section>
 
@@ -1574,7 +1597,7 @@
     <script src="js/multiselect-contas.js?v=20261026-1"></script>
     <script src="js/contas-receber.js?v=20261026-multi-1"></script>
     <script src="js/contas-pagar.js?v=20261026-multi-1"></script>
-    <script src="js/fluxo-caixa.js?v=20261026-conciliacao-1"></script>
+    <script src="js/fluxo-caixa.js?v=20261027-explicacao-saldo-1"></script>
     <script src="js/saldo-frete.js?v=3"></script>
     <script src="js/automacao-financeiro.js?v=1"></script>
     <script src="financeiro.js?v=20260924-carteira-14"></script>
