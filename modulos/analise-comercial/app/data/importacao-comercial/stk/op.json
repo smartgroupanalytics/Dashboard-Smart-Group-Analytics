@@ -121,66 +121,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8577",
-    "produto": "18157",
-    "desc_completa": "JACARTA PRATA",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 100,
-    "dt_saida": "2026-10-26",
-    "centro_custo": 7,
-    "abreviacao": "ESTAM"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8578",
-    "produto": "18158",
-    "desc_completa": "JACARTA OURO LIGHT",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 100,
-    "dt_saida": "2026-10-26",
-    "centro_custo": 7,
-    "abreviacao": "ESTAM"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8579",
-    "produto": "18160",
-    "desc_completa": "JACARTA OURO ROSADO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 100,
-    "dt_saida": "2026-10-26",
-    "centro_custo": 7,
-    "abreviacao": "ESTAM"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8580",
-    "produto": "18161",
-    "desc_completa": "JACARTA GRAFITE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 100,
-    "dt_saida": "2026-10-26",
-    "centro_custo": 7,
-    "abreviacao": "ESTAM"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8581",
-    "produto": "18162",
-    "desc_completa": "JACARTA BRONZE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 100,
-    "dt_saida": "2026-10-26",
-    "centro_custo": 7,
-    "abreviacao": "ESTAM"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8597",
     "produto": "17899",
     "desc_completa": "NAPA MADRID ESPRESSO",
@@ -236,8 +176,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-10-29",
-    "centro_custo": 7,
-    "abreviacao": "ESTAM"
+    "centro_custo": 24,
+    "abreviacao": "EST 3"
   },
   {
     "fonte_comercial": "STK",
@@ -265,30 +205,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8762",
-    "produto": "18258",
-    "desc_completa": "CANYON CAMOMILA",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 6,
-    "dt_saida": "2026-10-23",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8763",
-    "produto": "18252",
-    "desc_completa": "CANYON SALVIA",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 40,
-    "dt_saida": "2026-10-23",
-    "centro_custo": 3,
-    "abreviacao": "GR 1"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8765",
     "produto": "18256",
     "desc_completa": "CANYON ESPRESSO",
@@ -308,8 +224,8 @@
     "subgrupo": 41,
     "qtd_produzir": 120,
     "dt_saida": "2026-10-27",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -320,18 +236,6 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-10-30",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8785",
-    "produto": "16466",
-    "desc_completa": "SAVOY GLAM OURO LIGHT",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 310,
-    "dt_saida": "2026-10-29",
     "centro_custo": 7,
     "abreviacao": "ESTAM"
   },
@@ -361,15 +265,15 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8810",
-    "produto": "11847",
-    "desc_completa": "BORGONHA GRAFITE",
+    "nro_op": "8798",
+    "produto": "17224",
+    "desc_completa": "IBIZA LASER ROSE",
     "grupo": 39,
     "subgrupo": 41,
-    "qtd_produzir": 400,
-    "dt_saida": "2026-10-29",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "qtd_produzir": 200,
+    "dt_saida": "2026-10-28",
+    "centro_custo": 0,
+    "abreviacao": ""
   },
   {
     "fonte_comercial": "STK",
@@ -380,20 +284,8 @@
     "subgrupo": 41,
     "qtd_produzir": 500,
     "dt_saida": "2026-10-29",
-    "centro_custo": 0,
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8819",
-    "produto": "18256",
-    "desc_completa": "CANYON ESPRESSO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 6.6,
-    "dt_saida": "2026-10-27",
-    "centro_custo": 10,
-    "abreviacao": "REV 1"
+    "centro_custo": 1,
+    "abreviacao": "RECOB"
   },
   {
     "fonte_comercial": "STK",
@@ -404,8 +296,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-10-30",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -416,8 +308,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-10-30",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -428,8 +320,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-10-30",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -442,5 +334,125 @@
     "dt_saida": "2026-10-30",
     "centro_custo": 13,
     "abreviacao": "JUMBO 1"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8853",
+    "produto": "11784",
+    "desc_completa": "MAIORCA CARAMELO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-11-03",
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8854",
+    "produto": "11785",
+    "desc_completa": "MAIORCA PRETO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-11-03",
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8866",
+    "produto": "11845",
+    "desc_completa": "BORGONHA OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 1400,
+    "dt_saida": "2026-11-05",
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8867",
+    "produto": "11779",
+    "desc_completa": "SORRENTO OFF WHITE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 600,
+    "dt_saida": "2026-11-05",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8868",
+    "produto": "12399",
+    "desc_completa": "LILLY MANTEIGA",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-11-03",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8872",
+    "produto": "18378",
+    "desc_completa": "LISSE CAMOMILA",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 40,
+    "dt_saida": "2026-11-06",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8873",
+    "produto": "18376",
+    "desc_completa": "MALIBU CAMOMILA",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 40,
+    "dt_saida": "2026-11-06",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8874",
+    "produto": "18374",
+    "desc_completa": "NAPA LINHO DAKAR GUAVA",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 40,
+    "dt_saida": "2026-11-06",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8875",
+    "produto": "18380",
+    "desc_completa": "SAVOY LUX CAMOMILA",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 40,
+    "dt_saida": "2026-11-06",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8876",
+    "produto": "18382",
+    "desc_completa": "SAVOY LUX GUAVA",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 40,
+    "dt_saida": "2026-11-06",
+    "centro_custo": 0,
+    "abreviacao": ""
   }
 ]
