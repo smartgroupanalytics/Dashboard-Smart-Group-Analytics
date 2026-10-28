@@ -64,6 +64,10 @@ function atualizarKPIs(dados, dadosCarteira = dados) {
     const totalSaidas = somar(fornecedoresPagos, "valorLiquidoPago");
     const aPagar = somar(fornecedoresAbertos, "valorDocumento");
 
+    // O card Inadimplência só é exibido quando há valor efetivamente
+    // vencido no período filtrado. O cálculo e a base permanecem idênticos.
+    atualizarVisibilidadeInadimplencia(emAtraso > 0);
+
     preencherTexto("kpiTotalRecebido", formatarMoeda(totalRecebido));
     preencherTexto("kpiAReceber", formatarMoeda(aReceber));
     preencherTexto("kpiEmAtraso", formatarMoeda(emAtraso));
@@ -83,6 +87,35 @@ function atualizarKPIs(dados, dadosCarteira = dados) {
     for (const id of ["kpiAReceber", "kpiEmAtraso"]) {
         const elemento = document.getElementById(id);
         if (elemento) elemento.title = "Inclui títulos sem banco informado; exclui adiantamentos. Respeita período e demais filtros.";
+    }
+}
+
+/*
+ * Ocultar o card quando a pesquisa não contém títulos de clientes vencidos.
+ * Evita deixar um espaço vazio na grade e conserva os outros indicadores.
+ * Ao mudar novamente o período, atualizarKPIs() reexibe o card se necessário.
+ */
+function atualizarVisibilidadeInadimplencia(temValorVencido) {
+    const cartao = document.querySelector('[data-detalhe-kpi="inadimplencia"]');
+    if (!cartao) return;
+
+    cartao.hidden = !temValorVencido;
+    cartao.setAttribute("aria-hidden", String(!temValorVencido));
+    cartao.closest(".grade-kpis")?.classList.toggle("sem-inadimplencia", !temValorVencido);
+
+    // Se a pesquisa deixou o card oculto, selecionar um indicador acessível
+    // para a tabela de lançamentos não ficar apontando para um card invisível.
+    // Na primeira carga vazia, preservar a seleção padrão até carregar os dados.
+    if (!temValorVencido && detalheKpiAtivo === "inadimplencia" &&
+            Array.isArray(lancamentosFinanceiros) && lancamentosFinanceiros.length > 0) {
+        cartao.classList.remove("ativo");
+        cartao.setAttribute("aria-pressed", "false");
+        detalheKpiAtivo = "receber";
+        const receber = document.querySelector('[data-detalhe-kpi="receber"]');
+        if (receber) {
+            receber.classList.add("ativo");
+            receber.setAttribute("aria-pressed", "true");
+        }
     }
 }
 

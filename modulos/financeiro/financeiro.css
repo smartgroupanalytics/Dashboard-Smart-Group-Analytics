@@ -361,6 +361,17 @@ button {
     margin-top: 16px;
 }
 
+/* Mostra apenas os KPIs existentes, sem deixar a vaga do card oculto. */
+.grade-kpis > .card-kpi[hidden] {
+    display: none !important;
+}
+
+@media (min-width: 1451px) {
+    .grade-kpis.sem-inadimplencia {
+        grid-template-columns: repeat(5, minmax(175px, 1fr));
+    }
+}
+
 .card-kpi {
     position: relative;
 
