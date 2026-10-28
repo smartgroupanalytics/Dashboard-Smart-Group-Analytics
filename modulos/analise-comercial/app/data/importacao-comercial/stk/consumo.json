@@ -4832,6 +4832,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 73.1,
+    "dt_movto": "2026-10-27"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11905",
+    "produto": "11905",
+    "desc_completa": "NAPA MADRID CARAMELO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 76.3,
     "dt_movto": "2026-06-10"
   },
@@ -4882,6 +4894,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 123,
     "dt_movto": "2026-03-04"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11905",
+    "produto": "11905",
+    "desc_completa": "NAPA MADRID CARAMELO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 126.9,
+    "dt_movto": "2026-10-27"
   },
   {
     "fonte_comercial": "STK",
@@ -13244,6 +13268,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 1,
+    "dt_movto": "2026-10-27"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20000",
+    "produto": "20000",
+    "desc_completa": "NAPA MADRID PRETO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 38.6,
     "dt_movto": "2026-05-29"
   },
@@ -13366,6 +13402,30 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 198,
     "dt_movto": "2026-06-10"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20000",
+    "produto": "20000",
+    "desc_completa": "NAPA MADRID PRETO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 199,
+    "dt_movto": "2026-10-27"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20000",
+    "produto": "20000",
+    "desc_completa": "NAPA MADRID PRETO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 199,
+    "dt_movto": "2026-10-27"
   },
   {
     "fonte_comercial": "STK",
@@ -13810,6 +13870,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 200,
     "dt_movto": "2026-04-17"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20002",
+    "produto": "20002",
+    "desc_completa": "NAPA MADRID OFF WHITE - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 200,
+    "dt_movto": "2026-10-27"
   },
   {
     "fonte_comercial": "STK",
@@ -14456,6 +14528,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 32,
+    "dt_movto": "2026-10-27"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20011",
+    "produto": "20011",
+    "desc_completa": "NAPA MADRID CAFE - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 36.8,
     "dt_movto": "2026-06-10"
   },
@@ -14698,6 +14782,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 139.8,
     "dt_movto": "2026-05-25"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20011",
+    "produto": "20011",
+    "desc_completa": "NAPA MADRID CAFE - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 167,
+    "dt_movto": "2026-10-27"
   },
   {
     "fonte_comercial": "STK",
