@@ -55,8 +55,7 @@ function saldoPagar(item) {
 
 function inicializarContasPagar() {
     [
-        "pagarBusca", "pagarTipoDocumento", "pagarPlano",
-        "pagarInicio", "pagarFim", "pagarPorPagina"
+        "pagarBusca", "pagarInicio", "pagarFim", "pagarPorPagina"
     ].forEach((id) => {
         const el = document.getElementById(id);
         if (!el) return;
@@ -99,35 +98,17 @@ function atualizarContasPagar(lancamentos) {
     pagarTodos = (Array.isArray(lancamentos) ? lancamentos : [])
         .filter((item) => item.tipoCadastro === "fornecedor");
 
-    preencherSelectPagar("pagarTipoDocumento", pagarTodos.map(tipoDoc));
+    iniciarMultiselectContas("pagarTipoDocumento", pagarTodos.map(tipoDoc),
+        () => { pagarPaginaAtual = 1; aplicarFiltrosContasPagar(); });
     iniciarMultiselectContas("pagarFornecedor", pagarTodos.map((x) => x.razaoSocial),
         () => { pagarPaginaAtual = 1; aplicarFiltrosContasPagar(); });
     iniciarMultiselectContas("pagarLocal", pagarTodos.map(localPagar),
         () => { pagarPaginaAtual = 1; aplicarFiltrosContasPagar(); });
-    preencherSelectPagar("pagarPlano", pagarTodos.map((x) => x.planoFinanceiro));
+    iniciarMultiselectContas("pagarPlano", pagarTodos.map((x) => x.planoFinanceiro || "Não informado"),
+        () => { pagarPaginaAtual = 1; aplicarFiltrosContasPagar(); });
 
     pagarPaginaAtual = 1;
     aplicarFiltrosContasPagar();
-}
-
-function preencherSelectPagar(id, valores) {
-    const select = document.getElementById(id);
-    if (!select) return;
-    const atual = select.value;
-    select.innerHTML = '<option value="">Todos</option>';
-
-    [...new Set(valores.map((v) => String(v || "").trim()).filter(Boolean))]
-        .sort((a, b) => a.localeCompare(b, "pt-BR"))
-        .forEach((valor) => {
-            const option = document.createElement("option");
-            option.value = valor;
-            option.textContent = valor;
-            select.appendChild(option);
-        });
-
-    if ([...select.options].some((o) => o.value === atual)) {
-        select.value = atual;
-    }
 }
 
 function aplicarFiltrosContasPagar() {
@@ -136,8 +117,6 @@ function aplicarFiltrosContasPagar() {
      * formam o período-base; Status e os demais campos apenas refinam esse período.
      */
     const busca = normalizarTexto(valorCampo("pagarBusca"));
-    const documento = valorCampo("pagarTipoDocumento");
-    const plano = valorCampo("pagarPlano");
     const inicio = lerDataInput("pagarInicio");
     const fim = lerDataInput("pagarFim");
 
@@ -151,10 +130,10 @@ function aplicarFiltrosContasPagar() {
         const statusSelecionados = obterSelecaoContas("pagarStatus");
         if (statusSelecionados && ![...statusSelecionados].some((status) =>
             correspondeStatusContasPagar(item, status))) return false;
-        if (documento && tipoDoc(item) !== documento) return false;
+        if (!correspondeMultiselectContas("pagarTipoDocumento", tipoDoc(item))) return false;
         if (!correspondeMultiselectContas("pagarFornecedor", item.razaoSocial)) return false;
         if (!correspondeMultiselectContas("pagarLocal", localPagar(item))) return false;
-        if (plano && item.planoFinanceiro !== plano) return false;
+        if (!correspondeMultiselectContas("pagarPlano", item.planoFinanceiro || "Não informado")) return false;
         if (inicio && (!item.vencimento || inicioDoDia(item.vencimento) < inicio)) return false;
         if (fim && (!item.vencimento || inicioDoDia(item.vencimento) > fim)) return false;
         return true;
@@ -263,13 +242,12 @@ function renderizarPagar() {
 
 function limparFiltrosPagar() {
     [
-        "pagarBusca", "pagarTipoDocumento", "pagarPlano",
-        "pagarInicio", "pagarFim"
+        "pagarBusca", "pagarInicio", "pagarFim"
     ].forEach((id) => {
         const el = document.getElementById(id);
         if (el) el.value = "";
     });
-    ["pagarStatus", "pagarFornecedor", "pagarLocal"].forEach((id) =>
+    ["pagarStatus", "pagarFornecedor", "pagarLocal", "pagarTipoDocumento", "pagarPlano"].forEach((id) =>
         definirSelecaoContas(id, true, false));
     pagarPaginaAtual = 1;
     aplicarFiltrosContasPagar();

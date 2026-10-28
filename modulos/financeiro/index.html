@@ -563,12 +563,10 @@
                             <div class="fin-multi" id="receberBanco"></div>
                         </div>
 
-                        <label>
-                            <span>Representante</span>
-                            <select id="receberRepresentante">
-                                <option value="">Todos</option>
-                            </select>
-                        </label>
+                        <div class="fin-multi-campo">
+                            <span class="fin-multi-titulo">Representante</span>
+                            <div class="fin-multi" id="receberRepresentante"></div>
+                        </div>
 
                         <label>
                             <span>Vencimento inicial</span>
@@ -670,10 +668,10 @@
                     <div class="pagar-filtros">
                         <label class="pagar-busca"><span>Pesquisar</span><input type="search" id="pagarBusca" placeholder="Fornecedor ou documento"></label>
                         <div class="fin-multi-campo"><span class="fin-multi-titulo">Status</span><div class="fin-multi" id="pagarStatus"></div></div>
-                        <label><span>Descr.Tp.doc</span><select id="pagarTipoDocumento"><option value="">Todos</option></select></label>
+                        <div class="fin-multi-campo"><span class="fin-multi-titulo">Tipo de documento</span><div class="fin-multi" id="pagarTipoDocumento"></div></div>
                         <div class="fin-multi-campo"><span class="fin-multi-titulo">Fornecedor</span><div class="fin-multi" id="pagarFornecedor"></div></div>
                         <div class="fin-multi-campo"><span class="fin-multi-titulo">Local de cobrança</span><div class="fin-multi" id="pagarLocal"></div></div>
-                        <label><span>Plano financeiro</span><select id="pagarPlano"><option value="">Todos</option></select></label>
+                        <div class="fin-multi-campo"><span class="fin-multi-titulo">Plano financeiro</span><div class="fin-multi" id="pagarPlano"></div></div>
                         <label><span>Vencimento inicial</span><input type="date" id="pagarInicio"></label>
                         <label><span>Vencimento final</span><input type="date" id="pagarFim"></label>
                         <button type="button" class="btn-limpar-pagar" id="btnLimparPagar"><i class="fa-solid fa-eraser"></i> Limpar</button>
@@ -1595,8 +1593,8 @@
     <script src="js/filtros-financeiro.js?v=20261027-4-bancos-1"></script>
     <script src="js/importacao-planilha.js?v=9"></script>
     <script src="js/multiselect-contas.js?v=20261026-1"></script>
-    <script src="js/contas-receber.js?v=20261026-multi-1"></script>
-    <script src="js/contas-pagar.js?v=20261026-multi-1"></script>
+    <script src="js/contas-receber.js?v=20261028-multifiltros-2"></script>
+    <script src="js/contas-pagar.js?v=20261028-multifiltros-2"></script>
     <script src="js/fluxo-caixa.js?v=20261027-explicacao-saldo-1"></script>
     <script src="js/saldo-frete.js?v=3"></script>
     <script src="js/automacao-financeiro.js?v=1"></script>

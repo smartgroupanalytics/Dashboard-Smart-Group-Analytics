@@ -6,7 +6,7 @@ let receberPagina = 1;
 
 function inicializarContasReceber() {
     const ids = [
-        "receberBusca", "receberRepresentante",
+        "receberBusca",
         "receberDataInicio", "receberDataFim",
         "receberPorPagina"
     ];
@@ -78,44 +78,14 @@ function atualizarContasReceber(lancamentos) {
         () => { receberPagina = 1; aplicarFiltrosContasReceber(); }
     );
 
-    preencherSelectReceber(
+    iniciarMultiselectContas(
         "receberRepresentante",
-        receberTodos.map((item) => item.representante)
+        receberTodos.map((item) => item.representante || "Não informado"),
+        () => { receberPagina = 1; aplicarFiltrosContasReceber(); }
     );
 
     receberPagina = 1;
     aplicarFiltrosContasReceber();
-}
-
-function preencherSelectReceber(id, valores) {
-    const select = document.getElementById(id);
-    if (!select) return;
-
-    const valorAtual = select.value;
-    const primeiro = select.options[0]?.textContent || "Todos";
-
-    select.innerHTML = "";
-    const optionTodos = document.createElement("option");
-    optionTodos.value = "";
-    optionTodos.textContent = primeiro;
-    select.appendChild(optionTodos);
-
-    [...new Set(
-        valores
-            .map((valor) => String(valor || "").trim())
-            .filter(Boolean)
-    )]
-        .sort((a, b) => a.localeCompare(b, "pt-BR"))
-        .forEach((valor) => {
-            const option = document.createElement("option");
-            option.value = valor;
-            option.textContent = valor;
-            select.appendChild(option);
-        });
-
-    if ([...select.options].some((option) => option.value === valorAtual)) {
-        select.value = valorAtual;
-    }
 }
 
 /*
@@ -165,9 +135,6 @@ function aplicarFiltrosContasReceber() {
     );
 
 
-    const representante =
-        document.getElementById("receberRepresentante")?.value || "";
-
     const inicio =
         lerDataInput("receberDataInicio");
 
@@ -205,10 +172,7 @@ function aplicarFiltrosContasReceber() {
             correspondeStatusContasReceber(item, status))) return false;
         if (!correspondeMultiselectContas("receberCliente", item.razaoSocial)) return false;
         if (!correspondeMultiselectContas("receberBanco", local)) return false;
-        if (
-            representante &&
-            item.representante !== representante
-        ) return false;
+        if (!correspondeMultiselectContas("receberRepresentante", item.representante || "Não informado")) return false;
 
         if (
             inicio &&
@@ -464,14 +428,13 @@ function renderizarTabelaContasReceber() {
 
 function limparFiltrosContasReceber() {
     [
-        "receberBusca", "receberRepresentante",
-        "receberDataInicio", "receberDataFim"
+        "receberBusca", "receberDataInicio", "receberDataFim"
     ].forEach((id) => {
         const elemento = document.getElementById(id);
         if (elemento) elemento.value = "";
     });
 
-    ["receberStatus", "receberCliente", "receberBanco"].forEach((id) =>
+    ["receberStatus", "receberCliente", "receberBanco", "receberRepresentante"].forEach((id) =>
         definirSelecaoContas(id, true, false));
     receberPagina = 1;
     aplicarFiltrosContasReceber();
