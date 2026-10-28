@@ -1,6 +1,6 @@
 import { protegerModulo } from '../../module-guard.js?v=3';
 import { db } from '../../firebase-config.js';
-import { renderizarConsumoPorOP, iniciarConsumoCentros } from './consumo-centros.js?v=20261028-v1';
+import { renderizarConsumoPorOP, iniciarConsumoCentros } from './consumo-centros.js?v=20261028-v2-r208';
 
 import {
   collection,
@@ -2734,7 +2734,7 @@ async function loadData(){
   );
   bindEvents();
   configureSharedImportPermissions();
-  // Relatório SIGER complementar, separado dos 5 relatórios e dos cálculos atuais.
+  // Relatório SIGER 208, separado dos 5 relatórios e dos cálculos atuais.
   await iniciarConsumoCentros({
     admin:isCurrentUserAdmin(),
     carregarExcel:ensureExcelJS,

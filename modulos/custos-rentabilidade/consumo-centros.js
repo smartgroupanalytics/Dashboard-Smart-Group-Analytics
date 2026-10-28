@@ -58,7 +58,7 @@ export function extrairConsumoCentros(workbook){
   for(const [col,header] of Object.entries(esperado)){
     const real=chaveHeader(valorCelula(ws.getRow(1).getCell(Number(col)+1).value));
     if(real!==header){
-      throw Error(`Formato de relatório incorreto: coluna ${String.fromCharCode(65+Number(col))} deve ser "${header}" (recebido: "${real||'vazio'}"). Não use o importador dos cinco relatórios.`);
+      throw Error(`Formato do Relatório 208 incorreto: coluna ${String.fromCharCode(65+Number(col))} deve ser "${header}" (recebido: "${real||'vazio'}"). O Relatório 208 deve ser importado no botão exclusivo dele.`);
     }
   }
   const registros=[];
@@ -87,7 +87,7 @@ export function extrairConsumoCentros(workbook){
   }
   if(!registros.length) throw Error('Nenhuma OP com centro de custo foi encontrada no arquivo.');
   if(!registros.some(r=>r.itemValido)) throw Error('O relatório não contém produtos/materiais válidos.');
-  return {versao:1,fonte:'SIGER - Consumo por Centro de Custo',geradoEm:new Date().toISOString(),registros};
+  return {versao:1,relatorio:208,fonte:'SIGER - Relatório 208 - Consumo por Centro de Custo',geradoEm:new Date().toISOString(),registros};
 }
 
 function atualizarMapa(pacote){
@@ -107,9 +107,9 @@ function atualizarMapa(pacote){
 function atualizarStatus(){
   const status=elem('consumoCentrosStatus');
   if(!status) return;
-  if(erroConsulta) status.textContent=`Consumo por centro: erro ao consultar base compartilhada (${erroConsulta}).`;
-  else if(!carregado) status.textContent='Consumo por centro: ainda não foi importado o relatório complementar.';
-  else status.textContent=`Consumo por centro: ${itensTotal.toLocaleString('pt-BR')} item(ns) em ${opMap.size.toLocaleString('pt-BR')} OP(s) · base compartilhada${ultimaAtualizacao?' · '+new Date(ultimaAtualizacao).toLocaleString('pt-BR'):''}.`;
+  if(erroConsulta) status.textContent=`Relatório 208: erro ao consultar base compartilhada (${erroConsulta}).`;
+  else if(!carregado) status.textContent='Relatório 208: ainda não foi importado.';
+  else status.textContent=`Relatório 208: ${itensTotal.toLocaleString('pt-BR')} item(ns) em ${opMap.size.toLocaleString('pt-BR')} OP(s) · base compartilhada${ultimaAtualizacao?' · '+new Date(ultimaAtualizacao).toLocaleString('pt-BR'):''}.`;
 }
 
 function bytesBase64(bytes){
@@ -127,7 +127,7 @@ async function lerCompartilhado(){
   const slot=atual.data()?.slot;
   if(!SLOTS.includes(slot)) throw Error('Ponteiro do consumo inválido.');
   const meta=await getDoc(doc(db,COLLECTION,slot));
-  if(!meta.exists() || meta.data()?.status!=='ready') throw Error('Relatório de consumo não está pronto.');
+  if(!meta.exists() || meta.data()?.status!=='ready') throw Error('Relatório 208 não está pronto.');
   const count=Number(meta.data()?.chunkCount||0);
   if(!Number.isInteger(count) || count<1 || count>250) throw Error('Quantidade de blocos inválida.');
   const docs=await getDocs(collection(db,COLLECTION,slot,'chunks'));
@@ -136,10 +136,11 @@ async function lerCompartilhado(){
     const idx=Number(part.id);
     if(Number.isInteger(idx) && idx>=0 && idx<count) partes[idx]=base64Bytes(String(part.data()?.payload||''));
   }
-  if(Array.from({length:count},(_,i)=>partes[i]).some(a=>!a)) throw Error('Relatório compartilhado com blocos faltantes.');
+  if(Array.from({length:count},(_,i)=>partes[i]).some(a=>!a)) throw Error('Relatório 208 compartilhado com blocos faltantes.');
   const len=partes.reduce((a,b)=>a+b.length,0), bytes=new Uint8Array(len);
   let off=0; for(const part of partes){bytes.set(part,off);off+=part.length;}
   const pacote=JSON.parse(new TextDecoder().decode(bytes));
+  if(pacote?.relatorio != null && Number(pacote.relatorio) !== 208) throw Error('A base compartilhada não corresponde ao Relatório 208.');
   if(!Array.isArray(pacote.registros)) throw Error('Registros de consumo inválidos.');
   return pacote;
 }
@@ -166,8 +167,8 @@ async function publicarCompartilhado(pacote){
 export function renderizarConsumoPorOP(op){
   const chave=opChave(op), registros=opMap.get(chave)||[];
   if(erroConsulta && !carregado) return '<div class="cc-vazio">Consumo por centro indisponível. Confira a conexão com o Firestore.</div>';
-  if(!carregado) return '<div class="cc-vazio">Consumo por centro de custo: relatório complementar ainda não importado.</div>';
-  if(!registros.length) return '<div class="cc-vazio">Sem apontamentos do relatório de consumo para esta OP.</div>';
+  if(!carregado) return '<div class="cc-vazio">Relatório 208: ainda não importado.</div>';
+  if(!registros.length) return '<div class="cc-vazio">Sem registros do Relatório 208 para esta OP.</div>';
   const centros=new Map();
   for(const r of registros){
     const key=`${r.centroCodigo}¦${r.centroNome}`;
@@ -180,7 +181,7 @@ export function renderizarConsumoPorOP(op){
   const et=grupos.reduce((a,c)=>a+soma(c.linhas,'valorEfetivo'),0);
   const diferenca=(n)=>n>0.005?'cc-ruim':n< -0.005?'cc-bom':'cc-neutro';
   return `<section class="cc-bloco" aria-label="Consumos por centro de custo">
-    <div class="cc-bloco-head"><div><span>COMPLEMENTO DE PRODUÇÃO • SIGER</span><strong>Consumo por centro de custo · OP ${html(chave)}</strong><small>Previsto × apontado. Valores abaixo são de análise e NÃO são somados à M.O. ou à margem.</small></div><div class="cc-global"><span>Previsto: ${brl(vt)}</span><span>Efetivo: ${brl(et)}</span><strong class="${diferenca(et-vt)}">Diferença: ${et-vt>0?'+':''}${brl(et-vt)}</strong></div></div>
+    <div class="cc-bloco-head"><div><span>RELATÓRIO 208 • SIGER</span><strong>Consumo por centro de custo · OP ${html(chave)}</strong><small>Previsto × apontado. Valores abaixo são de análise e NÃO são somados à M.O. ou à margem.</small></div><div class="cc-global"><span>Previsto: ${brl(vt)}</span><span>Efetivo: ${brl(et)}</span><strong class="${diferenca(et-vt)}">Diferença: ${et-vt>0?'+':''}${brl(et-vt)}</strong></div></div>
     <div class="cc-centros">${grupos.map((c,idx)=>{
       const prev=soma(c.linhas,'valorPrevisto'),efet=soma(c.linhas,'valorEfetivo'),delta=efet-prev;
       const volume=c.linhas.length;
@@ -208,24 +209,24 @@ export async function iniciarConsumoCentros({admin,carregarExcel,atualizarDetalh
       e.target.value='';
       if(!arquivo) return;
       if(!admin){alert('Somente o administrador pode publicar o consumo.');return;}
-      if(!/\.xlsx$/i.test(arquivo.name)){alert('Selecione um arquivo .xlsx do SIGER.');return;}
+      if(!/\.xlsx$/i.test(arquivo.name)){alert('Selecione o Relatório 208 em formato .xlsx do SIGER.');return;}
       const original=botao.innerHTML;
       botao.disabled=true;
       try{
-        botao.textContent='Lendo relatório de consumo…';
+        botao.textContent='Lendo Relatório 208…';
         const ExcelJS=await carregarExcel();
         const workbook=new ExcelJS.Workbook();
         await workbook.xlsx.load(await arquivo.arrayBuffer());
         const pacote=extrairConsumoCentros(workbook);
-        botao.textContent='Publicando consumo para todos…';
+        botao.textContent='Publicando Relatório 208…';
         const blocos=await publicarCompartilhado(pacote);
         erroConsulta='';
         atualizarMapa(pacote);
         atualizarDetalhe();
-        alert(`Relatório de consumo publicado para todos os usuários autorizados.\n\n${itensTotal} produtos/materiais em ${opMap.size} OP(s).\n${blocos} bloco(s) gravados no Firestore.\n\nOs cinco relatórios e os cálculos atuais não foram alterados.`);
+        alert(`Relatório 208 publicado para todos os usuários autorizados.\n\n${itensTotal} produtos/materiais em ${opMap.size} OP(s).\n${blocos} bloco(s) gravados no Firestore.\n\nOs cinco relatórios e os cálculos atuais não foram alterados.`);
       }catch(err){
-        console.error('Falha ao importar consumo por centro:',err);
-        alert(`Relatório de consumo NÃO aplicado.\n\n${err?.message||err}`);
+        console.error('Falha ao importar Relatório 208:',err);
+        alert(`Relatório 208 NÃO aplicado.\n\n${err?.message||err}`);
       }finally{botao.disabled=false;botao.innerHTML=original;}
     });
   }
