@@ -1,23 +1,6 @@
 [
   {
     "fonte_comercial": "STK",
-    "nro_oc": "84",
-    "fornecedor": "162",
-    "razao_social": "AMERICA-ASIA TRADING COMPANY LIM",
-    "dt_emissao": "2026-06-26",
-    "produto": "15546",
-    "grupo": 39,
-    "subgrupo": 40,
-    "desc_completa": "NAPA SPORT PVC BRANCO - 1.5MM",
-    "qtde": 24000,
-    "qtd_aberto": 24000,
-    "vlr_un": 1.7,
-    "dt_orig_ent": "2026-09-26",
-    "dt_prazo_ent": "2026-09-26",
-    "sig_emp": "SM3"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_oc": "101",
     "fornecedor": "162",
     "razao_social": "AMERICA-ASIA TRADING COMPANY LIM",
