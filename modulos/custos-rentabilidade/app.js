@@ -1,5 +1,6 @@
 import { protegerModulo } from '../../module-guard.js?v=3';
 import { db } from '../../firebase-config.js';
+import { renderizarConsumoPorOP, iniciarConsumoCentros } from './consumo-centros.js?v=20261028-v1';
 
 import {
   collection,
@@ -1097,7 +1098,8 @@ function renderProductionMO(rows){
   const summaries = ops.map(op=>getMaoObraByOp(op)).filter(Boolean);
 
   if(!summaries.length){
-    container.innerHTML = `<div class="pending-box"><i class="fa-solid fa-link-slash"></i><div><strong>Nenhum cálculo de M.O. vinculado às OPs deste item</strong><p>As bases de produção e setup estão carregadas, mas as OPs deste faturamento ainda não possuem correspondência nelas.</p></div></div>`;
+    container.innerHTML = `<div class="pending-box"><i class="fa-solid fa-link-slash"></i><div><strong>Nenhum cálculo de M.O. vinculado às OPs deste item</strong><p>As bases de produção e setup estão carregadas, mas as OPs deste faturamento ainda não possuem correspondência nelas.</p></div></div>`
+      + ops.map(op=>renderizarConsumoPorOP(op)).join('');
     return;
   }
 
@@ -1122,6 +1124,7 @@ function renderProductionMO(rows){
           <tbody>${groupMaoObraEtapasForDisplay(g).map(item=>`<tr><td><span class="mo-type ${item.tipo==='Setup'?'setup':'production'}">${esc(item.tipo)}</span></td><td>${esc(item.centroCusto || '—')}</td><td>${esc(item.recurso || '—')}</td><td class="num">${esc(item.tempo)}</td><td class="num">${money(item.custoMinuto)}</td><td class="num">${money(item.custo)}</td><td class="num cost-per-meter">${money4(item.custoMetro)}</td></tr>`).join('')}</tbody>
         </table>
       </div>
+      ${renderizarConsumoPorOP(g.op)}
       ${g.impressoes.length ? `<div class="material-print-block"><div class="material-print-head"><div><span>ADICIONAL DE MATÉRIA-PRIMA</span><strong>Impressão UV / Solvente</strong></div><div><span>Total da OP</span><strong>${money(g.custoImpressaoTotal)}</strong></div><div><span>Adicional unit.</span><strong>${money(g.custoImpressaoUnitario)}</strong></div></div><div class="mo-table-wrap"><table class="mo-table material-print-table"><thead><tr><th data-help="Centro de custo do item de impressão no relatório 203.">Centro</th><th data-help="Somente IMPRESSAO UV ou IMPRESSAO SOLVENTE do relatório 203 entram aqui.">Descrição</th><th class="num" data-help="Quantidade aprovada do item de impressão no relatório 203.">Qtd. aprovada</th><th class="num" data-help="Preço ven do relatório 203 para UV/Solvente.">R$/un.</th><th class="num" data-help="Custo da impressão = Preço ven × Qtd. aprovada. Este valor compõe Matéria-Prima, não M.O.">Custo</th></tr></thead><tbody>${g.impressoes.map(item=>`<tr><td>${esc(item.centroCusto || '—')}</td><td>${esc(item.recurso || '—')}</td><td class="num">${number(item.quantidade)}</td><td class="num">${money(item.valorUnitario)}</td><td class="num">${money(item.custo)}</td></tr>`).join('')}</tbody></table></div></div>` : ''}
       ${g.pendencias.length ? `<div class="mo-pending">${g.pendencias.map(p=>`<span><i class="fa-solid fa-triangle-exclamation"></i> ${esc(p)}</span>`).join('')}</div>` : ''}
     </div>
@@ -2731,6 +2734,12 @@ async function loadData(){
   );
   bindEvents();
   configureSharedImportPermissions();
+  // Relatório SIGER complementar, separado dos 5 relatórios e dos cálculos atuais.
+  await iniciarConsumoCentros({
+    admin:isCurrentUserAdmin(),
+    carregarExcel:ensureExcelJS,
+    atualizarDetalhe:()=>{if(activeView()==='production') renderDetail();}
+  });
 }
 
 (async()=>{

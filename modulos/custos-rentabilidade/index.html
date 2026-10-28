@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Custos e Rentabilidade · Smart Group Analytics</title>
-  <link rel="stylesheet" href="style.css?v=20261009-17">
+  <link rel="stylesheet" href="style.css?v=20261028-cc-v1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -28,6 +28,8 @@
           <button id="exportDashboard" class="hero-action excel-button" type="button"><i class="fa-solid fa-file-excel"></i> Exportar Excel</button>
           <button id="importReports" class="import-button" type="button"><i class="fa-solid fa-file-import"></i> Importar 5 arquivos</button>
           <input id="importFiles" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" multiple hidden>
+          <button id="importarConsumoCentros" class="import-button cc-import-btn" type="button" title="Importar relatório SIGER complementar de consumo por centro de custo" hidden><i class="fa-solid fa-layer-group"></i> Importar consumo por centro</button>
+          <input id="arquivoConsumoCentros" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden>
         </div>
       </div>
     </header>
@@ -39,6 +41,7 @@
       </div>
       <div id="importSourceBadges" class="import-source-badges"></div>
       <div id="importOrigin" class="import-origin"><i class="fa-solid fa-spinner fa-spin"></i> Validando bases…</div>
+      <div id="consumoCentrosStatus" class="cc-import-status" role="status">Consumo por centro: verificando relatório complementar…</div>
     </section>
 
     <section class="filter-panel" aria-label="Filtros da rentabilidade">
@@ -311,6 +314,6 @@
     </footer>
   </main>
 
-  <script type="module" src="app.js?v=20261016-29-le-referencia-comercial"></script>
+  <script type="module" src="app.js?v=20261028-cc-v1"></script>
 </body>
 </html>

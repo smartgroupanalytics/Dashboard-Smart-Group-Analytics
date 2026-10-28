@@ -305,3 +305,53 @@ thead th[data-help]{cursor:help;text-decoration:underline dotted rgba(188,221,25
 
 /* L.E v29 — valores de referência comercial */
 .le-table td[title*="projetado pela última venda"]{font-style:italic;}
+
+
+/* Extensão 28/10/2026 — consumo por centro de custo SIGER. Apenas este módulo. */
+.hero-import-actions{flex-wrap:wrap;gap:7px}
+.cc-import-btn{background:linear-gradient(135deg,#176b88,#159bb1);border-color:rgba(76,215,222,.45)}
+.cc-import-status{margin-top:8px;padding:7px 9px;border-top:1px solid rgba(83,158,229,.18);color:#9ac9e8;font-size:10px}
+.cc-bloco{margin-top:13px;padding:11px;border:1px solid rgba(75,203,217,.32);border-radius:12px;background:rgba(5,33,70,.82)}
+.cc-bloco-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:2px 2px 12px;border-bottom:1px solid rgba(90,162,235,.18)}
+.cc-bloco-head>div:first-child{min-width:0}
+.cc-bloco-head span,.cc-global span{display:block;color:#8eafd5;font-size:9px}
+.cc-bloco-head strong{display:block;margin:4px 0;font-size:13px}
+.cc-bloco-head small{display:block;font-size:10px;color:#9ac2de;line-height:1.5}
+.cc-global{text-align:right;flex-shrink:0;line-height:1.5}
+.cc-global strong{font-size:12px}
+.cc-centros{display:grid;gap:9px;margin-top:10px}
+.cc-centro{border:1px solid rgba(101,170,231,.2);border-radius:10px;background:rgba(10,51,107,.56);overflow:hidden}
+.cc-centro>summary{display:flex;align-items:center;gap:10px;list-style:none;padding:11px 12px;cursor:pointer}
+.cc-centro>summary::-webkit-details-marker{display:none}
+.cc-centro>summary:hover{background:rgba(46,121,195,.14)}
+.cc-centro-nome{flex:1;font-size:11px;color:#bbd8f3}
+.cc-centro-nome strong{color:#fff;font-size:12px}
+.cc-centro-nome small{color:#91b7d6}
+.cc-centro-badge{font-size:9px;color:#e8f1ff;padding:4px 7px;background:rgba(110,163,217,.16);border-radius:20px}
+.cc-centro-sum{text-align:right;min-width:85px}
+.cc-centro-sum small{display:block;color:#8eafd5;font-size:8px;margin-bottom:3px}
+.cc-centro-sum strong{color:#fff;font-size:11px}
+.cc-centro-diff{min-width:95px;text-align:right;font-size:11px;font-weight:850}
+.cc-centro>summary i{font-size:10px;color:#98c1e5;transition:transform .2s}
+.cc-centro[open]>summary i{transform:rotate(180deg)}
+.cc-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:4px 10px 11px}
+.cc-cards article{background:rgba(2,26,62,.56);padding:10px;border:1px solid rgba(91,167,231,.16);border-radius:9px}
+.cc-cards span{display:block;font-size:9px;color:#91b9da}
+.cc-cards strong{font-size:15px;display:block;margin-top:6px;color:#fff}
+.cc-cards small{font-size:10px;color:#bbd6ea}
+.cc-ruim{color:#ff8290!important}
+.cc-bom{color:#4ee4a1!important}
+.cc-neutro{color:#dbe8fb!important}
+.cc-scroll{overflow-x:auto;padding:0 10px 11px}
+.cc-tabela{width:100%;min-width:1070px;table-layout:auto;font-size:10px}
+.cc-tabela th{padding:9px 7px;background:#0b488c}
+.cc-tabela td{padding:8px 7px;vertical-align:middle}
+.cc-tabela td:first-child{min-width:220px;white-space:normal}
+.cc-tabela td:first-child strong{display:inline-block;margin-right:6px;color:#fff}
+.cc-tabela td:first-child span{color:#bdd8ee}
+.cc-tabela td.num{white-space:nowrap;font-variant-numeric:tabular-nums}
+.cc-tabela td.num small{font-size:9px;white-space:nowrap}
+.cc-nota{font-size:9px;color:#8eb5d6;margin:10px 1px 1px;line-height:1.5}
+.cc-sem-item,.cc-vazio{padding:10px;font-size:10px;color:#b2c9de}
+.cc-vazio{border:1px dashed rgba(85,171,232,.22);border-radius:9px;margin-top:10px}
+@media(max-width:700px){.cc-bloco-head{flex-direction:column;align-items:stretch}.cc-global{text-align:left}.cc-cards{grid-template-columns:1fr}.cc-centro>summary{flex-wrap:wrap}.cc-centro-nome{flex:1 1 100%}.cc-centro-sum{text-align:left}.cc-centro-diff{min-width:75px}}
