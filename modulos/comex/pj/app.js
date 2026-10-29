@@ -10,6 +10,8 @@ await protegerModulo("comexPJ");
 const COLLECTION = "comex_pj_desenvolvimentos";
 const LOCAL_KEY = "smart_comex_pj_local_v1";
 const DAY = 86400000;
+// Prazo da etapa COMEX (envio ao destino), usado na tela, nos alertas e no Excel.
+const COMEX_ENVIO_PRAZO_DIAS = 10;
 
 const FIELD_DEFS = [
   {key:"diasProcesso", excel:"DIAS  EM PROCESSO", label:"DIAS EM PROCESSO", owner:"GERAL", type:"number", readonly:true},
@@ -53,7 +55,7 @@ const SECTIONS = [
   {id:"comercial1", title:"1. Comercial", owner:"COMERCIAL", note:"Prazo D+1", keys:["dataRecebimentoMaterial","encaminhamentoEngenharia","vencimentoComercial"]},
   {id:"engenharia1", title:"2. Engenharia", owner:"ENGENHARIA", note:"Prazo 2 dias", keys:["pj","paisDestino","dataCotacao","mesSolicitado","nomeMaterial","caracteristicaMaterial","cor","siglaCliente","encaminhamentoComex","vencimentoEngenharia"]},
   {id:"controle", title:"Controle de envio", owner:"CONTROLE", note:"Campo da planilha entre Engenharia e COMEX", keys:["aguardarEnvio"]},
-  {id:"comex1", title:"3. COMEX", owner:"COMEX", note:"Prazo até 7 dias", keys:["fedexAwbIda","dataEnvioDestino"]},
+  {id:"comex1", title:"3. COMEX", owner:"COMEX", note:`Prazo até ${COMEX_ENVIO_PRAZO_DIAS} dias`, keys:["fedexAwbIda","dataEnvioDestino"]},
   {id:"china", title:"4. China / Fornecedor", owner:"CHINA", note:"Trânsito estimado 10 dias · desenvolvimento estimado 15 dias", keys:["dataRecebimentoDestino","fornecedor","somenteCotar","desenvolver","dataInicio","dataFim","fedexAwbVolta","dataEnvioBrasil","statusDestino"]},
   {id:"comex2", title:"5. COMEX", owner:"COMEX", note:"Retorno ao Brasil estimado em 10 dias", keys:["dataPrecoOrigem","dataRecebimentoBrasil","dataEncaminhamentoEngenhariaFinal"]},
   {id:"engenharia2", title:"6. Engenharia", owner:"ENGENHARIA", note:"Entrega do material ao Comercial", keys:["dataEntregueComercial"]},
@@ -63,7 +65,7 @@ const SECTIONS = [
 const TIMELINE = [
   {id:"commercial", label:"Comercial", complete:r=>!!r.encaminhamentoEngenharia, start:r=>r.dataRecebimentoMaterial, due:r=>r.vencimentoComercial || addDaysString(r.dataRecebimentoMaterial,1)},
   {id:"engineering", label:"Engenharia", complete:r=>!!r.encaminhamentoComex, start:r=>r.encaminhamentoEngenharia, due:r=>r.vencimentoEngenharia || addDaysString(r.encaminhamentoEngenharia,2)},
-  {id:"comex-out", label:"COMEX", complete:r=>!!r.dataEnvioDestino, start:r=>r.encaminhamentoComex, due:r=>addDaysString(r.encaminhamentoComex,7)},
+  {id:"comex-out", label:"COMEX", complete:r=>!!r.dataEnvioDestino, start:r=>r.encaminhamentoComex, due:r=>addDaysString(r.encaminhamentoComex,COMEX_ENVIO_PRAZO_DIAS)},
   {id:"china-arrival", label:"China · Recebimento", complete:r=>!!r.dataRecebimentoDestino, start:r=>r.dataEnvioDestino, due:r=>addDaysString(r.dataEnvioDestino,10)},
   {id:"china-development", label:"China · Desenvolvimento", complete:r=>!!r.dataFim || !!r.dataEnvioBrasil, start:r=>r.dataInicio || r.dataRecebimentoDestino, due:r=>addDaysString(r.dataInicio || r.dataRecebimentoDestino,15)},
   {id:"return", label:"Retorno Brasil", complete:r=>!!r.dataRecebimentoBrasil, start:r=>r.dataEnvioBrasil, due:r=>addDaysString(r.dataEnvioBrasil,10)},
@@ -434,7 +436,7 @@ function exportExcel(){
  if(!window.XLSX){showToast("Biblioteca Excel indisponível.");return;}
  const empty=()=>Array(EXCEL_LAYOUT.length).fill("");
  const row2=empty(),row3=empty(),row5=empty();
- row2[1]="PRAZO D+1";row2[4]="PRAZO 2 DIAS";row2[16]="PRAZO ATÉ 7 DIAS";
+ row2[1]="PRAZO D+1";row2[4]="PRAZO 2 DIAS";row2[16]=`PRAZO ATÉ ${COMEX_ENVIO_PRAZO_DIAS} DIAS`;
  row3[1]="COMERCIAL";row3[4]="ENGENHARIA";row3[16]="COMEX";row3[18]="CHINA";row3[27]="COMEX";row3[30]="ENGENHARIA";row3[31]="COMERCIAL";
  row5[17]="ESTIMADO EM 10 DIAS";row5[19]="ESTIMADO EM 15 DIAS";row5[28]="ESTIMADO EM 10 DIAS";
  const headers=EXCEL_LAYOUT.map(key=>key?FIELD_DEFS.find(f=>f.key===key)?.excel||"":"");
