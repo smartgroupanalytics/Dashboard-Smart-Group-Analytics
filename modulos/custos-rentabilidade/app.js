@@ -183,9 +183,18 @@ function groupMaoObraEtapasForDisplay(group){
   }));
 }
 
+// MISTURAS são itens internos do SIGER: permanecem na base e nos
+// apontamentos/Rel. 208, mas não são produtos de faturamento do dashboard.
+// Regra restrita ao início da descrição, para não ocultar outros produtos.
+function isMisturaProduto(row){
+  const desc = normalizeHeader(row?.descricaoCompleta || '');
+  return desc === 'mistura' || desc.startsWith('mistura ');
+}
+
 function isTechnicalGridRow(row){
   const desc = normalizeHeader(row?.descricaoCompleta || '');
-  return desc.startsWith('impressao uv')
+  return isMisturaProduto(row)
+    || desc.startsWith('impressao uv')
     || desc.startsWith('impressao solvente')
     || desc.startsWith('insumos');
 }
@@ -488,8 +497,8 @@ function updateCfopLabel(){
   $('cfopOptions')?.querySelectorAll('input[data-cfop]').forEach(input=>{ input.checked=selectedCfops.has(input.dataset.cfop); });
 }
 
-function setupCfopFilter(){
-  allCfops=unique(records,'cfop').filter(meaningful);
+function setupCfopFilter(rows=records){
+  allCfops=unique(rows,'cfop').filter(meaningful);
   selectedCfops=new Set(allCfops);
   const wrap=$('cfopOptions');
   if(wrap){
@@ -501,12 +510,15 @@ function setupCfopFilter(){
 }
 
 function setupFilters(){
-  fillSelect('companyFilter', unique(records,'sigla'), 'Todas');
-  fillSelect('invoiceFilter', unique(records,'nota'), 'Todas');
-  fillSelect('orderFilter', unique(records,'pedido'), 'Todos');
-  fillSelect('opFilter', unique(records,'op').filter(meaningful), 'Todas');
-  setupCfopFilter();
-  const dates = records.map(r=>r.dataFaturamento).filter(Boolean).sort();
+  // Os filtros só oferecem registros comerciais exibidos no dashboard.
+  // A base original não é apagada nem alterada.
+  const visibleRecords=records.filter(row=>!isTechnicalGridRow(row));
+  fillSelect('companyFilter', unique(visibleRecords,'sigla'), 'Todas');
+  fillSelect('invoiceFilter', unique(visibleRecords,'nota'), 'Todas');
+  fillSelect('orderFilter', unique(visibleRecords,'pedido'), 'Todos');
+  fillSelect('opFilter', unique(visibleRecords,'op').filter(meaningful), 'Todas');
+  setupCfopFilter(visibleRecords);
+  const dates = visibleRecords.map(r=>r.dataFaturamento).filter(Boolean).sort();
   if(dates.length){
     $('startDate').min = dates[0]; $('startDate').max = dates.at(-1); $('startDate').value = dates[0];
     $('endDate').min = dates[0]; $('endDate').max = dates.at(-1); $('endDate').value = dates.at(-1);
@@ -561,7 +573,7 @@ function renderKpis(){
   $('kpiInvoices').textContent = unique(visibleRows,'nota').length.toLocaleString('pt-BR');
   const hiddenTechnical=filtered.length-visibleRows.length;
   $('kpiRows').textContent = hiddenTechnical
-    ? `${visibleRows.length.toLocaleString('pt-BR')} exibidos · ${hiddenTechnical.toLocaleString('pt-BR')} técnicos ocultos`
+    ? `${visibleRows.length.toLocaleString('pt-BR')} exibidos · ${hiddenTechnical.toLocaleString('pt-BR')} técnicos/misturas ocultos`
     : `${visibleRows.length.toLocaleString('pt-BR')} ${visibleRows.length === 1 ? 'item faturado' : 'itens faturados'}`;
   $('kpiRevenue').textContent = money(revenue);
   $('kpiCost').textContent = money(cost);
@@ -575,7 +587,7 @@ function renderKpis(){
 
 function getLESourceRows(){
   return (productionBase?.registros||[])
-    .filter(row=>normalizeHeader(row.tipoProducao)==='estoque');
+    .filter(row=>normalizeHeader(row.tipoProducao)==='estoque' && !isMisturaProduto(row));
 }
 
 function firstMeaningful(values=[]){
@@ -1046,7 +1058,7 @@ function renderBilling(){
       <td><button class="detail-button" type="button" data-detail-source="billing" data-detail-row="${esc(r._rowId)}" data-detail-product="${esc(r.produto)}"><i class="fa-solid fa-magnifying-glass-chart"></i> Detalhar</button></td>
     </tr>`).join('') : '<tr class="empty-row"><td colspan="22">Nenhum registro encontrado para os filtros selecionados.</td></tr>';
   const hiddenTechnical=filtered.length-gridRows.length;
-  $('billingCount').textContent = hiddenTechnical ? `${gridRows.length.toLocaleString('pt-BR')} registros · ${hiddenTechnical.toLocaleString('pt-BR')} técnicos ocultos` : `${gridRows.length.toLocaleString('pt-BR')} registros`;
+  $('billingCount').textContent = hiddenTechnical ? `${gridRows.length.toLocaleString('pt-BR')} registros · ${hiddenTechnical.toLocaleString('pt-BR')} técnicos/misturas ocultos` : `${gridRows.length.toLocaleString('pt-BR')} registros`;
   $('billingPage').textContent = `Página ${billingPage} de ${totalPages}`;
   $('billingPrev').disabled = billingPage <= 1;
   $('billingNext').disabled = billingPage >= totalPages;
@@ -1964,11 +1976,12 @@ function applyDataPackage(pkg,origin='published',validation=null){
   const updated=(origin==='imported' || origin==='shared') && pkg.importedAt ? new Date(pkg.importedAt).toLocaleString('pt-BR') : (base?.meta?.geradoEm ? new Date(base.meta.geradoEm).toLocaleString('pt-BR') : '—');
   $('updatedAt').textContent=`Atualizado em ${updated}`;
   const technicalRows=records.filter(isTechnicalGridRow).length;
+  const visibleRecordsCount=records.length-technicalRows;
   const priceMappedRows=records.filter(r=>r.valorTabelaMapeado).length;
   const taxMappedRows=records.filter(r=>r.impostoMapeado).length;
   const freightMappedRows=records.filter(r=>r.freteMapeado).length;
   const leSourceRows=(productionBase?.registros||[]).filter(r=>normalizeHeader(r.tipoProducao)==='estoque').length;
-  $('footerStatus').textContent=`${records.length.toLocaleString('pt-BR')} itens faturados · ${technicalRows.toLocaleString('pt-BR')} linhas técnicas ocultas do grid · ${productionBase?.registros?.length?.toLocaleString('pt-BR')||0} apontamentos de produção · ${setupBase?.registros?.length?.toLocaleString('pt-BR')||0} paradas/setup · ${printingBase?.registros?.length?.toLocaleString('pt-BR')||0} itens de impressão · ${priceMappedRows.toLocaleString('pt-BR')} itens com Valor de Tabela · ${taxMappedRows.toLocaleString('pt-BR')} itens com imposto por UF · ${freightMappedRows.toLocaleString('pt-BR')} itens com frete por UF · ${leSourceRows.toLocaleString('pt-BR')} registros L.E diretos do 201 (col. P = Estoque)`;
+  $('footerStatus').textContent=`${visibleRecordsCount.toLocaleString('pt-BR')} itens de faturamento exibíveis · ${technicalRows.toLocaleString('pt-BR')} linhas técnicas/misturas ocultas do grid · ${productionBase?.registros?.length?.toLocaleString('pt-BR')||0} apontamentos de produção · ${setupBase?.registros?.length?.toLocaleString('pt-BR')||0} paradas/setup · ${printingBase?.registros?.length?.toLocaleString('pt-BR')||0} itens de impressão · ${priceMappedRows.toLocaleString('pt-BR')} itens com Valor de Tabela · ${taxMappedRows.toLocaleString('pt-BR')} itens com imposto por UF · ${freightMappedRows.toLocaleString('pt-BR')} itens com frete por UF · ${leSourceRows.toLocaleString('pt-BR')} registros L.E diretos do 201 (col. P = Estoque)`;
   const moStatus=$('moIntegrationStatus');
   if(moStatus){
     moStatus.innerHTML=moByOp.size
