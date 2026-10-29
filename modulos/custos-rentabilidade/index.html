@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Custos e Rentabilidade · Smart Group Analytics</title>
-  <link rel="stylesheet" href="style.css?v=20261028-cc-v2-r208">
+  <link rel="stylesheet" href="style.css?v=20261029-cliente-r200-v2">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -282,7 +282,7 @@
         <section id="detailLinkagePanel" class="detail-panel detail-linkage-panel" hidden>
           <div class="detail-panel-title linkage-title">
             <i class="fa-solid fa-link"></i>
-            <div><h3>Notas, Pedidos e OPs do Produto</h3><p>Relação dos faturamentos do produto dentro dos filtros selecionados.</p></div>
+            <div><h3>Notas, Pedidos e OPs do Produto</h3><p>Relação dos faturamentos do produto dentro dos filtros selecionados. Clique em uma linha para consultar o cliente informado no Relatório 200.</p></div>
             <span id="detailLinkageCount" class="linkage-count"></span>
           </div>
           <div class="table-wrap detail-linkage-wrap">
@@ -306,6 +306,12 @@
       </div>
     </section>
 
+    <dialog id="clienteVendaDialog" class="cliente-venda-dialog" aria-labelledby="clienteVendaTitulo">
+      <div class="cliente-venda-topo"><div><span class="eyebrow">CLIENTE DO FATURAMENTO</span><h3 id="clienteVendaTitulo">Detalhes da venda</h3></div><button id="fecharClienteVendaDialog" type="button" aria-label="Fechar dados do cliente"><i class="fa-solid fa-xmark"></i></button></div>
+      <div class="cliente-venda-principal"><span>Cliente</span><strong id="clienteVendaNome">—</strong><small id="clienteVendaReferencia"></small></div>
+      <div class="cliente-venda-dados" id="clienteVendaDados"></div>
+      <p id="clienteVendaOrigem" class="cliente-venda-fonte"></p>
+    </dialog>
     <div id="columnHelpTooltip" class="column-help-tooltip" role="tooltip" hidden></div>
 
     <footer class="module-footer">
@@ -314,6 +320,6 @@
     </footer>
   </main>
 
-  <script type="module" src="app.js?v=20261028-r208-sem-misturas-v1"></script>
+  <script type="module" src="app.js?v=20261029-clientes-rel200-v2"></script>
 </body>
 </html>

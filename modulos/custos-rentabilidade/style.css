@@ -355,3 +355,22 @@ thead th[data-help]{cursor:help;text-decoration:underline dotted rgba(188,221,25
 .cc-sem-item,.cc-vazio{padding:10px;font-size:10px;color:#b2c9de}
 .cc-vazio{border:1px dashed rgba(85,171,232,.22);border-radius:9px;margin-top:10px}
 @media(max-width:700px){.cc-bloco-head{flex-direction:column;align-items:stretch}.cc-global{text-align:left}.cc-cards{grid-template-columns:1fr}.cc-centro>summary{flex-wrap:wrap}.cc-centro-nome{flex:1 1 100%}.cc-centro-sum{text-align:left}.cc-centro-diff{min-width:75px}}
+
+/* v30: somente visualização de cliente no detalhamento do produto */
+.detail-linkage-table tr.cliente-linha-clicavel{cursor:pointer;outline-offset:-2px}
+.detail-linkage-table tr.cliente-linha-clicavel:hover,
+.detail-linkage-table tr.cliente-linha-clicavel:focus-visible{outline:2px solid #50baff;background:rgba(31,129,231,.23)!important}
+.cliente-venda-dialog{width:min(560px,calc(100vw - 28px));max-height:85vh;overflow:auto;border-radius:15px;padding:20px;border:1px solid #347dbe;background:#082653;color:#f4f8ff;box-shadow:0 26px 70px #0008;font-family:Inter,Segoe UI,Arial,sans-serif}
+.cliente-venda-dialog::backdrop{background:rgba(0,9,28,.72)}
+.cliente-venda-topo{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;border-bottom:1px solid #1f5c9f;padding-bottom:12px}
+.cliente-venda-topo h3{margin:4px 0 0;font-size:20px}
+.cliente-venda-topo button{background:#114780;color:#fff;border:1px solid #4185c5;border-radius:9px;padding:9px 12px}
+.cliente-venda-principal{margin-top:14px;display:flex;flex-direction:column;gap:6px;padding:14px;background:#0a3571;border:1px solid #2670b9;border-radius:10px}
+.cliente-venda-principal>span,.cliente-venda-dados span{font-size:11px;color:#9fc0e7}
+.cliente-venda-principal>strong{font-size:17px;overflow-wrap:anywhere}
+.cliente-venda-principal>small{font-size:11px;color:#b3cce7}
+.cliente-venda-dados{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
+.cliente-venda-dados>div{display:flex;flex-direction:column;gap:4px;background:#06204b;border:1px solid #1a548e;border-radius:9px;padding:10px}
+.cliente-venda-dados strong{font-size:12px;overflow-wrap:anywhere}
+.cliente-venda-fonte{font-size:11px;color:#9fc0e7;line-height:1.45;margin:15px 0 0}
+@media(max-width:520px){.cliente-venda-dados{grid-template-columns:1fr}}

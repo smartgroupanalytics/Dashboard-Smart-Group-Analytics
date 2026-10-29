@@ -175,7 +175,12 @@ export function renderizarConsumoPorOP(op){
     if(!centros.has(key)) centros.set(key,{nome:r.centroNome||r.centroCodigo,codigo:r.centroCodigo,linhas:[]});
     if(r.itemValido) centros.get(key).linhas.push(r);
   }
-  const grupos=[...centros.values()];
+  // As passagens do SIGER sem produtos não indicam custo zero de máquina.
+  // Filtramos somente a lista visual de CONSUMO. O custo da operação
+  // permanece normalmente no apontamento do 201/202 e na M.O. do módulo.
+  const todosCentros=[...centros.values()];
+  const grupos=todosCentros.filter(c=>c.linhas.length>0);
+  const centrosSemMaterial=todosCentros.length-grupos.length;
   const soma=(linhas,campo)=>linhas.reduce((a,r)=>a+Number(r[campo]||0),0);
   const vt=grupos.reduce((a,c)=>a+soma(c.linhas,'valorPrevisto'),0);
   const et=grupos.reduce((a,c)=>a+soma(c.linhas,'valorEfetivo'),0);
@@ -194,7 +199,7 @@ export function renderizarConsumoPorOP(op){
         return `<tr><td><strong>${html(r.produto||'—')}</strong><span>${html(r.descricao||'Sem descrição')}</span></td><td>${html(r.unidade||'—')}</td><td class="num">${quant(r.qtdPrevista)}</td><td class="num">${quant(r.qtdEfetiva)}</td><td class="num ${diferenca(dq)}">${quant(dq)} <small>(${difer})</small></td><td class="num">${brl(r.valorPrevisto)}</td><td class="num">${brl(r.valorEfetivo)}</td><td class="num ${diferenca(dv)}">${dv>0?'+':''}${brl(dv)}</td><td class="num">${r.custoGer===null?'—':brl4(r.custoGer)}</td></tr>`;
       }).join('')}</tbody></table></div>`:'<p class="cc-sem-item">Centro registrado pelo SIGER sem item/material apontado.</p>'}
       </details>`;
-    }).join('')}</div><p class="cc-nota">Custo ger. (P) é mostrado por item, exatamente como informado pelo SIGER, sem somatória. Diferença = efetivo − previsto. As quantidades são comparadas somente dentro do mesmo produto/unidade.</p></section>`;
+    }).join('') || '<p class="cc-sem-item">Nenhum material apontado nesta OP no Relatório 208. Verifique as etapas operacionais na M.O. acima.</p>'}</div>${centrosSemMaterial?`<p class="cc-nota">${centrosSemMaterial} centro(s) com passagem registrada sem item de consumo foram ocultados apenas desta tabela. Seus custos de operação continuam disponíveis na M.O. dos relatórios 201/202.</p>`:''}<p class="cc-nota">Custo ger. (P) é mostrado por item, exatamente como informado pelo SIGER, sem somatória. Diferença = efetivo − previsto. As quantidades são comparadas somente dentro do mesmo produto/unidade.</p></section>`;
 }
 
 export async function iniciarConsumoCentros({admin,carregarExcel,atualizarDetalhe}){

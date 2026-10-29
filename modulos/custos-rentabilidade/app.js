@@ -37,6 +37,8 @@ let freightBase = null;
 let freightRateByKey = new Map();
 let moByOp = new Map();
 let eventsBound = false;
+// Clientes exibidos exclusivamente a partir dos campos do Relatório 200.
+// O importador preserva os campos no pacote compartilhado; nenhum outro módulo é consultado.
 let currentDataOrigin = 'published';
 let allCfops = [];
 let selectedCfops = new Set();
@@ -1156,6 +1158,34 @@ function selectedDetailRows(){
   return getGridRows().filter(r=>String(r.produto)===String(selectedProduct));
 }
 
+// A base antiga não tinha cliente porque o mapeamento do 200 não o exportava.
+// Após reimportar os 5 arquivos com esta versão, os campos passam a acompanhar
+// cada faturamento e ficam disponíveis no Firestore e na base de cálculo.
+function obterClienteDaLinha(r){
+  const nome=String(r?.clienteNome||'').trim();
+  const codigo=String(r?.clienteCodigo||'').trim();
+  if(nome) return {nome,codigo,origem:'Relatório 200 do SIGER (mesma linha da NF)'};
+  if(codigo) return {nome:'Nome não informado no Relatório 200',codigo,origem:'Código do cliente do Relatório 200'};
+  return {nome:'Cliente não disponível nesta base',codigo:'',origem:'Atualize a base usando os relatórios 200 a 204 no botão Importar 5 arquivos, com o 200 que contém o cliente.'};
+}
+function abrirClienteFaturamento(rowId){
+  const r=records.find(l=>String(l._rowId)===String(rowId));
+  const dialog=$('clienteVendaDialog');
+  if(!r || !dialog) return;
+  const cliente=obterClienteDaLinha(r);
+  $('clienteVendaNome').textContent=cliente.nome;
+  $('clienteVendaOrigem').textContent=cliente.origem;
+  $('clienteVendaReferencia').textContent=`${cliente.codigo?'Código '+cliente.codigo+' · ':''}NF ${meaningful(r.nota)?r.nota:'—'} · Pedido ${meaningful(r.pedido)?r.pedido:'—'} · ${r.sigla||'—'}`;
+  $('clienteVendaDados').innerHTML=[
+    ['Produto',`${r.produto} — ${r.descricaoCompleta}`],
+    ['Data',dateBR(r.dataFaturamento)],
+    ['Quantidade',number(r.quantidade)],
+    ['Valor faturado',money(r.valorVenda)],
+    ['UF',r.uf||'—']
+  ].map(([k,v])=>`<div><span>${esc(k)}</span><strong>${esc(v)}</strong></div>`).join('');
+  if(!dialog.open) dialog.showModal();
+}
+
 function renderProductLinkage(rows){
   const panel=$('detailLinkagePanel');
   const body=$('detailLinkageRows');
@@ -1170,7 +1200,7 @@ function renderProductLinkage(rows){
   panel.hidden=false;
   const sorted=[...rows].sort((a,b)=>String(b.dataFaturamento).localeCompare(String(a.dataFaturamento)) || String(b.nota).localeCompare(String(a.nota),undefined,{numeric:true}));
   count.textContent=`${sorted.length.toLocaleString('pt-BR')} ${sorted.length===1?'faturamento vinculado':'faturamentos vinculados'}`;
-  body.innerHTML=sorted.length ? sorted.map(r=>`<tr class="${r.margemBase<=0?'row-loss':''}">
+  body.innerHTML=sorted.length ? sorted.map(r=>`<tr class="${r.margemBase<=0?'row-loss':''} cliente-linha-clicavel" data-cliente-venda-row="${esc(r._rowId)}" tabindex="0" aria-label="Ver cliente da NF ${esc(r.nota)} e pedido ${esc(r.pedido)}" title="Clique para ver o cliente desta venda">
     <td>${dateBR(r.dataFaturamento)}</td>
     <td>${displayRef(r.nota)}</td>
     <td>${displayRef(r.pedido)}</td>
@@ -1622,9 +1652,32 @@ async function parseImportFile(file,ExcelJS){
   return {type,fileName:file.name,headers,rows};
 }
 
+// Identifica cliente no próprio relatório 200, sem cruzamento externo.
+// Cabeçalhos são normalizados, preservando compatibilidade com versões do SIGER.
+function camposClienteRelatorio200(row,map){
+  const nome=importText(byHeaderAny(row,map,[
+    'Razão social cliente','Razão social do cliente','Raz.social cliente',
+    'Razão social','Razao social','Raz.social','Raz.soc',
+    'Nome do cliente','Nome cliente','Nome.cliente','Nom.cliente',
+    'Cliente nome','Cliente/Razão social','Cliente - Razão social',
+    'Razão Social Cli','Raz.Social Cli','Raz.soc.cli','Fantasia cliente'
+  ]));
+  const codigo=importRef(byHeaderAny(row,map,[
+    'Cód.cliente','Cod.cliente','Código cliente','Código do cliente',
+    'Cód.cli','Cod.cli','Cod.clie','Código cli','Cliente código',
+    'Cod.cadastro cliente','Cód.cadastro cliente'
+  ]));
+  const generico=importText(byHeaderAny(row,map,['Cliente']));
+  // Em algumas versões Cliente é numérico; em outras é o nome.
+  const genericoNome=/[\p{L}]/u.test(generico) ? generico : '';
+  const genericoCodigo=generico && !genericoNome ? importRef(generico) : '';
+  return {clienteNome:nome || genericoNome,clienteCodigo:codigo || genericoCodigo};
+}
+
 function mapReport200(parsed){
   const map=headerIndexMap(parsed.headers);
   const registros=parsed.rows.map(row=>({
+    ...camposClienteRelatorio200(row,map),
     dataFaturamento:excelSourceDate(byHeader(row,map,'Dt.faturam')),
     sigla:importText(byHeader(row,map,'Sig.emp')),
     uf:importText(byHeader(row,map,'UF')).toLocaleUpperCase('pt-BR'),
@@ -2684,10 +2737,22 @@ function bindEvents(){
   });
   document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>switchView(btn.dataset.view)));
   document.addEventListener('click',event=>{
+    const clienteLinha=event.target.closest('[data-cliente-venda-row]');
+    if(clienteLinha){abrirClienteFaturamento(clienteLinha.dataset.clienteVendaRow);return;}
     const leBtn=event.target.closest('[data-le-detail]');
     if(leBtn){ selectLEDetail(leBtn.dataset.leDetail); return; }
     const btn=event.target.closest('[data-detail-product]');
     if(btn) selectDetail(btn.dataset.detailProduct,btn.dataset.detailSource||'product',btn.dataset.detailRow||null);
+  });
+  $('detailLinkageRows').addEventListener('keydown',event=>{
+    const linha=event.target.closest('[data-cliente-venda-row]');
+    if(linha && (event.key==='Enter'||event.key===' ')){
+      event.preventDefault();abrirClienteFaturamento(linha.dataset.clienteVendaRow);
+    }
+  });
+  $('fecharClienteVendaDialog').addEventListener('click',()=>$('clienteVendaDialog').close());
+  $('clienteVendaDialog').addEventListener('click',event=>{
+    if(event.target===$('clienteVendaDialog')) $('clienteVendaDialog').close();
   });
   $('billingPrev').addEventListener('click',()=>{if(billingPage>1){billingPage--;renderBilling()}}); $('billingNext').addEventListener('click',()=>{if(billingPage*PAGE_SIZE<getGridRows().length){billingPage++;renderBilling()}});
   $('productsPrev').addEventListener('click',()=>{if(productsPage>1){productsPage--;renderProducts()}}); $('productsNext').addEventListener('click',()=>{if(productsPage*PAGE_SIZE<groupedProducts.length){productsPage++;renderProducts()}});
@@ -2747,6 +2812,7 @@ async function loadData(){
   );
   bindEvents();
   configureSharedImportPermissions();
+  // Cliente é obtido somente dos dados do Relatório 200 já publicados/importados.
   // Relatório SIGER 208, separado dos 5 relatórios e dos cálculos atuais.
   await iniciarConsumoCentros({
     admin:isCurrentUserAdmin(),
