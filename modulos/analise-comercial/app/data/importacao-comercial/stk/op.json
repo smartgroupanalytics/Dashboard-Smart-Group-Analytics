@@ -169,18 +169,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8637",
-    "produto": "17322",
-    "desc_completa": "MACKAY GLAM OURO LIGHT",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 400,
-    "dt_saida": "2026-10-29",
-    "centro_custo": 24,
-    "abreviacao": "EST 3"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8639",
     "produto": "15535",
     "desc_completa": "MIRAGE OURO ROSADO",
@@ -217,18 +205,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8780",
-    "produto": "17615",
-    "desc_completa": "DOHA OURO LIGHT",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 120,
-    "dt_saida": "2026-10-27",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8784",
     "produto": "16577",
     "desc_completa": "SAVOY GLAM PRATA",
@@ -236,8 +212,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-10-30",
-    "centro_custo": 7,
-    "abreviacao": "ESTAM"
+    "centro_custo": 24,
+    "abreviacao": "EST 3"
   },
   {
     "fonte_comercial": "STK",
@@ -248,8 +224,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-10-29",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -260,8 +236,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-10-27",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -272,8 +248,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-10-28",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -284,8 +260,8 @@
     "subgrupo": 41,
     "qtd_produzir": 500,
     "dt_saida": "2026-10-29",
-    "centro_custo": 1,
-    "abreviacao": "RECOB"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -296,8 +272,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-10-30",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -308,8 +284,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-10-30",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -320,8 +296,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-10-30",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -332,32 +308,8 @@
     "subgrupo": 41,
     "qtd_produzir": 40,
     "dt_saida": "2026-10-30",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8853",
-    "produto": "11784",
-    "desc_completa": "MAIORCA CARAMELO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 200,
-    "dt_saida": "2026-11-03",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8854",
-    "produto": "11785",
-    "desc_completa": "MAIORCA PRETO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 200,
-    "dt_saida": "2026-11-03",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -368,8 +320,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1400,
     "dt_saida": "2026-11-05",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -380,8 +332,8 @@
     "subgrupo": 41,
     "qtd_produzir": 600,
     "dt_saida": "2026-11-05",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -404,8 +356,8 @@
     "subgrupo": 41,
     "qtd_produzir": 40,
     "dt_saida": "2026-11-06",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -416,8 +368,8 @@
     "subgrupo": 41,
     "qtd_produzir": 40,
     "dt_saida": "2026-11-06",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -428,8 +380,8 @@
     "subgrupo": 41,
     "qtd_produzir": 40,
     "dt_saida": "2026-11-06",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -440,8 +392,8 @@
     "subgrupo": 41,
     "qtd_produzir": 40,
     "dt_saida": "2026-11-06",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -452,6 +404,66 @@
     "subgrupo": 41,
     "qtd_produzir": 40,
     "dt_saida": "2026-11-06",
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8906",
+    "produto": "18385",
+    "desc_completa": "DENVER FML PRETO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-11-06",
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8907",
+    "produto": "18171",
+    "desc_completa": "ARUBA BEGE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 94.5,
+    "dt_saida": "2026-10-28",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8908",
+    "produto": "18173",
+    "desc_completa": "ARUBA CANELA",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 95,
+    "dt_saida": "2026-10-28",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8911",
+    "produto": "18012",
+    "desc_completa": "NAPA MADRID NEVOA",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 88.4,
+    "dt_saida": "2026-11-04",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8912",
+    "produto": "18226",
+    "desc_completa": "OREGON CAFE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 35.5,
+    "dt_saida": "2026-11-04",
     "centro_custo": 0,
     "abreviacao": ""
   }

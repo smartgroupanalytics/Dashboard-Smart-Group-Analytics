@@ -105,7 +105,7 @@
     "produto": "17851",
     "desc_completa": "TELA SHINE PARIS DOURADO",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 590.5,
+    "qtd_produzir": 302.9,
     "dt_saida": "2026-10-13",
     "abreviacao": ""
   },
@@ -117,46 +117,6 @@
     "grupo": "BEIRA RIO",
     "qtd_produzir": 760,
     "dt_saida": "2026-10-16",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8791",
-    "produto": "16509",
-    "desc_completa": "NAPA SEVILLE BRANCO OFF 526",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 400,
-    "dt_saida": "2026-10-23",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8792",
-    "produto": "16878",
-    "desc_completa": "NAPA SEVILLE AVELA 1248",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 1000,
-    "dt_saida": "2026-10-28",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8793",
-    "produto": "16732",
-    "desc_completa": "NAPA SEVILLE CACAU 1277",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 400,
-    "dt_saida": "2026-10-28",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8797",
-    "produto": "9873",
-    "desc_completa": "METALIZADO NANCY PU 1.0 DOURADO",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 1000,
-    "dt_saida": "2026-10-29",
     "abreviacao": ""
   },
   {
@@ -191,69 +151,9 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8809",
-    "produto": "17660",
-    "desc_completa": "NAPA DALLAS CAMEL 1165",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 68,
-    "dt_saida": "2026-10-28",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8824",
     "produto": "12655",
     "desc_completa": "VERNIZ NANCY 1.0 PU BRANCO OFF 526",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 200,
-    "dt_saida": "2026-10-27",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8829",
-    "produto": "18327",
-    "desc_completa": "VERNIZ NANCY CHOCOLATE 1271",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 75,
-    "dt_saida": "2026-10-27",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8830",
-    "produto": "18325",
-    "desc_completa": "NAPA NEW NANCY AVELA 1248",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 200,
-    "dt_saida": "2026-10-27",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8831",
-    "produto": "18322",
-    "desc_completa": "NAPA TRAMADO CASABLANCA CAMEL 1165",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 200,
-    "dt_saida": "2026-10-27",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8832",
-    "produto": "18289",
-    "desc_completa": "NAPA TRAMADO CASABLANCA AVELA 1248",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 200,
-    "dt_saida": "2026-10-27",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8833",
-    "produto": "18320",
-    "desc_completa": "NAPA TRAMADO CASABLANCA VINHO 1592",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 200,
     "dt_saida": "2026-10-27",
@@ -285,7 +185,7 @@
     "produto": "30087",
     "desc_completa": "NAPA MARSELHA CHOCOLATE 1271",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 400,
+    "qtd_produzir": 24,
     "dt_saida": "2026-10-29",
     "abreviacao": ""
   },
@@ -441,11 +341,51 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8892",
+    "produto": "17019",
+    "desc_completa": "NAPA MALAGA BRANCO OFF",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 400,
+    "dt_saida": "2026-10-30",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8893",
     "produto": "18111",
     "desc_completa": "NAPA MALAGA VINHO 1592",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 200,
+    "dt_saida": "2026-10-30",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8894",
+    "produto": "17561",
+    "desc_completa": "METALIZADO TRAMADO BERLIM DOURADO",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 400,
+    "dt_saida": "2026-10-30",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8895",
+    "produto": "14862",
+    "desc_completa": "METALIZADO PITON SAARA DOURADO",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 500,
+    "dt_saida": "2026-10-30",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8896",
+    "produto": "30156",
+    "desc_completa": "NAPA MARSELHA CACAU 1277",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 400,
     "dt_saida": "2026-10-30",
     "abreviacao": ""
   }
