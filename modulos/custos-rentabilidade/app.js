@@ -1671,7 +1671,13 @@ function camposClienteRelatorio200(row,map){
   // Em algumas versões Cliente é numérico; em outras é o nome.
   const genericoNome=/[\p{L}]/u.test(generico) ? generico : '';
   const genericoCodigo=generico && !genericoNome ? importRef(generico) : '';
-  return {clienteNome:nome || genericoNome,clienteCodigo:codigo || genericoCodigo};
+  // Layout confirmado do relatório SIGER 200:
+  // R (índice 17) = Cliente (código); S (índice 18) = Razão social.
+  // Só usamos a posição fixa quando OS DOIS cabeçalhos estão na posição correta.
+  const layoutRS=map.get('cliente')===17 && map.get('razao social')===18;
+  const codigoRS=layoutRS ? importRef(row[17]) : '';
+  const nomeRS=layoutRS ? importText(row[18]) : '';
+  return {clienteNome:nomeRS || nome || genericoNome,clienteCodigo:codigoRS || codigo || genericoCodigo};
 }
 
 function mapReport200(parsed){
@@ -2074,6 +2080,14 @@ async function handleImportFiles(event){
     const missing=Object.keys(IMPORT_SCHEMAS).filter(type=>!parsedByType[type]);
     if(missing.length) throw new Error(`Faltou o(s) relatório(s): ${missing.join(', ')}.`);
     const pkg=buildImportedPackage(parsedByType);
+    const layout200=headerIndexMap(parsedByType['200'].headers);
+    const nomesCliente=(pkg.base.registros||[]).filter(row=>String(row.clienteNome||'').trim()).length;
+    const codigosCliente=(pkg.base.registros||[]).filter(row=>String(row.clienteCodigo||'').trim()).length;
+    // Evita sobrescrever a base compartilhada por um 200 que perdeu os campos de cliente.
+    // A conferência é exigida apenas quando os cabeçalhos R/S estão no layout confirmado.
+    if(layout200.get('cliente')===17 && layout200.get('razao social')===18 && nomesCliente===0){
+      throw new Error('Relatório 200: a coluna S (Razão social) foi identificada, mas nenhum nome de cliente foi importado. A base anterior foi preservada. Confira se a coluna S contém dados nas linhas de faturamento.');
+    }
     const validation=validateImportedPackage(pkg);
     if(validation.errors.length) throw new Error(validation.errors.join(' '));
     button.innerHTML='<i class="fa-solid fa-cloud-arrow-up fa-beat"></i> Publicando para todos…';
@@ -2082,6 +2096,7 @@ async function handleImportFiles(event){
     applyDataPackage(pkg,'shared',validation);
     const details=[
       `200 Faturamento: ${pkg.base.registros.length.toLocaleString('pt-BR')} linhas`,
+      `200 Clientes: ${nomesCliente.toLocaleString('pt-BR')} linhas com razão social e ${codigosCliente.toLocaleString('pt-BR')} com código`,
       `201 Produção: ${pkg.production.registros.length.toLocaleString('pt-BR')} linhas`,
       `L.E: ${pkg.production.registros.filter(row=>normalizeHeader(row.tipoProducao)==='estoque').length.toLocaleString('pt-BR')} registros com Descr.Tp.produção = Estoque (inclui com/sem OP e com/sem pedido)`,
       `202 Setup/Paradas: ${pkg.setup.registros.length.toLocaleString('pt-BR')} linhas`,
