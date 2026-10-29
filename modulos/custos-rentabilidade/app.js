@@ -1030,6 +1030,17 @@ function selectLEDetail(key){
   switchView('production');
   document.querySelector('.tabs')?.scrollIntoView({behavior:'smooth',block:'start'});
 }
+// Destaque visual: compara apenas o Vlr Prod (preço unitário por metro)
+// com o Valor de Tabela (relatório 204), ambos por unidade.
+// Não destaca itens sem preço de tabela mapeado; não altera cálculos.
+function valorMetroDiferenteTabela(r){
+  if(!r?.valorTabelaMapeado) return false;
+  const metro=Number(r?.valorMetro);
+  const tabela=Number(r?.valorTabela);
+  return Number.isFinite(metro) && Number.isFinite(tabela)
+    && Math.round(metro*100)!==Math.round(tabela*100);
+}
+
 function renderBilling(){
   const gridRows=getGridRows();
   const totalPages = Math.max(1, Math.ceil(gridRows.length/PAGE_SIZE));
@@ -1045,8 +1056,8 @@ function renderBilling(){
       <td>${displayRef(r.pedido)}</td><td>${displayRef(r.op)}</td><td>${displayRef(r.nota)}</td>
       <td class="num">${number(r.quantidade)}</td>
       <td class="num">${money(r.valorVenda)}</td>
-      <td class="num">${money(r.valorMetro)}</td>
-      <td class="num table-price-col" title="Lista de preços ${esc(r.codigoListaPrecos || '—')}">${r.valorTabelaMapeado ? money(r.valorTabela) : ''}</td>
+      <td class="num ${valorMetroDiferenteTabela(r) ? 'valor-diferente-metro' : ''}">${money(r.valorMetro)}</td>
+      <td class="num table-price-col ${valorMetroDiferenteTabela(r) ? 'valor-diferente-tabela' : ''}" title="Lista de preços ${esc(r.codigoListaPrecos || '—')}">${r.valorTabelaMapeado ? money(r.valorTabela) : ''}</td>
       <td class="num material-cost-col" title="Base: ${money(r.custoMateriaPrimaBaseUnitario)}${r.custoImpressaoMateriaPrimaUnitario ? ` + Impressão UV/Solvente: ${money(r.custoImpressaoMateriaPrimaUnitario)}` : ''}">${money(r.custoMateriaPrimaUnitario)}</td>
       <td class="num optional-cost">${optionalMoney(r.custoMaoObraUnitario,r.custoMaoObraMapeado)}</td>
       <td class="num optional-cost" title="${r.impostoMapeado ? `UF ${esc(r.uf || '—')} · Alíquota ${percent(r.impostoPercentual)} · Imposto total ${money(r.impostoTotal)}` : 'Imposto não mapeado para esta UF'}">${optionalMoney(r.impostoUnitario,r.impostoMapeado)}</td>
@@ -1209,8 +1220,8 @@ function renderProductLinkage(rows){
     <td>${esc(r.uf || '—')}</td>
     <td class="num">${number(r.quantidade)}</td>
     <td class="num">${money(r.valorVenda)}</td>
-    <td class="num">${money(r.valorMetro)}</td>
-    <td class="num table-price-col">${r.valorTabelaMapeado ? money(r.valorTabela) : ''}</td>
+    <td class="num ${valorMetroDiferenteTabela(r) ? 'valor-diferente-metro' : ''}">${money(r.valorMetro)}</td>
+    <td class="num table-price-col ${valorMetroDiferenteTabela(r) ? 'valor-diferente-tabela' : ''}">${r.valorTabelaMapeado ? money(r.valorTabela) : ''}</td>
     <td class="num material-cost-col">${money(r.custoMateriaPrimaUnitario)}</td>
     <td class="num optional-cost">${optionalMoney(r.custoMaoObraUnitario,r.custoMaoObraMapeado)}</td>
     <td class="num optional-cost" title="${r.impostoMapeado ? `Vlr Metro × ${percent(r.impostoPercentual)} · UF ${esc(r.uf || '—')}` : ''}">${optionalMoney(r.impostoUnitario,r.impostoMapeado)}</td>
@@ -1424,7 +1435,7 @@ function printBillingHtml(){
     <td class="num">${money(r.custoTotal)}</td><td class="num">${money(r.lucroUnitario)}</td><td class="num">${money(r.margemBase)}</td><td class="num">${percent(r.margemBasePercentual)}</td>
   </tr>`).join('');
   return `<h2>Faturamento por item</h2>
-    <div class="print-table-wrap"><table><thead><tr><th>Dt. Fat.</th><th>Sigla</th><th>Produto</th><th>Descrição completa</th><th>Pedido</th><th>OP</th><th>Nota</th><th>CFOP</th><th>Qtd.</th><th>Vlr Venda</th><th>Vlr Metro</th><th>Valor de Tabela</th><th>Cst. Mat. Prima</th><th>Cst MO</th><th>Imposto</th><th>Frete</th><th>Comissão</th><th>% Comis.</th><th>Custo Total</th><th>Lucro</th><th>Margem Base</th><th>% Margem</th></tr></thead><tbody>${body||'<tr><td colspan="22">Nenhum registro.</td></tr>'}</tbody></table></div>`;
+    <div class="print-table-wrap"><table><thead><tr><th>Dt. Fat.</th><th>Sigla</th><th>Produto</th><th>Descrição completa</th><th>Pedido</th><th>OP</th><th>Nota</th><th>CFOP</th><th>Qtd.</th><th>Vlr Venda</th><th>Vlr Prod</th><th>Valor de Tabela</th><th>CST M.A</th><th>CST M.O</th><th>Imposto</th><th>Frete</th><th>Comissão</th><th>% Comis.</th><th>Custo Total</th><th>Lucro</th><th>Margem Base</th><th>% Margem</th></tr></thead><tbody>${body||'<tr><td colspan="22">Nenhum registro.</td></tr>'}</tbody></table></div>`;
 }
 
 function printProductsHtml(){
@@ -2349,11 +2360,23 @@ function styleLossRows(ws,startRow,endRow,profitCol,columnCount){
     if(Number(result) <= 0){
       for(let c=1;c<=columnCount;c++){
         const cell=ws.getCell(r,c);
-        cell.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF52233A'}};
-        cell.font={...(cell.font||{}),bold:true,color:{argb:'FFFF9AA5'}};
+        // Preserva o fundo azul/zebrado aplicado em styleDataRows.
+        cell.font={...(cell.font||{}),bold:true,color:{argb:'FFFF4D67'}};
       }
     }
   }
+}
+
+function destacarPrecosDiferentesExcel(ws,linhas,linhaInicial){
+  linhas.forEach((item,indice)=>{
+    if(!valorMetroDiferenteTabela(item)) return;
+    if(Number(item.margemBase)<=0) return; // Prejuízo mantém o texto vermelho.
+    const linha=linhaInicial+indice;
+    for(const [coluna,cor] of [[10,'FF40DFFF'],[11,'FFFFD166']]){
+      const celula=ws.getCell(linha,coluna);
+      celula.font={...(celula.font||{}),bold:true,color:{argb:cor}};
+    }
+  });
 }
 
 async function exportBilling(triggerButton=$('exportBilling')){
@@ -2391,7 +2414,7 @@ async function exportBilling(triggerButton=$('exportBilling')){
       {label:'% MARGEM',value:marginPct,color:XLS_COLORS.cyan,numFmt:'0.00%'}
     ],21);
 
-    const headers=['Dt. Fat.','Sigla','Produto','Desc. completa','Pedido','OP','Nota','Qtd','Vlr Venda','Vlr Metro','Valor de Tabela','Cst Mat. Prima','Cst MO','Imposto','Frete','Comissão','% Comis','Custo Total','Lucro','Margem Base','% Margem'];
+    const headers=['Dt. Fat.','Sigla','Produto','Desc. completa','Pedido','OP','Nota','Qtd','Vlr Venda','Vlr Prod','Valor de Tabela','CST M.A','CST M.O','Imposto','Frete','Comissão','% Comis','Custo Total','Lucro','Margem Base','% Margem'];
     const headerRow = 10;
     ws.getRow(headerRow).values = headers;
     styleTableHeader(ws,headerRow,headers.length);
@@ -2427,6 +2450,7 @@ async function exportBilling(triggerButton=$('exportBilling')){
       }
       applyProfitColors(ws,startRow,endRow,20,21);
       styleLossRows(ws,startRow,endRow,20,headers.length);
+      destacarPrecosDiferentesExcel(ws,exportRows,startRow);
     }
 
     const totalRow=(exportRows.length?endRow:headerRow)+1;

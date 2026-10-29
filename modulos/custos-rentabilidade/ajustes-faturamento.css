@@ -1,0 +1,69 @@
+/* SMART GROUP ANALYTICS — APENAS Custos e Rentabilidade.
+   Personalização visual, sem alteração de dados, importações ou cálculos.
+   Carregado após style.css para substituir somente os estilos abaixo. */
+
+/* Linhas sem lucro: manter o fundo azul original, sem pintar o registro de vermelho. */
+tbody tr.row-loss,
+tbody tr.row-loss:nth-child(even){
+  background:transparent !important;
+  box-shadow:inset 3px 0 0 #ff4d67 !important;
+}
+tbody tr.row-loss:nth-child(even){background:rgba(19,70,133,.17) !important}
+tbody tr.row-loss:hover{background:rgba(24,113,207,.20) !important}
+
+/* Vermelho vivo e negrito nos dados das linhas com margem <= 0. */
+tbody tr.row-loss td,
+tbody tr.row-loss td strong,
+tbody tr.row-loss td.money-positive,
+tbody tr.row-loss td.money-negative,
+tbody tr.row-loss td.optional-cost{
+  color:#ff4d67 !important;
+  font-weight:900 !important;
+  text-shadow:0 0 5px rgba(255,77,103,.12);
+}
+/* Preservar a leitura da coluna de matéria-prima sem o fundo rosado anterior. */
+tbody tr.row-loss td.material-cost-col{
+  background:linear-gradient(90deg,rgba(255,255,255,.035),rgba(100,181,255,.075),rgba(255,255,255,.035)) !important;
+  border-color:rgba(151,207,255,.18) !important;
+}
+/* O botão Detalhar não é um resultado financeiro: permanece azul. */
+tbody tr.row-loss .detail-button{
+  background:#0c3977 !important;
+  border-color:#2c70b8 !important;
+  color:#dfeeff !important;
+}
+tbody tr.row-loss .detail-button:hover{background:#13529d !important}
+
+/* Destaque condicional: Vlr Prod (por metro) x Valor de Tabela.
+   Azul turquesa = Vlr Prod; dourado = Valor de Tabela. */
+#billingRows td.valor-diferente-metro,
+#detailLinkageRows td.valor-diferente-metro{
+  color:#52e5ff;
+  background:linear-gradient(90deg,rgba(31,192,222,.16),rgba(31,192,222,.035));
+  box-shadow:inset 3px 0 0 #29d7f2;
+  font-weight:900;
+  font-variant-numeric:tabular-nums;
+}
+#billingRows td.valor-diferente-tabela,
+#detailLinkageRows td.valor-diferente-tabela{
+  color:#ffdb72;
+  background:linear-gradient(90deg,rgba(255,187,69,.16),rgba(255,187,69,.035));
+  box-shadow:inset 3px 0 0 #ffc04a;
+  font-weight:900;
+  font-variant-numeric:tabular-nums;
+}
+/* Em caso de prejuízo, o vermelho vivo tem prioridade nas letras;
+   as bordas azul/dourada continuam diferenciando as duas colunas. */
+#billingRows tr.row-loss td.valor-diferente-metro,
+#billingRows tr.row-loss td.valor-diferente-tabela,
+#detailLinkageRows tr.row-loss td.valor-diferente-metro,
+#detailLinkageRows tr.row-loss td.valor-diferente-tabela{color:#ff4d67 !important}
+
+@media print{
+  .print-report tr.loss td{
+    background:#082454 !important;
+    color:#ff4d67 !important;
+    font-weight:900 !important;
+  }
+  .print-report tr.loss:nth-child(even) td{background:#0b3168 !important}
+}
