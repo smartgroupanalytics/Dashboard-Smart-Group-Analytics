@@ -7544,6 +7544,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 44.6,
+    "dt_movto": "2026-10-29"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11920",
+    "produto": "11920",
+    "desc_completa": "VERNIZ MONACO MANTEIGA - PU 0.8MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 47.8,
     "dt_movto": "2026-04-14"
   },
@@ -7570,6 +7582,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 120,
     "dt_movto": "2026-04-14"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11920",
+    "produto": "11920",
+    "desc_completa": "VERNIZ MONACO MANTEIGA - PU 0.8MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 152.2,
+    "dt_movto": "2026-10-29"
   },
   {
     "fonte_comercial": "STK",
@@ -17410,6 +17434,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 40,
     "dt_movto": "2026-08-10"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "900012",
+    "produto": "900012",
+    "desc_completa": "CAPRI OFF WHITE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 42,
+    "dt_movto": "2026-10-29"
   },
   {
     "fonte_comercial": "STK",

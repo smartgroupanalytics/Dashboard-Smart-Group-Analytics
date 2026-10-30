@@ -151,46 +151,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8824",
-    "produto": "12655",
-    "desc_completa": "VERNIZ NANCY 1.0 PU BRANCO OFF 526",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 200,
-    "dt_saida": "2026-10-27",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8843",
-    "produto": "10898",
-    "desc_completa": "NAPA TRESSE VALENCIA PU 1.0 CREME 985 VENDA BR",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 220,
-    "dt_saida": "2026-10-30",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8849",
-    "produto": "30084",
-    "desc_completa": "NAPA MARSELHA CAMEL 1165",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 600,
-    "dt_saida": "2026-10-29",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8850",
-    "produto": "30087",
-    "desc_completa": "NAPA MARSELHA CHOCOLATE 1271",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 24,
-    "dt_saida": "2026-10-29",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8877",
     "produto": "18051",
     "desc_completa": "NAPA DALLAS COFFEE 1577",
@@ -351,16 +311,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8893",
-    "produto": "18111",
-    "desc_completa": "NAPA MALAGA VINHO 1592",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 200,
-    "dt_saida": "2026-10-30",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8894",
     "produto": "17561",
     "desc_completa": "METALIZADO TRAMADO BERLIM DOURADO",
@@ -387,6 +337,36 @@
     "grupo": "BEIRA RIO",
     "qtd_produzir": 400,
     "dt_saida": "2026-10-30",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8922",
+    "produto": "18388",
+    "desc_completa": "NAPA MARSELHA BRANCO OFF 526",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 200,
+    "dt_saida": "2026-11-03",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8923",
+    "produto": "18391",
+    "desc_completa": "NAPA SEVILLE OLIVA 1588",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 200,
+    "dt_saida": "2026-11-03",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8936",
+    "produto": "9439",
+    "desc_completa": "NAPA PELICA PU 1.0 CINZA 1235 (VENDA BEIRA RIO)",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 400,
+    "dt_saida": "2026-11-04",
     "abreviacao": ""
   }
 ]
