@@ -295,8 +295,10 @@ function renderForm(record=null){
  const byKey=Object.fromEntries(FIELD_DEFS.map(f=>[f.key,f]));
  const cycles=record?.refacoes||[];
  const notice=cycles.length?`<div class="refacao-aviso" role="note"><strong>Histórico do PJ preservado.</strong> A primeira passagem e as refações anteriores estão bloqueadas para edição. Preencha somente a <b>Refação ${cycles.length}</b>, a partir do campo <b>Fornecedor</b>.</div>`:"";
- const otherSections=SECTIONS.filter(section=>section.id!=="fichaPJ").map(section=>`<section class="form-section ${cycles.length?"secao-historica":""}" data-owner="${escapeHtml(section.owner||"")}"><div class="form-section-head"><h3>${escapeHtml(section.title)}</h3><span>${cycles.length?"HISTÓRICO ORIGINAL · SOMENTE CONSULTA":escapeHtml(section.note)}</span></div><div class="fields">${section.keys.map(k=>fieldHtml(byKey[k],"",cycles.length>0)).join("")}</div></section>`).join("");
- $("#formSections").innerHTML=notice+fichaSectionHtml(cycles.length>0)+otherSections+cycles.map((cycle,i)=>cycleFormHtml(cycle,i,cycles.length-1)).join("");
+ const sectionHtml=section=>`<section class="form-section ${cycles.length?"secao-historica":""}" data-owner="${escapeHtml(section.owner||"")}"><div class="form-section-head"><h3>${escapeHtml(section.title)}</h3><span>${cycles.length?"HISTÓRICO ORIGINAL · SOMENTE CONSULTA":escapeHtml(section.note)}</span></div><div class="fields">${section.keys.map(k=>fieldHtml(byKey[k],"",cycles.length>0)).join("")}</div></section>`;
+ const generalSection=sectionHtml(SECTIONS.find(section=>section.id==="geral"));
+ const otherSections=SECTIONS.filter(section=>!["fichaPJ","geral"].includes(section.id)).map(sectionHtml).join("");
+ $("#formSections").innerHTML=notice+generalSection+fichaSectionHtml(cycles.length>0)+otherSections+cycles.map((cycle,i)=>cycleFormHtml(cycle,i,cycles.length-1)).join("");
  setupCountryPicker(cycles.length>0, record?.paisDestino||"");
  setupColorField(record?.cor||"", cycles.length>0);
  const b=$("[name=dataRecebimentoMaterial]"),c=$("[name=encaminhamentoEngenharia]");
@@ -307,8 +309,7 @@ function renderForm(record=null){
 function renderColorRow(value="", locked=false){
  return `<div class="multi-color-row"><input type="text" class="color-item-input" value="${escapeHtml(value)}" ${locked?"disabled":""} placeholder="Informe a cor">${locked?"":'<button type="button" class="remove-color-btn" title="Remover cor"><i class="fa-solid fa-trash"></i></button>'}</div>`;
 }
-function parseColorList(value){return String(value||"").split(/[;
-]+/).map(item=>item.trim()).filter(Boolean)}
+function parseColorList(value){return String(value||"").split(/[;\r\n]+/).map(item=>item.trim()).filter(Boolean)}
 function setupColorField(value="", locked=false){
  const list=$("[data-multi-color='root']");
  if(!list)return;
@@ -518,4 +519,12 @@ $("#newButton").addEventListener("click",()=>openModal());$("#closeModal").addEv
  }catch(err){console.error(err);showToast(`Erro ao salvar: ${err.message||err}`)}
 });$("#closeDetail").addEventListener("click",closeDetail);$("#editButton").addEventListener("click",()=>state.selected&&openModal(state.selected));$("#deleteButton").addEventListener("click",async()=>{if(!state.selected)return;if(!confirm(`Excluir o desenvolvimento ${state.selected.pj||"selecionado"}?`))return;try{await removeRecord(state.selected.id);closeDetail()}catch(err){showToast(`Erro ao excluir: ${err.message||err}`)}});$("#importButton").addEventListener("click",()=>$("#fileInput").click());$("#fileInput").addEventListener("change",async e=>{const f=e.target.files?.[0];if(!f)return;try{await importExcel(f)}catch(err){console.error(err);showToast(err.message||"Falha ao importar Excel.")}finally{e.target.value=""}});$("#exportButton").addEventListener("click",exportExcel);["#searchInput","#stageFilter","#deadlineFilter","#countryFilter"].forEach(sel=>$(sel).addEventListener(sel==="#searchInput"?"input":"change",()=>{filterRecords();renderTable()}));
 
-renderForm();await connectData();
+try {
+ renderForm();
+ await connectData();
+} catch (error) {
+ console.error("COMEX PJ: falha na inicialização:", error);
+ const badge = document.querySelector("#syncBadge");
+ if (badge) {badge.className="sync-badge local";badge.textContent="Erro ao iniciar o COMEX PJ — consulte o console";}
+ showToast("Falha ao iniciar o COMEX PJ. Informe a TI.");
+}
