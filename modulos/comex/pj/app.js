@@ -10,24 +10,29 @@ await protegerModulo("comexPJ");
 const COLLECTION = "comex_pj_desenvolvimentos";
 const LOCAL_KEY = "smart_comex_pj_local_v1";
 const DAY = 86400000;
-// Prazo da etapa COMEX (envio ao destino), usado na tela, nos alertas e no Excel.
-const COMEX_ENVIO_PRAZO_DIAS = 10;
 
 const FIELD_DEFS = [
   {key:"diasProcesso", excel:"DIAS  EM PROCESSO", label:"DIAS EM PROCESSO", owner:"GERAL", type:"number", readonly:true},
-  {key:"dataRecebimentoMaterial", excel:"DATA RECEBIMENTO CARTELA/ MATERIAL DO CLIENTE", label:"DATA RECEBIMENTO CARTELA/ MATERIAL DO CLIENTE", owner:"COMERCIAL", type:"date"},
+  {key:"dataRecebimentoMaterial", excel:"DATA RECEBIMENTO CARTELA/ MATERIAL DO CLIENTE", label:"DATE / DATA", owner:"COMERCIAL", type:"date"},
   {key:"encaminhamentoEngenharia", excel:"ENCAMINHAMENTO PARA ENGENHARIA", label:"ENCAMINHAMENTO PARA ENGENHARIA", owner:"COMERCIAL", type:"date"},
-  {key:"vencimentoComercial", excel:"VENCIMENTO", label:"VENCIMENTO", owner:"COMERCIAL", type:"date"},
+  {key:"vencimentoComercial", excel:"VENCIMENTO", label:"VENCIMENTO COMERCIAL", owner:"COMERCIAL", type:"date"},
   {key:"pj", excel:"PJ #", label:"PJ #", owner:"ENGENHARIA", type:"text", required:true},
-  {key:"paisDestino", excel:"PAÍS DESTINO", label:"PAÍS DESTINO", owner:"ENGENHARIA", type:"text"},
+  {key:"paisDestino", excel:"PAÍS DESTINO", label:"LOCAL", owner:"ENGENHARIA", type:"text"},
   {key:"dataCotacao", excel:"DATA COTAÇÃO", label:"DATA COTAÇÃO", owner:"ENGENHARIA", type:"date"},
   {key:"mesSolicitado", excel:"MÊS SOLICITADO", label:"MÊS SOLICITADO", owner:"ENGENHARIA", type:"text"},
-  {key:"nomeMaterial", excel:"NOME DO MATERAIL DO PJ", label:"NOME DO MATERAIL DO PJ", owner:"ENGENHARIA", type:"text", required:true},
-  {key:"caracteristicaMaterial", excel:"CARACTERÍSTICAMATERIAL", label:"CARACTERÍSTICAMATERIAL", owner:"ENGENHARIA", type:"text"},
-  {key:"cor", excel:"COR", label:"COR", owner:"ENGENHARIA", type:"text"},
-  {key:"siglaCliente", excel:"SIGLA CLIENTE", label:"SIGLA CLIENTE", owner:"ENGENHARIA", type:"text"},
+  {key:"nomeMaterial", excel:"NOME DO MATERAIL DO PJ", label:"NAME / NOME", owner:"ENGENHARIA", type:"text", required:true},
+  {key:"caracteristicaMaterial", excel:"CARACTERÍSTICAMATERIAL", label:"CARACTERÍSTICA / MATERIAL", owner:"ENGENHARIA", type:"text"},
+  {key:"cor", excel:"COR", label:"COLOR / COR", owner:"ENGENHARIA", type:"text"},
+  {key:"siglaCliente", excel:"SIGLA CLIENTE", label:"CLIENT / CLIENTE", owner:"ENGENHARIA", type:"text"},
+  {key:"espessura", excel:"ESPESSURA", label:"THICKNESS / ESPESSURA", owner:"ENGENHARIA", type:"text"},
+  {key:"largura", excel:"LARGURA", label:"WIDTH / LARGURA", owner:"ENGENHARIA", type:"text"},
+  {key:"gramatura", excel:"GRAMATURA", label:"GRAMMAGE / GRAMATURA", owner:"ENGENHARIA", type:"text"},
+  {key:"brilho", excel:"BRILHO", label:"SHINE / BRILHO", owner:"ENGENHARIA", type:"text"},
+  {key:"gravacao", excel:"GRAVAÇÃO", label:"EMBOSS / GRAVAÇÃO", owner:"ENGENHARIA", type:"text"},
+  {key:"tamboreado", excel:"TAMBLEADO", label:"TUMBLE / TAMBLEADO", owner:"ENGENHARIA", type:"text"},
+  {key:"toque", excel:"TOQUE", label:"TOUCH / TOQUE", owner:"ENGENHARIA", type:"text"},
   {key:"encaminhamentoComex", excel:"ENCAMINHAMENTO COMEX", label:"ENCAMINHAMENTO COMEX", owner:"ENGENHARIA", type:"date"},
-  {key:"vencimentoEngenharia", excel:"VENCIMENTO", label:"VENCIMENTO", owner:"ENGENHARIA", type:"date"},
+  {key:"vencimentoEngenharia", excel:"VENCIMENTO", label:"VENCIMENTO ENGENHARIA", owner:"ENGENHARIA", type:"date"},
   {key:"aguardarEnvio", excel:"AGUARDAR ENVIO", label:"AGUARDAR ENVIO", owner:"CONTROLE", type:"select", options:["","SIM","NÃO"]},
   {key:"fedexAwbIda", excel:"FEDEX AWB", label:"FEDEX AWB", owner:"COMEX", type:"text"},
   {key:"dataEnvioDestino", excel:"DATA DE ENVIO PARA DESTINO", label:"DATA DE ENVIO PARA DESTINO", owner:"COMEX", type:"date"},
@@ -52,10 +57,9 @@ const FIELD_DEFS = [
 
 const SECTIONS = [
   {id:"geral", title:"Controle geral", owner:"GERAL", note:"Cálculo automático", keys:["diasProcesso"]},
-  {id:"comercial1", title:"1. Comercial", owner:"COMERCIAL", note:"Prazo D+1", keys:["dataRecebimentoMaterial","encaminhamentoEngenharia","vencimentoComercial"]},
-  {id:"engenharia1", title:"2. Engenharia", owner:"ENGENHARIA", note:"Prazo 2 dias", keys:["pj","paisDestino","dataCotacao","mesSolicitado","nomeMaterial","caracteristicaMaterial","cor","siglaCliente","encaminhamentoComex","vencimentoEngenharia"]},
-  {id:"controle", title:"Controle de envio", owner:"CONTROLE", note:"Campo da planilha entre Engenharia e COMEX", keys:["aguardarEnvio"]},
-  {id:"comex1", title:"3. COMEX", owner:"COMEX", note:`Prazo até ${COMEX_ENVIO_PRAZO_DIAS} dias`, keys:["fedexAwbIda","dataEnvioDestino"]},
+  {id:"fichaPJ", title:"1. Ficha PJ · Comercial + Engenharia", owner:"FICHA", note:"Cadastro inicial unificado conforme a ficha do PJ", keys:["pj","siglaCliente","dataRecebimentoMaterial","nomeMaterial","espessura","largura","gramatura","paisDestino","cor","brilho","gravacao","tamboreado","toque","encaminhamentoEngenharia","vencimentoComercial","dataCotacao","mesSolicitado","caracteristicaMaterial","encaminhamentoComex","vencimentoEngenharia"]},
+  {id:"controle", title:"2. Controle de envio", owner:"CONTROLE", note:"Campo da planilha entre Engenharia e COMEX", keys:["aguardarEnvio"]},
+  {id:"comex1", title:"3. COMEX", owner:"COMEX", note:"Prazo até 10 dias", keys:["fedexAwbIda","dataEnvioDestino"]},
   {id:"china", title:"4. China / Fornecedor", owner:"CHINA", note:"Trânsito estimado 10 dias · desenvolvimento estimado 15 dias", keys:["dataRecebimentoDestino","fornecedor","somenteCotar","desenvolver","dataInicio","dataFim","fedexAwbVolta","dataEnvioBrasil","statusDestino"]},
   {id:"comex2", title:"5. COMEX", owner:"COMEX", note:"Retorno ao Brasil estimado em 10 dias", keys:["dataPrecoOrigem","dataRecebimentoBrasil","dataEncaminhamentoEngenhariaFinal"]},
   {id:"engenharia2", title:"6. Engenharia", owner:"ENGENHARIA", note:"Entrega do material ao Comercial", keys:["dataEntregueComercial"]},
@@ -65,7 +69,7 @@ const SECTIONS = [
 const TIMELINE = [
   {id:"commercial", label:"Comercial", complete:r=>!!r.encaminhamentoEngenharia, start:r=>r.dataRecebimentoMaterial, due:r=>r.vencimentoComercial || addDaysString(r.dataRecebimentoMaterial,1)},
   {id:"engineering", label:"Engenharia", complete:r=>!!r.encaminhamentoComex, start:r=>r.encaminhamentoEngenharia, due:r=>r.vencimentoEngenharia || addDaysString(r.encaminhamentoEngenharia,2)},
-  {id:"comex-out", label:"COMEX", complete:r=>!!r.dataEnvioDestino, start:r=>r.encaminhamentoComex, due:r=>addDaysString(r.encaminhamentoComex,COMEX_ENVIO_PRAZO_DIAS)},
+  {id:"comex-out", label:"COMEX", complete:r=>!!r.dataEnvioDestino, start:r=>r.encaminhamentoComex, due:r=>addDaysString(r.encaminhamentoComex,10)},
   {id:"china-arrival", label:"China · Recebimento", complete:r=>!!r.dataRecebimentoDestino, start:r=>r.dataEnvioDestino, due:r=>addDaysString(r.dataEnvioDestino,10)},
   {id:"china-development", label:"China · Desenvolvimento", complete:r=>!!r.dataFim || !!r.dataEnvioBrasil, start:r=>r.dataInicio || r.dataRecebimentoDestino, due:r=>addDaysString(r.dataInicio || r.dataRecebimentoDestino,15)},
   {id:"return", label:"Retorno Brasil", complete:r=>!!r.dataRecebimentoBrasil, start:r=>r.dataEnvioBrasil, due:r=>addDaysString(r.dataEnvioBrasil,10)},
@@ -123,14 +127,19 @@ const COUNTRY_FLAG_SVG={
 function countryFlagHtml(country){const code=countryCode(country);const svg=COUNTRY_FLAG_SVG[code];if(svg){const src=`data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;return `<img class="country-flag-img" src="${src}" alt="Bandeira ${escapeHtml(country)}">`}if(code)return `<span class="country-code-flag">${escapeHtml(code.toUpperCase())}</span>`;return '<span class="country-flag-fallback"><i class="fa-regular fa-flag"></i></span>'}
 function countryLabel(country){return valueText(country)}
 function countryVisualHtml(country){const txt=valueText(country);if(txt==="—")return txt;return `<span class="country-visual">${countryFlagHtml(country)}<span>${escapeHtml(txt)}</span></span>`}
-function updateCountryPreview(){const input=$("[name=paisDestino]");const preview=$("#countryPreview");if(!preview)return;const value=input?.value?.trim()||"";preview.innerHTML=value?countryVisualHtml(value):'<span class="country-preview-placeholder">Bandeira automática</span>';preview.classList.toggle("active",!!value)}
+function updateCountryPreview(){const input=$("[name=paisDestino]");const preview=$("#countryPreview");const value=input?.value?.trim()||"";if(preview){preview.innerHTML=value?countryVisualHtml(value):'<span class="country-preview-placeholder">Bandeira automática</span>';preview.classList.toggle("active",!!value)}document.querySelectorAll(".country-quick-btn").forEach(btn=>btn.classList.toggle("active",normalize(btn.dataset.value)===normalize(value)))}
 function displayFieldValue(field, raw){return field?.type==="date"?formatDate(raw):valueText(raw)}
 // A refação reinicia na CHINA/FORNECEDOR, mantendo intacto o ciclo original.
-const REFACAO_SECTIONS = SECTIONS.slice(5).map(section=>section.id==="china"
+const REFACAO_SECTIONS = SECTIONS.filter(section=>["china","comex2","engenharia2","comercial2"].includes(section.id)).map(section=>section.id==="china"
   ? {...section, keys:["fornecedor",...section.keys.filter(k=>k!=="fornecedor")]}
   : section);
 const REFACAO_KEYS = REFACAO_SECTIONS.flatMap(s=>s.keys);
-const EXCEL_LAYOUT = ["diasProcesso","dataRecebimentoMaterial","encaminhamentoEngenharia","vencimentoComercial","pj","paisDestino","dataCotacao","mesSolicitado","nomeMaterial","caracteristicaMaterial","cor","siglaCliente","encaminhamentoComex",null,"vencimentoEngenharia","aguardarEnvio","fedexAwbIda","dataEnvioDestino","dataRecebimentoDestino","fornecedor","somenteCotar","desenvolver","dataInicio","dataFim","fedexAwbVolta","dataEnvioBrasil","statusDestino","dataPrecoOrigem","dataRecebimentoBrasil","dataEncaminhamentoEngenhariaFinal","dataEntregueComercial","retornoComercial","observacoesComercial","statusFinal","refazerComercial"];
+const EXCEL_LAYOUT = [
+  "diasProcesso","dataRecebimentoMaterial","encaminhamentoEngenharia","vencimentoComercial",
+  "pj","paisDestino","dataCotacao","mesSolicitado","nomeMaterial","caracteristicaMaterial","cor","siglaCliente","encaminhamentoComex",null,"vencimentoEngenharia","aguardarEnvio",
+  "fedexAwbIda","dataEnvioDestino","dataRecebimentoDestino","fornecedor","somenteCotar","desenvolver","dataInicio","dataFim","fedexAwbVolta","dataEnvioBrasil","statusDestino","dataPrecoOrigem","dataRecebimentoBrasil","dataEncaminhamentoEngenhariaFinal","dataEntregueComercial","retornoComercial","observacoesComercial","statusFinal","refazerComercial",
+  "espessura","largura","gramatura","brilho","gravacao","tamboreado","toque"
+];
 function upper(v){return normalize(v).toUpperCase()}
 function validEnd(v){return ["APROVADO","ENCERRADO","REPROVADO"].includes(upper(v))}
 function shouldRefazer(obj){return (upper(obj.retornoComercial)==="REPROVADO" || upper(obj.statusFinal)==="REPROVADO") && upper(obj.refazerComercial)!=="NAO"}
@@ -276,19 +285,53 @@ async function removeRecord(id){if(state.mode==="online")await deleteDoc(doc(db,
 function cycleFormHtml(cycle,i,activeIndex){
  const locked=i<activeIndex;
  return `<section class="refacao-block ${locked?"refacao-bloqueada":"refacao-ativa"}" data-refacao="${i}" data-refacao-ativa="${locked?"0":"1"}"><div class="refacao-title"><strong>↻ REFAÇÃO ${i+1} — CHINA / FORNECEDOR</strong><span>${locked?"HISTÓRICO PRESERVADO · SOMENTE CONSULTA":"CICLO ATIVO · COMECE PELO FORNECEDOR"} · Aberta em ${escapeHtml(formatDate(cycle.abertoEm))}</span></div>`+
- REFACAO_SECTIONS.map((section,j)=>`<section class="form-section"><div class="form-section-head"><h3>${j+8}. ${escapeHtml(section.title.replace(/^\d+\. /,""))} · Refação ${i+1}</h3><span>${escapeHtml(section.note)}</span></div><div class="fields">${section.keys.map(key=>fieldHtml(FIELD_DEFS.find(f=>f.key===key),`refacao_${i}__`,locked)).join("")}</div></section>`).join("")+`</section>`;
+ REFACAO_SECTIONS.map((section,j)=>`<section class="form-section" data-owner="${escapeHtml(section.owner||"")}"><div class="form-section-head"><h3>${j+8}. ${escapeHtml(section.title.replace(/^\d+\. /,""))} · Refação ${i+1}</h3><span>${escapeHtml(section.note)}</span></div><div class="fields">${section.keys.map(key=>fieldHtml(FIELD_DEFS.find(f=>f.key===key),`refacao_${i}__`,locked)).join("")}</div></section>`).join("")+`</section>`;
+}
+function fichaSectionHtml(locked=false){
+ const byKey=Object.fromEntries(FIELD_DEFS.map(f=>[f.key,f]));
+ return `<section class="form-section ficha-pj-section ${locked?"secao-historica":""}" data-owner="FICHA"><div class="form-section-head"><h3>1. Ficha PJ · Comercial + Engenharia</h3><span>${locked?"HISTÓRICO ORIGINAL · SOMENTE CONSULTA":"Cadastro inicial unificado conforme a ficha do PJ"}</span></div><div class="pj-ficha-layout"><div class="pj-number-row">${fieldHtml(byKey.pj,"",locked)}</div><div class="pj-ficha-card"><div class="pj-ficha-column pj-ficha-left">${fieldHtml(byKey.siglaCliente,"",locked)}${fieldHtml(byKey.dataRecebimentoMaterial,"",locked)}${fieldHtml(byKey.nomeMaterial,"",locked)}${fieldHtml(byKey.espessura,"",locked)}${fieldHtml(byKey.largura,"",locked)}${fieldHtml(byKey.gramatura,"",locked)}</div><div class="pj-ficha-column pj-ficha-right">${fieldHtml(byKey.paisDestino,"",locked)}${fieldHtml(byKey.cor,"",locked)}${fieldHtml(byKey.brilho,"",locked)}${fieldHtml(byKey.gravacao,"",locked)}${fieldHtml(byKey.tamboreado,"",locked)}${fieldHtml(byKey.toque,"",locked)}</div></div><div class="pj-process-grid">${fieldHtml(byKey.encaminhamentoEngenharia,"",locked)}${fieldHtml(byKey.vencimentoComercial,"",locked)}${fieldHtml(byKey.dataCotacao,"",locked)}${fieldHtml(byKey.mesSolicitado,"",locked)}${fieldHtml(byKey.caracteristicaMaterial,"",locked)}${fieldHtml(byKey.encaminhamentoComex,"",locked)}${fieldHtml(byKey.vencimentoEngenharia,"",locked)}</div></div></section>`;
 }
 function renderForm(record=null){
  const byKey=Object.fromEntries(FIELD_DEFS.map(f=>[f.key,f]));
  const cycles=record?.refacoes||[];
  const notice=cycles.length?`<div class="refacao-aviso" role="note"><strong>Histórico do PJ preservado.</strong> A primeira passagem e as refações anteriores estão bloqueadas para edição. Preencha somente a <b>Refação ${cycles.length}</b>, a partir do campo <b>Fornecedor</b>.</div>`:"";
- $("#formSections").innerHTML=notice+
- SECTIONS.map(section=>`<section class="form-section ${cycles.length?"secao-historica":""}"><div class="form-section-head"><h3>${escapeHtml(section.title)}</h3><span>${cycles.length?"HISTÓRICO ORIGINAL · SOMENTE CONSULTA":escapeHtml(section.note)}</span></div><div class="fields">${section.keys.map(k=>fieldHtml(byKey[k],"",cycles.length>0)).join("")}</div></section>`).join("")+
- cycles.map((cycle,i)=>cycleFormHtml(cycle,i,cycles.length-1)).join("");
- const b=$("[name=dataRecebimentoMaterial]"),c=$("[name=encaminhamentoEngenharia]"),country=$("[name=paisDestino]");
+ const otherSections=SECTIONS.filter(section=>section.id!=="fichaPJ").map(section=>`<section class="form-section ${cycles.length?"secao-historica":""}" data-owner="${escapeHtml(section.owner||"")}"><div class="form-section-head"><h3>${escapeHtml(section.title)}</h3><span>${cycles.length?"HISTÓRICO ORIGINAL · SOMENTE CONSULTA":escapeHtml(section.note)}</span></div><div class="fields">${section.keys.map(k=>fieldHtml(byKey[k],"",cycles.length>0)).join("")}</div></section>`).join("");
+ $("#formSections").innerHTML=notice+fichaSectionHtml(cycles.length>0)+otherSections+cycles.map((cycle,i)=>cycleFormHtml(cycle,i,cycles.length-1)).join("");
+ setupCountryPicker(cycles.length>0, record?.paisDestino||"");
+ setupColorField(record?.cor||"", cycles.length>0);
+ const b=$("[name=dataRecebimentoMaterial]"),c=$("[name=encaminhamentoEngenharia]");
  b?.addEventListener("change",()=>{const d=$("[name=vencimentoComercial]");if(d&&!d.value)d.value=addDaysString(b.value,1);const m=$("[name=mesSolicitado]");if(m&&!m.value&&b.value)m.value=String(dateObj(b.value).getMonth()+1);updateLiveDays()});
  c?.addEventListener("change",()=>{const d=$("[name=vencimentoEngenharia]");if(d&&!d.value)d.value=addDaysString(c.value,2);updateLiveDays()});
- country?.addEventListener("input",updateCountryPreview);updateCountryPreview();
+ updateCountryPreview();
+}
+function renderColorRow(value="", locked=false){
+ return `<div class="multi-color-row"><input type="text" class="color-item-input" value="${escapeHtml(value)}" ${locked?"disabled":""} placeholder="Informe a cor">${locked?"":'<button type="button" class="remove-color-btn" title="Remover cor"><i class="fa-solid fa-trash"></i></button>'}</div>`;
+}
+function parseColorList(value){return String(value||"").split(/[;
+]+/).map(item=>item.trim()).filter(Boolean)}
+function setupColorField(value="", locked=false){
+ const list=$("[data-multi-color='root']");
+ if(!list)return;
+ const colors=parseColorList(value);
+ list.innerHTML=(colors.length?colors:[""]).map(color=>renderColorRow(color,locked)).join("");
+ const addBtn=document.querySelector(".add-color-btn");
+ const bindRemovers=()=>list.querySelectorAll(".remove-color-btn").forEach(btn=>btn.onclick=()=>{const rows=[...list.querySelectorAll('.multi-color-row')];if(rows.length<=1){rows[0].querySelector('input').value='';return;}btn.closest('.multi-color-row')?.remove();});
+ bindRemovers();
+ if(addBtn&&!locked)addBtn.onclick=()=>{list.insertAdjacentHTML("beforeend",renderColorRow("",false));bindRemovers();};
+}
+function collectColorField(){
+ const list=$("[data-multi-color='root']");
+ if(!list)return "";
+ return [...list.querySelectorAll('.color-item-input')].map(input=>input.value.trim()).filter(Boolean).join('; ');
+}
+function setupCountryPicker(locked=false, value=""){
+ const input=$("[name=paisDestino]");
+ if(!input)return;
+ input.value=value||input.value||"";
+ document.querySelectorAll(".country-quick-btn").forEach(btn=>{
+  btn.disabled=locked;
+  btn.onclick=()=>{input.value=btn.dataset.value;updateCountryPreview();};
+ });
 }
 function fieldHtml(f,prefix="",locked=false){
  const name=prefix+f.key,req=f.required&&!prefix&&!locked?"required":"",ro=f.readonly?"readonly":"",disabled=locked?"disabled":"";
@@ -296,8 +339,9 @@ function fieldHtml(f,prefix="",locked=false){
  if(f.type==="select")control=`<select name="${name}" ${disabled}>${f.options.map(o=>`<option value="${escapeHtml(o)}">${escapeHtml(o||"Selecione")}</option>`).join("")}</select>`;
  else if(f.type==="textarea")control=`<textarea name="${name}" rows="3" ${disabled} placeholder="Descreva os motivos técnicos e as observações…"></textarea>`;
  else control=`<input name="${name}" type="${f.type||"text"}" ${req} ${ro} ${disabled}>`;
- if(f.key==="paisDestino"&&!prefix)control=`<div class="country-field">${control}<div id="countryPreview" class="country-preview">Bandeira automática</div></div>`;
- return `<div class="field ${["nomeMaterial","caracteristicaMaterial","observacoesComercial"].includes(f.key)?"wide":""} ${locked?"field-historico":""}"><label>${escapeHtml(f.label)}</label>${control}</div>`;
+ if(f.key==="paisDestino"&&!prefix)control=`<div class="country-field"><div class="country-quick-actions"><button type="button" class="country-quick-btn" data-value="CHINA">CHINA</button><button type="button" class="country-quick-btn" data-value="PARAGUAI">PARAGUAI</button></div><div class="country-entry">${control}<div id="countryPreview" class="country-preview">Bandeira automática</div></div></div>`;
+ if(f.key==="cor"&&!prefix)control=`<div class="multi-color-field"><div class="multi-color-list" data-multi-color="root"></div>${locked?"":'<button type="button" class="add-color-btn"><i class="fa-solid fa-plus"></i> Adicionar outra cor</button>'}</div>`;
+ return `<div class="field ${["nomeMaterial","caracteristicaMaterial","observacoesComercial"].includes(f.key)?"wide":""} ${["siglaCliente","dataRecebimentoMaterial","nomeMaterial","espessura","largura","gramatura","paisDestino","cor","brilho","gravacao","tamboreado","toque"].includes(f.key)&&!prefix?"ficha-cell":""} ${locked?"field-historico":""}"><label>${escapeHtml(f.label)}</label>${control}</div>`;
 }
 function updateLiveDays(){const start=$("[name=dataRecebimentoMaterial]")?.value;const el=$("[name=diasProcesso]");if(el)el.value=start?diffDays(start,dateString(today())):0}
 function openModal(record=null){
@@ -306,6 +350,8 @@ function openModal(record=null){
  $("#modalTitle").textContent=record?`Editar ${record.pj||"PJ"}`:"Novo Desenvolvimento";
  FIELD_DEFS.forEach(f=>{const el=$(`[name=${f.key}]`);if(el){const val=record?.[f.key]??"";if(f.type==="select"&&val&&![...el.options].some(o=>o.value===val))el.add(new Option(val,val));el.value=val}});
  (record?.refacoes||[]).forEach((cycle,i)=>REFACAO_KEYS.forEach(key=>{const el=$(`[name=refacao_${i}__${key}]`);if(el){const val=cycle?.[key]??"";if(el.tagName==="SELECT"&&val&&![...el.options].some(o=>o.value===val))el.add(new Option(val,val));el.value=val;}}));
+ setupCountryPicker((record?.refacoes||[]).length>0, record?.paisDestino||"");
+ setupColorField(record?.cor||"", (record?.refacoes||[]).length>0);
  if(record)$("[name=diasProcesso]").value=totalDays(record);updateLiveDays();updateCountryPreview();$("#modal").classList.remove("hidden");
 }
 function closeModal(){$("#modal").classList.add("hidden");state.editBaseline=null}
@@ -313,6 +359,7 @@ function formRecord(){
  const existing=state.editBaseline;
  const r=existing?structuredClone(existing):{historico:[],refacoes:[]};
  FIELD_DEFS.forEach(f=>{const el=$(`[name=${f.key}]`);if(el&&!f.readonly&&!el.disabled)r[f.key]=el.value.trim()});
+ r.cor=collectColorField();
  (r.refacoes||[]).forEach((cycle,i)=>REFACAO_KEYS.forEach(key=>{const el=$(`[name=refacao_${i}__${key}]`);if(el&&!el.disabled)cycle[key]=el.value.trim()}));
  r.id=$("#recordId").value||"";r.diasProcesso=totalDays(r);return r;
 }
@@ -436,7 +483,7 @@ function exportExcel(){
  if(!window.XLSX){showToast("Biblioteca Excel indisponível.");return;}
  const empty=()=>Array(EXCEL_LAYOUT.length).fill("");
  const row2=empty(),row3=empty(),row5=empty();
- row2[1]="PRAZO D+1";row2[4]="PRAZO 2 DIAS";row2[16]=`PRAZO ATÉ ${COMEX_ENVIO_PRAZO_DIAS} DIAS`;
+ row2[1]="PRAZO D+1";row2[4]="PRAZO 2 DIAS";row2[16]="PRAZO ATÉ 10 DIAS";
  row3[1]="COMERCIAL";row3[4]="ENGENHARIA";row3[16]="COMEX";row3[18]="CHINA";row3[27]="COMEX";row3[30]="ENGENHARIA";row3[31]="COMERCIAL";
  row5[17]="ESTIMADO EM 10 DIAS";row5[19]="ESTIMADO EM 15 DIAS";row5[28]="ESTIMADO EM 10 DIAS";
  const headers=EXCEL_LAYOUT.map(key=>key?FIELD_DEFS.find(f=>f.key===key)?.excel||"":"");

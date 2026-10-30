@@ -216,3 +216,54 @@ td{font-size:9.5px;padding:7px}
 .secao-historica .form-section-head span{color:#b8cce6}
 .field-historico input:disabled,.field-historico select:disabled,.field-historico textarea:disabled{opacity:1;background:#193555;color:#e6effa;border-color:#476280;cursor:not-allowed;-webkit-text-fill-color:#e6effa}
 @media(max-width:900px){.refacao-aviso{font-size:11px}}
+
+/* V9 — Ficha PJ unificada + múltiplas cores + faixas por setor */
+.form-section[data-owner="GERAL"] .form-section-head{background:linear-gradient(90deg,#163a74,#204f93)}
+.form-section[data-owner="FICHA"] .form-section-head{background:linear-gradient(90deg,#6d4c19,#b98027)}
+.form-section[data-owner="CONTROLE"] .form-section-head{background:linear-gradient(90deg,#244963,#2f6790)}
+.form-section[data-owner="COMEX"] .form-section-head{background:linear-gradient(90deg,#0f6b76,#1597a8)}
+.form-section[data-owner="CHINA"] .form-section-head{background:linear-gradient(90deg,#25396d,#3b5fb4)}
+.form-section[data-owner="ENGENHARIA"] .form-section-head{background:linear-gradient(90deg,#4d316b,#7b4fb3)}
+.form-section[data-owner="COMERCIAL"] .form-section-head{background:linear-gradient(90deg,#6a2d3b,#b04962)}
+
+.ficha-pj-section .form-section-head h3{letter-spacing:.02em}
+.pj-ficha-layout{display:flex;flex-direction:column;gap:14px}
+.pj-number-row .field{max-width:240px}
+.pj-number-row .field input{font-size:16px;font-weight:800;letter-spacing:.04em}
+.pj-ficha-card{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+.pj-ficha-column{display:grid;grid-template-columns:1fr;gap:0;border:1px solid rgba(111,155,212,.5);border-radius:10px;overflow:hidden;background:rgba(5,24,55,.26)}
+.pj-ficha-column .field{margin:0;border-bottom:1px solid rgba(111,155,212,.32);border-radius:0;padding:10px 12px;background:transparent}
+.pj-ficha-column .field:last-child{border-bottom:none}
+.pj-ficha-column .field label{font-size:11px;font-weight:800;color:#fff;text-transform:uppercase;letter-spacing:.03em;margin-bottom:6px}
+.pj-ficha-column .field input,
+.pj-ficha-column .field select,
+.pj-ficha-column .field textarea{min-height:40px}
+.pj-process-grid{display:grid;grid-template-columns:repeat(3,minmax(180px,1fr));gap:12px}
+.pj-process-grid .field.wide{grid-column:span 2}
+
+.country-field{display:flex;flex-direction:column;gap:8px}
+.country-quick-actions{display:flex;gap:8px;flex-wrap:wrap}
+.country-quick-btn{border:1px solid #5c87bf;background:#0b2e64;color:#eef5ff;border-radius:8px;padding:7px 12px;font-size:12px;font-weight:800;cursor:pointer}
+.country-quick-btn:hover{background:#174989}
+.country-quick-btn.active{background:#eef5ff;color:#0a2a5c;border-color:#eef5ff}
+.country-entry{display:grid;grid-template-columns:minmax(130px,1fr) auto;gap:8px;align-items:center}
+.country-entry input{min-width:0}
+
+.multi-color-field{display:flex;flex-direction:column;gap:8px}
+.multi-color-list{display:flex;flex-direction:column;gap:8px}
+.multi-color-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
+.multi-color-row input{min-width:0}
+.remove-color-btn,.add-color-btn{border:1px solid #5c87bf;background:#0b2e64;color:#eef5ff;border-radius:8px;cursor:pointer}
+.remove-color-btn{width:40px;height:40px;display:grid;place-items:center}
+.remove-color-btn:hover,.add-color-btn:hover{background:#174989}
+.add-color-btn{padding:9px 12px;display:inline-flex;align-items:center;gap:8px;font-weight:800;align-self:flex-start}
+
+@media(max-width:980px){
+  .pj-ficha-card{grid-template-columns:1fr}
+  .pj-process-grid{grid-template-columns:repeat(2,minmax(170px,1fr))}
+}
+@media(max-width:640px){
+  .country-entry{grid-template-columns:1fr}
+  .pj-process-grid{grid-template-columns:1fr}
+  .pj-process-grid .field.wide{grid-column:span 1}
+}
