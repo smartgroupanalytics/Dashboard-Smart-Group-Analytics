@@ -105794,7 +105794,7 @@
   {
     "fonte_comercial": "STK",
     "dt_entrada": "2026-10-20",
-    "dt_faturam": "2026-10-20",
+    "dt_faturam": "2026-10-30",
     "produto": "15597",
     "desc_completa": "NAPA LINHO DAKAR LIMONCELLO",
     "pedido": "7543",
@@ -105813,9 +105813,7 @@
     "representante": "4",
     "abreviacao": "CRISTIANO",
     "vlr_comissao_rep": 191.52,
-    "cod_altern_1": "VERAO 2027",
-    "dt_faturam_original": "2026-10-30",
-    "data_venda_ajustada": true
+    "cod_altern_1": "VERAO 2027"
   },
   {
     "fonte_comercial": "STK",

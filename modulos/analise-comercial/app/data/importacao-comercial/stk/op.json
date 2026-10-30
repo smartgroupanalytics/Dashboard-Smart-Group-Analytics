@@ -224,8 +224,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-10-29",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -241,75 +241,15 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8798",
-    "produto": "17224",
-    "desc_completa": "IBIZA LASER ROSE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 200,
-    "dt_saida": "2026-10-28",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8812",
-    "produto": "16605",
-    "desc_completa": "NAPA FLOATER VENEZIA DOURADO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 500,
-    "dt_saida": "2026-10-29",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8834",
-    "produto": "17307",
-    "desc_completa": "MADISON CAFE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 200,
-    "dt_saida": "2026-10-30",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8835",
-    "produto": "17308",
-    "desc_completa": "MADISON PRETO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 200,
-    "dt_saida": "2026-10-30",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8836",
-    "produto": "17306",
-    "desc_completa": "MADISON OFF WHITE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 200,
-    "dt_saida": "2026-10-30",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8841",
     "produto": "18336",
     "desc_completa": "ASPEN PRETO",
     "grupo": 39,
     "subgrupo": 41,
-    "qtd_produzir": 40,
+    "qtd_produzir": 7,
     "dt_saida": "2026-10-30",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "centro_custo": 10,
+    "abreviacao": "REV 1"
   },
   {
     "fonte_comercial": "STK",
@@ -334,18 +274,6 @@
     "dt_saida": "2026-11-05",
     "centro_custo": 13,
     "abreviacao": "JUMBO 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8868",
-    "produto": "12399",
-    "desc_completa": "LILLY MANTEIGA",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 200,
-    "dt_saida": "2026-11-03",
-    "centro_custo": 0,
-    "abreviacao": ""
   },
   {
     "fonte_comercial": "STK",
@@ -409,18 +337,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8906",
-    "produto": "18385",
-    "desc_completa": "DENVER FML PRETO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 200,
-    "dt_saida": "2026-11-06",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8907",
     "produto": "18171",
     "desc_completa": "ARUBA BEGE",
@@ -464,6 +380,78 @@
     "subgrupo": 41,
     "qtd_produzir": 35.5,
     "dt_saida": "2026-11-04",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8924",
+    "produto": "18233",
+    "desc_completa": "OREGON PRETO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 37.5,
+    "dt_saida": "2026-10-29",
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8925",
+    "produto": "18010",
+    "desc_completa": "ASPEN OURO ROSADO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 40,
+    "dt_saida": "2026-11-06",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8926",
+    "produto": "11782",
+    "desc_completa": "MAIORCA OFF WHITE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 40,
+    "dt_saida": "2026-11-06",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8927",
+    "produto": "11783",
+    "desc_completa": "MAIORCA BEGE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 40,
+    "dt_saida": "2026-11-06",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8928",
+    "produto": "18348",
+    "desc_completa": "NAPA MADRID BRANCO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-11-06",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8929",
+    "produto": "16468",
+    "desc_completa": "SAVOY GLAM OURO ROSADO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 40,
+    "dt_saida": "2026-11-06",
     "centro_custo": 0,
     "abreviacao": ""
   }
