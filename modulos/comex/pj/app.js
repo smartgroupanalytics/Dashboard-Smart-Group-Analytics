@@ -289,7 +289,7 @@ function cycleFormHtml(cycle,i,activeIndex){
 }
 function fichaSectionHtml(locked=false){
  const byKey=Object.fromEntries(FIELD_DEFS.map(f=>[f.key,f]));
- return `<section class="form-section ficha-pj-section ${locked?"secao-historica":""}" data-owner="FICHA"><div class="form-section-head"><h3>1. Ficha PJ · Comercial + Engenharia</h3><span>${locked?"HISTÓRICO ORIGINAL · SOMENTE CONSULTA":"Cadastro inicial unificado conforme a ficha do PJ"}</span></div><div class="pj-ficha-layout"><div class="pj-number-row">${fieldHtml(byKey.pj,"",locked)}</div><div class="pj-ficha-card"><div class="pj-ficha-column pj-ficha-left">${fieldHtml(byKey.siglaCliente,"",locked)}${fieldHtml(byKey.dataRecebimentoMaterial,"",locked)}${fieldHtml(byKey.nomeMaterial,"",locked)}${fieldHtml(byKey.espessura,"",locked)}${fieldHtml(byKey.largura,"",locked)}${fieldHtml(byKey.gramatura,"",locked)}</div><div class="pj-ficha-column pj-ficha-right">${fieldHtml(byKey.paisDestino,"",locked)}${fieldHtml(byKey.cor,"",locked)}${fieldHtml(byKey.brilho,"",locked)}${fieldHtml(byKey.gravacao,"",locked)}${fieldHtml(byKey.tamboreado,"",locked)}${fieldHtml(byKey.toque,"",locked)}</div></div><div class="pj-process-grid">${fieldHtml(byKey.encaminhamentoEngenharia,"",locked)}${fieldHtml(byKey.vencimentoComercial,"",locked)}${fieldHtml(byKey.dataCotacao,"",locked)}${fieldHtml(byKey.mesSolicitado,"",locked)}${fieldHtml(byKey.caracteristicaMaterial,"",locked)}${fieldHtml(byKey.encaminhamentoComex,"",locked)}${fieldHtml(byKey.vencimentoEngenharia,"",locked)}</div></div></section>`;
+ return `<section class="form-section ficha-pj-section ${locked?"secao-historica":""}" data-owner="FICHA"><div class="form-section-head ficha-pj-heading"><h3>1. Ficha PJ · Comercial + Engenharia</h3><div class="ficha-pj-tools"><button id="fichaExportButton" type="button" class="ficha-excel-button" title="Exportar somente os campos desta ficha para um Excel"><i class="fa-solid fa-file-arrow-down"></i> Exportar Ficha</button>${locked?"":'<button id="fichaImportButton" type="button" class="ficha-excel-button" title="Preencher somente esta ficha com dados de um Excel"><i class="fa-solid fa-file-arrow-up"></i> Importar Excel</button>'}<input id="fichaExcelInput" type="file" accept=".xlsx,.xls" hidden></div></div><div class="ficha-pj-hint">${locked?"Ficha original preservada para consulta · exportação disponível":"Importe apenas dados desta ficha · o banco só será atualizado após clicar em Salvar Desenvolvimento"}</div><div class="pj-ficha-layout"><div class="pj-number-row">${fieldHtml(byKey.pj,"",locked)}</div><div class="pj-ficha-card"><div class="pj-ficha-column pj-ficha-left">${fieldHtml(byKey.siglaCliente,"",locked)}${fieldHtml(byKey.dataRecebimentoMaterial,"",locked)}${fieldHtml(byKey.nomeMaterial,"",locked)}${fieldHtml(byKey.espessura,"",locked)}${fieldHtml(byKey.largura,"",locked)}${fieldHtml(byKey.gramatura,"",locked)}</div><div class="pj-ficha-column pj-ficha-right">${fieldHtml(byKey.paisDestino,"",locked)}${fieldHtml(byKey.cor,"",locked)}${fieldHtml(byKey.brilho,"",locked)}${fieldHtml(byKey.gravacao,"",locked)}${fieldHtml(byKey.tamboreado,"",locked)}${fieldHtml(byKey.toque,"",locked)}</div></div><div class="pj-process-grid">${fieldHtml(byKey.encaminhamentoEngenharia,"",locked)}${fieldHtml(byKey.vencimentoComercial,"",locked)}${fieldHtml(byKey.dataCotacao,"",locked)}${fieldHtml(byKey.mesSolicitado,"",locked)}${fieldHtml(byKey.caracteristicaMaterial,"",locked)}${fieldHtml(byKey.encaminhamentoComex,"",locked)}${fieldHtml(byKey.vencimentoEngenharia,"",locked)}</div></div></section>`;
 }
 function renderForm(record=null){
  const byKey=Object.fromEntries(FIELD_DEFS.map(f=>[f.key,f]));
@@ -301,6 +301,7 @@ function renderForm(record=null){
  $("#formSections").innerHTML=notice+generalSection+fichaSectionHtml(cycles.length>0)+otherSections+cycles.map((cycle,i)=>cycleFormHtml(cycle,i,cycles.length-1)).join("");
  setupCountryPicker(cycles.length>0, record?.paisDestino||"");
  setupColorField(record?.cor||"", cycles.length>0);
+ bindFichaExcelActions(cycles.length>0);
  const b=$("[name=dataRecebimentoMaterial]"),c=$("[name=encaminhamentoEngenharia]");
  b?.addEventListener("change",()=>{const d=$("[name=vencimentoComercial]");if(d&&!d.value)d.value=addDaysString(b.value,1);const m=$("[name=mesSolicitado]");if(m&&!m.value&&b.value)m.value=String(dateObj(b.value).getMonth()+1);updateLiveDays()});
  c?.addEventListener("change",()=>{const d=$("[name=vencimentoEngenharia]");if(d&&!d.value)d.value=addDaysString(c.value,2);updateLiveDays()});
@@ -363,6 +364,122 @@ function formRecord(){
  r.cor=collectColorField();
  (r.refacoes||[]).forEach((cycle,i)=>REFACAO_KEYS.forEach(key=>{const el=$(`[name=refacao_${i}__${key}]`);if(el&&!el.disabled)cycle[key]=el.value.trim()}));
  r.id=$("#recordId").value||"";r.diasProcesso=totalDays(r);return r;
+}
+
+
+// Excel exclusivo da Ficha PJ: nenhum campo de COMEX, China, controle de envio ou refação é importado.
+const FICHA_KEYS = SECTIONS.find(section=>section.id==="fichaPJ").keys;
+function fichaCurrentValue(key){
+ if(key==="cor")return collectColorField();
+ return document.querySelector(`[name="${key}"]`)?.value?.trim()||"";
+}
+function fichaExcelSafeText(value){
+ const text=String(value??"");
+ return /^[=+@]/.test(text)?`'${text}`:text;
+}
+function exportFichaExcel(){
+ if(!window.XLSX){showToast("Biblioteca Excel indisponível.");return;}
+ const rows=[
+  ["SMART GROUP | FICHA PJ — COMERCIAL + ENGENHARIA",""],
+  ["Preencha uma ficha por arquivo. Na COR, separe as cores por ponto e vírgula (ex.: PRETO; AZUL).",""],
+  ["CAMPO","VALOR"],
+  ...FICHA_KEYS.map(key=>{
+   const f=FIELD_DEFS.find(item=>item.key===key);
+   const raw=fichaCurrentValue(key);
+   return [f.label,fichaExcelSafeText(f.type==="date"&&raw?formatDate(raw):raw)];
+  })
+ ];
+ const wb=XLSX.utils.book_new(),ws=XLSX.utils.aoa_to_sheet(rows);
+ ws["!cols"]=[{wch:44},{wch:70}];
+ ws["!rows"]=[{hpt:28},{hpt:30},{hpt:23}];
+ XLSX.utils.book_append_sheet(wb,ws,"Ficha PJ");
+ const ref=fichaCurrentValue("pj").replace(/[^a-zA-Z0-9_-]/g,"_").slice(0,35)||"MODELO";
+ XLSX.writeFile(wb,`FICHA_PJ_${ref}.xlsx`);
+}
+function fichaKeyByLabel(label){
+ const term=normalize(label);
+ if(!term)return null;
+ // A identificação por chave e título da interface é única (inclusive vencimentos duplicados do Excel antigo).
+ for(const key of FICHA_KEYS){
+  const f=FIELD_DEFS.find(item=>item.key===key);
+  if(term===normalize(key)||term===normalize(f.label))return key;
+ }
+ const aliases={"CLIENTE":"siglaCliente","DATA":"dataRecebimentoMaterial","NOME":"nomeMaterial","ESPESSURA":"espessura","LARGURA":"largura","GRAMATURA":"gramatura","LOCAL":"paisDestino","PAIS DESTINO":"paisDestino","COR":"cor","BRILHO":"brilho","GRAVACAO":"gravacao","TAMBOREADO":"tamboreado","TAMBLEADO":"tamboreado","TOQUE":"toque","PJ #":"pj","DATA RECEBIMENTO CARTELA/ MATERIAL DO CLIENTE":"dataRecebimentoMaterial","NOME DO MATERAIL DO PJ":"nomeMaterial","SIGLA CLIENTE":"siglaCliente","DATA COTACAO":"dataCotacao","MES SOLICITADO":"mesSolicitado","CARACTERISTICAMATERIAL":"caracteristicaMaterial","ENCAMINHAMENTO PARA ENGENHARIA":"encaminhamentoEngenharia","ENCAMINHAMENTO COMEX":"encaminhamentoComex"};
+ for(const [key,value] of Object.entries(aliases))if(term===normalize(key))return value;
+ return null;
+}
+function fichaExcelValue(f,value){
+ if(value==null||value==="")return "";
+ if(f.type==="date"){
+  const valueDate=excelDate(value);
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(valueDate)||!dateObj(valueDate))throw new Error(`Data inválida para ${f.label}: ${String(value)}`);
+  return valueDate;
+ }
+ return String(value).trim();
+}
+function parseFichaExcelRows(matrix){
+ // Formato vertical gerado por Exportar Ficha: Campo | Valor.
+ const headIndex=matrix.findIndex(row=>normalize(row[0])==="campo"&&normalize(row[1])==="valor");
+ const found={};
+ if(headIndex>=0){
+  for(const row of matrix.slice(headIndex+1)){
+   const key=fichaKeyByLabel(row[0]);
+   if(key&&row[1]!==""&&row[1]!=null)found[key]=row[1];
+  }
+  return found;
+ }
+ // Aceita também uma planilha de uma única ficha com campos na horizontal.
+ const i=matrix.findIndex(row=>row.filter(cell=>fichaKeyByLabel(cell)).length>=3);
+ if(i<0)throw new Error("Não encontrei os campos da Ficha PJ. Clique em Exportar Ficha para obter o modelo Excel.");
+ const header=matrix[i],body=matrix.slice(i+1).filter(row=>row.some(v=>v!==""&&v!=null));
+ if(body.length!==1)throw new Error("A planilha deve conter uma única ficha PJ. Utilize um arquivo por desenvolvimento.");
+ header.forEach((v,index)=>{const key=fichaKeyByLabel(v);if(key&&body[0][index]!==""&&body[0][index]!=null)found[key]=body[0][index]});
+ return found;
+}
+async function importFichaExcel(file){
+ if(!window.XLSX)throw new Error("Biblioteca Excel indisponível.");
+ if(state.editBaseline?.refacoes?.length)throw new Error("A ficha original de uma refação é somente leitura.");
+ const wb=XLSX.read(await file.arrayBuffer(),{type:"array",cellDates:true});
+ const sheet=wb.Sheets["Ficha PJ"]||wb.Sheets[wb.SheetNames[0]];
+ if(!sheet)throw new Error("Nenhuma planilha encontrada.");
+ const matrix=XLSX.utils.sheet_to_json(sheet,{header:1,raw:true,defval:""});
+ const raw=parseFichaExcelRows(matrix);
+ const parsed=Object.fromEntries(Object.entries(raw).filter(([key])=>FICHA_KEYS.includes(key)).map(([key,value])=>{
+  const f=FIELD_DEFS.find(item=>item.key===key);
+  return [key,fichaExcelValue(f,value)];
+ }));
+ const changes=Object.entries(parsed).filter(([,value])=>value!=="");
+ if(!changes.length)throw new Error("A Ficha PJ importada está vazia.");
+ const currentPj=fichaCurrentValue("pj"),incomingPj=parsed.pj||"";
+ // Impede que importar uma ficha altere o PJ # de um desenvolvimento existente.
+ if(state.editBaseline?.id&&incomingPj&&incomingPj!==currentPj)throw new Error(`Este registro é o PJ ${currentPj}. O Excel é do PJ ${incomingPj}. Nada foi alterado.`);
+ const overlaps=changes.filter(([key,value])=>fichaCurrentValue(key)&&fichaCurrentValue(key)!==value);
+ if(overlaps.length&&!confirm(`${overlaps.length} campo(s) preenchido(s) nesta ficha serão substituídos pelos valores do Excel. Continuar?`))return;
+ for(const [key,value] of changes){
+  if(key==="cor"){setupColorField(value,false);continue;}
+  const el=document.querySelector(`[name="${key}"]`);
+  if(el&&!el.disabled&&!el.readOnly)el.value=value;
+ }
+ // Calcula vencimentos apenas quando estão em branco. Não interfere em outras etapas.
+ const received=fichaCurrentValue("dataRecebimentoMaterial"),sent=fichaCurrentValue("encaminhamentoEngenharia");
+ const dueC=$("[name=vencimentoComercial]"),dueE=$("[name=vencimentoEngenharia]"),month=$("[name=mesSolicitado]");
+ if(received&&dueC&&!dueC.value)dueC.value=addDaysString(received,1);
+ if(sent&&dueE&&!dueE.value)dueE.value=addDaysString(sent,2);
+ if(received&&month&&!month.value)month.value=String(dateObj(received).getMonth()+1);
+ updateLiveDays();updateCountryPreview();
+ showToast(`Ficha PJ preenchida: ${changes.length} campo(s). Confira e clique em Salvar Desenvolvimento.`);
+}
+function bindFichaExcelActions(locked){
+ const exportBtn=$("#fichaExportButton"),importBtn=$("#fichaImportButton"),fileInput=$("#fichaExcelInput");
+ if(exportBtn)exportBtn.addEventListener("click",exportFichaExcel);
+ if(!locked&&importBtn&&fileInput){
+  importBtn.addEventListener("click",()=>fileInput.click());
+  fileInput.addEventListener("change",async()=>{
+   const file=fileInput.files?.[0];if(!file)return;
+   try{await importFichaExcel(file)}catch(err){console.error("Importação Ficha PJ",err);showToast(err.message||"Não foi possível importar a Ficha PJ.");}
+   finally{fileInput.value="";}
+  });
+ }
 }
 
 function filterRecords(){const q=normalize($("#searchInput").value);const stage=$("#stageFilter").value;const deadline=$("#deadlineFilter").value;const country=$("#countryFilter").value;state.filtered=state.records.filter(r=>{const hay=normalize([r.pj,r.nomeMaterial,r.siglaCliente,r.fornecedor,r.cor,r.paisDestino].join(" "));if(q&&!hay.includes(q))return false;if(stage&&currentStage(r).label!==stage)return false;if(deadline&&deadlineStatus(r).label!==deadline)return false;if(country&&r.paisDestino!==country)return false;return true})}

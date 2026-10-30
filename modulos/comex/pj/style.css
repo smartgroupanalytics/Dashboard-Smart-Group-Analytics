@@ -267,3 +267,14 @@ td{font-size:9.5px;padding:7px}
   .pj-process-grid{grid-template-columns:1fr}
   .pj-process-grid .field.wide{grid-column:span 1}
 }
+
+
+/* V12 — importação / exportação restritas à Ficha PJ */
+.ficha-pj-heading{display:flex;flex-wrap:wrap;align-items:center;gap:9px;padding-top:7px;padding-bottom:7px}
+.ficha-pj-heading h3{flex:1 1 240px}
+.ficha-pj-tools{display:flex;justify-content:flex-end;align-items:center;flex-wrap:wrap;gap:7px}
+.ficha-excel-button{display:inline-flex;align-items:center;gap:7px;min-height:30px;padding:6px 11px;border-radius:6px;border:1px solid rgba(255,255,255,.62);background:rgba(5,27,62,.8);color:#fff;font:inherit;font-size:11px;font-weight:800;cursor:pointer;white-space:nowrap}
+.ficha-excel-button:hover{background:#eaf5ff;color:#123a6c}
+.ficha-excel-button:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.ficha-pj-hint{color:#bdd4ee;font-size:11px;line-height:1.4;margin-top:-4px}
+@media(max-width:560px){.ficha-pj-tools{justify-content:flex-start}.ficha-excel-button{font-size:10px}}
