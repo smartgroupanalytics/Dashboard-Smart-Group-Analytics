@@ -1,5 +1,5 @@
 {
-  "importadoEm": "2026-10-30T08:26:32.162Z",
+  "importadoEm": "2026-10-30T08:41:28.726Z",
   "pastaEntrada": "/home/runner/work/Dashboard-Smart-Group-Analytics/Dashboard-Smart-Group-Analytics/_automacao/entrada-relatorios",
   "modo": "ATUALIZACAO_PARCIAL_PROTEGIDA",
   "status": "OK",
@@ -26,10 +26,10 @@
       "arquivo": "CONSUMO.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 1461,
-      "linhasValidas": 1461,
+      "linhasOriginais": 1464,
+      "linhasValidas": 1464,
       "produtosDistintos": 152,
-      "quantidade": 252679.03999999998
+      "quantidade": 252917.83999999997
     },
     "OP": {
       "arquivo": "OP.xlsx",
