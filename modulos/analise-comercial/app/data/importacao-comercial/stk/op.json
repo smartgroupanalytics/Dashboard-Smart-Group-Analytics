@@ -404,8 +404,8 @@
     "subgrupo": 41,
     "qtd_produzir": 40,
     "dt_saida": "2026-11-06",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -452,7 +452,19 @@
     "subgrupo": 41,
     "qtd_produzir": 40,
     "dt_saida": "2026-11-06",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8942",
+    "produto": "30095",
+    "desc_completa": "BORGONHA WHISKY",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 400,
+    "dt_saida": "2026-11-06",
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   }
 ]
