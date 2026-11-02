@@ -1,10 +1,10 @@
 {
-  "updatedAt": "2026-11-02T11:12:29.644Z",
+  "updatedAt": "2026-11-02T11:20:39.842Z",
   "fontes": {
     "financeiro": {
       "status": "OK",
-      "ultimoSucessoEm": "2026-11-02T11:12:05.332Z",
-      "atualizadoEm": "2026-11-02T11:12:05.332Z",
+      "ultimoSucessoEm": "2026-11-02T11:20:13.243Z",
+      "atualizadoEm": "2026-11-02T11:20:13.243Z",
       "mensagem": "Atualização automática concluída."
     },
     "fretes": {
