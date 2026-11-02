@@ -1,6 +1,6 @@
 {
-  "atualizadoEm": "2026-11-02T08:26:31.454Z",
-  "ultimaAtualizacaoValida": "2026-11-02T08:26:31.454Z",
+  "atualizadoEm": "2026-11-02T08:41:27.506Z",
+  "ultimaAtualizacaoValida": "2026-11-02T08:41:27.506Z",
   "status": "ATENCAO",
   "mensagem": "9 de 9 relatórios atualizados com sucesso. 2 relatório(s) está(ão) atrasado(s).",
   "modo": "PARCIAL_SEGURO",
@@ -26,8 +26,8 @@
     {
       "arquivo": "CONSUMO.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-10-31T08:40:14.000Z",
-      "linhasValidas": 1464,
+      "recebidoEm": "2026-11-02T08:40:13.000Z",
+      "linhasValidas": 1417,
       "mensagem": "Atualizado com sucesso."
     },
     {
