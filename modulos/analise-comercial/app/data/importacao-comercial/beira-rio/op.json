@@ -301,16 +301,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8892",
-    "produto": "17019",
-    "desc_completa": "NAPA MALAGA BRANCO OFF",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 400,
-    "dt_saida": "2026-10-30",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8894",
     "produto": "17561",
     "desc_completa": "METALIZADO TRAMADO BERLIM DOURADO",
@@ -367,6 +357,76 @@
     "grupo": "BEIRA RIO",
     "qtd_produzir": 400,
     "dt_saida": "2026-11-04",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8955",
+    "produto": "17001",
+    "desc_completa": "NAPA MARSELHA PRETO",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 1015,
+    "dt_saida": "2026-11-09",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8956",
+    "produto": "17676",
+    "desc_completa": "NAPA TRAMADO BERLIM BRANCO OFF 526",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 215,
+    "dt_saida": "2026-11-09",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8957",
+    "produto": "18407",
+    "desc_completa": "NAPA SEVILLE VERDE RIVIERA 1573",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 320,
+    "dt_saida": "2026-11-09",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8958",
+    "produto": "16506",
+    "desc_completa": "NAPA NEW NANCY CAMEL 1165",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 215,
+    "dt_saida": "2026-11-06",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8959",
+    "produto": "17562",
+    "desc_completa": "NAPA DALLAS PRETO",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 800,
+    "dt_saida": "2026-11-06",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8960",
+    "produto": "17660",
+    "desc_completa": "NAPA DALLAS CAMEL 1165",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 400,
+    "dt_saida": "2026-11-06",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "8962",
+    "produto": "9873",
+    "desc_completa": "METALIZADO NANCY PU 1.0 DOURADO",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 2000,
+    "dt_saida": "2026-11-06",
     "abreviacao": ""
   }
 ]
