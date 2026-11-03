@@ -407,7 +407,7 @@ async function fichaLogoBase64() {
 async function exportFichaExcel(){
  if(!window.ExcelJS){showToast("Biblioteca da Ficha Excel indisponível. Atualize a página e tente novamente.");return;}
  try{
-  const navy="000000",blue="000000",ink="000000",light="F2F2F2",border="E6E6E6",white="FFFFFF",muted="000000",documentRed="FF0000";
+  const navy="000000",blue="000000",ink="000000",light="F2F2F2",border="E6E6E6",white="FFFFFF",muted="000000";
   const wb=new ExcelJS.Workbook();wb.creator="Smart Group Analytics";wb.subject="Ficha PJ — Comercial e Engenharia";
   const ws=wb.addWorksheet("Ficha PJ",{views:[{showGridLines:false}]});
   ws.properties.defaultRowHeight=15;
@@ -430,20 +430,16 @@ async function exportFichaExcel(){
   }
   ws.getCell("K1").value=FICHA_VISUAL_VERSION; // marcador interno, coluna K oculta
   ws.getColumn("K").hidden=true;
-  // Ficha PJ diagramada como o modelo recebido, A4 retrato (1 folha).
-  // Padrão original: branco e preto, valores em cinza-claro (#F2F2F2),
-  // somente TIPO DE DOCUMENTO em vermelho (#FF0000).
-  // Cabeçalho branco, identificadores claros, observações e duas colunas.
+  // Ficha PJ diagramada em A4 retrato (1 folha), sem o quadro TIPO DE DOCUMENTO.
+  // Fundo branco, texto preto, valores cinza-claro (#F2F2F2), com logo e observações.
   area("A1:J4",white);[1,2,3,4].forEach(r=>ws.getRow(r).height=r===1?13:18);
   textCell("D2:J3","FICHA DE DESENVOLVIMENTO · PJ",{color:navy,bold:true,size:18});
   textCell("D4:J4","SMART GROUP / COMERCIAL + ENGENHARIA",{color:blue,size:10});
   ws.getRow(5).height=9;
-  textCell("B6:E6","NÚMERO DO PJ",{color:muted,bold:true,size:9});
-  area("G6:J7",documentRed); // faixa vermelha contínua como no modelo oficial
-  textCell("G6:J6","TIPO DE DOCUMENTO",{color:ink,bold:true,size:9,bg:documentRed});
+  textCell("B6:J6","NÚMERO DO PJ",{color:muted,bold:true,size:9});
   ws.getRow(6).height=18;ws.getRow(7).height=28;ws.getRow(8).height=9;
-  textCell("B7:E7",fichaExcelSafeText(fichaCurrentValue("pj")),{color:navy,bold:true,size:14,bg:light});
-  textCell("G7:J7","FICHA DE MATERIAL",{color:ink,bold:true,size:11,bg:documentRed});
+  // O número do PJ ocupa toda a largura: nenhum quadro de tipo de documento.
+  textCell("B7:J7",fichaExcelSafeText(fichaCurrentValue("pj")),{color:navy,bold:true,size:14,bg:light});
   ws.getRow(9).height=23;
   textCell("B9:J9","01  •  IDENTIFICAÇÃO E CARACTERÍSTICAS DO MATERIAL",{color:ink,bold:true,size:10,bg:white,indent:1});
   const fields=[[11,"siglaCliente","paisDestino"],[13,"dataRecebimentoMaterial","cor"],[15,"nomeMaterial","brilho"],[17,"espessura","gravacao"],[19,"largura","tamboreado"],[21,"gramatura","toque"]];
@@ -492,7 +488,7 @@ async function exportFichaPdf(){
  try{
   const PAGE_W=210,PAGE_H=297,SCALE=8; // milímetros, ~203 dpi na impressão
   const L=14,R=108,CW=88,W=182;
-  const colors={ink:'#000000',pale:'#F2F2F2',white:'#FFFFFF',red:'#FF0000',line:'#E6E6E6'};
+  const colors={ink:'#000000',pale:'#F2F2F2',white:'#FFFFFF',line:'#E6E6E6'};
   const makePage=()=>{
    const canvas=document.createElement('canvas');canvas.width=PAGE_W*SCALE;canvas.height=PAGE_H*SCALE;
    const ctx=canvas.getContext('2d',{alpha:false});
@@ -551,11 +547,9 @@ async function exportFichaPdf(){
   write(c,'FICHA DE DESENVOLVIMENTO · PJ',53,21,5.2,true);
   write(c,'SMART GROUP / COMERCIAL + ENGENHARIA',53,28.6,2.9);
   rect(c,L,35.7,W,.25,colors.line);
-  write(c,'NÚMERO DO PJ',L,42,2.85,true);rect(c,L,45,CW,12,colors.pale);
-  rect(c,R,38.5,CW,18.5,colors.red);
-  write(c,'TIPO DE DOCUMENTO',R+2.5,42.5,2.85,true);
-  fitValue(c,fichaCurrentValue('pj'),L,45,CW,12);
-  fitValue(c,'FICHA DE MATERIAL',R,45,CW,12);
+  // Identificação de largura total, sem a caixa vermelha de tipo de documento.
+  write(c,'NÚMERO DO PJ',L,42,2.85,true);rect(c,L,45,W,12,colors.pale);
+  fitValue(c,fichaCurrentValue('pj'),L,45,W,12);
   separator(c,'01  •  IDENTIFICAÇÃO E CARACTERÍSTICAS DO MATERIAL',63);
   const items=[
    ['siglaCliente','CLIENT / CLIENTE','paisDestino','LOCAL'],
