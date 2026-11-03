@@ -291,3 +291,12 @@ td{font-size:9.5px;padding:7px}
 .ficha-pj-section>.ficha-pj-tools .ficha-import-protegido{background:#344866;border-color:#9cb2cd;color:#f6f9ff}
 .ficha-pj-section>.ficha-pj-hint{margin:0 12px 10px;font-size:11px;color:#e2edff}
 @media(max-width:560px){.ficha-pj-section>.ficha-pj-tools .ficha-excel-button{width:100%;justify-content:center}}
+
+/* Ficha PJ: campo de observações no topo e botão de exportação PDF */
+.ficha-pj-section .pj-number-row{display:grid;grid-template-columns:minmax(170px,240px) minmax(250px,1fr);gap:14px;align-items:start}
+.ficha-pj-section .pj-ficha-observation-top{min-width:0}
+.ficha-pj-section .pj-ficha-observation-top .field{max-width:none}
+.ficha-pj-section .pj-ficha-observation-top textarea{min-height:95px;resize:vertical;line-height:1.45}
+.ficha-pj-section>.ficha-pj-tools .ficha-pdf{background:#8a3649;border-color:#e7a0ac}
+.ficha-pj-section>.ficha-pj-tools .ficha-pdf:hover{background:#b64559;color:#fff}
+@media(max-width:700px){.ficha-pj-section .pj-number-row{grid-template-columns:1fr}}
