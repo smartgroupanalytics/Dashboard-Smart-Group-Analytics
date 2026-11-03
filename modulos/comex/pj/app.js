@@ -397,22 +397,17 @@ const FICHA_VISUAL_CELLS = Object.freeze({
 });
 const FICHA_VISUAL_VERSION="SMART_FICHA_PJ_V3";
 const FICHA_VISUAL_LEGACY="SMART_FICHA_PJ_V2";
-async function fichaLogoBase64(){
- // A logo oficial já está no diretório principal do Dashboard, não é necessário incluí-la no patch.
- const logoUrl=new URL("../../logo.png",import.meta.url);
- const response=await fetch(logoUrl,{cache:"force-cache"});
- if(!response.ok)throw new Error(`Logo não encontrada em ${logoUrl.pathname}`);
- const blob=await response.blob();
- return await new Promise((resolve,reject)=>{
-  const reader=new FileReader();
-  reader.onload=()=>resolve(String(reader.result));reader.onerror=()=>reject(new Error("Falha ao carregar a logo"));
-  reader.readAsDataURL(blob);
- });
+// Logomarca fornecida para a Ficha PJ. Incorporada para não depender de URL, cache ou CORS.
+// PNG com transparência, apropriado ao cabeçalho branco do Excel e do PDF.
+const FICHA_LOGO_DATA_URI = "data:image/png;base64,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";
+async function fichaLogoBase64() {
+ return FICHA_LOGO_DATA_URI;
 }
+
 async function exportFichaExcel(){
  if(!window.ExcelJS){showToast("Biblioteca da Ficha Excel indisponível. Atualize a página e tente novamente.");return;}
  try{
-  const navy="000000",blue="FFFFFF",ink="000000",light="F2F2F2",border="E6E6E6",white="FFFFFF",muted="000000",documentRed="FF0000";
+  const navy="000000",blue="000000",ink="000000",light="F2F2F2",border="E6E6E6",white="FFFFFF",muted="000000",documentRed="FF0000";
   const wb=new ExcelJS.Workbook();wb.creator="Smart Group Analytics";wb.subject="Ficha PJ — Comercial e Engenharia";
   const ws=wb.addWorksheet("Ficha PJ",{views:[{showGridLines:false}]});
   ws.properties.defaultRowHeight=15;
@@ -479,8 +474,8 @@ async function exportFichaExcel(){
   try{
    const logo=await fichaLogoBase64();
    const imageId=wb.addImage({base64:logo,extension:"png"});
-   ws.addImage(imageId,{tl:{col:1.05,row:.18},ext:{width:118,height:72}});
-  }catch(error){console.warn("Não foi possível inserir a logo no Excel da Ficha PJ:",error);showToast("Atenção: a logo não foi carregada. Confira se logo.png está na raiz do dashboard.");}
+   ws.addImage(imageId,{tl:{col:1.1,row:.16},ext:{width:124,height:72}});
+  }catch(error){console.warn("Não foi possível inserir a logo no Excel da Ficha PJ:",error);showToast("Não foi possível inserir a logo na Ficha Excel. Consulte o console do navegador.");}
   const bytes=await wb.xlsx.writeBuffer();
   const blob=new Blob([bytes],{type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
   const downloadUrl=URL.createObjectURL(blob),link=document.createElement("a");
@@ -491,100 +486,149 @@ async function exportFichaExcel(){
 }
 // Exporta apenas a Ficha PJ, inclusive alterações ainda não salvas, para PDF A4.
 // O PDF não usa a importação nem altera registros do Firestore.
+// Geração de PDF independente de bibliotecas externas (sem jsPDF/CDN).
+// Cada página A4 é desenhada em alta resolução no Canvas e embutida num PDF válido.
 async function exportFichaPdf(){
- const JsPDF=window.jspdf?.jsPDF;
- if(!JsPDF){showToast("Biblioteca PDF não carregou. Atualize a página e tente novamente.");return;}
  try{
-  const pdf=new JsPDF({orientation:"portrait",unit:"mm",format:"a4",compress:true});
-  const ink=[0,0,0],muted=[0,0,0],pale=[242,242,242],line=[235,235,235],white=[255,255,255],documentRed=[255,0,0];
+  const PAGE_W=210,PAGE_H=297,SCALE=8; // milímetros, ~203 dpi na impressão
   const L=14,R=108,CW=88,W=182;
-  const color=(rgb,fn)=>pdf[fn](...rgb);
-  function rect(x,y,w,h,fillColor,strokeColor){
-   if(fillColor)color(fillColor,"setFillColor");
-   if(strokeColor)color(strokeColor,"setDrawColor");
-   pdf.rect(x,y,w,h,fillColor&&strokeColor?"FD":fillColor?"F":"S");
+  const colors={ink:'#000000',pale:'#F2F2F2',white:'#FFFFFF',red:'#FF0000',line:'#E6E6E6'};
+  const makePage=()=>{
+   const canvas=document.createElement('canvas');canvas.width=PAGE_W*SCALE;canvas.height=PAGE_H*SCALE;
+   const ctx=canvas.getContext('2d',{alpha:false});
+   if(!ctx)throw new Error('Seu navegador não disponibilizou a área de desenho para o PDF.');
+   ctx.scale(SCALE,SCALE);ctx.fillStyle=colors.white;ctx.fillRect(0,0,PAGE_W,PAGE_H);
+   ctx.textBaseline='alphabetic';return {canvas,ctx};
+  };
+  function rect(ctx,x,y,w,h,color){ctx.fillStyle=color;ctx.fillRect(x,y,w,h);}
+  function write(ctx,content,x,y,size=3.0,bold=false,color=colors.ink){
+   ctx.font=`${bold?'bold ':''}${size}px Arial, Helvetica, sans-serif`;
+   ctx.fillStyle=color;ctx.fillText(String(content??''),x,y);
   }
-  function print(text,x,y,size=9,weight="normal",colorValue=ink){
-   pdf.setFont("helvetica",weight);pdf.setFontSize(size);color(colorValue,"setTextColor");pdf.text(String(text??""),x,y);
+  function wrap(ctx,text,maxWidth){
+   const result=[];
+   for(const paragraph of String(text??'').split(/\r?\n/)){
+    if(!paragraph.trim()){result.push('');continue;}
+    let current='';
+    for(const word of paragraph.trim().split(/\s+/)){
+     const candidate=current?`${current} ${word}`:word;
+     if(ctx.measureText(candidate).width<=maxWidth){current=candidate;continue;}
+     if(current){result.push(current);current=word;}else current=word;
+     // O texto excepcionalmente longo não deve ultrapassar o campo.
+     while(ctx.measureText(current).width>maxWidth && current.length>1){
+      let cut=current.length-1;
+      while(cut>1&&ctx.measureText(current.slice(0,cut)).width>maxWidth)cut--;
+      result.push(current.slice(0,cut));current=current.slice(cut);
+     }
+    }
+    if(current)result.push(current);
+   }
+   return result;
   }
-  function writeValue(raw,x,y,width,height,size=9){
-   const text=String(raw??"").trim();if(!text)return;
-   let font=size,lines=[];
-   for(;font>=7;font-=.5){pdf.setFont("helvetica","normal");pdf.setFontSize(font);lines=pdf.splitTextToSize(text,width-5);if(lines.length<=2)break;}
-   color(ink,"setTextColor");pdf.setFont("helvetica","normal");pdf.setFontSize(Math.max(7,font));
-   if(lines.length>2)lines=[lines[0],lines.slice(1).join(" ").slice(0,65)+"…"];
-   const step=font<=8?3.1:3.6;
-   lines.forEach((t,i)=>pdf.text(t,x+2.5,y+height/2+(i-(lines.length-1)/2)*step+1.1));
+  function fitValue(ctx,content,x,y,width,height){
+   const str=String(content??'').trim();if(!str)return;
+   let size=3.1,lines=[];
+   for(;size>=2.35;size-=.15){ctx.font=`${size}px Arial, Helvetica, sans-serif`;lines=wrap(ctx,str,width-5);if(lines.length<=2)break;}
+   if(lines.length>2){lines=[lines[0],`${lines[1].slice(0,46)}…`];}
+   ctx.fillStyle=colors.ink;ctx.font=`${Math.max(2.35,size)}px Arial, Helvetica, sans-serif`;
+   const step=Math.max(3.0,size+.15);
+   lines.forEach((line,i)=>ctx.fillText(line,x+2.5,y+height/2+(i-(lines.length-1)/2)*step+size*.32));
   }
-  function field(key,title,x,y){
-   print(title,x,y+3.3,7.6,"bold",muted);
-   rect(x,y+5.0,CW,8.6,pale,null);
+  function field(ctx,key,title,x,y){
+   write(ctx,title,x,y+3.2,2.55,true);
+   rect(ctx,x,y+5,CW,8.6,colors.pale);
    let value=fichaCurrentValue(key);
-   const fd=FIELD_DEFS.find(f=>f.key===key);
-   if(fd?.type==="date"&&value)value=formatDate(value);
-   writeValue(value,x,y+5,CW,8.6,9.1);
+   if(FIELD_DEFS.find(f=>f.key===key)?.type==='date'&&value)value=formatDate(value);
+   fitValue(ctx,value,x,y+5,CW,8.6);
   }
-  function separator(title,y){rect(L,y,W,7.4,white,null);print(title,L+3,y+5.05,9.1,"bold",ink);}
-  // Cores extraídas do modelo do usuário: preto/branco, cinza #F2F2F2 e vermelho #FF0000.
-  rect(0,0,210,297,[255,255,255],null);
+  function separator(ctx,title,y){rect(ctx,L,y,W,7.4,colors.white);write(ctx,title,L+2.5,y+5.1,3.1,true);}
+  const pages=[],page=makePage(),c=page.ctx;
   try{
-   const logo=await fichaLogoBase64();
-   pdf.addImage(logo,"PNG",L,10,29,19);
-  }catch(error){console.warn("Logo Smart Group indisponível para PDF:",error);print("SMART GROUP",L,24,9,"bold",ink);}
-  print("FICHA DE DESENVOLVIMENTO · PJ",53,21,16,"bold",ink);
-  print("SMART GROUP / COMERCIAL + ENGENHARIA",53,29,8.8,"normal",muted);
-  color(line,"setDrawColor");pdf.line(L,36,L+W,36);
-  print("NÚMERO DO PJ",L,42,8.5,"bold",ink);
-  rect(L,45,CW,12,pale,null);
-  // Mesma faixa vermelha do Excel de referência: título e tipo do documento.
-  rect(R,38.5,CW,18.5,documentRed,null);
-  print("TIPO DE DOCUMENTO",R+2.5,42.5,8.5,"bold",ink);
-  writeValue(fichaCurrentValue("pj"),L,45,CW,12,12);
-  writeValue("FICHA DE MATERIAL",R,45,CW,12,10);
-  separator("01  •  IDENTIFICAÇÃO E CARACTERÍSTICAS DO MATERIAL",63);
+   const logoImage=new Image();
+   await new Promise((resolve,reject)=>{logoImage.onload=resolve;logoImage.onerror=()=>reject(new Error('Logomarca inválida'));logoImage.src=FICHA_LOGO_DATA_URI;});
+   c.drawImage(logoImage,L,9.7,29,17);
+  }catch(error){console.warn('Erro ao desenhar logo da ficha PJ no PDF:',error);write(c,'SMART GROUP',L,21,3.2,true);}
+  write(c,'FICHA DE DESENVOLVIMENTO · PJ',53,21,5.2,true);
+  write(c,'SMART GROUP / COMERCIAL + ENGENHARIA',53,28.6,2.9);
+  rect(c,L,35.7,W,.25,colors.line);
+  write(c,'NÚMERO DO PJ',L,42,2.85,true);rect(c,L,45,CW,12,colors.pale);
+  rect(c,R,38.5,CW,18.5,colors.red);
+  write(c,'TIPO DE DOCUMENTO',R+2.5,42.5,2.85,true);
+  fitValue(c,fichaCurrentValue('pj'),L,45,CW,12);
+  fitValue(c,'FICHA DE MATERIAL',R,45,CW,12);
+  separator(c,'01  •  IDENTIFICAÇÃO E CARACTERÍSTICAS DO MATERIAL',63);
   const items=[
-   ["siglaCliente","CLIENT / CLIENTE","paisDestino","LOCAL"],
-   ["dataRecebimentoMaterial","DATE / DATA","cor","COLOR / COR"],
-   ["nomeMaterial","NAME / NOME","brilho","SHINE / BRILHO"],
-   ["espessura","THICKNESS / ESPESSURA","gravacao","EMBOSS / GRAVAÇÃO"],
-   ["largura","WIDTH / LARGURA","tamboreado","TUMBLE / TAMBOR"],
-   ["gramatura","GRAMMAGE / GRAMATURA","toque","TOUCH / TOQUE"]
+   ['siglaCliente','CLIENT / CLIENTE','paisDestino','LOCAL'],
+   ['dataRecebimentoMaterial','DATE / DATA','cor','COLOR / COR'],
+   ['nomeMaterial','NAME / NOME','brilho','SHINE / BRILHO'],
+   ['espessura','THICKNESS / ESPESSURA','gravacao','EMBOSS / GRAVAÇÃO'],
+   ['largura','WIDTH / LARGURA','tamboreado','TUMBLE / TAMBOR'],
+   ['gramatura','GRAMMAGE / GRAMATURA','toque','TOUCH / TOQUE']
   ];
-  items.forEach(([lk,ll,rk,rl],i)=>{const y=74+i*14.6;field(lk,ll,L,y);field(rk,rl,R,y);});
-  print("OBSERVATIONS / OBSERVAÇÕES",L,168.1,8.3,"bold",muted);
-  rect(L,171.5,W,34.5,pale,null);
-  const observations=fichaCurrentValue("observacoesFicha");
-  let overflow=[];
-  if(observations){
-   pdf.setFont("helvetica","normal");pdf.setFontSize(8.2);
-   const wrapped=pdf.splitTextToSize(observations,W-6);
-   const shown=wrapped.slice(0,8);overflow=wrapped.slice(8);
-   color(ink,"setTextColor");shown.forEach((t,i)=>pdf.text(t,L+3,177+i*3.45));
-   if(overflow.length)print("Observações continuam na página seguinte.",L+3,203.5,7,"normal",muted);
-  }
-  separator("02  •  DATAS E ENCAMINHAMENTOS",211.2);
+  items.forEach(([lk,ll,rk,rl],i)=>{const y=74+i*14.6;field(c,lk,ll,L,y);field(c,rk,rl,R,y);});
+  write(c,'OBSERVATIONS / OBSERVAÇÕES',L,168.1,2.85,true);
+  rect(c,L,171.5,W,34.5,colors.pale);
+  const observations=fichaCurrentValue('observacoesFicha');
+  c.font='2.9px Arial, Helvetica, sans-serif';
+  const wrapped=wrap(c,observations,W-6);
+  const firstLines=wrapped.slice(0,8),overflow=wrapped.slice(8);
+  firstLines.forEach((line,i)=>write(c,line,L+3,177+i*3.4,2.9));
+  if(overflow.length)write(c,'As observações continuam na página seguinte.',L+3,203.4,2.5);
+  separator(c,'02  •  DATAS E ENCAMINHAMENTOS',211.2);
   const steps=[
-   ["encaminhamentoEngenharia","ENCAMINHAMENTO PARA ENGENHARIA","vencimentoComercial","VENCIMENTO COMERCIAL"],
-   ["dataCotacao","DATA COTAÇÃO","mesSolicitado","MÊS SOLICITADO"],
-   ["caracteristicaMaterial","CARACTERÍSTICA / MATERIAL","encaminhamentoComex","ENCAMINHAMENTO COMEX"],
-   ["vencimentoEngenharia","VENCIMENTO ENGENHARIA",null,null]
+   ['encaminhamentoEngenharia','ENCAMINHAMENTO PARA ENGENHARIA','vencimentoComercial','VENCIMENTO COMERCIAL'],
+   ['dataCotacao','DATA COTAÇÃO','mesSolicitado','MÊS SOLICITADO'],
+   ['caracteristicaMaterial','CARACTERÍSTICA / MATERIAL','encaminhamentoComex','ENCAMINHAMENTO COMEX'],
+   ['vencimentoEngenharia','VENCIMENTO ENGENHARIA',null,null]
   ];
-  steps.forEach(([lk,ll,rk,rl],i)=>{const y=222+i*13.6;field(lk,ll,L,y);if(rk)field(rk,rl,R,y);});
-  color(line,"setDrawColor");pdf.line(L,284,L+W,284);
-  print("SMART GROUP ANALYTICS  •  FICHA PJ",L,289,7.7,"normal",muted);
-  print("Documento gerado no COMEX PJ",R,289,7.7,"normal",muted);
+  steps.forEach(([lk,ll,rk,rl],i)=>{const y=222+i*13.6;field(c,lk,ll,L,y);if(rk)field(c,rk,rl,R,y);});
+  rect(c,L,284,W,.25,colors.line);
+  write(c,'SMART GROUP ANALYTICS  •  FICHA PJ',L,289,2.65);
+  write(c,'Documento gerado no COMEX PJ',R,289,2.65);
+  pages.push(page.canvas);
   if(overflow.length){
-   pdf.addPage("a4","portrait");
-   print(`FICHA PJ ${fichaCurrentValue("pj")} · CONTINUAÇÃO DAS OBSERVAÇÕES`,L,19,13,"bold",ink);
-   color(line,"setDrawColor");pdf.line(L,25,L+W,25);
-   pdf.setFont("helvetica","normal");pdf.setFontSize(9);color(ink,"setTextColor");
-   const all=pdf.splitTextToSize(observations,W);
-   let y=34;
-   all.forEach(lineText=>{if(y>278){pdf.addPage("a4","portrait");y=25;}pdf.text(lineText,L,y);y+=5;});
+   let rest=[...overflow];
+   while(rest.length){
+    const next=makePage(),ctx=next.ctx;
+    write(ctx,`FICHA PJ ${fichaCurrentValue('pj')} · CONTINUAÇÃO DAS OBSERVAÇÕES`,L,19,4.1,true);
+    rect(ctx,L,25,W,.25,colors.line);
+    const taken=rest.splice(0,65);
+    taken.forEach((line,i)=>write(ctx,line,L,34+i*3.8,3.05));
+    pages.push(next.canvas);
+   }
   }
-  const ref=fichaCurrentValue("pj").replace(/[^a-zA-Z0-9_-]/g,"_").slice(0,35)||"MODELO";
-  pdf.save(`FICHA_PJ_${ref}.pdf`);
- }catch(error){console.error("Exportar PDF da Ficha PJ:",error);showToast(`Erro ao gerar PDF: ${error.message||error}`);}
+  // Empacota JPEG(s) gerados pelo próprio navegador em um PDF A4 sem dependências.
+  const jpegImages=[];
+  for(const canvas of pages){
+   const blob=await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('Não foi possível gerar a página do PDF.')),'image/jpeg',.94));
+   jpegImages.push({bytes:new Uint8Array(await blob.arrayBuffer()),width:canvas.width,height:canvas.height});
+  }
+  const enc=new TextEncoder(),chunks=[],offsets=[0];let written=0;
+  function append(value){const bytes=typeof value==='string'?enc.encode(value):value;chunks.push(bytes);written+=bytes.length;}
+  function object(id,body){offsets[id]=written;append(`${id} 0 obj\n${body}\nendobj\n`);}
+  append('%PDF-1.4\n% SMART GROUP FICHA PJ\n');
+  object(1,'<< /Type /Catalog /Pages 2 0 R >>');
+  const kids=jpegImages.map((_,i)=>`${3+i*3} 0 R`).join(' ');
+  object(2,`<< /Type /Pages /Kids [${kids}] /Count ${jpegImages.length} >>`);
+  jpegImages.forEach((img,i)=>{
+   const pageId=3+i*3,imageId=pageId+1,contentId=pageId+2;
+   object(pageId,`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.276 841.89] /Resources << /XObject << /Im${i} ${imageId} 0 R >> >> /Contents ${contentId} 0 R >>`);
+   offsets[imageId]=written;
+   append(`${imageId} 0 obj\n<< /Type /XObject /Subtype /Image /Width ${img.width} /Height ${img.height} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${img.bytes.length} >>\nstream\n`);
+   append(img.bytes);append('\nendstream\nendobj\n');
+   const stream=`q\n595.276 0 0 841.89 0 0 cm\n/Im${i} Do\nQ\n`;
+   object(contentId,`<< /Length ${enc.encode(stream).length} >>\nstream\n${stream}endstream`);
+  });
+  const xrefStart=written,objectCount=2+jpegImages.length*3;
+  append(`xref\n0 ${objectCount+1}\n0000000000 65535 f \n`);
+  for(let i=1;i<=objectCount;i++)append(`${String(offsets[i]).padStart(10,'0')} 00000 n \n`);
+  append(`trailer\n<< /Size ${objectCount+1} /Root 1 0 R >>\nstartxref\n${xrefStart}\n%%EOF\n`);
+  const pdfBlob=new Blob(chunks,{type:'application/pdf'});
+  const pdfUrl=URL.createObjectURL(pdfBlob),link=document.createElement('a');
+  const ref=fichaCurrentValue('pj').replace(/[^a-zA-Z0-9_-]/g,'_').slice(0,35)||'MODELO';
+  link.href=pdfUrl;link.download=`FICHA_PJ_${ref}.pdf`;document.body.appendChild(link);link.click();link.remove();
+  setTimeout(()=>URL.revokeObjectURL(pdfUrl),30000);
+ }catch(error){console.error('Falha ao gerar PDF da Ficha PJ:',error);showToast(`Erro ao gerar PDF: ${error.message||error}`);}
 }
 
 function fichaKeyByLabel(label){
