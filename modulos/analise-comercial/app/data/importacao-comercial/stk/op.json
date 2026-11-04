@@ -25,18 +25,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "6911",
-    "produto": "14180",
-    "desc_completa": "HELSINKI OFF WHITE - 1.2MM",
-    "grupo": 39,
-    "subgrupo": 40,
-    "qtd_produzir": 132,
-    "dt_saida": "2026-06-18",
-    "centro_custo": 10,
-    "abreviacao": "REV 1"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "6937",
     "produto": "12879",
     "desc_completa": "KALAHARI CARAMELO",
@@ -212,32 +200,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-10-30",
-    "centro_custo": 24,
-    "abreviacao": "EST 3"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8786",
-    "produto": "14145",
-    "desc_completa": "STELLAR OFF WHITE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 400,
-    "dt_saida": "2026-10-29",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8787",
-    "produto": "15656",
-    "desc_completa": "STELLAR ROSE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 200,
-    "dt_saida": "2026-10-27",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "centro_custo": 23,
+    "abreviacao": "RAMA"
   },
   {
     "fonte_comercial": "STK",
@@ -320,8 +284,8 @@
     "subgrupo": 41,
     "qtd_produzir": 40,
     "dt_saida": "2026-11-06",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -332,32 +296,8 @@
     "subgrupo": 41,
     "qtd_produzir": 40,
     "dt_saida": "2026-11-06",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8907",
-    "produto": "18171",
-    "desc_completa": "ARUBA BEGE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 94.5,
-    "dt_saida": "2026-10-28",
-    "centro_custo": 0,
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8908",
-    "produto": "18173",
-    "desc_completa": "ARUBA CANELA",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 95,
-    "dt_saida": "2026-10-28",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -368,8 +308,8 @@
     "subgrupo": 41,
     "qtd_produzir": 88.4,
     "dt_saida": "2026-11-04",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 15,
+    "abreviacao": "TUMB 1"
   },
   {
     "fonte_comercial": "STK",
@@ -380,8 +320,8 @@
     "subgrupo": 41,
     "qtd_produzir": 35.5,
     "dt_saida": "2026-11-04",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -392,8 +332,8 @@
     "subgrupo": 41,
     "qtd_produzir": 37.5,
     "dt_saida": "2026-10-29",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -416,8 +356,8 @@
     "subgrupo": 41,
     "qtd_produzir": 40,
     "dt_saida": "2026-11-06",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -428,8 +368,8 @@
     "subgrupo": 41,
     "qtd_produzir": 40,
     "dt_saida": "2026-11-06",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -464,7 +404,7 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-11-06",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   }
 ]
