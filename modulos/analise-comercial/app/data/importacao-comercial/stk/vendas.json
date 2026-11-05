@@ -154974,7 +154974,7 @@
   {
     "fonte_comercial": "STK",
     "dt_entrada": "2026-10-27",
-    "dt_faturam": "2026-10-27",
+    "dt_faturam": "2026-11-05",
     "produto": "30095",
     "desc_completa": "BORGONHA WHISKY",
     "pedido": "7670",
@@ -154993,9 +154993,7 @@
     "representante": "8",
     "abreviacao": "MARCELO",
     "vlr_comissao_rep": 220.56,
-    "cod_altern_1": "INVERNO 2027",
-    "dt_faturam_original": "2026-11-05",
-    "data_venda_ajustada": true
+    "cod_altern_1": "INVERNO 2027"
   },
   {
     "fonte_comercial": "STK",
