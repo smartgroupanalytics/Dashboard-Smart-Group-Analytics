@@ -1,20 +1,20 @@
 {
-  "atualizadoEm": "2026-11-06T11:11:28.790Z",
-  "ultimaAtualizacaoValida": "2026-11-06T11:11:28.790Z",
-  "status": "OK",
-  "mensagem": "9 de 9 relatórios atualizados com sucesso.",
+  "atualizadoEm": "2026-11-06T13:56:35.143Z",
+  "ultimaAtualizacaoValida": "2026-11-06T13:56:35.143Z",
+  "status": "ATENCAO",
+  "mensagem": "8 de 9 relatórios atualizados com sucesso. 1 mantido(s) na base anterior: ESTOQUE.xlsx.",
   "modo": "PARCIAL_SEGURO",
   "totalEsperado": 9,
-  "totalRecebido": 9,
-  "totalAtualizado": 9,
-  "totalMantido": 0,
+  "totalRecebido": 8,
+  "totalAtualizado": 8,
+  "totalMantido": 1,
   "relatorios": [
     {
       "arquivo": "ESTOQUE.xlsx",
-      "status": "OK",
-      "recebidoEm": "2026-11-06T11:09:35.000Z",
-      "linhasValidas": 1102,
-      "mensagem": "Atualizado com sucesso."
+      "status": "MANTIDO — Gmail API retornou HTTP 500: { \"error\": { \"code\": 500, \"message\": \"Unknown Error.\", \"errors\": [ { \"message\": \"Unknown Error.\", \"domain\": \"global\", \"reason\": \"backendError\" } ], \"stat",
+      "recebidoEm": null,
+      "mensagem": "Gmail API retornou HTTP 500: { \"error\": { \"code\": 500, \"message\": \"Unknown Error.\", \"errors\": [ { \"message\": \"Unknown Error.\", \"domain\": \"global\", \"reason\": \"backendError\" } ], \"stat",
+      "baseAnteriorMantida": true
     },
     {
       "arquivo": "COMPRAS.xlsx",
