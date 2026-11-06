@@ -1113,7 +1113,6 @@ function renderizarColaborador(colaborador) {
   renderizarPdi(colaborador.pdi || []);
   renderizarFeedbacks(colaborador.feedbacks || []);
   renderizarResumoHabilidades(colaborador);
-  renderizarAvaliacao(colaborador.avaliacao || {}, colaborador.resumoHabilidades);
   renderizarMatriz(colaborador);
 }
 
@@ -1245,12 +1244,6 @@ function renderizarResumoHabilidades(colaborador) {
   const aviso = document.getElementById("avisoNotasHabilidades");
   aviso.hidden = [resumo.tecnica, resumo.comportamental, resumo.resultado].every(v => typeof v === "number" && Number.isFinite(v));
   aviso.textContent = aviso.hidden ? "" : "Notas indisponíveis. Atualize a base com a planilha no novo modelo.";
-}
-
-function renderizarAvaliacao(avaliacao, resumo) {
-  document.getElementById("resultadoAvaliacao").textContent =
-    resumo ? percentualResumo(resumo.resultado)
-      : avaliacao.resultado == null ? "—" : String(avaliacao.resultado);
 }
 
 function renderizarMatriz(colaborador) {

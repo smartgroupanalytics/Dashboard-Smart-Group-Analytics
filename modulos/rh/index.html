@@ -149,10 +149,6 @@
             </div>
           </section>
 
-          <section class="bloco-rh">
-            <h2>AVALIAÇÃO DE DESEMPENHO</h2>
-            <div class="avaliacao-resumo"><span>Resultado geral</span><strong id="resultadoAvaliacao">—</strong></div>
-          </section>
         </article>
       </section>
 
@@ -215,7 +211,7 @@
     import { protegerModulo } from "../../module-guard.js?v=3";
     try {
       await protegerModulo("rh");
-      await import("./rh.js?v=16");
+      await import("./rh.js?v=17");
     } catch (erro) {
       console.warn("Acesso ao módulo de RH interrompido:", erro.message);
     }
