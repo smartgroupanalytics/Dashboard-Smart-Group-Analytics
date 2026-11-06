@@ -1,33 +1,42 @@
-# Smart Group Analytics — correção RH 2.6.2
+# Smart Group Analytics — RH 2.6.5 (pacote cumulativo)
 
-## Motivo da correção
-No `rh.js` 2.6.1, o item **Comportamental** era desabilitado se `matrizComportamental.habilidades` não estivesse presente no documento Firebase. Além disso, após `getDocs()` a lista de colaboradores era substituída, mas o colaborador selecionado continuava apontando para o objeto anterior. Por isso, mesmo após sincronizar um funcionário, sua tela podia mostrar os dados antigos até uma troca de seleção ou recarga.
+## Principal correção pedida
 
-## Mudanças nesta revisão (somente frontend)
+O **Nome completo da aba Perfil** é a fonte oficial, SEM comparar semelhança com os nomes das matrizes. Durante a sincronização:
 
-- Seletor **Técnica / Comportamental** sempre disponível para consulta.
-- Caso os dados comportamentais não estejam no Firebase, mostra uma explicação orientando a sincronização **individual**; nunca inventa percentuais e contagens com valor zero.
-- Após consultar o Firebase, o colaborador selecionado é associado novamente ao **novo objeto**, corrigindo a persistência da matriz antiga em memória.
-- Ao sincronizar e recarregar **o mesmo colaborador**, a matriz selecionada permanece; ao mudar de colaborador, volta à Técnica.
-- Preservados: imagens, redução de fotos, matrizes técnicas, cálculos, autenticação, permissões, atualização individual/completa e outros módulos.
+1. Abre a planilha XLSX do funcionário no Drive, identifica o Perfil e lê o nome oficial.
+2. Na **Matriz de Habilidades Técnicas** e na **Matriz de Habilidades Comportamentais**, identifica o campo "Membro do Time". Mesmo se o campo tiver um nome completamente diferente, será padronizado ao Perfil no processamento dos dados.
+3. Registra o nome anterior nos logs. Não altera a matrícula, conteúdo das avaliações, fórmulas ou outras células.
+4. Antes de modificar o XLSX original no Drive, cria um backup na pasta privada **RH - BACKUPS CORRECOES DE NOMES**, fora das pastas monitoradas pelo RH. Só após verificar o backup regrava o original, mantendo o ID do arquivo.
+5. Se a célula não for reconhecida com segurança, tiver fórmula, o arquivo tiver sido alterado por outra pessoa, ou a gravação falhar, não altera o original e informa o erro no resultado. Os dados do Firebase podem ter sido atualizados antes de um eventual erro na gravação do Excel.
 
-## Instalação
+**Atenção:** esta correção altera APENAS a escrita do nome na matriz. Se as notas/habilidades dentro da matriz realmente forem de outro funcionário, elas NÃO serão identificadas nem corrigidas automaticamente. Confirme a origem das avaliações com o RH quando o nome anterior for muito diferente.
 
-Se o RH 2.6.1 já está instalado, substitua **somente** estes arquivos em `/rh` no GitHub Pages:
+## Inclui as correções já feitas
 
-1. `rh.js`
-2. `index.html`
-3. `rh.css`
+- Matrículas (incluindo cadastro histórico sem matrícula, como Agnaldo / 226), com validação da identidade pelo Perfil e do vínculo do arquivo Drive.
+- Atualização individual ou completa do RH.
+- Duas matrizes: Técnica e Comportamental, seletor e resumos.
+- Foto vinculada à aba Perfil, com redução automática quando necessário.
+- Preservação de campos existentes no Firestore via PATCH/updateMask e sem exclusão automática de colaboradores sem arquivo.
+- Correção de nomes nas matrizes do Excel original do Drive com backup.
 
-Os arquivos `rh-leitura.js`, `rh-faixas.css`, `rh-privacidade.css` e o **Apps Script 2.6.1** não precisam ser alterados. O ZIP inclui os outros arquivos apenas para fornecer uma cópia completa do módulo.
+## Instalação — A versão 2.6.4 NÃO foi instalada
 
-Faça backup dos arquivos atuais antes da troca. Após o deploy, recarregue o dashboard com `Ctrl + F5`.
+**Não instale 2.6.3 ou 2.6.4 antes.** Este pacote já incorpora todas as mudanças.
 
-## Teste recomendado
+1. Faça backup do Apps Script atual (2.6.1) e dos arquivos do GitHub atualmente publicados.
+2. No Apps Script, **substitua** a versão atual por `Automacao-RH-2.6.5.gs`; não mantenha versões duplicadas no mesmo projeto. Salve.
+3. Abra **Implantar → Gerenciar implantações → editar implantação existente → Nova versão → Implantar**. Mantenha a mesma URL do Web App. Não reinstale o gatilho RH se ele já existe.
+4. Na pasta `rh/` do GitHub, substitua `rh.js`, `rh-leitura.js` e `index.html`. Os três arquivos CSS estão no pacote apenas como cópia de referência da versão anterior.
+5. Após GitHub Pages atualizar, pressione Ctrl + F5. Teste **Atualizar somente este funcionário** com o cadastro do Agnaldo (matrícula 226) antes de usar a atualização completa.
+6. Confira o resultado no painel, o nome corrigido nas duas matrizes no Excel original do Drive, e o backup na pasta dedicada.
 
-1. No dashboard, selecione **Fabio Silveira** (selecionado no print). A lista **Tipo de matriz** deverá permitir selecionar **Comportamental**.
-2. Caso apareça a mensagem de dados não disponíveis, confirme que o XLSX atualizado do Fabio, com **as duas abas**, está na pasta correta do Drive. Se estiver, clique no ícone azul e escolha **Atualizar somente este funcionário**.
-3. A atualização individual deve retornar se encontrou a matriz comportamental. Verifique `rh_colaboradores/<id_do_Fabio>` no Firestore e localize `matrizComportamental.habilidades`.
-4. Repita para **Abner**, matrícula 158, para verificar as duas matrizes. A foto não é alterada por esta revisão.
+Para corrigir os nomes de TODOS os colaboradores, use o modo "Atualizar todo o RH" **apenas depois** do teste individual, pois é um processamento de múltiplas planilhas.
 
-**Validação:** verificações locais de sintaxe e fluxo de estado. Sem acesso ao Firebase/GitHub em produção, não se pode confirmar remotamente que a matriz do Fabio já foi gravada.
+## Limitações e salvaguardas
+
+- Somente arquivos `.xlsx` autorizados no Drive são modificados, mediante permissões existentes de administrador/RH.
+- A rotina de escrita protege macros/assinaturas, verifica a posição da célula, limita o tamanho da planilha e confirma a existência do backup.
+- Não altera dados de outros módulos do dashboard.
+- Apps Script de produção e Google Drive **não foram acessados** durante o preparo deste pacote. Testes locais não garantem o comportamento em produção.

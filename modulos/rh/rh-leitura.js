@@ -105,3 +105,21 @@ export function rhNovoValidarNome(perfilNome, linhas) {
     throw new Error("O nome do Perfil deve ser igual ao nome nas matrizes Técnica e Comportamental.");
   }
 }
+
+/**
+ * Alinha em memória a célula "Membro do Time" ao nome completo do Perfil,
+ * mesmo quando o nome exibido na matriz é completamente diferente.
+ * Na importação manual do painel, o XLSX local não é alterado.
+ */
+export function rhNovoAjustarNomeMatriz(nomePerfil, linhas, tipo = "matriz") {
+  const indice = linhas.findIndex(linha => linha.some(v => rhNovoTexto(v) === "membro do time"));
+  if (indice < 0 || !linhas[indice + 1]) {
+    throw new Error(`Campo Membro do Time não localizado na matriz ${tipo}.`);
+  }
+  const coluna = linhas[indice].findIndex(v => rhNovoTexto(v) === "membro do time");
+  const nomeAnterior = String(linhas[indice + 1][coluna] ?? "").trim();
+  const oficial = String(nomePerfil ?? "").trim();
+  if (!oficial) throw new Error("Nome completo ausente do Perfil.");
+  linhas[indice + 1][coluna] = oficial;
+  return { ajustado: nomeAnterior !== oficial, anterior: nomeAnterior };
+}

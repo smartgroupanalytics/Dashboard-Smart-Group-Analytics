@@ -1,5 +1,5 @@
 import { auth, db } from "../../firebase-config.js";
-import { rhNovoSelecionarAbas, rhNovoExtrairResumo, rhNovoExtrairMatriz, rhNovoValidarNome } from "./rh-leitura.js?v=2";
+import { rhNovoSelecionarAbas, rhNovoExtrairResumo, rhNovoExtrairMatriz, rhNovoValidarNome, rhNovoAjustarNomeMatriz } from "./rh-leitura.js?v=5";
 
 import {
   collection,
@@ -265,13 +265,18 @@ async function sincronizarOuAtualizarRH(modo) {
       `${semAlteracao} arquivo(s) sem alteração.` +
       parteRemovidos + parteBloqueados + continuacao +
       (modo === "individual" ?
+        (resumo.matriculaCorrigida === true ? ` Matrícula ${resumo.matricula || ""} registrada no cadastro existente.` : "") +
         (resumo.fotoAtualizada === true ? " Foto atualizada." :
           resumo.fotoAtualizada === false ? " Foto não atualizada (ver aviso no Apps Script)." : "") +
         (resumo.matrizComportamentalDisponivel === true ? " Matriz comportamental carregada." :
-          resumo.matrizComportamentalDisponivel === false ? " Matriz comportamental não carregada." : "")
+          resumo.matrizComportamentalDisponivel === false ? " Matriz comportamental não carregada." : "") +
+        (resumo.nomesMatrizesAjustadosDrive === true ? " Nomes das matrizes corrigidos no Excel do Drive (backup criado)." : "") +
+        (Array.isArray(resumo.avisos) && resumo.avisos.length ?
+          ` Aviso: ${String(resumo.avisos[0]).slice(0, 350)}` : "")
         : ""),
       bloqueados > 0 || (modo === "individual" &&
-        (resumo.fotoAtualizada === false || resumo.matrizComportamentalDisponivel === false))
+        (resumo.fotoAtualizada === false || resumo.matrizComportamentalDisponivel === false ||
+         (Array.isArray(resumo.avisos) && resumo.avisos.some(texto => /NÃO foi alterado/i.test(texto)))))
     );
   } catch (erro) {
     console.error("Erro na sincronização imediata do RH:", erro);
@@ -689,6 +694,9 @@ async function processarPlanilha(arquivo) {
   const resumoHabilidades = rhNovoExtrairResumo(matriz);
   const novoModelo = Boolean(comportamental || resumoHabilidades);
   if (novoModelo) {
+    // Ajusta o nome somente nos dados importados; não edita o XLSX original.
+    rhNovoAjustarNomeMatriz(nome, matriz, "Técnica");
+    if (comportamental) rhNovoAjustarNomeMatriz(nome, comportamental, "Comportamental");
     rhNovoValidarNome(nome, matriz);
     if (comportamental) rhNovoValidarNome(nome, comportamental);
   }
