@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Recursos Humanos - Smart Group Analytics</title>
-  <link rel="stylesheet" href="rh.css?v=5">
+  <link rel="stylesheet" href="rh.css?v=6">
   <link rel="stylesheet" href="rh-faixas.css?v=1">
   <link rel="stylesheet" href="rh-privacidade.css?v=3">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -118,9 +118,17 @@
             </div>
             <div class="caixa-rh matriz-resumo-card">
               <h3>MATRIZ DE HABILIDADES</h3>
+              <div class="matriz-resumo-conteudo">
               <div class="atingimento">
                 <div class="anel-progresso" id="anelAtingimento"><strong id="nivelAtingimento">0%</strong></div>
                 <div><span>Nível de atingimento</span><p>Resultado registrado no perfil do colaborador.</p></div>
+              </div>
+              <div class="notas-habilidades" aria-label="Composição do resultado de habilidades" aria-live="polite">
+                <div class="nota-habilidade"><span>Técnica</span><strong id="notaTecnica">—</strong><small id="pesoTecnica">—</small></div>
+                <div class="nota-habilidade"><span>Comportamental</span><strong id="notaComportamental">—</strong><small id="pesoComportamental">—</small></div>
+                <div class="nota-habilidade nota-resultado"><span>Resultado</span><strong id="resultadoHabilidades">—</strong><small id="formulaHabilidades">Resultado da planilha</small></div>
+                <p class="notas-habilidades-aviso" id="avisoNotasHabilidades" hidden></p>
+              </div>
               </div>
             </div>
           </section>
@@ -144,18 +152,17 @@
           <section class="bloco-rh">
             <h2>AVALIAÇÃO DE DESEMPENHO</h2>
             <div class="avaliacao-resumo"><span>Resultado geral</span><strong id="resultadoAvaliacao">—</strong></div>
-            <div class="duas-colunas avaliacao-grids">
-              <div class="caixa-rh"><h3>COMPETÊNCIAS TÉCNICAS</h3><div class="tabela-scroll"><table class="tabela-rh compacta"><thead><tr><th>Competência</th><th>Nota atual</th><th>Próxima nota</th></tr></thead><tbody id="avaliacaoTecnicaCorpo"></tbody></table></div></div>
-              <div class="caixa-rh"><h3>COMPETÊNCIAS COMPORTAMENTAIS</h3><div class="tabela-scroll"><table class="tabela-rh compacta"><thead><tr><th>Competência</th><th>Nota atual</th><th>Próxima nota</th></tr></thead><tbody id="avaliacaoComportamentalCorpo"></tbody></table></div></div>
-            </div>
           </section>
         </article>
       </section>
 
       <section class="conteudo-aba" id="abaMatriz">
         <article class="folha-rh">
-          <header class="titulo-folha"><span>MATRIZ DE HABILIDADES</span><small>Dados da aba “Matriz de Habilidades”</small></header>
+          <header class="titulo-folha"><span>MATRIZ DE HABILIDADES</span><small id="origemMatriz">Matriz de Habilidades Técnicas</small></header>
           <section class="bloco-rh">
+            <label class="seletor-tipo-matriz">Tipo de matriz
+              <select id="tipoMatriz"><option value="tecnica">Técnica</option><option value="comportamental" id="opcaoMatrizComportamental">Comportamental</option></select>
+            </label>
             <div class="identificacao-matriz"><div><span>Membro do time</span><strong id="matrizNome">—</strong></div><div><span>Cargo / Função</span><strong id="matrizCargo">—</strong></div></div>
             <div class="cards-matriz">
               <article><span>Habilidades requeridas</span><strong id="matrizRequeridas">0</strong></article>
@@ -196,7 +203,7 @@
     import { protegerModulo } from "../../module-guard.js?v=3";
     try {
       await protegerModulo("rh");
-      await import("./rh.js?v=9");
+      await import("./rh.js?v=10");
     } catch (erro) {
       console.warn("Acesso ao módulo de RH interrompido:", erro.message);
     }

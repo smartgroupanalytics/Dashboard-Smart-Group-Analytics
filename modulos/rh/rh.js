@@ -1,4 +1,5 @@
 import { auth, db } from "../../firebase-config.js";
+import { rhNovoSelecionarAbas, rhNovoExtrairResumo, rhNovoExtrairMatriz, rhNovoValidarNome } from "./rh-leitura.js?v=1";
 
 import {
   collection,
@@ -112,6 +113,10 @@ function configurarEventos() {
   elementos.seletorColaborador.addEventListener("change", selecionarColaborador);
   elementos.pesquisaHabilidade.addEventListener("input", renderizarHabilidades);
   elementos.filtroSituacaoHabilidade.addEventListener("change", renderizarHabilidades);
+  document.getElementById("tipoMatriz").addEventListener("change", () => {
+    const colaborador = estado.selecionado;
+    if (colaborador) renderizarMatriz(colaborador);
+  });
   elementos.listaAlertasIntegridade?.addEventListener("click", evento => {
     const botao = evento.target.closest("[data-localizar-colaborador]");
     if (!botao) return;
@@ -597,7 +602,8 @@ async function processarPlanilha(arquivo) {
 
   const workbook = window.XLSX.read(bufferPlanilha, { type: "array", cellDates: true });
   const nomePerfil = workbook.SheetNames.find(nome => normalizarTexto(nome).includes("perfil"));
-  const nomeMatriz = workbook.SheetNames.find(nome => normalizarTexto(nome).includes("matriz de habilidades"));
+  const abasMatrizes = rhNovoSelecionarAbas(workbook.SheetNames);
+  const nomeMatriz = abasMatrizes.tecnica;
 
   if (!nomePerfil || !nomeMatriz) {
     throw new Error('O arquivo precisa conter as abas "Perfil" e "Matriz de Habilidades".');
@@ -617,6 +623,17 @@ async function processarPlanilha(arquivo) {
 
   const nome = texto(valorAoLado(perfil, "Nome completo"));
   if (!nome) throw new Error("O nome do colaborador não foi localizado na aba Perfil.");
+
+  const comportamental = abasMatrizes.comportamental
+    ? window.XLSX.utils.sheet_to_json(workbook.Sheets[abasMatrizes.comportamental], {
+      header: 1, raw: true, defval: null
+    }) : null;
+  const resumoHabilidades = rhNovoExtrairResumo(matriz);
+  const novoModelo = Boolean(comportamental || resumoHabilidades);
+  if (novoModelo) {
+    rhNovoValidarNome(nome, matriz);
+    if (comportamental) rhNovoValidarNome(nome, comportamental);
+  }
 
   const departamento = texto(valorAoLado(perfil, "Departamento"));
   if (!departamento) throw new Error("O departamento do colaborador não foi localizado.");
@@ -649,7 +666,11 @@ async function processarPlanilha(arquivo) {
     pdi: extrairPdi(perfil),
     feedbacks: extrairFeedbacks(perfil),
     avaliacao: extrairAvaliacao(perfil),
-    matriz: extrairMatrizHabilidades(matriz)
+    resumoHabilidades,
+    matrizComportamental: comportamental
+      ? rhNovoExtrairMatriz(comportamental, resumoHabilidades?.comportamental ?? null) : null,
+    matriz: novoModelo ? rhNovoExtrairMatriz(matriz, resumoHabilidades?.tecnica ?? null)
+      : extrairMatrizHabilidades(matriz)
   });
 }
 
@@ -936,6 +957,8 @@ function extrairMatrizHabilidades(linhas) {
 }
 
 function renderizarColaborador(colaborador) {
+  document.getElementById("tipoMatriz").value = "tecnica";
+  document.getElementById("opcaoMatrizComportamental").disabled = !colaborador.matrizComportamental;
   fecharBlocosSensiveis();
   renderizarIdentificacao(colaborador);
   renderizarHistorico(colaborador.historico || []);
@@ -945,7 +968,8 @@ function renderizarColaborador(colaborador) {
   renderizarTreinamentos(colaborador.treinamentos || []);
   renderizarPdi(colaborador.pdi || []);
   renderizarFeedbacks(colaborador.feedbacks || []);
-  renderizarAvaliacao(colaborador.avaliacao || {});
+  renderizarResumoHabilidades(colaborador);
+  renderizarAvaliacao(colaborador.avaliacao || {}, colaborador.resumoHabilidades);
   renderizarMatriz(colaborador);
 }
 
@@ -1032,8 +1056,8 @@ function renderizarEnquadramentoSalarial(item) {
 }
 
 function renderizarAtingimento(valor) {
-  const percentual = Math.max(0, Math.min(100, numeroPercentual(valor)));
-  document.getElementById("nivelAtingimento").textContent = formatarPercentual(percentual);
+  const percentual = Math.max(0, Math.min(100, numero(valor)));
+  document.getElementById("nivelAtingimento").textContent = `${numero(valor).toLocaleString("pt-BR", { maximumFractionDigits: 2 })}%`;
   document.getElementById("anelAtingimento").style.setProperty("--valor", percentual);
 }
 
@@ -1057,28 +1081,50 @@ function renderizarFeedbacks(itens) {
   `, 4);
 }
 
-function renderizarAvaliacao(avaliacao) {
+function percentualResumo(valor) {
+  return typeof valor === "number" && Number.isFinite(valor)
+    ? `${valor.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%` : "—";
+}
+
+function renderizarResumoHabilidades(colaborador) {
+  const resumo = colaborador.resumoHabilidades || {};
+  document.getElementById("notaTecnica").textContent = percentualResumo(resumo.tecnica);
+  document.getElementById("notaComportamental").textContent = percentualResumo(resumo.comportamental);
+  document.getElementById("resultadoHabilidades").textContent = percentualResumo(resumo.resultado);
+  const peso = valor => valor == null ? "Peso não informado" : `Peso ${percentualResumo(valor)}`;
+  document.getElementById("pesoTecnica").textContent = peso(resumo.pesoTecnica);
+  document.getElementById("pesoComportamental").textContent = peso(resumo.pesoComportamental);
+  const formula = resumo.pesoTecnica != null && resumo.pesoComportamental != null
+    ? `Técnica × ${percentualResumo(resumo.pesoTecnica)} + Comportamental × ${percentualResumo(resumo.pesoComportamental)}` : "Resultado da planilha";
+  document.getElementById("formulaHabilidades").textContent = formula
+    + (resumo.adicional ? ` + Adicional ${percentualResumo(resumo.adicional)}` : "");
+  const aviso = document.getElementById("avisoNotasHabilidades");
+  aviso.hidden = [resumo.tecnica, resumo.comportamental, resumo.resultado].every(v => typeof v === "number" && Number.isFinite(v));
+  aviso.textContent = aviso.hidden ? "" : "Notas indisponíveis. Atualize a base com a planilha no novo modelo.";
+}
+
+function renderizarAvaliacao(avaliacao, resumo) {
   document.getElementById("resultadoAvaliacao").textContent =
-    avaliacao.resultado == null ? "—" : String(avaliacao.resultado);
-  renderizarCorpo("avaliacaoTecnicaCorpo", avaliacao.tecnicas || [], item =>
-    `<tr><td>${escaparHtml(item.competencia)}</td><td>${escaparHtml(valorExibicao(item.atual))}</td><td>${escaparHtml(valorExibicao(item.proxima))}</td></tr>`, 3);
-  renderizarCorpo("avaliacaoComportamentalCorpo", avaliacao.comportamentais || [], item =>
-    `<tr><td>${escaparHtml(item.competencia)}</td><td>${escaparHtml(valorExibicao(item.atual))}</td><td>${escaparHtml(valorExibicao(item.proxima))}</td></tr>`, 3);
+    resumo ? percentualResumo(resumo.resultado)
+      : avaliacao.resultado == null ? "—" : String(avaliacao.resultado);
 }
 
 function renderizarMatriz(colaborador) {
-  const matriz = colaborador.matriz || {};
+  const comportamental = document.getElementById("tipoMatriz").value === "comportamental";
+  const matriz = (comportamental ? colaborador.matrizComportamental : colaborador.matriz) || {};
+  document.getElementById("origemMatriz").textContent = comportamental
+    ? "Matriz de Habilidades Comportamentais" : "Matriz de Habilidades Técnicas";
   document.getElementById("matrizNome").textContent = colaborador.nome || "—";
   document.getElementById("matrizCargo").textContent = colaborador.cargo || "—";
   document.getElementById("matrizRequeridas").textContent = matriz.requeridas ?? 0;
   document.getElementById("matrizCapazes").textContent = matriz.capazes ?? 0;
   document.getElementById("matrizGap").textContent = matriz.gap ?? 0;
-  document.getElementById("matrizMeta").textContent = formatarPercentual(matriz.meta || 0);
-  document.getElementById("matrizAtual").textContent = formatarPercentual(matriz.atual || 0);
+  document.getElementById("matrizMeta").textContent = percentualResumo(matriz.meta);
+  document.getElementById("matrizAtual").textContent = percentualResumo(matriz.atual);
 
-  const diferenca = numeroPercentual(matriz.atual) - numeroPercentual(matriz.meta);
+  const diferenca = numero(matriz.atual) - numero(matriz.meta);
   const mensagem = document.getElementById("mensagemMeta");
-  if (Number.isFinite(diferenca)) {
+  if (matriz.atual != null && matriz.meta != null && Number.isFinite(diferenca)) {
     mensagem.style.display = "block";
     mensagem.textContent = diferenca >= 0
       ? `Capacidade atual ${Math.abs(diferenca).toLocaleString("pt-BR", { maximumFractionDigits: 2 })} pontos percentuais acima da meta.`
