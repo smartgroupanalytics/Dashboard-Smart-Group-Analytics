@@ -164,8 +164,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1400,
     "dt_saida": "2026-11-05",
-    "centro_custo": 25,
-    "abreviacao": "TRANSFE"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -176,8 +176,8 @@
     "subgrupo": 41,
     "qtd_produzir": 600,
     "dt_saida": "2026-11-05",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -188,8 +188,8 @@
     "subgrupo": 41,
     "qtd_produzir": 40,
     "dt_saida": "2026-11-06",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -200,38 +200,14 @@
     "subgrupo": 41,
     "qtd_produzir": 40,
     "dt_saida": "2026-11-06",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
     "nro_op": "8874",
     "produto": "18374",
     "desc_completa": "NAPA LINHO DAKAR GUAVA",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 40,
-    "dt_saida": "2026-11-06",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8875",
-    "produto": "18380",
-    "desc_completa": "SAVOY LUX CAMOMILA",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 40,
-    "dt_saida": "2026-11-06",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8876",
-    "produto": "18382",
-    "desc_completa": "SAVOY LUX GUAVA",
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 40,
@@ -265,18 +241,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8926",
-    "produto": "11782",
-    "desc_completa": "MAIORCA OFF WHITE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 40,
-    "dt_saida": "2026-11-06",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8927",
     "produto": "11783",
     "desc_completa": "MAIORCA BEGE",
@@ -284,8 +248,8 @@
     "subgrupo": 41,
     "qtd_produzir": 40,
     "dt_saida": "2026-11-06",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -308,8 +272,8 @@
     "subgrupo": 41,
     "qtd_produzir": 40,
     "dt_saida": "2026-11-06",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -320,8 +284,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-11-06",
-    "centro_custo": 3,
-    "abreviacao": "GR 1"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -332,8 +296,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-11-12",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -344,8 +308,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-11-12",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -356,8 +320,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-11-12",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -368,8 +332,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-11-12",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -380,6 +344,18 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-11-12",
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "8989",
+    "produto": "17323",
+    "desc_completa": "MACKAY GLAM GRAFITE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 400,
+    "dt_saida": "2026-11-11",
     "centro_custo": 0,
     "abreviacao": ""
   }
