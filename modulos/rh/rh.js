@@ -55,7 +55,8 @@ const estado = {
   alertasIntegridade: [],
   podeAdministrar: false,
   podeVerTodos: false,
-  departamentoChave: ""
+  departamentoChave: "",
+  matrizColaboradorId: null
 };
 
 inicializar();
@@ -526,6 +527,9 @@ function aplicarFiltrosColaboradores() {
 
   if (idAtual && estado.filtrados.some(item => item.id === idAtual)) {
     elementos.seletorColaborador.value = idAtual;
+    // O getDocs() trouxe objetos NOVOS. Sem reatribuir o selecionado,
+    // o dashboard continua usando a matriz antiga mesmo após sincronizar.
+    estado.selecionado = estado.filtrados.find(item => item.id === idAtual);
   } else if (estado.filtrados.length) {
     elementos.seletorColaborador.value = estado.filtrados[0].id;
     estado.selecionado = estado.filtrados[0];
@@ -1078,14 +1082,19 @@ function extrairMatrizHabilidades(linhas) {
 }
 
 function renderizarColaborador(colaborador) {
-  document.getElementById("tipoMatriz").value = "tecnica";
+  const seletorMatriz = document.getElementById("tipoMatriz");
+  const idColaborador = String(colaborador.id || "");
+  // Mantém a opção escolhida ao atualizar o MESMO funcionário,
+  // mas volta à Técnica quando selecionar outra pessoa.
+  if (estado.matrizColaboradorId !== idColaborador) {
+    seletorMatriz.value = "tecnica";
+  }
+  estado.matrizColaboradorId = idColaborador;
   const opcaoComportamental = document.getElementById("opcaoMatrizComportamental");
-  const temMatrizComportamental = Boolean(colaborador.matrizComportamental &&
-    Array.isArray(colaborador.matrizComportamental.habilidades) &&
-    colaborador.matrizComportamental.habilidades.length);
-  opcaoComportamental.disabled = !temMatrizComportamental;
-  opcaoComportamental.title = temMatrizComportamental ? "" :
-    "Matriz não disponível no Firebase. Atualize este colaborador a partir do XLSX com as duas abas.";
+  // As duas opções precisam permanecer acessíveis. Ausência de dados
+  // é explicada na tela, sem atribuir resultados falsos à pessoa.
+  opcaoComportamental.disabled = false;
+  opcaoComportamental.title = "Ver a matriz comportamental deste colaborador";
   fecharBlocosSensiveis();
   renderizarIdentificacao(colaborador);
   renderizarHistorico(colaborador.historico || []);
@@ -1239,19 +1248,36 @@ function renderizarAvaliacao(avaliacao, resumo) {
 function renderizarMatriz(colaborador) {
   const comportamental = document.getElementById("tipoMatriz").value === "comportamental";
   const matriz = (comportamental ? colaborador.matrizComportamental : colaborador.matriz) || {};
+  const temHabilidades = Array.isArray(matriz.habilidades) && matriz.habilidades.length > 0;
+  const semDadosComportamentais = comportamental && !temHabilidades;
   document.getElementById("origemMatriz").textContent = comportamental
     ? "Matriz de Habilidades Comportamentais" : "Matriz de Habilidades Técnicas";
   document.getElementById("matrizNome").textContent = colaborador.nome || "—";
   document.getElementById("matrizCargo").textContent = colaborador.cargo || "—";
-  document.getElementById("matrizRequeridas").textContent = matriz.requeridas ?? 0;
-  document.getElementById("matrizCapazes").textContent = matriz.capazes ?? 0;
-  document.getElementById("matrizGap").textContent = matriz.gap ?? 0;
-  document.getElementById("matrizMeta").textContent = percentualResumo(matriz.meta);
-  document.getElementById("matrizAtual").textContent = percentualResumo(matriz.atual);
+
+  const aviso = document.getElementById("avisoMatrizIndisponivel");
+  if (aviso) {
+    aviso.hidden = !semDadosComportamentais;
+    if (semDadosComportamentais) {
+      aviso.textContent = estado.podeAdministrar
+        ? "A matriz comportamental deste colaborador ainda não está disponível na base do RH. " +
+          "Confira se a planilha XLSX com as duas abas está no Drive e use o botão azul de " +
+          "atualizar > Atualizar somente este funcionário."
+        : "A matriz comportamental deste colaborador ainda não está disponível na base do RH. " +
+          "Solicite ao RH a sincronização da planilha com as duas abas.";
+    }
+  }
+
+  // Nunca mostrar zeros como resultado real quando uma matriz não foi carregada.
+  document.getElementById("matrizRequeridas").textContent = semDadosComportamentais ? "—" : (matriz.requeridas ?? 0);
+  document.getElementById("matrizCapazes").textContent = semDadosComportamentais ? "—" : (matriz.capazes ?? 0);
+  document.getElementById("matrizGap").textContent = semDadosComportamentais ? "—" : (matriz.gap ?? 0);
+  document.getElementById("matrizMeta").textContent = semDadosComportamentais ? "—" : percentualResumo(matriz.meta);
+  document.getElementById("matrizAtual").textContent = semDadosComportamentais ? "—" : percentualResumo(matriz.atual);
 
   const diferenca = numero(matriz.atual) - numero(matriz.meta);
   const mensagem = document.getElementById("mensagemMeta");
-  if (matriz.atual != null && matriz.meta != null && Number.isFinite(diferenca)) {
+  if (!semDadosComportamentais && matriz.atual != null && matriz.meta != null && Number.isFinite(diferenca)) {
     mensagem.style.display = "block";
     mensagem.textContent = diferenca >= 0
       ? `Capacidade atual ${Math.abs(diferenca).toLocaleString("pt-BR", { maximumFractionDigits: 2 })} pontos percentuais acima da meta.`

@@ -31,3 +31,7 @@
 .rh-modal-opcao small{font-size:11px;font-weight:normal;color:#566985;line-height:1.4}
 .rh-modal-opcao:disabled{opacity:.5;cursor:not-allowed}
 .rh-modal-cancelar{margin-top:5px;align-self:flex-end;padding:8px 13px;border:1px solid #c7d5e7;border-radius:7px;background:white;color:#40516b;cursor:pointer}
+
+/* RH 2.6.2: motivo explícito quando uma matriz não foi sincronizada. */
+.aviso-matriz-indisponivel{margin:0 0 14px;padding:11px 13px;border:1px solid #c9d7e7;border-left:3px solid #5988b6;border-radius:7px;background:#f5f8fc;color:#36516f;font-size:12px;line-height:1.5}
+.aviso-matriz-indisponivel[hidden]{display:none!important}

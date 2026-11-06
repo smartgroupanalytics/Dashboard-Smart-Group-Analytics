@@ -1,45 +1,33 @@
-# Smart Group Analytics — RH 2.6.1 (ajustes controlados)
+# Smart Group Analytics — correção RH 2.6.2
 
-Este pacote foi preparado a partir dos arquivos do módulo RH enviados em 06/11/2026 e do Apps Script 2.5.1 enviado em seguida.
+## Motivo da correção
+No `rh.js` 2.6.1, o item **Comportamental** era desabilitado se `matrizComportamental.habilidades` não estivesse presente no documento Firebase. Além disso, após `getDocs()` a lista de colaboradores era substituída, mas o colaborador selecionado continuava apontando para o objeto anterior. Por isso, mesmo após sincronizar um funcionário, sua tela podia mostrar os dados antigos até uma troca de seleção ou recarga.
 
-## O que foi alterado
+## Mudanças nesta revisão (somente frontend)
 
-1. **Escolha do escopo de sincronização:** ao clicar no ícone azul de atualizar, um administrador/RH escolhe **somente o colaborador selecionado** ou **todos os colaboradores**. O usuário sem permissão administrativa continua apenas recarregando os dados, sem executar Apps Script.
-2. **Atualização individual de fato:** o servidor usa o ID do documento do Firestore, procura o `arquivoDriveId` já vinculado e verifica a origem em uma das pastas permitidas do RH. Não aceita um ID arbitrário de arquivo enviado pelo navegador, nem percorre as planilhas de outras matrículas. Bloqueia atualizações se a matrícula ou o nome da planilha não corresponderem ao cadastro selecionado ou se houver alerta de integridade.
-3. **Extração de fotografia:** no Apps Script e no importador do painel, procura a imagem ancorada na região do retrato da **aba Perfil** no arquivo XLSX, usando as relações internas da planilha; **não** escolhe mais `xl/media/image1` automaticamente. Se a foto não for identificada com segurança, mantém a anterior (quando houver) e registra aviso.
-4. **Matrizes:** preserva os dois tipos da versão 2.5.1. A opção Comportamental fica habilitada quando o documento no Firestore inclui `matrizComportamental.habilidades` preenchido. Um arquivo com as duas abas precisa ser processado para que esse campo chegue à base.
-5. **Proteção de cadastros:** `PERMITIR_REMOCAO_AUTOMATICA: false` evita remover outros cadastros simplesmente porque um arquivo não foi encontrado no Drive. `REPROCESSAR_VERSAO_AUTOMATICAMENTE: false` evita que a troca para 2.6.1 reimporte todos os funcionários pelo gatilho de 15 minutos sem você solicitar.
+- Seletor **Técnica / Comportamental** sempre disponível para consulta.
+- Caso os dados comportamentais não estejam no Firebase, mostra uma explicação orientando a sincronização **individual**; nunca inventa percentuais e contagens com valor zero.
+- Após consultar o Firebase, o colaborador selecionado é associado novamente ao **novo objeto**, corrigindo a persistência da matriz antiga em memória.
+- Ao sincronizar e recarregar **o mesmo colaborador**, a matriz selecionada permanece; ao mudar de colaborador, volta à Técnica.
+- Preservados: imagens, redução de fotos, matrizes técnicas, cálculos, autenticação, permissões, atualização individual/completa e outros módulos.
 
-## Instalação na ordem correta
+## Instalação
 
-1. **Guarde cópias** do Apps Script atual e dos 6 arquivos de `/rh` publicados no GitHub.
-2. No projeto **automacao rh drive**, substitua o código anterior pelo conteúdo completo de `Automacao-RH-2.6.1.gs`. Não mantenha duas versões das mesmas funções no projeto. Clique em **Salvar**.
-3. No Apps Script, use **Implantar > Gerenciar implantações > Editar (lápis) > Nova versão > Implantar**. Isso mantém a URL `/exec` que já existe no arquivo `rh.js`. **Não rode `instalarAutomacaoRH` novamente** se o gatilho atual já funciona.
-4. No repositório do dashboard, substitua **apenas** estes arquivos da pasta `/rh`: `index.html`, `rh.js`, `rh.css`, `rh-leitura.js`, `rh-faixas.css` e `rh-privacidade.css`. Não mexa em outros módulos.
-5. Aguarde a publicação do GitHub Pages e abra o RH com **Ctrl+F5**. Evite clicar em Atualizar durante a troca de versões; o painel antigo não envia o parâmetro `modo`, exigido pelo script novo.
+Se o RH 2.6.1 já está instalado, substitua **somente** estes arquivos em `/rh` no GitHub Pages:
 
-## Primeiro teste recomendado (sem alterar outros funcionários)
+1. `rh.js`
+2. `index.html`
+3. `rh.css`
 
-1. No Apps Script, execute a função **`testarLeituraRH`** para um XLSX de teste, preenchendo temporariamente o ID do arquivo na própria função. Ela lê o arquivo e mostra no registro se encontrou Técnica e Comportamental, sem gravar no Firestore. Pode criar e excluir **cópias temporárias** no Drive.
-2. No painel, escolha o funcionário **matrícula 158 (Abner)** ou outro que tenha as duas abas; clique na seta circular azul e depois em **Atualizar somente este funcionário**.
-3. Confirme no Firestore, em `rh_colaboradores/<matrícula>`, se `versaoAutomacao` é `2.6.1`, se `matrizComportamental.habilidades` foi gravado e se a foto correta aparece. Em seguida verifique a opção **Comportamental** no dashboard.
-4. Para atualizar toda a base, use explicitamente **Atualizar todos os funcionários**. Essa operação utiliza lotes e continuações como na versão anterior.
+Os arquivos `rh-leitura.js`, `rh-faixas.css`, `rh-privacidade.css` e o **Apps Script 2.6.1** não precisam ser alterados. O ZIP inclui os outros arquivos apenas para fornecer uma cópia completa do módulo.
 
-## Observações importantes
+Faça backup dos arquivos atuais antes da troca. Após o deploy, recarregue o dashboard com `Ctrl + F5`.
 
-- **Testes locais realizados:** sintaxe do Apps Script e do JS; escolha da foto em um XLSX sintético no qual `image1.png` era uma legenda e `image9.jpg` era a foto; preservação de foto quando não há imagem identificável; escolha de abas; roteamento dos modos individual/completo; existência de IDs dos botões no HTML.
-- **Não testado em produção:** autenticação real Firebase, Apps Script implantado, leitura das planilhas atuais do Drive, integração final com Firestore/GitHub Pages. A atualização real só pode ser verificada no seu ambiente.
-- Se a foto antiga já foi gravada incorretamente no Firestore **e** o novo código não conseguir identificar uma foto válida na planilha original, ele preservará o valor anterior. Nesse caso é necessário corrigir/posicionar a foto no arquivo XLSX ou tratar o campo específico com backup — não faremos exclusões automáticas de fotos.
-- Algumas imagens não usam vínculos padrão OOXML (por exemplo imagens dentro de célula ou formatos não suportados); nesses casos a automação não escolhe outra imagem por aproximação arriscada.
-- Mantenha a versão anterior para reversão caso o ambiente de produção apresente uma estrutura de Excel diferente da esperada.
+## Teste recomendado
 
-## Ajuste 2.6.1: fotos maiores e diagnóstico individual
+1. No dashboard, selecione **Fabio Silveira** (selecionado no print). A lista **Tipo de matriz** deverá permitir selecionar **Comportamental**.
+2. Caso apareça a mensagem de dados não disponíveis, confirme que o XLSX atualizado do Fabio, com **as duas abas**, está na pasta correta do Drive. Se estiver, clique no ícone azul e escolha **Atualizar somente este funcionário**.
+3. A atualização individual deve retornar se encontrou a matriz comportamental. Verifique `rh_colaboradores/<id_do_Fabio>` no Firestore e localize `matrizComportamental.habilidades`.
+4. Repita para **Abner**, matrícula 158, para verificar as duas matrizes. A foto não é alterada por esta revisão.
 
-- Mantida a redução automática das fotos (800, 600, 500, 400, 300 ou 240 px, conforme o limite).
-- Corrigida a identificação explícita de PNG/JPEG extraído do Excel antes da miniatura do Drive.
-- Foto só é selecionada quando está ancorada na área de identificação da aba Perfil (não é a legenda colorida).
-- Na atualização de um funcionário, o retorno indica separadamente se a foto foi atualizada e se a matriz comportamental foi carregada.
-- A atualização individual não reprocessa os demais colaboradores.
-- Faça backup do Apps Script e da pasta rh antes de aplicar. Não execute atualização geral para validar o Abner.
-
-**Observação:** não houve conexão direta com o Drive/Firebase de produção neste teste. Se a foto permanecer antiga após atualizar só a matrícula 158, abra o registro da execução para conferir o aviso de miniatura e o ID do arquivo associado ao cadastro.
+**Validação:** verificações locais de sintaxe e fluxo de estado. Sem acesso ao Firebase/GitHub em produção, não se pode confirmar remotamente que a matriz do Fabio já foi gravada.
