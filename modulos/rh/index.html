@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Recursos Humanos - Smart Group Analytics</title>
-  <link rel="stylesheet" href="rh.css?v=6">
+  <link rel="stylesheet" href="rh.css?v=7">
   <link rel="stylesheet" href="rh-faixas.css?v=1">
   <link rel="stylesheet" href="rh-privacidade.css?v=3">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -194,6 +194,17 @@
     </section>
   </main>
 
+  <div class="rh-modal-backdrop" id="dialogoSincronizacaoRH" hidden>
+    <section class="rh-modal-sync" role="dialog" aria-modal="true" aria-labelledby="tituloSincronizacaoRH">
+      <h2 id="tituloSincronizacaoRH">Atualizar dados do RH</h2>
+      <p>Escolha se deseja atualizar somente o funcionário selecionado ou todas as planilhas.</p>
+      <div class="rh-modal-destino" id="nomeAtualizacaoIndividualRH">Nenhum colaborador selecionado</div>
+      <button type="button" class="rh-modal-opcao" id="btnSincronizarIndividualRH"><i class="fa-solid fa-user-check"></i><span><strong>Atualizar somente este funcionário</strong><small>Busca apenas a planilha vinculada à matrícula selecionada.</small></span></button>
+      <button type="button" class="rh-modal-opcao" id="btnSincronizarTodosRH"><i class="fa-solid fa-users-gear"></i><span><strong>Atualizar todos os funcionários</strong><small>Reprocessa toda a base do RH; arquivos excedentes continuam em lotes.</small></span></button>
+      <button type="button" class="rh-modal-cancelar" id="btnCancelarSincronizacaoRH">Cancelar</button>
+    </section>
+  </div>
+
   <div class="carregando-rh" id="carregandoRh" hidden><div><i class="fa-solid fa-spinner fa-spin"></i><span id="textoCarregando">Carregando dados...</span></div></div>
   <div class="toast" id="toast" aria-live="polite"></div>
 
@@ -203,7 +214,7 @@
     import { protegerModulo } from "../../module-guard.js?v=3";
     try {
       await protegerModulo("rh");
-      await import("./rh.js?v=10");
+      await import("./rh.js?v=11");
     } catch (erro) {
       console.warn("Acesso ao módulo de RH interrompido:", erro.message);
     }

@@ -15,3 +15,19 @@
 .seletor-tipo-matriz select{padding:9px;border:1px solid var(--line);border-radius:7px;background:white;color:var(--text)}
 @media(max-width:1100px){.matriz-resumo-conteudo{grid-template-columns:1fr}.notas-habilidades{margin-top:8px}}
 @media(max-width:500px){.notas-habilidades{grid-template-columns:1fr 1fr}.nota-resultado{grid-column:1/-1}.matriz-resumo-conteudo .atingimento{gap:12px}.nota-habilidade strong{font-size:22px}}
+
+/* RH 2.6.0 — seleção explícita do escopo de sincronização */
+.rh-modal-backdrop{position:fixed;inset:0;z-index:9900;background:rgba(6,21,47,.62);display:flex;align-items:center;justify-content:center;padding:16px}
+.rh-modal-backdrop[hidden]{display:none!important}
+.rh-modal-sync{width:min(100%,500px);background:#fff;border-radius:12px;padding:22px;box-shadow:0 20px 60px rgba(0,0,0,.24);display:flex;flex-direction:column;gap:11px}
+.rh-modal-sync h2{font-size:19px;margin:0;color:#1e3567}
+.rh-modal-sync p{font-size:13px;line-height:1.45;color:#52627a;margin:0}
+.rh-modal-destino{font-size:12px;font-weight:700;background:#edf4fc;border:1px solid #d7e0ec;border-radius:7px;padding:11px;color:#284566}
+.rh-modal-opcao{display:flex;gap:12px;text-align:left;align-items:center;background:#fff;border:1px solid #cfdaea;padding:14px 12px;border-radius:8px;cursor:pointer;color:#164c91}
+.rh-modal-opcao:hover:not(:disabled){background:#edf5ff;border-color:#93c6f2}
+.rh-modal-opcao>i{font-size:22px;min-width:26px}
+.rh-modal-opcao span{display:flex;flex-direction:column;gap:5px}
+.rh-modal-opcao strong{font-size:13px}
+.rh-modal-opcao small{font-size:11px;font-weight:normal;color:#566985;line-height:1.4}
+.rh-modal-opcao:disabled{opacity:.5;cursor:not-allowed}
+.rh-modal-cancelar{margin-top:5px;align-self:flex-end;padding:8px 13px;border:1px solid #c7d5e7;border-radius:7px;background:white;color:#40516b;cursor:pointer}

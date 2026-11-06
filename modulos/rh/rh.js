@@ -1,5 +1,5 @@
 import { auth, db } from "../../firebase-config.js";
-import { rhNovoSelecionarAbas, rhNovoExtrairResumo, rhNovoExtrairMatriz, rhNovoValidarNome } from "./rh-leitura.js?v=1";
+import { rhNovoSelecionarAbas, rhNovoExtrairResumo, rhNovoExtrairMatriz, rhNovoValidarNome } from "./rh-leitura.js?v=2";
 
 import {
   collection,
@@ -28,6 +28,11 @@ const elementos = {
   filtroDepartamento: document.getElementById("filtroDepartamento"),
   seletorColaborador: document.getElementById("seletorColaborador"),
   btnAtualizar: document.getElementById("btnAtualizar"),
+  dialogoSincronizacao: document.getElementById("dialogoSincronizacaoRH"),
+  nomeAtualizacaoIndividual: document.getElementById("nomeAtualizacaoIndividualRH"),
+  btnSincronizarIndividual: document.getElementById("btnSincronizarIndividualRH"),
+  btnSincronizarTodos: document.getElementById("btnSincronizarTodosRH"),
+  btnCancelarSincronizacao: document.getElementById("btnCancelarSincronizacaoRH"),
   estadoVazio: document.getElementById("estadoVazio"),
   mensagemVazia: document.getElementById("mensagemVazia"),
   conteudoRh: document.getElementById("conteudoRh"),
@@ -107,7 +112,16 @@ function configurarEventos() {
     elementos.painelImportacao.hidden = true;
   });
   elementos.arquivosExcel.addEventListener("change", importarArquivos);
-  elementos.btnAtualizar.addEventListener("click", sincronizarOuAtualizarRH);
+  elementos.btnAtualizar.addEventListener("click", abrirEscolhaSincronizacaoRH);
+  elementos.btnSincronizarIndividual?.addEventListener("click", () => sincronizarOuAtualizarRH("individual"));
+  elementos.btnSincronizarTodos?.addEventListener("click", () => sincronizarOuAtualizarRH("todos"));
+  elementos.btnCancelarSincronizacao?.addEventListener("click", fecharEscolhaSincronizacaoRH);
+  elementos.dialogoSincronizacao?.addEventListener("click", event => {
+    if (event.target === elementos.dialogoSincronizacao) fecharEscolhaSincronizacaoRH();
+  });
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && !elementos.dialogoSincronizacao?.hidden) fecharEscolhaSincronizacaoRH();
+  });
   elementos.pesquisaColaborador.addEventListener("input", aplicarFiltrosColaboradores);
   elementos.filtroDepartamento.addEventListener("change", aplicarFiltrosColaboradores);
   elementos.seletorColaborador.addEventListener("change", selecionarColaborador);
@@ -130,7 +144,27 @@ function configurarEventos() {
   });
 }
 
-async function sincronizarOuAtualizarRH() {
+function abrirEscolhaSincronizacaoRH() {
+  if (!estado.podeAdministrar) {
+    carregarColaboradores();
+    return;
+  }
+  const colaborador = estado.selecionado;
+  elementos.nomeAtualizacaoIndividual.textContent = colaborador
+    ? `${colaborador.nome || "Colaborador"} — matrícula ${colaborador.matricula || "não informada"}`
+    : "Nenhum colaborador selecionado";
+  elementos.btnSincronizarIndividual.disabled = !colaborador?.id || !colaborador?.arquivoDriveId;
+  elementos.btnSincronizarIndividual.title = !colaborador?.arquivoDriveId
+    ? "Este cadastro não tem vínculo com uma planilha do Drive" : "";
+  elementos.dialogoSincronizacao.hidden = false;
+  elementos.btnCancelarSincronizacao.focus();
+}
+
+function fecharEscolhaSincronizacaoRH() {
+  if (elementos.dialogoSincronizacao) elementos.dialogoSincronizacao.hidden = true;
+}
+
+async function sincronizarOuAtualizarRH(modo) {
   if (!estado.podeAdministrar) {
     await carregarColaboradores();
     return;
@@ -148,7 +182,16 @@ async function sincronizarOuAtualizarRH() {
     return;
   }
 
-  mostrarCarregamento("Sincronizando as planilhas do Google Drive...");
+  if (modo !== "individual" && modo !== "todos") return;
+  const selecionado = estado.selecionado;
+  if (modo === "individual" && (!selecionado?.id || !selecionado?.arquivoDriveId)) {
+    mostrarToast("Selecione um colaborador com planilha vinculada ao Drive.", true);
+    return;
+  }
+  fecharEscolhaSincronizacaoRH();
+  mostrarCarregamento(modo === "individual"
+    ? `Atualizando somente ${selecionado.nome || "o colaborador"}...`
+    : "Sincronizando todas as planilhas do Google Drive...");
   elementos.btnAtualizar.disabled = true;
   elementos.btnAtualizar.classList.add("sincronizando");
   const controlador = new AbortController();
@@ -164,7 +207,10 @@ async function sincronizarOuAtualizarRH() {
       redirect: "follow",
       cache: "no-store",
       headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify({ acao: "sincronizar_rh", idToken }),
+      body: JSON.stringify({
+         acao: "sincronizar_rh", idToken, modo,
+         documentoId: modo === "individual" ? selecionado.id : ""
+       }),
       signal: controlador.signal
     });
 
@@ -213,6 +259,7 @@ async function sincronizarOuAtualizarRH() {
       : "";
 
     mostrarToast(
+      (modo === "individual" ? `${selecionado.nome || "Colaborador"}: ` : "") +
       `${atualizados} colaborador(es) atualizado(s). ` +
       `${semAlteracao} arquivo(s) sem alteração.` +
       parteRemovidos + parteBloqueados + continuacao,
@@ -674,15 +721,82 @@ async function processarPlanilha(arquivo) {
   });
 }
 
+// Usa as relações OOXML do arquivo XLSX para vincular a foto à aba Perfil.
+// Não presume que image1.* em xl/media seja a foto do colaborador.
+async function localizarFotoNaAbaPerfilRH(zip) {
+  const ler = async caminho => zip.file(caminho)?.async("string") || "";
+  const attr = (tag, nome) => {
+    for (const item of String(tag || "").match(/[:\w-]+=["'][^"']*["']/g) || []) {
+      const i = item.indexOf("=");
+      if (item.slice(0, i) === nome) return item.slice(i + 2, -1).replace(/&amp;/g, "&");
+    }
+    return "";
+  };
+  const resolver = (origem, alvo) => {
+    if (!alvo) return "";
+    const base = alvo.startsWith("/") ? alvo.slice(1) :
+      origem.slice(0, origem.lastIndexOf("/") + 1) + alvo;
+    const partes = [];
+    for (const parte of base.replace(/\\/g, "/").split("/")) {
+      if (!parte || parte === ".") continue;
+      if (parte === "..") partes.pop();
+      else partes.push(parte);
+    }
+    return partes.join("/");
+  };
+  const relacoes = async origem => {
+    const i = origem.lastIndexOf("/");
+    const xml = await ler(origem.slice(0, i + 1) + "_rels/" + origem.slice(i + 1) + ".rels");
+    const mapa = {};
+    for (const tag of xml.match(/<(?:(?:\w+):)?Relationship\b[^>]*\/?\s*>/g) || []) {
+      if (attr(tag, "TargetMode") === "External") continue;
+      const id = attr(tag, "Id");
+      if (id) mapa[id] = resolver(origem, attr(tag, "Target"));
+    }
+    return mapa;
+  };
+  const wb = await ler("xl/workbook.xml");
+  const abaPerfil = (wb.match(/<(?:(?:\w+):)?sheet\b[^>]*\/?\s*>/g) || [])
+    .find(tag => normalizarTexto(attr(tag, "name")) === "perfil");
+  if (!abaPerfil) return null;
+  const sheet = (await relacoes("xl/workbook.xml"))[attr(abaPerfil, "r:id")];
+  if (!sheet) return null;
+  const sheetXml = await ler(sheet);
+  const drawingTag = sheetXml.match(/<(?:(?:\w+):)?drawing\b[^>]*\/?\s*>/);
+  if (!drawingTag) return null;
+  const drawing = (await relacoes(sheet))[attr(drawingTag[0], "r:id")];
+  if (!drawing) return null;
+  const rels = await relacoes(drawing);
+  const xml = await ler(drawing);
+  const anchors = xml.match(/<(?:(?:\w+):)?(?:oneCellAnchor|twoCellAnchor)\b[\s\S]*?<\/(?:(?:\w+):)?(?:oneCellAnchor|twoCellAnchor)>/g) || [];
+  const candidatos = [];
+  for (const anchor of anchors) {
+    const from = anchor.match(/<(?:(?:\w+):)?from>[\s\S]*?<\/(?:(?:\w+):)?from>/);
+    if (!from) continue;
+    const col = from[0].match(/<(?:(?:\w+):)?col>(\d+)<\/(?:(?:\w+):)?col>/);
+    const row = from[0].match(/<(?:(?:\w+):)?row>(\d+)<\/(?:(?:\w+):)?row>/);
+    if (!col || !row) continue;
+    const coluna = Number(col[1]), linha = Number(row[1]);
+    if (coluna > 3 || linha < 2 || linha > 18) continue;
+    const blip = anchor.match(/<(?:(?:\w+):)?blip\b[^>]*\/?\s*>/);
+    const arquivo = blip ? rels[attr(blip[0], "r:embed")] : "";
+    if (arquivo && /^xl\/media\/.*\.(png|jpe?g|webp|gif|bmp)$/i.test(arquivo) && zip.file(arquivo)) {
+      candidatos.push({item: zip.file(arquivo), score: Math.abs(coluna - 1)*5 + Math.abs(linha - 4)});
+    }
+  }
+  candidatos.sort((a,b) => a.score - b.score);
+  if (!candidatos.length || (candidatos[1] && candidatos[0].score === candidatos[1].score)) return null;
+  return candidatos[0].item;
+}
+
 async function extrairFoto(buffer) {
   try {
     const zip = await window.JSZip.loadAsync(buffer);
-    const imagens = Object.values(zip.files)
-      .filter(item => !item.dir && /^xl\/media\/.*\.(png|jpe?g|webp|gif|bmp)$/i.test(item.name))
-      .sort((a, b) => a.name.localeCompare(b.name));
-
-    if (!imagens.length) return "";
-    const imagem = imagens[0];
+    const imagem = await localizarFotoNaAbaPerfilRH(zip);
+    if (!imagem) {
+      console.warn("Foto não identificada na área Perfil do arquivo; nenhuma imagem foi associada.");
+      return "";
+    }
     const extensao = imagem.name.split(".").pop().toLowerCase();
     const tipos = {
       png: "image/png",
@@ -958,7 +1072,13 @@ function extrairMatrizHabilidades(linhas) {
 
 function renderizarColaborador(colaborador) {
   document.getElementById("tipoMatriz").value = "tecnica";
-  document.getElementById("opcaoMatrizComportamental").disabled = !colaborador.matrizComportamental;
+  const opcaoComportamental = document.getElementById("opcaoMatrizComportamental");
+  const temMatrizComportamental = Boolean(colaborador.matrizComportamental &&
+    Array.isArray(colaborador.matrizComportamental.habilidades) &&
+    colaborador.matrizComportamental.habilidades.length);
+  opcaoComportamental.disabled = !temMatrizComportamental;
+  opcaoComportamental.title = temMatrizComportamental ? "" :
+    "Matriz não disponível no Firebase. Atualize este colaborador a partir do XLSX com as duas abas.";
   fecharBlocosSensiveis();
   renderizarIdentificacao(colaborador);
   renderizarHistorico(colaborador.historico || []);
