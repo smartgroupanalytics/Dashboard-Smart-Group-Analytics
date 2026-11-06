@@ -262,8 +262,15 @@ async function sincronizarOuAtualizarRH(modo) {
       (modo === "individual" ? `${selecionado.nome || "Colaborador"}: ` : "") +
       `${atualizados} colaborador(es) atualizado(s). ` +
       `${semAlteracao} arquivo(s) sem alteração.` +
-      parteRemovidos + parteBloqueados + continuacao,
-      bloqueados > 0
+      parteRemovidos + parteBloqueados + continuacao +
+      (modo === "individual" ?
+        (resumo.fotoAtualizada === true ? " Foto atualizada." :
+          resumo.fotoAtualizada === false ? " Foto não atualizada (ver aviso no Apps Script)." : "") +
+        (resumo.matrizComportamentalDisponivel === true ? " Matriz comportamental carregada." :
+          resumo.matrizComportamentalDisponivel === false ? " Matriz comportamental não carregada." : "")
+        : ""),
+      bloqueados > 0 || (modo === "individual" &&
+        (resumo.fotoAtualizada === false || resumo.matrizComportamentalDisponivel === false))
     );
   } catch (erro) {
     console.error("Erro na sincronização imediata do RH:", erro);
