@@ -1,8 +1,8 @@
 {
-  "importadoEm": "2026-11-06T13:56:35.143Z",
+  "importadoEm": "2026-11-07T08:11:30.446Z",
   "pastaEntrada": "/home/runner/work/Dashboard-Smart-Group-Analytics/Dashboard-Smart-Group-Analytics/_automacao/entrada-relatorios",
   "modo": "ATUALIZACAO_PARCIAL_PROTEGIDA",
-  "status": "ATENCAO",
+  "status": "OK",
   "relatorios": {
     "ESTOQUE": {
       "arquivo": "ESTOQUE.xlsx",
@@ -11,9 +11,7 @@
       "linhasOriginais": 1103,
       "linhasValidas": 1102,
       "produtosDistintos": 897,
-      "quantidade": 247128.14999999985,
-      "statusAtualizacao": "MANTIDO",
-      "motivo": "Gmail API retornou HTTP 500: { \"error\": { \"code\": 500, \"message\": \"Unknown Error.\", \"errors\": [ { \"message\": \"Unknown Error.\", \"domain\": \"global\", \"reason\": \"backendError\" } ], \"stat"
+      "quantidade": 247128.14999999985
     },
     "COMPRAS": {
       "arquivo": "COMPRAS.xlsx",
@@ -37,10 +35,10 @@
       "arquivo": "OP.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 30,
-      "linhasValidas": 30,
-      "produtosDistintos": 30,
-      "quantidade": 8785.4
+      "linhasOriginais": 24,
+      "linhasValidas": 24,
+      "produtosDistintos": 24,
+      "quantidade": 6057
     },
     "VENDAS": {
       "arquivo": "VENDAS.xlsx",
@@ -67,10 +65,10 @@
       "arquivo": "ESTOQUEBR.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 1006,
-      "linhasValidas": 1006,
-      "produtosDistintos": 589,
-      "quantidade": 38537.99999999999
+      "linhasOriginais": 1009,
+      "linhasValidas": 1009,
+      "produtosDistintos": 592,
+      "quantidade": 39356.9
     },
     "OPBR": {
       "arquivo": "OPBR.xlsx",
@@ -85,10 +83,10 @@
       "arquivo": "VENDASBR.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 1722,
-      "linhasValidas": 1722,
+      "linhasOriginais": 1725,
+      "linhasValidas": 1725,
       "produtosDistintos": 356,
-      "quantidade": 586178.3699999999
+      "quantidade": 587876.8699999999
     }
   },
   "totais": {
@@ -96,12 +94,5 @@
     "beiraRio": {},
     "comum": {}
   },
-  "erros": [
-    {
-      "relatorio": "ESTOQUE",
-      "arquivo": "ESTOQUE.xlsx",
-      "mensagem": "Gmail API retornou HTTP 500: { \"error\": { \"code\": 500, \"message\": \"Unknown Error.\", \"errors\": [ { \"message\": \"Unknown Error.\", \"domain\": \"global\", \"reason\": \"backendError\" } ], \"stat",
-      "baseAnteriorMantida": true
-    }
-  ]
+  "erros": []
 }

@@ -1,20 +1,20 @@
 {
-  "atualizadoEm": "2026-11-06T13:56:35.143Z",
-  "ultimaAtualizacaoValida": "2026-11-06T13:56:35.143Z",
-  "status": "ATENCAO",
-  "mensagem": "8 de 9 relatórios atualizados com sucesso. 1 mantido(s) na base anterior: ESTOQUE.xlsx.",
+  "atualizadoEm": "2026-11-07T08:11:30.446Z",
+  "ultimaAtualizacaoValida": "2026-11-07T08:11:30.446Z",
+  "status": "OK",
+  "mensagem": "9 de 9 relatórios atualizados com sucesso.",
   "modo": "PARCIAL_SEGURO",
   "totalEsperado": 9,
-  "totalRecebido": 8,
-  "totalAtualizado": 8,
-  "totalMantido": 1,
+  "totalRecebido": 9,
+  "totalAtualizado": 9,
+  "totalMantido": 0,
   "relatorios": [
     {
       "arquivo": "ESTOQUE.xlsx",
-      "status": "MANTIDO — Gmail API retornou HTTP 500: { \"error\": { \"code\": 500, \"message\": \"Unknown Error.\", \"errors\": [ { \"message\": \"Unknown Error.\", \"domain\": \"global\", \"reason\": \"backendError\" } ], \"stat",
-      "recebidoEm": null,
-      "mensagem": "Gmail API retornou HTTP 500: { \"error\": { \"code\": 500, \"message\": \"Unknown Error.\", \"errors\": [ { \"message\": \"Unknown Error.\", \"domain\": \"global\", \"reason\": \"backendError\" } ], \"stat",
-      "baseAnteriorMantida": true
+      "status": "OK",
+      "recebidoEm": "2026-11-06T11:09:35.000Z",
+      "linhasValidas": 1102,
+      "mensagem": "Atualizado com sucesso."
     },
     {
       "arquivo": "COMPRAS.xlsx",
@@ -33,8 +33,8 @@
     {
       "arquivo": "OP.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-11-06T08:00:11.000Z",
-      "linhasValidas": 30,
+      "recebidoEm": "2026-11-07T08:00:10.000Z",
+      "linhasValidas": 24,
       "mensagem": "Atualizado com sucesso."
     },
     {
@@ -54,8 +54,8 @@
     {
       "arquivo": "ESTOQUEBR.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-11-06T08:05:11.000Z",
-      "linhasValidas": 1006,
+      "recebidoEm": "2026-11-07T08:05:12.000Z",
+      "linhasValidas": 1009,
       "mensagem": "Atualizado com sucesso."
     },
     {
@@ -68,8 +68,8 @@
     {
       "arquivo": "VENDASBR.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-11-06T08:10:15.000Z",
-      "linhasValidas": 1722,
+      "recebidoEm": "2026-11-07T08:10:17.000Z",
+      "linhasValidas": 1725,
       "mensagem": "Atualizado com sucesso."
     }
   ]

@@ -157,30 +157,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8866",
-    "produto": "11845",
-    "desc_completa": "BORGONHA OURO LIGHT",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 1400,
-    "dt_saida": "2026-11-05",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8867",
-    "produto": "11779",
-    "desc_completa": "SORRENTO OFF WHITE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 600,
-    "dt_saida": "2026-11-05",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8872",
     "produto": "18378",
     "desc_completa": "LISSE CAMOMILA",
@@ -188,8 +164,8 @@
     "subgrupo": 41,
     "qtd_produzir": 40,
     "dt_saida": "2026-11-06",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -200,8 +176,8 @@
     "subgrupo": 41,
     "qtd_produzir": 40,
     "dt_saida": "2026-11-06",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "centro_custo": 3,
+    "abreviacao": "GR 1"
   },
   {
     "fonte_comercial": "STK",
@@ -212,20 +188,8 @@
     "subgrupo": 41,
     "qtd_produzir": 40,
     "dt_saida": "2026-11-06",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8911",
-    "produto": "18012",
-    "desc_completa": "NAPA MADRID NEVOA",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 88.4,
-    "dt_saida": "2026-11-04",
-    "centro_custo": 15,
-    "abreviacao": "TUMB 1"
+    "centro_custo": 7,
+    "abreviacao": "ESTAM"
   },
   {
     "fonte_comercial": "STK",
@@ -238,18 +202,6 @@
     "dt_saida": "2026-11-06",
     "centro_custo": 13,
     "abreviacao": "JUMBO 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8927",
-    "produto": "11783",
-    "desc_completa": "MAIORCA BEGE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 40,
-    "dt_saida": "2026-11-06",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -272,32 +224,8 @@
     "subgrupo": 41,
     "qtd_produzir": 40,
     "dt_saida": "2026-11-06",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8942",
-    "produto": "30095",
-    "desc_completa": "BORGONHA WHISKY",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 400,
-    "dt_saida": "2026-11-06",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8981",
-    "produto": "15686",
-    "desc_completa": "LILLY ROSE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 200,
-    "dt_saida": "2026-11-12",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 7,
+    "abreviacao": "ESTAM"
   },
   {
     "fonte_comercial": "STK",
@@ -320,8 +248,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-11-12",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -332,8 +260,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-11-12",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 23,
+    "abreviacao": "RAMA"
   },
   {
     "fonte_comercial": "STK",
@@ -344,8 +272,8 @@
     "subgrupo": 41,
     "qtd_produzir": 1000,
     "dt_saida": "2026-11-12",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -356,7 +284,7 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-11-11",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   }
 ]
