@@ -1,8 +1,8 @@
 {
-  "importadoEm": "2026-11-07T09:11:49.737Z",
+  "importadoEm": "2026-11-08T07:56:34.211Z",
   "pastaEntrada": "/home/runner/work/Dashboard-Smart-Group-Analytics/Dashboard-Smart-Group-Analytics/_automacao/entrada-relatorios",
   "modo": "ATUALIZACAO_PARCIAL_PROTEGIDA",
-  "status": "OK",
+  "status": "ATENCAO",
   "relatorios": {
     "ESTOQUE": {
       "arquivo": "ESTOQUE.xlsx",
@@ -59,7 +59,9 @@
       "quantidade": 27690.181,
       "valor": 1041846.11,
       "pedidosDistintos": 87,
-      "clientesDistintos": 28
+      "clientesDistintos": 28,
+      "statusAtualizacao": "MANTIDO",
+      "motivo": "Gmail API retornou HTTP 500: { \"error\": { \"code\": 500, \"message\": \"Internal error encountered.\", \"errors\": [ { \"message\": \"Internal error encountered.\", \"domain\": \"global\", \"reason\": \"backendError"
     },
     "ESTOQUEBR": {
       "arquivo": "ESTOQUEBR.xlsx",
@@ -94,5 +96,12 @@
     "beiraRio": {},
     "comum": {}
   },
-  "erros": []
+  "erros": [
+    {
+      "relatorio": "PEDIDOS_EM_ABERTO",
+      "arquivo": "PEDIDOS EM ABERTO.xlsx",
+      "mensagem": "Gmail API retornou HTTP 500: { \"error\": { \"code\": 500, \"message\": \"Internal error encountered.\", \"errors\": [ { \"message\": \"Internal error encountered.\", \"domain\": \"global\", \"reason\": \"backendError",
+      "baseAnteriorMantida": true
+    }
+  ]
 }
