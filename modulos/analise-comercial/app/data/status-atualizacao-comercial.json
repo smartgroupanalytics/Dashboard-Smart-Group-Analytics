@@ -1,6 +1,6 @@
 {
-  "atualizadoEm": "2026-11-09T08:26:31.725Z",
-  "ultimaAtualizacaoValida": "2026-11-09T08:26:31.725Z",
+  "atualizadoEm": "2026-11-09T08:41:38.567Z",
+  "ultimaAtualizacaoValida": "2026-11-09T08:41:38.567Z",
   "status": "OK",
   "mensagem": "9 de 9 relatórios atualizados com sucesso.",
   "modo": "PARCIAL_SEGURO",
@@ -26,7 +26,7 @@
     {
       "arquivo": "CONSUMO.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-11-07T08:40:13.000Z",
+      "recebidoEm": "2026-11-09T08:40:12.000Z",
       "linhasValidas": 1430,
       "mensagem": "Atualizado com sucesso."
     },
