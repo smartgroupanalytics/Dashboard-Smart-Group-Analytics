@@ -141,52 +141,12 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8936",
-    "produto": "9439",
-    "desc_completa": "NAPA PELICA PU 1.0 CINZA 1235 (VENDA BEIRA RIO)",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 400,
-    "dt_saida": "2026-11-04",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8956",
     "produto": "17676",
     "desc_completa": "NAPA TRAMADO BERLIM BRANCO OFF 526",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 215,
+    "qtd_produzir": 59,
     "dt_saida": "2026-11-09",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8958",
-    "produto": "16506",
-    "desc_completa": "NAPA NEW NANCY CAMEL 1165",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 215,
-    "dt_saida": "2026-11-06",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8959",
-    "produto": "17562",
-    "desc_completa": "NAPA DALLAS PRETO",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 55,
-    "dt_saida": "2026-11-06",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8961",
-    "produto": "11013",
-    "desc_completa": "NOBUCK TUNISIA PU 1.2 BRANCO OFF (VENDA BEIRA RIO)",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 400,
-    "dt_saida": "2026-11-06",
     "abreviacao": ""
   },
   {
@@ -286,16 +246,6 @@
     "desc_completa": "NAPA MARSELHA DARK BERRY 1591",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 400,
-    "dt_saida": "2026-11-11",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8999",
-    "produto": "15832",
-    "desc_completa": "NAPA NEW NANCY PRETO",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 300,
     "dt_saida": "2026-11-11",
     "abreviacao": ""
   },
@@ -457,6 +407,26 @@
     "grupo": "BEIRA RIO",
     "qtd_produzir": 420,
     "dt_saida": "2026-11-11",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "9041",
+    "produto": "17444",
+    "desc_completa": "BRILHO ITALIA BROWN 1570",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 500,
+    "dt_saida": "2026-11-17",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "9042",
+    "produto": "18454",
+    "desc_completa": "NAPA FIORELLA DARK BURGUNDY 1576",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 1500,
+    "dt_saida": "2026-11-13",
     "abreviacao": ""
   }
 ]
