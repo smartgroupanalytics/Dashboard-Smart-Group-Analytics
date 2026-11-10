@@ -12968,6 +12968,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 78,
+    "dt_movto": "2026-11-09"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20000",
+    "produto": "20000",
+    "desc_completa": "NAPA MADRID PRETO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 78.3,
     "dt_movto": "2026-06-01"
   },
@@ -13798,6 +13810,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 38,
     "dt_movto": "2026-09-30"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20008",
+    "produto": "20008",
+    "desc_completa": "NAPA MADRID BORDO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 39,
+    "dt_movto": "2026-11-09"
   },
   {
     "fonte_comercial": "STK",
@@ -16618,6 +16642,30 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 318,
     "dt_movto": "2026-10-16"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20084",
+    "produto": "20084",
+    "desc_completa": "SEVILLA PRETO - 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 477,
+    "dt_movto": "2026-11-09"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20084",
+    "produto": "20084",
+    "desc_completa": "SEVILLA PRETO - 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 519,
+    "dt_movto": "2026-11-09"
   },
   {
     "fonte_comercial": "STK",
