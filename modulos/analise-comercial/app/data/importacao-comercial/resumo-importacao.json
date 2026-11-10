@@ -1,5 +1,5 @@
 {
-  "importadoEm": "2026-11-10T08:41:33.627Z",
+  "importadoEm": "2026-11-10T08:56:29.986Z",
   "pastaEntrada": "/home/runner/work/Dashboard-Smart-Group-Analytics/Dashboard-Smart-Group-Analytics/_automacao/entrada-relatorios",
   "modo": "ATUALIZACAO_PARCIAL_PROTEGIDA",
   "status": "OK",
@@ -44,10 +44,10 @@
       "arquivo": "VENDAS.xlsx",
       "aba": "Planilha",
       "linhaCabecalho": 1,
-      "linhasOriginais": 6717,
-      "linhasValidas": 6717,
+      "linhasOriginais": 6737,
+      "linhasValidas": 6737,
       "produtosDistintos": 612,
-      "quantidade": 824551.9
+      "quantidade": 825171.9
     },
     "PEDIDOS_EM_ABERTO": {
       "arquivo": "PEDIDOS EM ABERTO.xlsx",
