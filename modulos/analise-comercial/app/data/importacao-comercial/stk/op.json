@@ -157,42 +157,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8872",
-    "produto": "18378",
-    "desc_completa": "LISSE CAMOMILA",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 40,
-    "dt_saida": "2026-11-06",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8873",
-    "produto": "18376",
-    "desc_completa": "MALIBU CAMOMILA",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 40,
-    "dt_saida": "2026-11-06",
-    "centro_custo": 3,
-    "abreviacao": "GR 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8874",
-    "produto": "18374",
-    "desc_completa": "NAPA LINHO DAKAR GUAVA",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 40,
-    "dt_saida": "2026-11-06",
-    "centro_custo": 7,
-    "abreviacao": "ESTAM"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8925",
     "produto": "18010",
     "desc_completa": "ASPEN OURO ROSADO",
@@ -217,18 +181,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8929",
-    "produto": "16468",
-    "desc_completa": "SAVOY GLAM OURO ROSADO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 40,
-    "dt_saida": "2026-11-06",
-    "centro_custo": 7,
-    "abreviacao": "ESTAM"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8982",
     "produto": "17322",
     "desc_completa": "MACKAY GLAM OURO LIGHT",
@@ -236,20 +188,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-11-12",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8985",
-    "produto": "13144",
-    "desc_completa": "NAPA LINHO DAKAR NATURAL",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 377.5,
-    "dt_saida": "2026-11-12",
-    "centro_custo": 10,
-    "abreviacao": "REV 1"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -260,7 +200,7 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-11-11",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   }
 ]
