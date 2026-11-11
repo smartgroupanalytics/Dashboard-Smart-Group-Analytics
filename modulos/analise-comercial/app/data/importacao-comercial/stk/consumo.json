@@ -16064,8 +16064,32 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 0.5,
+    "dt_movto": "2026-11-10"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20077",
+    "produto": "20077",
+    "desc_completa": "NAPA METAL CHARM BRANCO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 199.5,
     "dt_movto": "2026-09-11"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20077",
+    "produto": "20077",
+    "desc_completa": "NAPA METAL CHARM BRANCO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 299.5,
+    "dt_movto": "2026-11-10"
   },
   {
     "fonte_comercial": "STK",
@@ -16813,6 +16837,18 @@
   },
   {
     "fonte_comercial": "STK",
+    "cod_prod": "20102",
+    "produto": "20102",
+    "desc_completa": "NAPA METAL CHARM OURO LIGHT - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 300,
+    "dt_movto": "2026-11-10"
+  },
+  {
+    "fonte_comercial": "STK",
     "cod_prod": "20103",
     "produto": "20103",
     "desc_completa": "NAPA METAL CHARM PRATA - PU 0.9MM",
@@ -16822,6 +16858,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 118,
     "dt_movto": "2026-09-11"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "20103",
+    "produto": "20103",
+    "desc_completa": "NAPA METAL CHARM PRATA - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 300,
+    "dt_movto": "2026-11-10"
   },
   {
     "fonte_comercial": "STK",
