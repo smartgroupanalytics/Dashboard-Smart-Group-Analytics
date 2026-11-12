@@ -164,8 +164,8 @@
     "subgrupo": 41,
     "qtd_produzir": 40,
     "dt_saida": "2026-11-06",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 1,
+    "abreviacao": "RECOB"
   },
   {
     "fonte_comercial": "STK",
@@ -176,8 +176,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-11-06",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -188,8 +188,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-11-12",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "centro_custo": 3,
+    "abreviacao": "GR 1"
   },
   {
     "fonte_comercial": "STK",
@@ -200,7 +200,19 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-11-11",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "centro_custo": 3,
+    "abreviacao": "GR 1"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "9067",
+    "produto": "17420",
+    "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 330,
+    "dt_saida": "2026-11-11",
+    "centro_custo": 0,
+    "abreviacao": ""
   }
 ]
