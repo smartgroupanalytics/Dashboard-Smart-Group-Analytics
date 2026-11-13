@@ -176,8 +176,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-11-06",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -188,8 +188,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-11-12",
-    "centro_custo": 3,
-    "abreviacao": "GR 1"
+    "centro_custo": 24,
+    "abreviacao": "EST 3"
   },
   {
     "fonte_comercial": "STK",
@@ -200,8 +200,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-11-11",
-    "centro_custo": 3,
-    "abreviacao": "GR 1"
+    "centro_custo": 24,
+    "abreviacao": "EST 3"
   },
   {
     "fonte_comercial": "STK",
@@ -212,6 +212,102 @@
     "subgrupo": 41,
     "qtd_produzir": 330,
     "dt_saida": "2026-11-11",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "9076",
+    "produto": "18501",
+    "desc_completa": "NAPA METAL CHARM BRANCO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 300,
+    "dt_saida": "2026-11-26",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "9077",
+    "produto": "18504",
+    "desc_completa": "NAPA METAL CHARM NUDE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 300,
+    "dt_saida": "2026-11-26",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "9078",
+    "produto": "17899",
+    "desc_completa": "NAPA MADRID ESPRESSO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 32,
+    "dt_saida": "2026-11-26",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "9082",
+    "produto": "15212",
+    "desc_completa": "BORGONHA TITANIO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 580,
+    "dt_saida": "2026-11-23",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "9084",
+    "produto": "30095",
+    "desc_completa": "BORGONHA WHISKY",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 400,
+    "dt_saida": "2026-11-23",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "9087",
+    "produto": "16642",
+    "desc_completa": "NAPA BARI FOSCO PRETO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 1500,
+    "dt_saida": "2026-11-23",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "9088",
+    "produto": "16650",
+    "desc_completa": "NAPA BARI FOSCO CAFE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 1000,
+    "dt_saida": "2026-11-23",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "9089",
+    "produto": "16644",
+    "desc_completa": "NAPA BARI FOSCO OFF WHITE",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 1000,
+    "dt_saida": "2026-11-23",
     "centro_custo": 0,
     "abreviacao": ""
   }
