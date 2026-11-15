@@ -1,5 +1,5 @@
 {
-  "importadoEm": "2026-11-15T23:11:34.248Z",
+  "importadoEm": "2026-11-15T23:26:23.174Z",
   "pastaEntrada": "/home/runner/work/Dashboard-Smart-Group-Analytics/Dashboard-Smart-Group-Analytics/_automacao/entrada-relatorios",
   "modo": "ATUALIZACAO_PARCIAL_PROTEGIDA",
   "status": "ATENCAO",
@@ -86,9 +86,7 @@
       "linhasOriginais": 1763,
       "linhasValidas": 1763,
       "produtosDistintos": 361,
-      "quantidade": 602073.1699999999,
-      "statusAtualizacao": "MANTIDO",
-      "motivo": "Gmail API retornou HTTP 400: { \"error\": { \"code\": 400, \"message\": \"Precondition check failed.\", \"errors\": [ { \"message\": \"Precondition check failed.\", \"domain\": \"global\", \"reason\": \"failedPrecondi"
+      "quantidade": 602073.1699999999
     }
   },
   "totais": {
@@ -96,12 +94,5 @@
     "beiraRio": {},
     "comum": {}
   },
-  "erros": [
-    {
-      "relatorio": "VENDASBR",
-      "arquivo": "VENDASBR.xlsx",
-      "mensagem": "Gmail API retornou HTTP 400: { \"error\": { \"code\": 400, \"message\": \"Precondition check failed.\", \"errors\": [ { \"message\": \"Precondition check failed.\", \"domain\": \"global\", \"reason\": \"failedPrecondi",
-      "baseAnteriorMantida": true
-    }
-  ]
+  "erros": []
 }

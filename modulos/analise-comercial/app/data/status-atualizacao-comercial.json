@@ -1,13 +1,13 @@
 {
-  "atualizadoEm": "2026-11-15T23:11:34.248Z",
-  "ultimaAtualizacaoValida": "2026-11-15T23:11:34.248Z",
+  "atualizadoEm": "2026-11-15T23:26:23.174Z",
+  "ultimaAtualizacaoValida": "2026-11-15T23:26:23.174Z",
   "status": "ATENCAO",
-  "mensagem": "8 de 9 relatórios atualizados com sucesso. 1 mantido(s) na base anterior: VENDASBR.xlsx.",
+  "mensagem": "9 de 9 relatórios atualizados com sucesso. 1 relatório(s) está(ão) atrasado(s).",
   "modo": "PARCIAL_SEGURO",
   "totalEsperado": 9,
-  "totalRecebido": 8,
-  "totalAtualizado": 8,
-  "totalMantido": 1,
+  "totalRecebido": 9,
+  "totalAtualizado": 9,
+  "totalMantido": 0,
   "relatorios": [
     {
       "arquivo": "ESTOQUE.xlsx",
@@ -67,10 +67,10 @@
     },
     {
       "arquivo": "VENDASBR.xlsx",
-      "status": "MANTIDO — Gmail API retornou HTTP 400: { \"error\": { \"code\": 400, \"message\": \"Precondition check failed.\", \"errors\": [ { \"message\": \"Precondition check failed.\", \"domain\": \"global\", \"reason\": \"failedPrecondi",
-      "recebidoEm": null,
-      "mensagem": "Gmail API retornou HTTP 400: { \"error\": { \"code\": 400, \"message\": \"Precondition check failed.\", \"errors\": [ { \"message\": \"Precondition check failed.\", \"domain\": \"global\", \"reason\": \"failedPrecondi",
-      "baseAnteriorMantida": true
+      "status": "OK",
+      "recebidoEm": "2026-11-14T08:10:15.000Z",
+      "linhasValidas": 1763,
+      "mensagem": "Atualizado com sucesso."
     }
   ]
 }
