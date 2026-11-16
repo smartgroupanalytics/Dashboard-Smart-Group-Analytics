@@ -151,26 +151,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "9008",
-    "produto": "9439",
-    "desc_completa": "NAPA PELICA PU 1.0 CINZA 1235 (VENDA BEIRA RIO)",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 550,
-    "dt_saida": "2026-11-13",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "9014",
-    "produto": "2382",
-    "desc_completa": "METALIZADO PREMIUM PU 0.9 DOURADO",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 2019.5,
-    "dt_saida": "2026-11-19",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "9017",
     "produto": "2382",
     "desc_completa": "METALIZADO PREMIUM PU 0.9 DOURADO",
@@ -185,7 +165,7 @@
     "produto": "18428",
     "desc_completa": "NAPA FIORELLA PRETO",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 2497,
+    "qtd_produzir": 2494,
     "dt_saida": "2026-11-12",
     "abreviacao": ""
   },
@@ -197,16 +177,6 @@
     "grupo": "BEIRA RIO",
     "qtd_produzir": 2500,
     "dt_saida": "2026-11-17",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "9030",
-    "produto": "17287",
-    "desc_completa": "NAPA MALAGA CAFE 987",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 215,
-    "dt_saida": "2026-11-11",
     "abreviacao": ""
   },
   {
@@ -325,7 +295,7 @@
     "produto": "18125",
     "desc_completa": "NAPA MARSELHA DARK BERRY 1591",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 394.5,
+    "qtd_produzir": 253,
     "dt_saida": "2026-11-13",
     "abreviacao": ""
   },
