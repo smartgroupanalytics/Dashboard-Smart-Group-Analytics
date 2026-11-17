@@ -116836,7 +116836,7 @@
   {
     "fonte_comercial": "STK",
     "dt_entrada": "2026-11-10",
-    "dt_faturam": "2026-11-10",
+    "dt_faturam": "2026-11-17",
     "produto": "16576",
     "desc_completa": "SAVOY GLAM BRONZE",
     "pedido": "7898",
@@ -116855,9 +116855,7 @@
     "representante": "4",
     "abreviacao": "CRISTIANO",
     "vlr_comissao_rep": 299.4,
-    "cod_altern_1": "INVERNO 2027",
-    "dt_faturam_original": "2026-11-17",
-    "data_venda_ajustada": true
+    "cod_altern_1": "INVERNO 2027"
   },
   {
     "fonte_comercial": "STK",
