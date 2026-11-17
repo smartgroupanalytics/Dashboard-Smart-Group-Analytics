@@ -1,6 +1,6 @@
 {
-  "atualizadoEm": "2026-11-17T08:41:46.418Z",
-  "ultimaAtualizacaoValida": "2026-11-17T08:41:46.418Z",
+  "atualizadoEm": "2026-11-17T08:56:28.567Z",
+  "ultimaAtualizacaoValida": "2026-11-17T08:56:28.567Z",
   "status": "OK",
   "mensagem": "9 de 9 relatórios atualizados com sucesso.",
   "modo": "PARCIAL_SEGURO",
@@ -40,8 +40,8 @@
     {
       "arquivo": "VENDAS.xlsx",
       "status": "OK",
-      "recebidoEm": "2026-11-16T08:51:21.000Z",
-      "linhasValidas": 6824,
+      "recebidoEm": "2026-11-17T08:51:58.000Z",
+      "linhasValidas": 6849,
       "mensagem": "Atualizado com sucesso."
     },
     {
