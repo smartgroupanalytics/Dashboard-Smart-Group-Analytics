@@ -139,6 +139,15 @@ grid-template-columns:1fr;
   white-space:nowrap;transition:background .2s}
 .btn-exportar-top-clientes:hover{background:#218657}
 .btn-exportar-top-clientes:focus-visible{outline:2px solid #8cf2bb;outline-offset:2px}
+/* Botão da exportação de Top 10 Produtos: isolado, sem alterar estilos existentes */
+.top-produtos-exportar-header{display:flex;align-items:center;justify-content:space-between;
+ gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.top-produtos-exportar-header h2{margin:0}
+.btn-exportar-top-produtos{background:#176a45;color:#fff;border:1px solid #2da56c;
+ border-radius:9px;padding:9px 13px;cursor:pointer;font-weight:700;font-size:12px;
+ white-space:nowrap;transition:background .2s}
+.btn-exportar-top-produtos:hover{background:#218657}
+.btn-exportar-top-produtos:focus-visible{outline:2px solid #8cf2bb;outline-offset:2px}
 </style>
 </head>
 <body>
@@ -322,7 +331,14 @@ Substrato
 </div>
 
 <div class="chart">
-<h2>🔥 Top 10 Produtos</h2>
+<div class="top-produtos-exportar-header">
+  <h2>🔥 Top 10 Produtos</h2>
+  <button type="button" class="btn-exportar-top-produtos"
+    onclick="exportarTopProdutosExcelVendas()"
+    title="Exportar os 10 produtos do ranking e todos os clientes que compraram no período filtrado">
+    📗 Exportar Excel
+  </button>
+</div>
 <div id="grupo"></div>
 </div>
 
@@ -2457,6 +2473,154 @@ function exportarTopClientesExcelVendas(){
     );
   }catch(erro){
     console.error('Erro ao exportar Top 10 Clientes para Excel:', erro);
+    alert('Não foi possível gerar o Excel. Verifique o console do navegador.');
+  }
+}
+
+
+/* ============================================================
+   EXPORTAR TOP 10 PRODUTOS PARA EXCEL
+   Função independente: usa a lista filtrados e agrupar('Desc.completa').
+   Não altera filtros, cálculos, rankings, cache ou renderização.
+   Inclui TODOS os clientes de cada um dos 10 produtos do ranking.
+============================================================ */
+function exportarTopProdutosExcelVendas(){
+  try{
+    if(typeof XLSX === 'undefined' || !XLSX.utils || !XLSX.writeFile){
+      alert('A biblioteca Excel não está disponível. Atualize a página e tente novamente.');
+      return;
+    }
+
+    // Repete exatamente o critério do quadro "Top 10 Produtos":
+    // agrupar já ignora códigos de produtos da lista de exclusões.
+    const top10 = Object.entries(agrupar('Desc.completa'))
+      .sort((a, b) => b[1].valor - a[1].valor)
+      .slice(0, 10);
+
+    if(!top10.length){
+      alert('Não há produtos para exportar com os filtros atuais.');
+      return;
+    }
+
+    const posicoesPorProduto = new Map(
+      top10.map(([nome], indice) => [nome, indice + 1])
+    );
+    const clientesPorProduto = new Map();
+    const contagemClientes = new Map();
+
+    // Os itens excluídos do ranking permanecem excluídos do detalhamento
+    // para que a soma exportada coincida com a apresentada na tela.
+    for(const venda of filtrados){
+      const produto = String(venda['Desc.completa'] ?? '').trim();
+      const posicao = posicoesPorProduto.get(produto);
+      if(!posicao) continue;
+
+      const codigo = String(venda['Produto'] ?? '').trim();
+      if(produtosExcluidos.includes(codigo)) continue;
+
+      const cliente = String(venda['Razão social'] ?? '').trim() || 'Cliente não informado';
+      const chave = JSON.stringify([produto, cliente]);
+      if(!clientesPorProduto.has(chave)){
+        clientesPorProduto.set(chave, {
+          posicao, produto, cliente, codigos:new Set(), quantidade:0, faturamento:0
+        });
+        if(!contagemClientes.has(produto)) contagemClientes.set(produto, 0);
+        contagemClientes.set(produto, contagemClientes.get(produto) + 1);
+      }
+      const linha = clientesPorProduto.get(chave);
+      if(codigo) linha.codigos.add(codigo);
+      linha.quantidade += numero(venda['Qtd.item/Ft']);
+      linha.faturamento += numero(venda['Valor Fat+Valor IPI+Valor Frete']);
+    }
+
+    const itens = [...clientesPorProduto.values()]
+      .sort((a, b) => a.posicao - b.posicao || b.faturamento - a.faturamento ||
+        a.cliente.localeCompare(b.cliente, 'pt-BR'));
+
+    const inicio = document.getElementById('dataInicial').value;
+    const fim = document.getElementById('dataFinal').value;
+    const periodo = (inicio || fim)
+      ? (inicio || 'Sem início') + ' até ' + (fim || 'Sem fim')
+      : 'Todos os períodos aplicáveis';
+
+    // Protege entradas textuais externas contra interpretações como fórmulas.
+    const textoExcel = valor => {
+      const txt = String(valor ?? '');
+      return /^[\s]*[=+@\-]/.test(txt) ? "'" + txt : txt;
+    };
+
+    const cabecalhoDetalhe = [
+      'Posição', 'Código(s) produto', 'Produto / Material', 'Cliente',
+      'Quantidade', 'Faturamento (R$)', 'Preço médio (R$)', 'Período filtrado'
+    ];
+    const linhasDetalhe = itens.map(item => [
+      item.posicao,
+      textoExcel([...item.codigos].sort().join(', ')),
+      textoExcel(item.produto),
+      textoExcel(item.cliente),
+      item.quantidade,
+      item.faturamento,
+      item.quantidade ? item.faturamento / item.quantidade : 0,
+      periodo
+    ]);
+
+    const cabecalhoResumo = [
+      'Posição', 'Código do ranking', 'Produto / Material', 'Clientes diferentes',
+      'Quantidade total', 'Faturamento (R$)', 'Preço médio (R$)', 'Período filtrado'
+    ];
+    const linhasResumo = top10.map(([produto, dadosProduto], indice) => [
+      indice + 1,
+      textoExcel(dadosProduto.codigo),
+      textoExcel(produto),
+      contagemClientes.get(produto) || 0,
+      dadosProduto.qtd,
+      dadosProduto.valor,
+      dadosProduto.qtd ? dadosProduto.valor / dadosProduto.qtd : 0,
+      periodo
+    ]);
+
+    const planilhaDetalhe = XLSX.utils.aoa_to_sheet([cabecalhoDetalhe, ...linhasDetalhe]);
+    const planilhaResumo = XLSX.utils.aoa_to_sheet([cabecalhoResumo, ...linhasResumo]);
+
+    planilhaDetalhe['!cols'] = [
+      {wch:10},{wch:20},{wch:55},{wch:44},
+      {wch:17},{wch:22},{wch:20},{wch:30}
+    ];
+    planilhaResumo['!cols'] = [
+      {wch:10},{wch:20},{wch:55},{wch:21},
+      {wch:19},{wch:22},{wch:20},{wch:30}
+    ];
+    // Filtros nativos do Excel, inclusive pelas colunas de produto e cliente.
+    planilhaDetalhe['!autofilter'] = {ref:'A1:H' + (linhasDetalhe.length + 1)};
+    planilhaResumo['!autofilter'] = {ref:'A1:H' + (linhasResumo.length + 1)};
+
+    const formatarNumeros = (planilha, linhas, colunasQtd, colunasReais) => {
+      for(let i = 2; i <= linhas + 1; i++){
+        for(const coluna of colunasQtd){
+          const celula = planilha[coluna + i];
+          if(celula) celula.z = '#,##0.00';
+        }
+        for(const coluna of colunasReais){
+          const celula = planilha[coluna + i];
+          if(celula) celula.z = '"R$" #,##0.00';
+        }
+      }
+    };
+    formatarNumeros(planilhaDetalhe, linhasDetalhe.length, ['E'], ['F','G']);
+    formatarNumeros(planilhaResumo, linhasResumo.length, ['E'], ['F','G']);
+
+    const arquivo = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(arquivo, planilhaDetalhe, 'Clientes por Produto');
+    XLSX.utils.book_append_sheet(arquivo, planilhaResumo, 'Resumo Top Produtos');
+
+    const dataNome = valor => valor ? valor.replaceAll('-', '') : 'todos';
+    XLSX.writeFile(
+      arquivo,
+      'SmartGroup_Top10_Produtos_' + dataNome(inicio) + '_' + dataNome(fim) + '.xlsx',
+      {compression:true}
+    );
+  }catch(erro){
+    console.error('Erro ao exportar Top 10 Produtos para Excel:', erro);
     alert('Não foi possível gerar o Excel. Verifique o console do navegador.');
   }
 }
