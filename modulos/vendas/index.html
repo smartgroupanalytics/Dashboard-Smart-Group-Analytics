@@ -105,6 +105,31 @@ grid-template-columns:1fr;
   
 }
 
+
+/* Melhorias isoladas: busca de clientes, indicador de consulta e detalhes */
+.status-atualizacao-vendas{margin-left:auto;display:flex;align-items:center;gap:9px;
+  max-width:360px;padding:10px 14px;border-radius:12px;background:#102a51;
+  font-size:12px;color:#dbeafe;border:1px solid #244875;line-height:1.4}
+.status-ponto-vendas{width:9px;height:9px;flex-shrink:0;border-radius:50%;background:#f59e0b}
+.status-ponto-vendas.ok{background:#22c55e}
+.status-ponto-vendas.erro{background:#ef4444}
+.busca-clientes-vendas{position:sticky;top:-15px;z-index:2;padding:4px 0 10px;background:#18356d}
+.busca-clientes-vendas input{box-sizing:border-box;width:100%;padding:10px;border-radius:8px;
+ border:1px solid #3e66a3;background:#10224a;color:white;outline:none}
+.cliente-top-clicavel{cursor:pointer;border-radius:6px}
+.cliente-top-clicavel:hover{background:#204078}
+.cliente-top-clicavel:focus-visible{outline:2px solid #60a5fa}
+.cliente-detalhe-inline{margin:8px 0 14px}
+.detalhe-cliente-vendas{background:#0a1e44;border:1px solid #31548a;border-radius:12px;
+ padding:16px;margin-top:0;color:#eff6ff}
+.detalhe-cliente-vendas-header{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.detalhe-cliente-vendas-scroll{overflow:auto;max-height:390px;margin-top:12px}
+.detalhe-cliente-vendas table{width:100%;border-collapse:collapse;font-size:12px}
+.detalhe-cliente-vendas th,.detalhe-cliente-vendas td{padding:9px;border-bottom:1px solid #29456d}
+.detalhe-cliente-vendas th{position:sticky;top:0;background:#16356d;text-align:left}
+.detalhe-cliente-vendas td.num,.detalhe-cliente-vendas th.num{text-align:right;white-space:nowrap}
+@media(max-width:800px){.status-atualizacao-vendas{margin-left:0;max-width:none}
+ .detalhe-cliente-vendas{padding:10px}}
 </style>
 </head>
 <body>
@@ -122,6 +147,11 @@ border-radius:12px;
 <h1>Dashboard - Vendas</h1>
 
 
+</div>
+
+<div id="statusAtualizacaoVendas" class="status-atualizacao-vendas" role="status" aria-live="polite">
+  <span id="statusPontoVendas" class="status-ponto-vendas"></span>
+  <span id="statusTextoVendas">Aguardando carregamento...</span>
 </div>
 
 </div>
@@ -161,7 +191,7 @@ position:absolute;
 top:45px;
 left:0;
 width:300px;
-max-height:220px;
+max-height:320px;
 overflow-y:auto;
 background:#18356d;
 padding:15px;
@@ -342,6 +372,18 @@ let produtoDetalheHTML = '';
 
 let clientesSelecionados = [];
 let representantesSelecionados = [];
+let clienteDetalheSelecionado = '';
+
+// Horário da última consulta bem-sucedida; não representa a data do ERP.
+function atualizarIndicadorVendas(estado, mensagem, dataConsulta){
+  const el = document.getElementById('statusTextoVendas');
+  const ponto = document.getElementById('statusPontoVendas');
+  if(!el || !ponto) return;
+  const dataTexto = dataConsulta ? new Date(dataConsulta).toLocaleString('pt-BR') : '';
+  el.textContent = mensagem + (dataTexto ? ' • ' + dataTexto : '');
+  ponto.className = 'status-ponto-vendas' + (estado === 'ok' ? ' ok' : estado === 'erro' ? ' erro' : '');
+}
+
 
 /* =========================================================
    CARREGAMENTO ESTÁVEL DOS DADOS
@@ -540,6 +582,7 @@ async function carregarAutomatico(opcoes = {}){
   }
 
   carregamentoEmAndamento = true;
+  atualizarIndicadorVendas('pendente', 'Consultando dados do servidor...');
 
   try{
     const recebidos =
@@ -556,6 +599,7 @@ async function carregarAutomatico(opcoes = {}){
 
     salvarCache(dados);
     prepararFiltrosDepoisDeCarregar();
+    atualizarIndicadorVendas('ok', 'Dados consultados no servidor em', ultimaAtualizacaoServidor);
 
     console.log(
       'Dados carregados do servidor:',
@@ -577,6 +621,8 @@ async function carregarAutomatico(opcoes = {}){
       );
     }
 
+    const dataCache = Number(localStorage.getItem(CHAVE_CACHE_DATA) || 0);
+    atualizarIndicadorVendas('erro', dataCache ? 'Falha na consulta • exibindo cache salvo em' : 'Falha ao carregar dados', dataCache);
     return false;
 
   }finally{
@@ -614,6 +660,7 @@ async function iniciarDashboard(){
   if(cache){
     dados = cache.dados;
     prepararFiltrosDepoisDeCarregar();
+    atualizarIndicadorVendas('ok', 'Dados em cache salvos em', cache.data);
 
     console.log(
       'Dashboard aberto pelo cache:',
@@ -640,6 +687,7 @@ async function iniciarDashboard(){
     return;
   }
 
+  atualizarIndicadorVendas('pendente', 'Sem cache • buscando dados...');
   console.log(
     'Sem cache disponível. Buscando dados no servidor.'
   );
@@ -990,68 +1038,48 @@ uf.innerHTML += `<option value="${u}">${u}</option>`;
 
 }
 
+function escaparHTMLVendas(valor){
+  return String(valor ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
 function popularClientesMulti(){
+  const el = document.getElementById('clientesMulti');
+  const clientes = [...new Set(dados.map(x => x['Razão social']).filter(Boolean))].sort();
+  const jaTinhaSelecao = Boolean(el.querySelector('.clienteCheck'));
+  const anteriores = new Set(clientesSelecionados);
+  const todosAntes = [...el.querySelectorAll('.clienteCheck')].every(chk => chk.checked);
+  const marcarTodos = !jaTinhaSelecao || todosAntes;
+  clientesSelecionados = marcarTodos ? [...clientes] : clientes.filter(c => anteriores.has(c));
+  el.innerHTML = `
+    <div class="busca-clientes-vendas">
+      <input type="search" id="pesquisaClientesVendas"
+        placeholder="🔎 Digite o código ou nome do cliente..."
+        aria-label="Pesquisar clientes" oninput="pesquisarClientesVendas()">
+    </div>
+    <label style="display:block;margin-bottom:10px;font-weight:bold">
+      <input type="checkbox" id="todosClientes" ${marcarTodos ? 'checked' : ''}
+        onchange="toggleTodosClientes()"> Selecionar Todos
+    </label>
+    <div id="listaClientesVendas">${clientes.map(c => `
+      <label class="item-cliente-vendas" style="display:block;margin-bottom:6px;cursor:pointer">
+        <input type="checkbox" class="clienteCheck" value="${escaparHTMLVendas(c)}"
+          ${clientesSelecionados.includes(c) ? 'checked' : ''}
+          onchange="atualizarClientesSelecionados()"> ${escaparHTMLVendas(c)}
+      </label>`).join('')}</div>
+    <div id="semClientesVendas" style="display:none;padding:8px;color:#bcd4fb">Nenhum cliente encontrado.</div>`;
+}
 
-const el =
-document.getElementById('clientesMulti');
-
-const clientes = [
-...new Set(
-dados.map(x => x['Razão social'])
-.filter(Boolean)
-)
-].sort();
-
-let html = `
-
-<label style="
-display:block;
-margin-bottom:10px;
-font-weight:bold;
-">
-
-<input
-type="checkbox"
-id="todosClientes"
-checked
-onchange="toggleTodosClientes()"
->
-
-Selecionar Todos
-
-</label>
-
-`;
-
-clientes.forEach(c=>{
-
-html += `
-
-<label style="
-display:block;
-margin-bottom:5px;
-">
-
-<input
-type="checkbox"
-class="clienteCheck"
-value="${c}"
-checked
-onchange="atualizarClientesSelecionados()"
->
-
-${c}
-
-</label>
-
-`;
-
-});
-
-el.innerHTML = html;
-
-clientesSelecionados = [...clientes];
-
+function pesquisarClientesVendas(){
+  const termo = (document.getElementById('pesquisaClientesVendas')?.value || '')
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
+  let visiveis = 0;
+  document.querySelectorAll('.item-cliente-vendas').forEach(item => {
+    const nome = item.textContent.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+    const mostrar = nome.includes(termo);
+    item.style.display = mostrar ? 'block' : 'none';
+    if(mostrar) visiveis++;
+  });
+  document.getElementById('semClientesVendas').style.display = visiveis ? 'none' : 'block';
 }
 
 function toggleTodosClientes(){
@@ -1604,6 +1632,7 @@ const produtosAgrupados =
 agrupar('Desc.completa');
 
 barras('clientes',clientesAgrupados,10);
+  mostrarDetalheClienteVendas();
 barras('grupo',produtosAgrupados,10);
 ufs();
 
@@ -1854,7 +1883,7 @@ box-sizing:border-box;
 ">
 
 <div
-${produtos ? `onclick="detalharProduto('${i[0].replace(/'/g,"\\'")}')"` : ''}
+${produtos ? `onclick="detalharProduto('${i[0].replace(/'/g,"\'")}')"` : `data-cliente-vendas="${escaparHTMLVendas(encodeURIComponent(i[0]))}" role="button" tabindex="0" class="cliente-top-clicavel" title="Ver todos os produtos comprados pelo cliente"`}
 style="
 font-weight:600;
 cursor:${produtos ? 'pointer' : 'default'};
@@ -1899,6 +1928,11 @@ i[1].qtd
 
 </div>
 `;
+
+// Exibe o histórico completo imediatamente abaixo do cliente selecionado.
+if(id === 'clientes' && clienteDetalheSelecionado === i[0]){
+  html += '<div class="cliente-detalhe-inline" data-detalhe-cliente-inline aria-live="polite"></div>';
+}
 
 if(produtos && produtoSelecionado === i[0]){
 
@@ -2082,6 +2116,70 @@ produtoDetalheHTML = html;
 
 render();
 
+}
+
+// Usa os registros já filtrados por período, UF, representante e demais filtros.
+// A tabela de detalhes não usa o Top 10 nem a lista de produtos excluídos.
+document.getElementById('clientes').addEventListener('click', function(evento){
+  const item = evento.target.closest('[data-cliente-vendas]');
+  if(!item) return;
+  selecionarDetalheClienteVendas(decodeURIComponent(item.dataset.clienteVendas));
+});
+document.getElementById('clientes').addEventListener('keydown', function(evento){
+  if(evento.key !== 'Enter' && evento.key !== ' ') return;
+  const item = evento.target.closest('[data-cliente-vendas]');
+  if(!item) return;
+  evento.preventDefault();
+  selecionarDetalheClienteVendas(decodeURIComponent(item.dataset.clienteVendas));
+});
+function selecionarDetalheClienteVendas(cliente){
+  clienteDetalheSelecionado = clienteDetalheSelecionado === cliente ? '' : cliente;
+  // Redesenha apenas o Top Clientes, sem recalcular outros painéis nem recarregar dados.
+  barras('clientes', agrupar('Razão social'), 10);
+  mostrarDetalheClienteVendas();
+}
+function mostrarDetalheClienteVendas(){
+  // O espaço do detalhe faz parte da linha clicada, e não do rodapé do Top 10.
+  const painel = document.querySelector('#clientes [data-detalhe-cliente-inline]');
+  if(!clienteDetalheSelecionado || !painel) return;
+  const vendas = filtrados.filter(x => x['Razão social'] === clienteDetalheSelecionado);
+  const agrupados = new Map();
+  for(const venda of vendas){
+    const codigo = String(venda['Produto'] ?? '').trim();
+    const descricao = String(venda['Desc.completa'] ?? '').trim() || 'Produto sem descrição';
+    const chave = JSON.stringify([codigo, descricao]);
+    if(!agrupados.has(chave)) agrupados.set(chave,{codigo,descricao,qtd:0,valor:0});
+    const item = agrupados.get(chave);
+    item.qtd += numero(venda['Qtd.item/Ft']);
+    item.valor += numero(venda['Valor Fat+Valor IPI+Valor Frete']);
+  }
+  const itens = [...agrupados.values()].sort((a,b)=>b.valor-a.valor);
+  const qtdTotal = itens.reduce((a,b)=>a+b.qtd,0);
+  const valorTotal = itens.reduce((a,b)=>a+b.valor,0);
+  const inicio = document.getElementById('dataInicial').value;
+  const fim = document.getElementById('dataFinal').value;
+  const periodo = inicio || fim
+    ? `Período: ${inicio ? inicio.split('-').reverse().join('/') : 'início'} até ${fim ? fim.split('-').reverse().join('/') : 'fim'}`
+    : 'Período definido pelos filtros';
+  painel.innerHTML = `<section class="detalhe-cliente-vendas">
+    <div class="detalhe-cliente-vendas-header">
+      <div><strong>📦 Todos os materiais comprados</strong>
+      <div style="font-size:12px;margin-top:5px;color:#bcd4fb">${escaparHTMLVendas(clienteDetalheSelecionado)} • ${escaparHTMLVendas(periodo)}</div></div>
+      <button type="button" id="fecharDetalheClienteVendas">Fechar ✕</button>
+    </div>
+    <div style="font-size:12px;margin-top:10px">${itens.length.toLocaleString('pt-BR')} produtos diferentes •
+      ${qtdTotal.toLocaleString('pt-BR',{maximumFractionDigits:2})} em quantidade • ${moeda(valorTotal)} em faturamento</div>
+    <div class="detalhe-cliente-vendas-scroll"><table>
+      <thead><tr><th>Código</th><th>Produto / material</th><th class="num">Quantidade</th><th class="num">Faturamento</th><th class="num">Preço médio</th></tr></thead>
+      <tbody>${itens.map(i=>`<tr><td>${escaparHTMLVendas(i.codigo)}</td>
+      <td>${escaparHTMLVendas(i.descricao)}</td><td class="num">${i.qtd.toLocaleString('pt-BR',{maximumFractionDigits:2})}</td>
+      <td class="num">${moeda(i.valor)}</td><td class="num">${moeda(i.qtd ? i.valor/i.qtd : 0)}</td></tr>`).join('') ||
+      '<tr><td colspan="5">Nenhuma venda para este cliente com os filtros atuais.</td></tr>'}</tbody>
+    </table></div></section>`;
+  painel.querySelector('#fecharDetalheClienteVendas').addEventListener('click',()=>{
+    clienteDetalheSelecionado='';
+    barras('clientes', agrupar('Razão social'), 10);
+  });
 }
 
 function ufs(){
