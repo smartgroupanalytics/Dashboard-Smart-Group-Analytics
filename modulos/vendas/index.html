@@ -130,6 +130,15 @@ grid-template-columns:1fr;
 .detalhe-cliente-vendas td.num,.detalhe-cliente-vendas th.num{text-align:right;white-space:nowrap}
 @media(max-width:800px){.status-atualizacao-vendas{margin-left:0;max-width:none}
  .detalhe-cliente-vendas{padding:10px}}
+/* Exportação Excel do Top 10: estilos isolados, sem interferir nos rankings */
+.top-clientes-exportar-header{display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.top-clientes-exportar-header h2{margin:0}
+.btn-exportar-top-clientes{background:#176a45;color:#fff;border:1px solid #2da56c;
+  border-radius:9px;padding:9px 13px;cursor:pointer;font-weight:700;font-size:12px;
+  white-space:nowrap;transition:background .2s}
+.btn-exportar-top-clientes:hover{background:#218657}
+.btn-exportar-top-clientes:focus-visible{outline:2px solid #8cf2bb;outline-offset:2px}
 </style>
 </head>
 <body>
@@ -301,7 +310,14 @@ Substrato
 <div class="grid">
 
 <div class="chart">
-<h2>🏆 Top Clientes</h2>
+<div class="top-clientes-exportar-header">
+  <h2>🏆 Top Clientes</h2>
+  <button type="button" class="btn-exportar-top-clientes"
+    onclick="exportarTopClientesExcelVendas()"
+    title="Exportar os 10 clientes do ranking e todos os produtos comprados no período filtrado">
+    📗 Exportar Excel
+  </button>
+</div>
 <div id="clientes"></div>
 </div>
 
@@ -2301,6 +2317,148 @@ function carregarMaisProdutos(){
 
   mostrarBotaoProdutos();
 
+}
+
+
+/* ============================================================
+   EXPORTAR TOP 10 CLIENTES PARA EXCEL
+   Esta função é isolada: apenas LÊ filtrados/agrupar/numero.
+   Não altera render(), filtros, rankings nem valores do painel.
+   A planilha detalhada contém TODOS os produtos dos 10 clientes,
+   inclusive os que não entram no ranking dos Top 10 Produtos.
+============================================================ */
+function exportarTopClientesExcelVendas(){
+  try{
+    if(typeof XLSX === 'undefined' || !XLSX.utils || !XLSX.writeFile){
+      alert('A biblioteca Excel não está disponível. Atualize a página e tente novamente.');
+      return;
+    }
+
+    // Mesma ordenação do quadro "Top Clientes", com os filtros já aplicados.
+    const top10 = Object.entries(agrupar('Razão social'))
+      .sort((a, b) => b[1].valor - a[1].valor)
+      .slice(0, 10);
+
+    if(!top10.length){
+      alert('Não há vendas para exportar com os filtros atuais.');
+      return;
+    }
+
+    const posicoesPorCliente = new Map(top10.map(([nome], indice) => [nome, indice + 1]));
+    const produtosPorCliente = new Map();
+
+    // Exatamente a mesma base de linhas usada pelo detalhamento do cliente.
+    // Não aplica nenhum corte Top 10 à lista de produtos.
+    for(const venda of filtrados){
+      const cliente = String(venda['Razão social'] ?? '').trim();
+      const posicao = posicoesPorCliente.get(cliente);
+      if(!posicao) continue;
+
+      const codigo = String(venda['Produto'] ?? '').trim();
+      const descricao = String(venda['Desc.completa'] ?? '').trim() || 'Produto sem descrição';
+      const chave = JSON.stringify([cliente, codigo, descricao]);
+
+      if(!produtosPorCliente.has(chave)){
+        produtosPorCliente.set(chave, {
+          posicao, cliente, codigo, descricao, quantidade:0, faturamento:0
+        });
+      }
+      const linha = produtosPorCliente.get(chave);
+      linha.quantidade += numero(venda['Qtd.item/Ft']);
+      linha.faturamento += numero(venda['Valor Fat+Valor IPI+Valor Frete']);
+    }
+
+    const itens = [...produtosPorCliente.values()]
+      .sort((a,b) => a.posicao - b.posicao || b.faturamento - a.faturamento ||
+        a.descricao.localeCompare(b.descricao, 'pt-BR'));
+
+    const inicio = document.getElementById('dataInicial').value;
+    const fim = document.getElementById('dataFinal').value;
+    const periodo = (inicio || fim)
+      ? (inicio || 'Sem início') + ' até ' + (fim || 'Sem fim')
+      : 'Todos os períodos aplicáveis';
+
+    // Células de texto ficam explicitamente como texto; protegem códigos com zeros
+    // à esquerda e evitam que conteúdo importado seja interpretado como fórmula.
+    const textoExcel = valor => {
+      const texto = String(valor ?? '');
+      return /^[\s]*[=+@\-]/.test(texto) ? "'" + texto : texto;
+    };
+
+    const cabecalhoDetalhe = [
+      'Posição', 'Cliente', 'Código produto', 'Produto / Material',
+      'Quantidade', 'Faturamento (R$)', 'Preço médio (R$)', 'Período filtrado'
+    ];
+    const linhasDetalhe = itens.map(item => [
+      item.posicao,
+      textoExcel(item.cliente),
+      textoExcel(item.codigo),
+      textoExcel(item.descricao),
+      item.quantidade,
+      item.faturamento,
+      item.quantidade ? item.faturamento / item.quantidade : 0,
+      periodo
+    ]);
+
+    const cabecalhoResumo = [
+      'Posição', 'Cliente', 'Produtos diferentes', 'Quantidade total',
+      'Faturamento (R$)', 'Preço médio (R$)', 'Período filtrado'
+    ];
+    const linhasResumo = top10.map(([cliente, dadosCliente], indice) => [
+      indice + 1,
+      textoExcel(cliente),
+      itens.filter(item => item.cliente === cliente).length,
+      dadosCliente.qtd,
+      dadosCliente.valor,
+      dadosCliente.qtd ? dadosCliente.valor / dadosCliente.qtd : 0,
+      periodo
+    ]);
+
+    const planilhaDetalhe = XLSX.utils.aoa_to_sheet([cabecalhoDetalhe, ...linhasDetalhe]);
+    const planilhaResumo = XLSX.utils.aoa_to_sheet([cabecalhoResumo, ...linhasResumo]);
+
+    planilhaDetalhe['!cols'] = [
+      {wch:9},{wch:44},{wch:17},{wch:55},
+      {wch:16},{wch:21},{wch:21},{wch:29}
+    ];
+    planilhaResumo['!cols'] = [
+      {wch:9},{wch:44},{wch:19},{wch:19},
+      {wch:21},{wch:21},{wch:29}
+    ];
+
+    // Ativa as setas de filtro nativas do Excel para clientes, produtos etc.
+    planilhaDetalhe['!autofilter'] = {ref:'A1:H' + (linhasDetalhe.length + 1)};
+    planilhaResumo['!autofilter'] = {ref:'A1:G' + (linhasResumo.length + 1)};
+
+    const formatarNumeros = (planilha, linhas, colunasQtd, colunasReais) => {
+      for(let i = 2; i <= linhas + 1; i++){
+        for(const coluna of colunasQtd){
+          const celula = planilha[coluna + i];
+          if(celula) celula.z = '#,##0.00';
+        }
+        for(const coluna of colunasReais){
+          const celula = planilha[coluna + i];
+          if(celula) celula.z = '"R$" #,##0.00';
+        }
+      }
+    };
+    formatarNumeros(planilhaDetalhe, linhasDetalhe.length, ['E'], ['F','G']);
+    formatarNumeros(planilhaResumo, linhasResumo.length, ['D'], ['E','F']);
+
+    const arquivo = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(arquivo, planilhaDetalhe, 'Produtos por Cliente');
+    XLSX.utils.book_append_sheet(arquivo, planilhaResumo, 'Resumo Top 10');
+
+    const dataNome = valor => valor ? valor.replaceAll('-', '') : 'todos';
+    XLSX.writeFile(
+      arquivo,
+      'SmartGroup_Top10_Clientes_' + dataNome(inicio) + '_' + dataNome(fim) + '.xlsx',
+      {compression:true}
+    );
+  }catch(erro){
+    console.error('Erro ao exportar Top 10 Clientes para Excel:', erro);
+    alert('Não foi possível gerar o Excel. Verifique o console do navegador.');
+  }
 }
 
 </script>
