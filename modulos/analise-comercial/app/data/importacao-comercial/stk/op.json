@@ -109,18 +109,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "8702",
-    "produto": "18230",
-    "desc_completa": "OREGON OFF WHITE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 40,
-    "dt_saida": "2026-10-22",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "8765",
     "produto": "18256",
     "desc_completa": "CANYON ESPRESSO",
@@ -130,30 +118,6 @@
     "dt_saida": "2026-10-23",
     "centro_custo": 2,
     "abreviacao": "GRAV"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8841",
-    "produto": "18336",
-    "desc_completa": "ASPEN PRETO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 7,
-    "dt_saida": "2026-10-30",
-    "centro_custo": 10,
-    "abreviacao": "REV 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "8925",
-    "produto": "18010",
-    "desc_completa": "ASPEN OURO ROSADO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 40,
-    "dt_saida": "2026-11-06",
-    "centro_custo": 3,
-    "abreviacao": "GR 1"
   },
   {
     "fonte_comercial": "STK",
@@ -169,15 +133,15 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "9077",
-    "produto": "18504",
-    "desc_completa": "NAPA METAL CHARM NUDE",
+    "nro_op": "9076",
+    "produto": "18501",
+    "desc_completa": "NAPA METAL CHARM BRANCO",
     "grupo": 39,
     "subgrupo": 41,
-    "qtd_produzir": 300,
+    "qtd_produzir": 800,
     "dt_saida": "2026-11-26",
-    "centro_custo": 38,
-    "abreviacao": "MISTURA 2"
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
   },
   {
     "fonte_comercial": "STK",
@@ -200,8 +164,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-11-19",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -212,8 +176,8 @@
     "subgrupo": 41,
     "qtd_produzir": 580,
     "dt_saida": "2026-11-23",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
+    "centro_custo": 3,
+    "abreviacao": "GR 1"
   },
   {
     "fonte_comercial": "STK",
@@ -224,20 +188,8 @@
     "subgrupo": 41,
     "qtd_produzir": 400,
     "dt_saida": "2026-11-23",
-    "centro_custo": 2,
-    "abreviacao": "GRAV"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "9087",
-    "produto": "16642",
-    "desc_completa": "NAPA BARI FOSCO PRETO",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 82.5,
-    "dt_saida": "2026-11-23",
-    "centro_custo": 10,
-    "abreviacao": "REV 1"
+    "centro_custo": 3,
+    "abreviacao": "GR 1"
   },
   {
     "fonte_comercial": "STK",
@@ -248,18 +200,6 @@
     "subgrupo": 41,
     "qtd_produzir": 40,
     "dt_saida": "2026-11-24",
-    "centro_custo": 13,
-    "abreviacao": "JUMBO 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "9094",
-    "produto": "18504",
-    "desc_completa": "NAPA METAL CHARM NUDE",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 500,
-    "dt_saida": "2026-11-17",
     "centro_custo": 6,
     "abreviacao": "EST1"
   },
@@ -284,8 +224,8 @@
     "subgrupo": 41,
     "qtd_produzir": 40,
     "dt_saida": "2026-11-25",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 6,
+    "abreviacao": "EST1"
   },
   {
     "fonte_comercial": "STK",
@@ -307,6 +247,54 @@
     "grupo": 39,
     "subgrupo": 41,
     "qtd_produzir": 40,
+    "dt_saida": "2026-11-25",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "9146",
+    "produto": "30096",
+    "desc_completa": "BORGONHA BROWN",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 400,
+    "dt_saida": "2026-11-26",
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "9147",
+    "produto": "17420",
+    "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 500,
+    "dt_saida": "2026-11-26",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "9149",
+    "produto": "30214",
+    "desc_completa": "SAVOY LUX DOURADO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-11-26",
+    "centro_custo": 13,
+    "abreviacao": "JUMBO 1"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "9150",
+    "produto": "12889",
+    "desc_completa": "ZAFIR BORDO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 80,
     "dt_saida": "2026-11-25",
     "centro_custo": 0,
     "abreviacao": ""
