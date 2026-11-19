@@ -4136,6 +4136,18 @@
     "subgrupo": 40,
     "orig_movto": 20,
     "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 25.5,
+    "dt_movto": "2026-11-18"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11904",
+    "produto": "11904",
+    "desc_completa": "NAPA MADRID NUDE - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 38,
     "dt_movto": "2026-03-12"
   },
@@ -4366,6 +4378,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 409,
     "dt_movto": "2026-09-28"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11904",
+    "produto": "11904",
+    "desc_completa": "NAPA MADRID NUDE - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 474.5,
+    "dt_movto": "2026-11-18"
   },
   {
     "fonte_comercial": "STK",
@@ -7726,6 +7750,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 20,
     "dt_movto": "2025-11-18"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "11923",
+    "produto": "11923",
+    "desc_completa": "NAPA METAL LYON PRETO - PU 0.9MM",
+    "grupo": 39,
+    "subgrupo": 40,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 40,
+    "dt_movto": "2026-11-18"
   },
   {
     "fonte_comercial": "STK",
@@ -12826,6 +12862,18 @@
     "descr_orig_movto": "Item de ordem de produção",
     "qtd_movimentada": 118,
     "dt_movto": "2026-08-14"
+  },
+  {
+    "fonte_comercial": "STK",
+    "cod_prod": "17899",
+    "produto": "17899",
+    "desc_completa": "NAPA MADRID ESPRESSO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "orig_movto": 20,
+    "descr_orig_movto": "Item de ordem de produção",
+    "qtd_movimentada": 22,
+    "dt_movto": "2026-11-18"
   },
   {
     "fonte_comercial": "STK",
