@@ -360,7 +360,7 @@
       botao.id = id;
       botao.className = "sg-exportar-comercial-excel";
       botao.title = `Exportar somente ${escopo}, com todos os produtos e os 4 períodos`;
-      botao.innerHTML = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="m8 13 8 6m0-6-8 6"/></svg><span>Exportar Excel</span>';
+      botao.innerHTML = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="m8 13 8 6m0-6-8 6"/></svg><span>' + (escopo === 'STK' ? 'Exportar STK' : 'Exportar Beira Rio') + '</span>';
       botao.addEventListener("click", e => {e.stopPropagation(); exportarExcel(botao, escopo);});
       inserirApos.insertAdjacentElement("afterend", botao);
     }
