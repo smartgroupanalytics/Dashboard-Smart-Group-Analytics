@@ -1,0 +1,22 @@
+/* Somente o botao novo: sem interferencia nos componentes existentes. */
+.sg-exportar-comercial-excel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  flex: 0 0 auto;
+  min-height: 34px;
+  padding: 6px 12px;
+  border: 1px solid #27b85d;
+  border-radius: 6px;
+  background: #137a38;
+  color: #fff;
+  font: 700 12px/1.2 Arial, Helvetica, sans-serif;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease;
+}
+.sg-exportar-comercial-excel:hover { background: #169345; border-color: #53d582; }
+.sg-exportar-comercial-excel:focus-visible { outline: 2px solid #86efac; outline-offset: 3px; }
+.sg-exportar-comercial-excel:disabled { cursor: progress; opacity: .7; }
+@media (max-width: 850px) { .sg-exportar-comercial-excel { font-size: 11px; padding: 6px 9px; } }
