@@ -80,7 +80,11 @@
   // Separacao por Colecao/Marca utiliza os MESMOS filtros do dashboard:
   // um produto unificado em colecoes diferentes so aparece com os saldos e
   // movimentacoes da colecao escolhida, evitando repetir o total global.
-  function montarLinhas(estado) {
+  function montarLinhas(estado, escopo) {
+    // Exporta somente o grupo do botão acionado. Nunca une STK com Beira Rio.
+    if (escopo !== "STK" && escopo !== "BEIRA RIO") {
+      throw new Error("Selecione o grupo STK ou BEIRA RIO para exportação.");
+    }
     if (!estado || !estado.pronto || !estado.stk || !estado.beiraRio || !estado.dados) {
       throw new Error("Os dados comerciais ainda não terminaram de carregar.");
     }
@@ -89,20 +93,20 @@
     const colecoes = Array.from(new Set((estado.stk.estoque || [])
       .map(item => normalizar(item.cod_altern_1)).filter(Boolean))).sort(ordem);
 
-    for (const colecao of colecoes) {
+    if (escopo === "STK") for (const colecao of colecoes) {
       const dados = estado.filtrarColecao(estado.stk, [colecao]);
       const familias = estado.agrupar(dados, "", "");
       grupos.push({grupo: "STK", colecao, marca: "", familias});
     }
     // Produtos sem Cód. altern. 1, se existirem, não ficam fora da exportação.
     const semColecao = (estado.stk.estoque || []).filter(item => !normalizar(item.cod_altern_1));
-    if (semColecao.length) {
+    if (escopo === "STK" && semColecao.length) {
       const filtrados = filtrarPorCodigos(estado.stk, new Set(semColecao.map(codigo).filter(Boolean)), semColecao);
       grupos.push({grupo: "STK", colecao: "(SEM COLEÇÃO)", marca: "", familias: estado.agrupar(filtrados, "", "")});
     }
     const marcas = Array.from(new Set((estado.beiraRio.estoque || [])
       .map(item => normalizar(item.marca) || "VAZIO"))).sort(ordem);
-    for (const marca of marcas) {
+    if (escopo === "BEIRA RIO") for (const marca of marcas) {
       const dados = estado.filtrarMarca(estado.beiraRio, [marca]);
       grupos.push({grupo: "BEIRA RIO", colecao: "", marca, familias: estado.agrupar(dados, "", "")});
     }
@@ -139,7 +143,7 @@
         }
       }
     }
-    return {linhas, produtos, colecoes: colecoes.length, marcas: marcas.length};
+    return {escopo, linhas, produtos, colecoes: escopo === "STK" ? colecoes.length : 0, marcas: escopo === "BEIRA RIO" ? marcas.length : 0};
   }
 
   function filtrarPorCodigos(dados, codigos, estoque) {
@@ -265,11 +269,12 @@
   function gerarExcel(resultado) {
     const dados = [COLUNAS.map(c => c[0]), ...resultado.linhas];
     const instr = [
-      ["SMART GROUP ANALYTICS — EXPORTAÇÃO COMERCIAL", ""],
-      ["Planilha", "Base Completa (uma linha por produto, coleção/marca e período)"],
-      ["Filtro de coleção", "Use a coluna 'Coleção STK (Cód. altern. 1)' para filtrar Inverno, Verão, Clássico etc."],
-      ["Filtro de família", "Use 'Família' para filtrar ALGARVE, ALURE, AMALFI e outras."],
-      ["Filtro de marca", "Para produtos BEIRA RIO, utilize 'Marca Beira Rio'."],
+      [`SMART GROUP ANALYTICS — EXPORTAÇÃO ${resultado.escopo}`, ""],
+      ["Planilha", `Somente produtos ${resultado.escopo}; uma linha por produto e período`],
+      ["Origem dos registros", `Todos os produtos de ${resultado.escopo}, inclusive famílias fechadas e filtros não selecionados no painel.`],
+      ["Filtro de coleção STK", resultado.escopo === "STK" ? "Use 'Coleção STK (Cód. altern. 1)' para selecionar uma coleção." : "Não se aplica à Beira Rio."],
+      ["Filtro de família", "Use 'Família' para localizar famílias específicas."],
+      ["Filtro de marca Beira Rio", resultado.escopo === "BEIRA RIO" ? "Use 'Marca Beira Rio' para selecionar uma marca." : "Não se aplica ao STK."],
       ["Filtro do período", "Use 'Período' para selecionar 30 dias, 3 meses, 6 meses ou 12 meses."],
       ["ATENÇÃO: totais", "Escolha um período antes de somar estoques, compras, OP ou carteira: estes saldos aparecem nos 4 períodos."],
       ["Estoque Geral", "Estoque Físico + Compras em Aberto + Ordens de Produção."],
@@ -279,7 +284,7 @@
       ["Cobertura sem consumo", "Quando não há consumo nem vendas no período, é exibido '999+ meses', como no painel."],
       ["Códigos unificados", "Uma linha pode representar vários códigos agrupados pelo módulo; veja 'Códigos unificados'."],
       ["Dados", "Exportação feita a partir dos dados carregados no painel; não altera o sistema ou os arquivos originais."],
-      ["Produtos (coleção/marca)", resultado.produtos],
+      [`Produtos ${resultado.escopo} (coleção/marca)`, resultado.produtos],
       ["Linhas exportadas", resultado.linhas.length],
       ["Gerado em", new Date().toLocaleString("pt-BR")]
     ];
@@ -297,22 +302,10 @@
     return criarZip(arquivos);
   }
 
-  function obterBotao() {
-    const pastas = document.querySelectorAll(".sg-source-folder");
-    for (const pasta of pastas) {
-      const titulo = pasta.querySelector(".sg-source-header h3");
-      if (titulo && normalizar(titulo.textContent).toUpperCase() === "STK") {
-        const cabecalho = pasta.querySelector(".sg-source-header");
-        if (!cabecalho) continue;
-        const botaoDePeriodo = Array.from(cabecalho.querySelectorAll('button[aria-pressed]'))
-          .find(botao => normalizar(botao.textContent) === "12 meses");
-        if (botaoDePeriodo) return botaoDePeriodo.parentElement;
-      }
-    }
-    return null;
-  }
+  // O React desenha os dois botões; esta biblioteca só gera os arquivos.
+  // Não modificar nós internos da árvore do React (evita tela em branco).
 
-  async function exportarExcel(botao) {
+  async function exportarExcel(botao, escopo) {
     if (botao.disabled) return;
     const textoOriginal = botao.innerHTML;
     botao.disabled = true;
@@ -320,44 +313,26 @@
     try {
       await new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 0)));
       const estado = window.__SMART_COMERCIAL_EXPORT__;
-      const resultado = montarLinhas(estado);
-      if (!resultado.linhas.length) throw new Error("Nenhum produto foi encontrado para exportar.");
+      const resultado = montarLinhas(estado, escopo);
+      if (!resultado.linhas.length) throw new Error(`Nenhum produto ${escopo} foi encontrado para exportar.`);
       const arquivo = gerarExcel(resultado);
       const url = URL.createObjectURL(arquivo);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `Smart_Analise_Integrada_Comercial_${new Date().toISOString().slice(0, 10)}.xlsx`;
+      const nomeGrupo = escopo === "STK" ? "STK" : "BEIRA_RIO";
+      a.download = `Smart_Analise_Comercial_${nomeGrupo}_${new Date().toISOString().slice(0, 10)}.xlsx`;
       document.body.appendChild(a); a.click(); a.remove();
       setTimeout(() => URL.revokeObjectURL(url), 30_000);
     } catch (erro) {
-      console.error("Falha na exportação da Análise Comercial:", erro);
-      alert(`Não foi possível exportar o Excel: ${erro.message}`);
+      console.error(`Falha na exportação ${escopo}:`, erro);
+      alert(`Não foi possível exportar o Excel de ${escopo}: ${erro.message}`);
     } finally {
       botao.disabled = false;
       botao.innerHTML = textoOriginal;
     }
   }
 
-  function adicionarBotao() {
-    const local = obterBotao();
-    if (!local || local.parentElement.querySelector("#sg-exportar-comercial-excel")) return;
-    const botao = document.createElement("button");
-    botao.type = "button";
-    botao.id = "sg-exportar-comercial-excel";
-    botao.className = "sg-exportar-comercial-excel";
-    botao.title = "Exportar todos os produtos e os 4 períodos para Excel";
-    botao.innerHTML = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="m8 13 8 6m0-6-8 6"/></svg><span>Exportar Excel</span>';
-    botao.addEventListener("click", e => {e.stopPropagation(); exportarExcel(botao);});
-    local.insertAdjacentElement("afterend", botao);
-  }
-
-  function iniciar() {
-    adicionarBotao();
-    const observador = new MutationObserver(() => adicionarBotao());
-    observador.observe(document.getElementById("root") || document.body, {childList: true, subtree: true});
-  }
-  // Disponivel apenas para testes automatizados sem interagir com a interface.
+  // O callback é chamado diretamente pelos botões nativos do React.
+  window.__SMART_EXCEL_RUN__ = (escopo, botao) => exportarExcel(botao, escopo);
   window.__SMART_EXCEL_INTERNAL__ = {montarLinhas, gerarExcel, colunas: COLUNAS};
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", iniciar, {once: true});
-  else iniciar();
 })();
