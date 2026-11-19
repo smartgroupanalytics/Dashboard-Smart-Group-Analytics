@@ -68330,7 +68330,7 @@
   {
     "fonte_comercial": "STK",
     "dt_entrada": "2026-11-12",
-    "dt_faturam": "2026-11-12",
+    "dt_faturam": "2026-11-19",
     "produto": "13334",
     "desc_completa": "NAPA OLIMPIC CAFE",
     "pedido": "7949",
@@ -68349,9 +68349,7 @@
     "representante": "14",
     "abreviacao": "TELEVENDAS",
     "vlr_comissao_rep": 35.94,
-    "cod_altern_1": "CLASSICO",
-    "dt_faturam_original": "2026-11-19",
-    "data_venda_ajustada": true
+    "cod_altern_1": "CLASSICO"
   },
   {
     "fonte_comercial": "STK",
@@ -120268,7 +120266,7 @@
   {
     "fonte_comercial": "STK",
     "dt_entrada": "2026-11-12",
-    "dt_faturam": "2026-11-12",
+    "dt_faturam": "2026-11-19",
     "produto": "16642",
     "desc_completa": "NAPA BARI FOSCO PRETO",
     "pedido": "7949",
@@ -120287,9 +120285,7 @@
     "representante": "14",
     "abreviacao": "TELEVENDAS",
     "vlr_comissao_rep": 659,
-    "cod_altern_1": "INVERNO 2027",
-    "dt_faturam_original": "2026-11-19",
-    "data_venda_ajustada": true
+    "cod_altern_1": "INVERNO 2027"
   },
   {
     "fonte_comercial": "STK",
@@ -121710,7 +121706,7 @@
   {
     "fonte_comercial": "STK",
     "dt_entrada": "2026-11-12",
-    "dt_faturam": "2026-11-12",
+    "dt_faturam": "2026-11-19",
     "produto": "16644",
     "desc_completa": "NAPA BARI FOSCO OFF WHITE",
     "pedido": "7949",
@@ -121729,9 +121725,7 @@
     "representante": "14",
     "abreviacao": "TELEVENDAS",
     "vlr_comissao_rep": 329.5,
-    "cod_altern_1": "INVERNO 2027",
-    "dt_faturam_original": "2026-11-19",
-    "data_venda_ajustada": true
+    "cod_altern_1": "INVERNO 2027"
   },
   {
     "fonte_comercial": "STK",
@@ -122336,7 +122330,7 @@
   {
     "fonte_comercial": "STK",
     "dt_entrada": "2026-11-12",
-    "dt_faturam": "2026-11-12",
+    "dt_faturam": "2026-11-19",
     "produto": "16650",
     "desc_completa": "NAPA BARI FOSCO CAFE",
     "pedido": "7949",
@@ -122355,9 +122349,7 @@
     "representante": "14",
     "abreviacao": "TELEVENDAS",
     "vlr_comissao_rep": 500.84,
-    "cod_altern_1": "INVERNO 2027",
-    "dt_faturam_original": "2026-11-19",
-    "data_venda_ajustada": true
+    "cod_altern_1": "INVERNO 2027"
   },
   {
     "fonte_comercial": "STK",
