@@ -141,16 +141,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "9023",
-    "produto": "18428",
-    "desc_completa": "NAPA FIORELLA PRETO",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 1985.5,
-    "dt_saida": "2026-11-12",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "9024",
     "produto": "18428",
     "desc_completa": "NAPA FIORELLA PRETO",
@@ -191,42 +181,12 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "9058",
-    "produto": "18485",
-    "desc_completa": "NAPA FIORELLA CARAMEL 1575",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 1554,
-    "dt_saida": "2026-11-13",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "9059",
     "produto": "18481",
     "desc_completa": "NAPA FIORELLA COFFEE 1577",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 1494,
     "dt_saida": "2026-11-17",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "9091",
-    "produto": "9146",
-    "desc_completa": "METALIZADO PREMIUM PU 0.9 GRAFITE 914 (VENDA BEIRA RIO)",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 400,
-    "dt_saida": "2026-11-18",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "9110",
-    "produto": "30094",
-    "desc_completa": "NAPA MALAGA NUDE 658",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 215,
-    "dt_saida": "2026-11-19",
     "abreviacao": ""
   },
   {
@@ -255,18 +215,98 @@
     "produto": "16707",
     "desc_completa": "NAPA SEVILLE  PRETO",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 1000,
+    "qtd_produzir": 507.5,
     "dt_saida": "2026-11-25",
     "abreviacao": ""
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "9160",
-    "produto": "17001",
-    "desc_completa": "NAPA MARSELHA PRETO",
+    "nro_op": "9164",
+    "produto": "18111",
+    "desc_completa": "NAPA MALAGA VINHO 1592",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 6.5,
-    "dt_saida": "2026-11-18",
+    "qtd_produzir": 400,
+    "dt_saida": "2026-11-23",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "9165",
+    "produto": "17874",
+    "desc_completa": "NAPA TRAMADO BERLIM PRETO 01",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 400,
+    "dt_saida": "2026-11-23",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "9166",
+    "produto": "17676",
+    "desc_completa": "NAPA TRAMADO BERLIM BRANCO OFF 526",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 400,
+    "dt_saida": "2026-11-23",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "9167",
+    "produto": "13433",
+    "desc_completa": "METALIZADO FLOATHER VENEZIA PU 0.9 BRONZE",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 200,
+    "dt_saida": "2026-11-23",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "9170",
+    "produto": "9100085",
+    "desc_completa": "VERNIZ NANCY 1.0 PU PRETO 01",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 600,
+    "dt_saida": "2026-11-25",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "9171",
+    "produto": "18327",
+    "desc_completa": "VERNIZ NANCY CHOCOLATE 1271",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 600,
+    "dt_saida": "2026-11-25",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "9174",
+    "produto": "15197",
+    "desc_completa": "VERNIZ NANCY AVELA 1248",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 500,
+    "dt_saida": "2026-11-25",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "9175",
+    "produto": "18438",
+    "desc_completa": "VERNIZ NANCY VINHO 1592",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 600,
+    "dt_saida": "2026-11-25",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "9177",
+    "produto": "17444",
+    "desc_completa": "BRILHO ITALIA BROWN 1570",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 600,
+    "dt_saida": "2026-12-01",
     "abreviacao": ""
   }
 ]
