@@ -20,6 +20,60 @@ const AUTOMACAO_FINANCEIRO = Object.freeze({
     fretes: "data/fretes.xlsx"
 });
 
+
+/*
+ * PREPARAÇÃO PARA FONTE PRIVADA (somente na branch de testes).
+ *
+ * O modo padrão permanece "publico": nenhum comportamento existente muda.
+ *
+ * Quando a integração protegida estiver pronta, um script anterior a este
+ * poderá definir:
+ *   window.SMART_FINANCEIRO_ORIGEM = "privada";
+ *   window.smartFinanceiroFontePrivada = {
+ *     async obterPlanilha(tipo) { ... retorna Blob autenticado ... },
+ *     async obterStatus() { ... retorna { fontes: {...} } ... }
+ *   };
+ *
+ * IMPORTANTE: no modo "privada" NÃO existe fallback para arquivos públicos.
+ * O provedor deve verificar autenticação/autorização no servidor/Firestore.
+ * Não colocar senhas, tokens administrativos ou chaves privadas no navegador.
+ */
+function usarFonteFinanceiraPrivada() {
+    return window.SMART_FINANCEIRO_ORIGEM === "privada";
+}
+
+function obterFonteFinanceiraPrivada() {
+    const fonte = window.smartFinanceiroFontePrivada;
+
+    if (!fonte || typeof fonte.obterPlanilha !== "function") {
+        throw new Error(
+            "Fonte financeira privada indisponível. " +
+            "Dados públicos NÃO serão usados como alternativa."
+        );
+    }
+
+    return fonte;
+}
+
+async function obterBlobFinanceiro(tipo, versao = "") {
+    if (!["financeiro", "fretes"].includes(tipo)) {
+        throw new Error("Tipo de planilha inválido.");
+    }
+
+    if (!usarFonteFinanceiraPrivada()) {
+        const resposta = await buscarRecursoFinanceiro(
+            AUTOMACAO_FINANCEIRO[tipo], versao
+        );
+        return resposta.blob();
+    }
+
+    const blob = await obterFonteFinanceiraPrivada().obterPlanilha(tipo);
+    if (!(blob instanceof Blob) || blob.size === 0) {
+        throw new Error("Fonte privada retornou arquivo vazio ou inválido: " + tipo);
+    }
+    return blob;
+}
+
 function urlSemCache(caminho, versao = "") {
     const separador = caminho.includes("?") ? "&" : "?";
     const chave = versao || Date.now();
@@ -160,24 +214,14 @@ function aplicarResultadoFretesAutomatico(registros) {
 }
 
 async function carregarBaseFinanceiroAutomatica(versao) {
-    const resposta = await buscarRecursoFinanceiro(
-        AUTOMACAO_FINANCEIRO.financeiro,
-        versao
-    );
-
-    const blob = await resposta.blob();
+    const blob = await obterBlobFinanceiro("financeiro", versao);
     const resultado = await processarPlanilhaFinanceira(blob);
     aplicarResultadoFinanceiroAutomatico(resultado);
     return resultado;
 }
 
 async function carregarBaseFretesAutomatica(versao) {
-    const resposta = await buscarRecursoFinanceiro(
-        AUTOMACAO_FINANCEIRO.fretes,
-        versao
-    );
-
-    const blob = await resposta.blob();
+    const blob = await obterBlobFinanceiro("fretes", versao);
     const registros = await processarPlanilhaFrete(blob);
     aplicarResultadoFretesAutomatico(registros);
     return registros;
@@ -187,34 +231,60 @@ async function carregarDadosAutomaticosFinanceiro() {
     let status = { fontes: {} };
     let versao = "";
 
-    try {
-        const respostaVersao = await buscarRecursoFinanceiro(
-            AUTOMACAO_FINANCEIRO.versao
-        );
-        const dadosVersao = await respostaVersao.json();
-        versao = dadosVersao?.updatedAt || "";
-    } catch (erro) {
-        console.warn("Não foi possível ler a versão automática do Financeiro:", erro);
-    }
+    if (usarFonteFinanceiraPrivada()) {
+        // Sem fallback para status/planilhas hospedados em URLs públicas.
+        // Se não houver provedor autenticado, o carregamento falha fechado.
+        try {
+            const fonte = obterFonteFinanceiraPrivada();
+            if (typeof fonte.obterStatus === "function") {
+                const dadosStatus = await fonte.obterStatus();
+                if (dadosStatus && typeof dadosStatus === "object") {
+                    status = dadosStatus;
+                }
+            }
+        } catch (erro) {
+            console.error("Falha na conexão financeira protegida:", erro);
+            for (const chave of ["financeiro", "fretes"]) {
+                definirStatusFonte(
+                    chave,
+                    "🔒 Fonte protegida indisponível — carregamento bloqueado",
+                    "erro",
+                    erro.message || "Não foi possível validar a fonte privada."
+                );
+            }
+            return;
+        }
+    } else {
+        // Caminho original. Preservado até a migração ser validada.
+        try {
+            const respostaVersao = await buscarRecursoFinanceiro(
+                AUTOMACAO_FINANCEIRO.versao
+            );
+            const dadosVersao = await respostaVersao.json();
+            versao = dadosVersao?.updatedAt || "";
+        } catch (erro) {
+            console.warn("Não foi possível ler a versão automática do Financeiro:", erro);
+        }
 
-    try {
-        const respostaStatus = await buscarRecursoFinanceiro(
-            AUTOMACAO_FINANCEIRO.status,
-            versao
-        );
-        status = await respostaStatus.json();
-    } catch (erro) {
-        console.warn("Não foi possível ler o status da automação financeira:", erro);
-        definirStatusFonte(
-            "financeiro",
-            "⚠️ Status automático indisponível — tentando base anterior",
-            "erro"
-        );
-        definirStatusFonte(
-            "fretes",
-            "⚠️ Status automático indisponível — tentando base anterior",
-            "erro"
-        );
+        try {
+            const respostaStatus = await buscarRecursoFinanceiro(
+                AUTOMACAO_FINANCEIRO.status,
+                versao
+            );
+            status = await respostaStatus.json();
+        } catch (erro) {
+            console.warn("Não foi possível ler o status da automação financeira:", erro);
+            definirStatusFonte(
+                "financeiro",
+                "⚠️ Status automático indisponível — tentando base anterior",
+                "erro"
+            );
+            definirStatusFonte(
+                "fretes",
+                "⚠️ Status automático indisponível — tentando base anterior",
+                "erro"
+            );
+        }
     }
 
     if (status?.fontes?.financeiro) {
