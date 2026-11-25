@@ -80,8 +80,8 @@
     "subgrupo": 41,
     "qtd_produzir": 200,
     "dt_saida": "2026-09-29",
-    "centro_custo": 0,
-    "abreviacao": ""
+    "centro_custo": 2,
+    "abreviacao": "GRAV"
   },
   {
     "fonte_comercial": "STK",
@@ -133,42 +133,6 @@
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "9135",
-    "produto": "18537",
-    "desc_completa": "METALIZADO LAS VEGAS WHISKY",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 40,
-    "dt_saida": "2026-11-25",
-    "centro_custo": 3,
-    "abreviacao": "GR 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "9136",
-    "produto": "18536",
-    "desc_completa": "METALIZADO LAS VEGAS BROWN",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 40,
-    "dt_saida": "2026-11-25",
-    "centro_custo": 3,
-    "abreviacao": "GR 1"
-  },
-  {
-    "fonte_comercial": "STK",
-    "nro_op": "9146",
-    "produto": "30096",
-    "desc_completa": "BORGONHA BROWN",
-    "grupo": 39,
-    "subgrupo": 41,
-    "qtd_produzir": 400,
-    "dt_saida": "2026-11-26",
-    "centro_custo": 3,
-    "abreviacao": "GR 1"
-  },
-  {
-    "fonte_comercial": "STK",
     "nro_op": "9147",
     "produto": "17420",
     "desc_completa": "METALIZADO LAS VEGAS OURO LIGHT",
@@ -176,20 +140,20 @@
     "subgrupo": 41,
     "qtd_produzir": 500,
     "dt_saida": "2026-11-26",
-    "centro_custo": 23,
-    "abreviacao": "RAMA"
+    "centro_custo": 7,
+    "abreviacao": "ESTAM"
   },
   {
     "fonte_comercial": "STK",
-    "nro_op": "9150",
-    "produto": "12889",
-    "desc_completa": "ZAFIR BORDO",
+    "nro_op": "9148",
+    "produto": "16571",
+    "desc_completa": "SAVOY LUX BRANCO",
     "grupo": 39,
     "subgrupo": 41,
-    "qtd_produzir": 80,
-    "dt_saida": "2026-11-25",
-    "centro_custo": 6,
-    "abreviacao": "EST1"
+    "qtd_produzir": 200,
+    "dt_saida": "2026-11-26",
+    "centro_custo": 0,
+    "abreviacao": ""
   },
   {
     "fonte_comercial": "STK",
@@ -200,8 +164,8 @@
     "subgrupo": 41,
     "qtd_produzir": 40,
     "dt_saida": "2026-11-27",
-    "centro_custo": 1,
-    "abreviacao": "RECOB"
+    "centro_custo": 3,
+    "abreviacao": "GR 1"
   },
   {
     "fonte_comercial": "STK",
@@ -212,7 +176,67 @@
     "subgrupo": 41,
     "qtd_produzir": 40,
     "dt_saida": "2026-11-27",
-    "centro_custo": 1,
-    "abreviacao": "RECOB"
+    "centro_custo": 3,
+    "abreviacao": "GR 1"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "9210",
+    "produto": "18501",
+    "desc_completa": "NAPA METAL CHARM BRANCO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 500,
+    "dt_saida": "2026-12-02",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "9211",
+    "produto": "18587",
+    "desc_completa": "NAPA BARI METAL PRATA",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 200,
+    "dt_saida": "2026-11-26",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "9222",
+    "produto": "18592",
+    "desc_completa": "LISSE NEVOA",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 40,
+    "dt_saida": "2026-12-02",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "9223",
+    "produto": "18590",
+    "desc_completa": "LISSE SALVIA",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 40,
+    "dt_saida": "2026-12-02",
+    "centro_custo": 0,
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_op": "9233",
+    "produto": "18501",
+    "desc_completa": "NAPA METAL CHARM BRANCO",
+    "grupo": 39,
+    "subgrupo": 41,
+    "qtd_produzir": 600,
+    "dt_saida": "2026-12-04",
+    "centro_custo": 0,
+    "abreviacao": ""
   }
 ]
