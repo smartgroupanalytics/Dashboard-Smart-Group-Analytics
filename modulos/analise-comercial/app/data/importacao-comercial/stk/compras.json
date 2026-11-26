@@ -321,5 +321,39 @@
     "dt_orig_ent": "2027-01-05",
     "dt_prazo_ent": "2027-01-05",
     "sig_emp": "SM3"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_oc": "126",
+    "fornecedor": "162",
+    "razao_social": "AMERICA-ASIA TRADING COMPANY LIM",
+    "dt_emissao": "2026-11-25",
+    "produto": "20077",
+    "grupo": 39,
+    "subgrupo": 40,
+    "desc_completa": "NAPA METAL CHARM BRANCO - PU 0.9MM",
+    "qtde": 3000,
+    "qtd_aberto": 3000,
+    "vlr_un": 3.04,
+    "dt_orig_ent": "2027-02-23",
+    "dt_prazo_ent": "2027-02-23",
+    "sig_emp": "SM3"
+  },
+  {
+    "fonte_comercial": "STK",
+    "nro_oc": "126",
+    "fornecedor": "162",
+    "razao_social": "AMERICA-ASIA TRADING COMPANY LIM",
+    "dt_emissao": "2026-11-25",
+    "produto": "20078",
+    "grupo": 39,
+    "subgrupo": 40,
+    "desc_completa": "NAPA METAL CHARM NUDE - PU 0.9MM",
+    "qtde": 2000,
+    "qtd_aberto": 2000,
+    "vlr_un": 3.04,
+    "dt_orig_ent": "2027-02-23",
+    "dt_prazo_ent": "2027-02-23",
+    "sig_emp": "SM3"
   }
 ]
