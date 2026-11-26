@@ -71,16 +71,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "8418",
-    "produto": "17966",
-    "desc_completa": "NAPA ONCA SAVANA MULTI ROSA 1541",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 254.5,
-    "dt_saida": "2026-09-29",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "8923",
     "produto": "18391",
     "desc_completa": "NAPA SEVILLE OLIVA 1588",
@@ -96,16 +86,6 @@
     "desc_completa": "NAPA FIORELLA DARK BURGUNDY 1576",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 1491,
-    "dt_saida": "2026-11-13",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "9049",
-    "produto": "18477",
-    "desc_completa": "NAPA FIORELLA CACAU 1277",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 3075,
     "dt_saida": "2026-11-13",
     "abreviacao": ""
   },
@@ -151,16 +131,6 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "9167",
-    "produto": "13433",
-    "desc_completa": "METALIZADO FLOATHER VENEZIA PU 0.9 BRONZE",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 200,
-    "dt_saida": "2026-11-23",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "9174",
     "produto": "15197",
     "desc_completa": "VERNIZ NANCY AVELA 1248",
@@ -181,32 +151,12 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "9177",
-    "produto": "17444",
-    "desc_completa": "BRILHO ITALIA BROWN 1570",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 600,
-    "dt_saida": "2026-12-01",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "9182",
     "produto": "9439",
     "desc_completa": "NAPA PELICA PU 1.0 CINZA 1235 (VENDA BEIRA RIO)",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 600,
     "dt_saida": "2026-11-27",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "9183",
-    "produto": "17674",
-    "desc_completa": "NAPA TRAMADO BERLIM CAMEL 1165",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 210,
-    "dt_saida": "2026-12-02",
     "abreviacao": ""
   },
   {
@@ -224,6 +174,16 @@
     "nro_op": "9185",
     "produto": "17873",
     "desc_completa": "METALIZADO TRAMADO BERLIM PRATA",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 210,
+    "dt_saida": "2026-12-02",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "9187",
+    "produto": "30233",
+    "desc_completa": "NAPA LISTRAS CANNES  MULTI BEGE 435",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 210,
     "dt_saida": "2026-12-02",
@@ -335,17 +295,7 @@
     "produto": "17869",
     "desc_completa": "NAPA MADAGASCAR CAMEL 1165",
     "grupo": "BEIRA RIO",
-    "qtd_produzir": 600,
-    "dt_saida": "2026-11-27",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "9201",
-    "produto": "17562",
-    "desc_completa": "NAPA DALLAS PRETO",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 1000,
+    "qtd_produzir": 449.5,
     "dt_saida": "2026-11-27",
     "abreviacao": ""
   },
@@ -376,26 +326,6 @@
     "desc_completa": "NAPA NEW NANCY PRETO",
     "grupo": "BEIRA RIO",
     "qtd_produzir": 500,
-    "dt_saida": "2026-11-27",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "9205",
-    "produto": "15826",
-    "desc_completa": "NAPA NEW NANCY BRANCO OFF 526",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 400,
-    "dt_saida": "2026-11-27",
-    "abreviacao": ""
-  },
-  {
-    "fonte_comercial": "BEIRA_RIO",
-    "nro_op": "9206",
-    "produto": "16506",
-    "desc_completa": "NAPA NEW NANCY CAMEL 1165",
-    "grupo": "BEIRA RIO",
-    "qtd_produzir": 200,
     "dt_saida": "2026-11-27",
     "abreviacao": ""
   },
@@ -521,6 +451,16 @@
   },
   {
     "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "9230",
+    "produto": "16509",
+    "desc_completa": "NAPA SEVILLE BRANCO OFF 526",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 1041.9,
+    "dt_saida": "2026-12-04",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
     "nro_op": "9232",
     "produto": "18407",
     "desc_completa": "NAPA SEVILLE VERDE RIVIERA 1573",
@@ -537,6 +477,16 @@
     "grupo": "BEIRA RIO",
     "qtd_produzir": 400,
     "dt_saida": "2026-11-30",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "9235",
+    "produto": "14488",
+    "desc_completa": "NAPA LEZARD EVORA BRANCO OFF 526",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 200,
+    "dt_saida": "2026-12-04",
     "abreviacao": ""
   },
   {
@@ -567,6 +517,16 @@
     "grupo": "BEIRA RIO",
     "qtd_produzir": 200,
     "dt_saida": "2026-11-24",
+    "abreviacao": ""
+  },
+  {
+    "fonte_comercial": "BEIRA_RIO",
+    "nro_op": "9265",
+    "produto": "18602",
+    "desc_completa": "NAPA DALLAS CAFE 856",
+    "grupo": "BEIRA RIO",
+    "qtd_produzir": 200,
+    "dt_saida": "2026-11-30",
     "abreviacao": ""
   }
 ]
